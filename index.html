@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+
+    <meta charset="utf-8" />
+    <title>DMC Quote Desk</title>
+    <meta name="robots" content="noindex" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet data-dc-atomics>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" />
+        <style>
+          :root{--paper:oklch(0.972 0.008 85);--paper2:oklch(0.953 0.01 85);--card:oklch(0.993 0.004 85);--ink:oklch(0.22 0.015 60);--ink2:oklch(0.40 0.012 60);--ink3:oklch(0.52 0.01 60);--line:oklch(0.885 0.01 85);--line2:oklch(0.93 0.008 85);--sea:oklch(0.52 0.115 160);--sea-l:oklch(0.74 0.115 160);--sea-t:oklch(0.94 0.035 160);--sea-d:oklch(0.34 0.08 160);--rust:oklch(0.52 0.115 45);--rust-l:oklch(0.74 0.115 45);--rust-t:oklch(0.94 0.035 45);--rust-d:oklch(0.38 0.09 45);--night:oklch(0.23 0.025 170);--night2:oklch(0.36 0.03 170);--night-t:oklch(0.76 0.02 170)}
+          html,body{margin:0;background:var(--paper)}
+          a{color:var(--sea-d)}
+          a:hover{color:var(--ink)}
+          .app{min-height:100vh;background:var(--paper);color:var(--ink);font:400 14px/1.45 'IBM Plex Sans',system-ui,sans-serif}
+          .top{position:sticky;top:0;z-index:5;min-height:56px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding:10px 20px;background:var(--night);color:var(--paper)}
+          .brand{font:600 18px/1 'Bricolage Grotesque',sans-serif;letter-spacing:-0.01em;white-space:nowrap}
+          .flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+          .fstep{display:flex;align-items:center;gap:8px;font:500 12.5px/1 'IBM Plex Sans',sans-serif;color:var(--night-t);white-space:nowrap}
+          .fstep.done{color:var(--paper)}
+          .fstep.cur{color:var(--paper)}
+          .fnum{font:500 10.5px/1 'IBM Plex Mono',monospace;padding:4px 6px;border-radius:4px;border:1px solid var(--night2)}
+          .done .fnum{background:var(--sea);border-color:var(--sea);color:#fff}
+          .cur .fnum{background:var(--paper);border-color:var(--paper);color:var(--night)}
+          .fline{width:24px;height:1px;background:var(--night2)}
+          .wastat{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--paper);white-space:nowrap}
+          .dot{width:8px;height:8px;border-radius:50%;background:var(--sea-l);flex:none}
+          .dot.off{background:var(--rust-l)}
+          .tlink{border:0;background:none;padding:0 0 0 6px;font:500 12.5px/1 'IBM Plex Sans',sans-serif;color:var(--night-t);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+          .connect{max-width:860px;margin:0 auto;padding:48px 24px;display:flex;flex-direction:column;gap:24px}
+          .cgrid{display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;align-items:center;padding:28px}
+          .qr{aspect-ratio:1;border-radius:8px;border:1px solid var(--line);background:repeating-linear-gradient(135deg,var(--line2) 0 6px,var(--card) 6px 12px);display:flex;align-items:center;justify-content:center;text-align:center}
+          .qrlabel{background:var(--card);padding:6px 8px;border-radius:4px;font:500 10.5px/1.3 'IBM Plex Mono',monospace;color:var(--ink2)}
+          .csteps{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+          .cstep{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;align-items:baseline;font-size:15px}
+          .fmt{padding:0 18px 18px;font:400 13px/1.6 'IBM Plex Mono',monospace;white-space:pre-wrap;color:var(--ink2)}
+          .cols{display:grid;grid-template-columns:320px minmax(0,1fr) 400px;align-items:start}
+          .inbox{position:sticky;top:56px;height:calc(100vh - 56px);box-sizing:border-box;overflow-y:auto;border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column;gap:8px}
+          .inhead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 12px 6px}
+          .enq{border:1px solid transparent;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:5px;cursor:pointer}
+          .enq.on{background:var(--card);border-color:var(--ink)}
+          .ename{font:600 15px/1.2 'Bricolage Grotesque',sans-serif}
+          .work{padding:24px 28px 56px;min-width:0;display:flex;flex-direction:column;gap:20px}
+          .stack{display:flex;flex-direction:column;gap:20px}
+          .eyebrow{font:500 10.5px/1.2 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:0.09em;text-transform:uppercase}
+          .h1{font:600 30px/1.1 'Bricolage Grotesque',sans-serif;letter-spacing:-0.02em;margin:0}
+          .t-sm{font-size:12.5px}
+          .t-xs{font-size:11px}
+          .t-sub{color:var(--ink2)}
+          .t-mute{color:var(--ink3)}
+          .t-mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+          .t-b5{font-weight:500}
+          .t-b6{font-weight:600}
+          .panel{background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+          .phead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;flex-wrap:wrap}
+          .ptitle{font:600 15px/1.2 'Bricolage Grotesque',sans-serif;margin:0}
+          .chip{display:inline-flex;align-items:center;font:500 11.5px/1 'IBM Plex Sans',sans-serif;padding:5px 8px;border-radius:4px;border:1px solid var(--line);color:var(--ink2);white-space:nowrap}
+          .chip.ok{background:var(--sea-t);border-color:transparent;color:var(--sea-d)}
+          .chip.warn{background:var(--rust-t);border-color:transparent;color:var(--rust-d)}
+          .chip.solid{background:var(--rust);border-color:transparent;color:#fff}
+          .recv{display:grid;grid-template-columns:270px minmax(0,1fr);border-top:1px solid var(--line2)}
+          .recvl{padding:16px 18px;background:var(--paper);border-right:1px solid var(--line2)}
+          .inbubble{padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:10px 10px 10px 2px;font-size:13px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+          .recvr{display:flex;flex-direction:column;min-width:0}
+          .rrow{display:grid;grid-template-columns:118px minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:8px 18px;border-top:1px solid var(--line2);font-size:13.5px}
+          .rrow.first{border-top:0}
+          .check{border-top:1px solid var(--line2);padding:14px 18px;display:flex;flex-direction:column;gap:10px}
+          .check.warn{background:var(--rust-t)}
+          .crow{display:grid;grid-template-columns:118px minmax(0,1fr);gap:10px;align-items:baseline;font-size:13.5px}
+          .cval{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+          .dinput{font:500 13px/1 'IBM Plex Mono',monospace;padding:6px 8px;border:1px solid var(--ink3);border-radius:6px;background:var(--card);color:var(--ink)}
+          .frow{display:grid;grid-template-columns:190px minmax(0,1fr);gap:12px;padding:10px 18px;border-top:1px solid var(--line2);font-size:13.5px}
+          .drafting{display:flex;align-items:center;gap:12px;padding:16px 18px;border-top:1px solid var(--line2);background:var(--paper)}
+          .pulse{width:10px;height:10px;border-radius:50%;background:var(--sea);flex:none}
+          @keyframes dmc-pulse{50%{opacity:0.2}}
+          @media (prefers-reduced-motion:no-preference){.pulse{animation:dmc-pulse 1s ease-in-out infinite}}
+          .autoline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+          .btn{font:500 13px/1 'IBM Plex Sans',sans-serif;padding:11px 14px;border-radius:6px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
+          .btn:disabled{opacity:0.4;cursor:not-allowed}
+          .btn.big{padding:14px 20px;font-size:14px}
+          .btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink3)}
+          .btn.wa{background:var(--sea);border-color:var(--sea);color:#fff}
+          .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;align-items:start}
+          .ohead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 18px 14px}
+          .otitle{font:600 22px/1.1 'Bricolage Grotesque',sans-serif;letter-spacing:-0.01em}
+          .oright{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+          .ototal{font:600 30px/1 'Bricolage Grotesque',sans-serif;letter-spacing:-0.02em}
+          .prow{display:flex;justify-content:space-between;gap:12px;padding:9px 18px;border-top:1px solid var(--line2);font-size:13.5px}
+          .feedline{padding:9px 18px;border-top:1px solid var(--line2);background:var(--paper)}
+          .hrow{padding:12px 18px;border-top:1px solid var(--line2);display:flex;flex-direction:column;gap:3px}
+          .day{display:grid;grid-template-columns:104px minmax(0,1fr);border-top:1px solid var(--line2)}
+          .dgut{padding:14px 0 14px 18px}
+          .dnum{font:600 17px/1.1 'Bricolage Grotesque',sans-serif;padding-bottom:4px}
+          .dbody{padding:14px 18px 14px 0;min-width:0;display:flex;flex-direction:column;gap:10px}
+          .item{display:flex;flex-direction:column;gap:2px;font-size:13.5px}
+          .terms{padding:0 0 12px}
+          .term{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;padding:5px 18px;font-size:12.5px;color:var(--ink2)}
+          .msg{position:sticky;top:56px;height:calc(100vh - 56px);box-sizing:border-box;display:flex;flex-direction:column;border-left:1px solid var(--line);background:var(--paper2)}
+          .chat{flex:1;min-height:0;overflow-y:auto;padding:2px 16px 16px}
+          .chat.empty{display:flex;align-items:center;justify-content:center;text-align:center;padding:24px 32px;color:var(--ink2)}
+          .bubble{background:var(--sea-t);border-radius:10px 10px 2px 10px;padding:12px 14px;font:400 13px/1.5 'IBM Plex Sans',system-ui,sans-serif;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink)}
+          .note{padding:10px 16px;font-size:12.5px;font-weight:500;color:var(--sea-d);background:var(--sea-t)}
+          .actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:14px 16px;border-top:1px solid var(--line);background:var(--card)}
+          @media (max-width:1180px){.top{position:static}.cols{grid-template-columns:280px minmax(0,1fr)}.inbox{top:0;height:100vh}.msg{grid-column:1 / -1;position:static;height:auto;border-left:0;border-top:1px solid var(--line)}.chat{max-height:560px}.recv{grid-template-columns:minmax(0,1fr)}.recvl{border-right:0;border-bottom:1px solid var(--line2)}}
+          @media (max-width:760px){.cols{grid-template-columns:minmax(0,1fr)}.inbox{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}.work{padding:20px 16px 40px}.frow{grid-template-columns:minmax(0,1fr);gap:2px}.crow{grid-template-columns:minmax(0,1fr);gap:2px}.fline{width:10px}.h1{font-size:25px}.cgrid{grid-template-columns:minmax(0,1fr);padding:20px}.qr{max-width:200px}.connect{padding:32px 16px}}
+        </style>
+      </helmet>
+      <div class="app">
+        <header class="top">
+          <div class="brand">DMC Quote Desk</div>
+          <div class="flow">
+            <sc-for list="{{ flow }}" as="f" hint-placeholder-count="4">
+              <sc-if value="{{ f.line }}" hint-placeholder-val="{{ false }}"><span class="fline"></span></sc-if>
+              <span class="fstep {{ f.cls }}"><span class="fnum">{{ f.n }}</span>{{ f.label }}</span>
+            </sc-for>
+          </div>
+          <sc-if value="{{ connected }}" hint-placeholder-val="{{ false }}">
+            <div class="wastat"><span class="dot"></span><span>WhatsApp connected</span><button class="tlink" onClick="{{ disconnect }}">Disconnect</button></div>
+          </sc-if>
+          <sc-if value="{{ notConnected }}" hint-placeholder-val="{{ true }}">
+            <div class="wastat"><span class="dot off"></span><span>WhatsApp not connected</span></div>
+          </sc-if>
+        </header>
+
+        <sc-if value="{{ notConnected }}" hint-placeholder-val="{{ true }}">
+          <main class="connect" data-screen-label="Connect WhatsApp">
+            <div class="fx col gap8">
+              <div class="eyebrow t-mute">Step 01</div>
+              <h1 class="h1">Connect WhatsApp</h1>
+              <div class="t-sub">Link the WhatsApp Business number your agents message. Every enquiry sent to it in the enquiry format lands here and a quote is drafted automatically.</div>
+            </div>
+            <section class="panel cgrid">
+              <div class="qr"><span class="qrlabel">WhatsApp link code</span></div>
+              <div class="csteps">
+                <sc-for list="{{ connectSteps }}" as="cs" hint-placeholder-count="4">
+                  <div class="cstep"><span class="t-mono t-xs t-mute">{{ cs.n }}</span><span>{{ cs.text }}</span></div>
+                </sc-for>
+                <button class="btn wa big" onClick="{{ connect }}">Connect WhatsApp</button>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="phead">
+                <h2 class="ptitle">Enquiry format agents send</h2>
+                <button class="btn ghost" onClick="{{ copyFormat }}">{{ formatLabel }}</button>
+              </div>
+              <div class="fmt">{{ formatText }}</div>
+            </section>
+          </main>
+        </sc-if>
+
+        <sc-if value="{{ connected }}" hint-placeholder-val="{{ false }}">
+          <div class="cols">
+            <aside class="inbox" data-screen-label="Enquiries received on WhatsApp">
+              <div class="inhead">
+                <h2 class="ptitle">WhatsApp enquiries</h2>
+                <span class="t-mono t-sm t-mute">{{ toSend }}</span>
+              </div>
+              <sc-for list="{{ inbox }}" as="q" hint-placeholder-count="6">
+                <div class="enq {{ q.cls }}" role="button" onClick="{{ q.pick }}" style-hover="background:var(--card)">
+                  <div class="fx jb ac gap8"><span class="ename">{{ q.agent }}</span><span class="chip {{ q.tone }}">{{ q.statusLabel }}</span></div>
+                  <div class="t-sm">{{ q.stay }}</div>
+                  <div class="t-sm t-sub">{{ q.when }} · {{ q.guests }}</div>
+                  <div class="t-mono t-xs t-mute">WhatsApp · {{ q.at }} · Trip {{ q.trip }}</div>
+                </div>
+              </sc-for>
+            </aside>
+
+            <main class="work" data-screen-label="Enquiry and auto-drafted quote">
+              <div class="fx col gap8">
+                <div class="eyebrow t-mute">Trip ID {{ cur.trip }} · received on WhatsApp {{ cur.at }}</div>
+                <h1 class="h1">{{ cur.agent }}</h1>
+                <div class="t-sub">{{ summary }}</div>
+              </div>
+
+              <section class="panel">
+                <div class="phead">
+                  <h2 class="ptitle">Received on WhatsApp</h2>
+                  <span class="t-sm t-sub">Message on the left, how it was read on the right</span>
+                </div>
+                <div class="recv">
+                  <div class="recvl"><div class="inbubble">{{ cur.raw }}</div></div>
+                  <div class="recvr">
+                    <sc-for list="{{ read }}" as="r" hint-placeholder-count="11">
+                      <div class="rrow {{ r.cls }}"><span class="eyebrow t-mute">{{ r.k }}</span><span class="t-b5">{{ r.v }}</span><sc-if value="{{ r.flag }}" hint-placeholder-val="{{ false }}"><span class="chip warn">Assumed</span></sc-if></div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div class="check {{ checkCls }}">
+                  <span class="t-b6">{{ checkTitle }}</span>
+                  <sc-for list="{{ notes }}" as="nt" hint-placeholder-count="3">
+                    <div class="crow">
+                      <span class="eyebrow">{{ nt.k }}</span>
+                      <span class="cval"><span>{{ nt.text }}</span><sc-if value="{{ nt.isDate }}" hint-placeholder-val="{{ false }}"><input class="dinput" type="date" value="{{ nt.dateVal }}" onChange="{{ nt.onDate }}" /></sc-if></span>
+                    </div>
+                  </sc-for>
+                </div>
+              </section>
+
+              <sc-if value="{{ isDrafting }}" hint-placeholder-val="{{ false }}">
+                <section class="panel">
+                  <div class="phead">
+                    <h2 class="ptitle">Drafting quote from feed data</h2>
+                    <span class="chip warn">Drafting</span>
+                  </div>
+                  <sc-for list="{{ feedRows }}" as="r" hint-placeholder-count="4">
+                    <div class="frow"><span class="t-sub">{{ r.k }}</span><span>{{ r.v }}</span></div>
+                  </sc-for>
+                  <div class="drafting"><span class="pulse"></span><span class="t-sm t-sub">Filling prices, hotels, day plan and terms. No manual entry.</span></div>
+                </section>
+              </sc-if>
+
+              <sc-if value="{{ hasQuote }}" hint-placeholder-val="{{ true }}">
+                <div class="stack">
+                  <div class="autoline"><span class="chip ok">Auto-drafted</span><span class="t-sm t-sub">Drafted from feed data when the enquiry arrived. Review it, then send or copy.</span></div>
+                  <div class="opts">
+                    <sc-for list="{{ options }}" as="o" hint-placeholder-count="2">
+                      <section class="panel">
+                        <div class="ohead">
+                          <div class="fx col gap8">
+                            <div class="eyebrow t-mute">Option {{ o.n }}</div>
+                            <div class="otitle">{{ o.cat }}</div>
+                          </div>
+                          <div class="oright">
+                            <div class="eyebrow t-mute">Total MYR</div>
+                            <div class="ototal">{{ o.total }}</div>
+                          </div>
+                        </div>
+                        <div class="prow"><span>Per person, double sharing × {{ o.adults }}</span><span class="t-mono t-b5">{{ o.pp }}</span></div>
+                        <sc-if value="{{ o.hasChild }}" hint-placeholder-val="{{ true }}">
+                          <div class="prow"><span>Per child without extra bed × 1 ({{ o.childAge }}y)</span><span class="t-mono t-b5">{{ o.ch }}</span></div>
+                        </sc-if>
+                        <div class="feedline t-mono t-xs t-mute">{{ o.calc }}</div>
+                        <sc-for list="{{ o.hotels }}" as="h" hint-placeholder-count="2">
+                          <div class="hrow">
+                            <div class="t-sm t-sub">{{ h.nightsLine }} · {{ h.inOut }}</div>
+                            <div class="t-b6">{{ h.title }}</div>
+                            <div class="t-sm t-sub">{{ h.roomLine }}</div>
+                          </div>
+                        </sc-for>
+                      </section>
+                    </sc-for>
+                  </div>
+
+                  <section class="panel">
+                    <div class="phead">
+                      <h2 class="ptitle">For all options · transportation and activities</h2>
+                      <span class="t-sm t-sub">{{ dayCount }}</span>
+                    </div>
+                    <sc-for list="{{ days }}" as="d" hint-placeholder-count="6">
+                      <div class="day">
+                        <div class="dgut">
+                          <div class="dnum">{{ d.n }}</div>
+                          <div class="t-mono t-xs t-mute">{{ d.date }}</div>
+                        </div>
+                        <div class="dbody">
+                          <sc-for list="{{ d.items }}" as="it" hint-placeholder-count="3">
+                            <div class="item"><span>{{ it.text }}</span><span class="t-mono t-xs t-mute">{{ it.unit }}</span></div>
+                          </sc-for>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </section>
+
+                  <section class="panel terms">
+                    <div class="phead">
+                      <h2 class="ptitle">Terms and conditions</h2>
+                    </div>
+                    <sc-for list="{{ terms }}" as="t" hint-placeholder-count="9">
+                      <div class="term"><span class="t-mono t-xs t-mute">{{ t.n }}</span><span>{{ t.text }}</span></div>
+                    </sc-for>
+                  </section>
+                </div>
+              </sc-if>
+            </main>
+
+            <aside class="msg" data-screen-label="WhatsApp reply">
+              <div class="phead">
+                <h2 class="ptitle">WhatsApp reply</h2>
+                <span class="t-sm t-sub">To {{ cur.agent }}</span>
+              </div>
+              <sc-if value="{{ hasQuote }}" hint-placeholder-val="{{ true }}">
+                <div class="chat"><div class="bubble">{{ text }}</div></div>
+              </sc-if>
+              <sc-if value="{{ isDrafting }}" hint-placeholder-val="{{ false }}">
+                <div class="chat empty">The reply is being drafted. It appears here ready to send or copy.</div>
+              </sc-if>
+              <sc-if value="{{ isSent }}" hint-placeholder-val="{{ false }}">
+                <div class="note">Sent to {{ cur.agent }} on WhatsApp.</div>
+              </sc-if>
+              <div class="actions">
+                <button class="btn wa" onClick="{{ send }}" disabled="{{ isDrafting }}">{{ sendLabel }}</button>
+                <button class="btn ghost" onClick="{{ copy }}" disabled="{{ isDrafting }}">{{ copyLabel }}</button>
+              </div>
+            </aside>
+          </div>
+        </sc-if>
+      </div>
+    </x-dc>
+    <script
+      type="text/x-dc"
+      data-dc-script
+      data-props='{
+  "startConnected": { "editor": "boolean", "default": false, "tsType": "boolean" }
+}'
+    >
+      class Component extends DCLogic {
+        constructor(props) {
+          super(props);
+          const on = !!(props && props.startConnected);
+          // e1 is the enquiry that arrives right after WhatsApp is connected.
+          this.state = { connected: on, sel: on ? 'e1' : 'e2', status: { e1: on ? 'draft' : 'pending', e2: 'draft', e3: 'draft', e4: 'draft', e5: 'sent', e6: 'sent' }, dates: {}, copied: '' };
+        }
+
+        componentWillUnmount() {
+          clearTimeout(this._t);
+          clearTimeout(this._d);
+        }
+
+        // The enquiry format agents send on WhatsApp, one field per line.
+        labels() {
+          return ['Lead Passenger Name:', 'Destination:', 'Travel date:', 'No. of pax:', 'Kids Age:', 'No. of Nights:', 'No.of Rooms :', 'Hotel category:', 'Remarks:', 'Inclusions :'];
+        }
+
+        // Feed data: hotel rates (MYR per person per night on double sharing, child without bed per night),
+        // land blocks per city (arrival day, full days in order, departure day, with per adult / per child cost),
+        // default city split per destination and nights, and the terms template.
+        feed() {
+          const checkin = ['Checkin to hotel - (check in time is 3pm, guests have to wait at the hotel lobby till check in time)', 'p'];
+          const checkout = ['Checkout from hotel - (hotel check-out is before 12:00 PM)', 'p'];
+          return {
+            hotels: {
+              'Langkawi': {
+                '3 star': { name: 'Adya', room: 'Deluxe king', pp: 80, cnb: 24 },
+                '4 star': { name: 'Holiday Villa', room: 'Deluxe Room', pp: 170, cnb: 39 }
+              },
+              'Kuala Lumpur': {
+                '3 star': { name: 'Star Points Hotel', room: 'Superior Queen Room', pp: 90, cnb: 24 },
+                '4 star': { name: 'IBIS KLCC', room: 'Standard room (Window room)', pp: 200, cnb: 39 }
+              }
+            },
+            land: {
+              'Langkawi': {
+                base: [150, 136],
+                first: [['LGK Airport to LGK Hotel - Arrival & Transfer', 'v'], checkin, ['Tour to Eagle square and under water world - Duration: 6 hrs)', 'v'], ['Underwater world - With entry tickets', 'p']],
+                mid: [
+                  { cost: [152, 140], items: [['Island Hopping boat ride SIC - - (Dayang bunting island conservation fees of RM 20/Adult and RM 10/Child is not included, Guest need to pay the same if accessing fresh water lake)', 'p'], ['Tour to Oriental village - (Duration: 5 hrs - Including pick up and return)', 'v'], ['Oriental Village - Skycab, Skybridge, Skyglide, Skyrex, Skydome and 3D Art Museum with entry tickets', 'p']] }
+                ],
+                last: [checkout, ['LGK Hotel to LGK Airport - Arrival & Transfer', 'v']]
+              },
+              'Kuala Lumpur': {
+                base: [130, 120],
+                first: [['KL Airport to Kuala Lumpur Hotel - Arrival & Transfer', 'v'], checkin, ['Tour to Bukit Bintang at evening - (Duration: 2 hrs)', 'v']],
+                mid: [
+                  { cost: [160, 145], items: [['Tour to Batu caves and genting highlands - (Duration: 8 hrs)', 'v'], ['Genting - Cable car tickets (2 way), (Please note Cable car tickets can be upgraded to express tickets at an addition of 20 RM per person, to be confirmed one day prior to the travel)', 'p']] },
+                  { cost: [60, 55], items: [['Kuala lumpur Half Day City tour - (Twin tower photostop, KL Tower photostop, National Mosque, National Monument. Independence Square, Choclate outlet and Kings Palace) (Duration: 4 hrs)', 'v']] }
+                ],
+                last: [checkout, ['Drop off to KL Airport - Transfer With Putrajaya & Drop off to Airport', 'v']]
+              }
+            },
+            packages: {
+              'Malaysia': { 2: [['Kuala Lumpur', 2]], 3: [['Kuala Lumpur', 3]], 4: [['Langkawi', 2], ['Kuala Lumpur', 2]], 5: [['Langkawi', 2], ['Kuala Lumpur', 3]] }
+            },
+            terms: [
+              'Tourism tax of 10 MYR/ room/night included',
+              'Hotel subject to availability at the time of confirmation',
+              'Air tickets and visa is not included',
+              'Meals as indicated in meal plan',
+              'Quote valid till 7 days of issue.',
+              'Tourism tax is prepaid at Metrostar, IBIS Styles and Furama only (all other hotels guest to pay the tourism tax and amount will be refunded later upon showing the receipt)',
+              'Please make sure that the quote matches with the requested requirement, we will not be responsible for discrepancy if any',
+              'Hotel Security Deposit: Please be advised that security deposit might be required by the hotel upon check-in. This deposit is the responsibility of the guest and will be collected by the hotel directly. The amount of the deposit varies from hotel to hotel and will be refunded at check out by the hotel',
+              'Please note that unless specified this rates are not valid for peak season such as Christmas, Chinese new year, Diwali and Eid holidays etc'
+            ]
+          };
+        }
+
+        // Each enquiry holds the field values as the agent sent them (sent) and how the software read them.
+        // assumed marks fields the software had to interpret or fill in.
+        enquiries() {
+          const L = this.labels();
+          const mk = (o) => Object.assign({}, o, { raw: o.raw || L.map((l, i) => l + (o.sent[i] ? ' ' + o.sent[i] : '')).join('\n') });
+          return [
+            mk({ id: 'e1', agent: 'Blue Orbit Holidays', trip: '4499564', at: '14:02', ref: '12 OCT 01 DEC LK NF-R1',
+              raw: ['Lead Passenger Name: TEST GUEST', 'Destination: MALAYASIA', 'Travel date: dec First week', 'No. of pax: 2 ADULT', 'Kids Age:', 'No. of Nights: 4 days', 'No.of Rooms :', 'Hotel category:3*4', 'Remarks:', 'Inclusions :'].join('\n'),
+              lead: 'Test Guest', dest: 'Malaysia', date: '2026-12-01', adults: 2, child: 0, nights: 4, rooms: 1, cats: ['3 star', '4 star'], remarks: '', inclusions: '',
+              assumed: { date: 'dec First week', nights: '4 days', rooms: true, stay: true } }),
+            mk({ id: 'e2', agent: 'Royal sky', trip: '4499560', at: '13:40', ref: '25 SEP 30 BN AN-R1 30 SEP 07 BN NF',
+              sent: ['SAMEER K', 'MALAYSIA', '23 Nov 2026', '2 ADULT 1 CHILD', '7', '5', '1', '3*4', '2N Langkawi + 3N Kuala Lumpur', 'Breakfast, transfers, sightseeing'],
+              lead: 'Sameer K', dest: 'Malaysia', date: '2026-11-23', adults: 2, child: 7, nights: 5, rooms: 1, cats: ['3 star', '4 star'], stays: [['Langkawi', 2], ['Kuala Lumpur', 3]], remarks: '2N Langkawi + 3N Kuala Lumpur', inclusions: 'Breakfast, transfers, sightseeing' }),
+            mk({ id: 'e3', agent: 'Wanderlane Travels', trip: '4499562', at: '12:15', ref: '12 OCT 14 DEC LK NF-R1',
+              sent: ['PRIYA NAIR', 'MALAYSIA', '14 Dec 2026', '4 ADULT', '', '5', '2', '3*4', '', ''],
+              lead: 'Priya Nair', dest: 'Malaysia', date: '2026-12-14', adults: 4, child: 0, nights: 5, rooms: 2, cats: ['3 star', '4 star'], remarks: '', inclusions: '',
+              assumed: { stay: true } }),
+            mk({ id: 'e4', agent: 'Al Noor Tours', trip: '4499563', at: '11:05', ref: '12 OCT 30 NOV LG NF-R1',
+              sent: ['IMRAN SHAIKH', 'MALAYSIA', '30 Nov 2026', '2 ADULT 1 CHILD', '4', '2', '1', '3', 'Langkawi only', 'Island hopping'],
+              lead: 'Imran Shaikh', dest: 'Malaysia', date: '2026-11-30', adults: 2, child: 4, nights: 2, rooms: 1, cats: ['3 star'], stays: [['Langkawi', 2]], remarks: 'Langkawi only', inclusions: 'Island hopping' }),
+            mk({ id: 'e5', agent: 'Seven Hills Travel', trip: '4499558', at: 'Yesterday', ref: '11 OCT 18 NOV LK NF-R1',
+              sent: ['ANITA DSOUZA', 'MALAYSIA', '18 Nov 2026', '2 ADULT', '', '5', '1', '4', 'Honeymoon', 'Private transfers'],
+              lead: 'Anita Dsouza', dest: 'Malaysia', date: '2026-11-18', adults: 2, child: 0, nights: 5, rooms: 1, cats: ['4 star'], remarks: 'Honeymoon', inclusions: 'Private transfers',
+              assumed: { stay: true } }),
+            mk({ id: 'e6', agent: 'Greenleaf Vacations', trip: '4499555', at: 'Sat 10 Oct', ref: '10 OCT 20 DEC KL NF-R1',
+              sent: ['JOSEPH MATHEW', 'MALAYSIA', '20 Dec 2026', '2 ADULT 1 CHILD', '10', '3', '1', '3*4', 'Kuala Lumpur only', ''],
+              lead: 'Joseph Mathew', dest: 'Malaysia', date: '2026-12-20', adults: 2, child: 10, nights: 3, rooms: 1, cats: ['3 star', '4 star'], stays: [['Kuala Lumpur', 3]], remarks: 'Kuala Lumpur only', inclusions: '' })
+          ];
+        }
+
+        build(e) {
+          const F = this.feed();
+          const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+          const iso = (this.state.dates && this.state.dates[e.id]) || e.date;
+          const p = iso.split('-').map(Number);
+          const day = (add) => new Date(Date.UTC(p[0], p[1] - 1, p[2] + add));
+          const dm = (dt) => dt.getUTCDate() + ' ' + MON[dt.getUTCMonth()];
+          const ord = (n) => n + (n % 10 === 1 && n % 100 !== 11 ? 'st' : n % 10 === 2 && n % 100 !== 12 ? 'nd' : n % 10 === 3 && n % 100 !== 13 ? 'rd' : 'th');
+          const num = (v) => v.toLocaleString('en-US');
+          const guests = e.adults + (e.adults === 1 ? ' Adult' : ' Adults') + (e.child ? ', 1 Child (' + e.child + 'y)' : '');
+          const paxTag = '(' + e.adults + 'Ad.' + (e.child ? ' + 1Ch.' : '') + ')';
+          const vehTag = e.adults + (e.child ? 1 : 0) <= 3 ? '(1-Sedan (4 Seater))' : '(1-MPV (7 Seater))';
+          const cnbTxt = e.child ? ' + 1 Child without Extra Bed/Mattress' : '';
+          const blockDays = (city, nights) => { const B = F.land[city]; return [B.first].concat(B.mid.slice(0, nights - 1).map((m) => m.items), [B.last]); };
+          const blockCost = (city, nights, idx) => { const B = F.land[city]; return B.mid.slice(0, nights - 1).reduce((a, m) => a + m.cost[idx], B.base[idx]); };
+
+          let n = 0;
+          const plan = e.stays || F.packages[e.dest][e.nights];
+          const stays = plan.map((pair) => { const s = { city: pair[0], from: n, nights: pair[1] }; n += s.nights; return s; });
+          const nights = n;
+
+          const options = e.cats.map((cat, i) => {
+            let hotelPP = 0, landPP = 0, ch = 0;
+            const hotels = stays.map((s) => {
+              const h = F.hotels[s.city][cat];
+              hotelPP += h.pp * s.nights; landPP += blockCost(s.city, s.nights, 0); ch += h.cnb * s.nights + blockCost(s.city, s.nights, 1);
+              const ords = [];
+              for (let k = 1; k <= s.nights; k++) ords.push(ord(s.from + k));
+              return {
+                name: h.name,
+                nightsLine: ords.join(', ') + ' Nights at ' + s.city,
+                inOut: 'Check-in: ' + dm(day(s.from)) + ' & Check-out: ' + dm(day(s.from + s.nights)),
+                title: h.name + ' (' + cat.charAt(0) + ' Star)',
+                roomLine: 'Bed and Breakfast • ' + e.rooms + ' ' + h.room + ' (' + e.adults + ' Pax' + cnbTxt + ')'
+              };
+            });
+            const pp = hotelPP + landPP;
+            const total = pp * e.adults + (e.child ? ch : 0);
+            return { n: i + 1, cat, adults: e.adults, hasChild: !!e.child, childAge: e.child, pp: num(pp), ch: num(ch), total: num(total), calc: 'Feed: hotels ' + num(hotelPP) + ' + transport and activities ' + num(landPP) + ' per person', hotels };
+          });
+
+          const lists = [];
+          stays.forEach((s, i) => {
+            blockDays(s.city, s.nights).forEach((items, j) => {
+              if (i > 0 && j === 0) lists[lists.length - 1] = lists[lists.length - 1].concat(items);
+              else lists.push(items);
+            });
+          });
+          const days = lists.map((items, k) => {
+            const dt = day(k);
+            return {
+              n: 'Day ' + (k + 1),
+              date: DOW[dt.getUTCDay()] + ' ' + dm(dt),
+              head: ord(k + 1) + ' Day - ' + DOW[dt.getUTCDay()] + ', ' + ord(dt.getUTCDate()) + ' ' + MON[dt.getUTCMonth()] + "'" + String(dt.getUTCFullYear()).slice(2),
+              items: items.map((it) => ({ text: it[0], unit: it[1] === 'v' ? vehTag : paxTag }))
+            };
+          });
+
+          const dateLine = dm(day(0)) + ', ' + p[0];
+          const durLine = nights + ' Nights, ' + (nights + 1) + ' Days';
+          const T = [];
+          T.push('Hi ' + e.agent + ',');
+          T.push('Thank you for your query with us. As per your requirements, following are the package details.');
+          T.push('Trip ID ' + e.trip + ' (' + options.length + ' Package Category/Options)');
+          T.push(e.dest + ' Trip');
+          T.push('• ' + dateLine + ' for ' + durLine);
+          T.push('• ' + guests);
+          T.push('• Ref ID: ' + e.ref);
+          options.forEach((o) => {
+            T.push('⏬ OPTION ' + o.n + ': ' + o.cat);
+            T.push('Price (MYR):');
+            T.push('• ' + o.pp + ' /- Per Person (Double Sharing) x ' + e.adults + ' Pax');
+            if (e.child) T.push('• ' + o.ch + ' /- Per Child without Extra Bed/Mattress x 1 Child (' + e.child + 'y)');
+            T.push('Total: ' + o.total);
+            T.push('🏨 Hotels');
+            o.hotels.forEach((h) => { T.push(h.nightsLine); T.push(h.inOut); T.push(h.title); T.push(h.roomLine); });
+          });
+          T.push('⏩ For All Options');
+          T.push('Details below are applicable for all the options.');
+          T.push('🚖 Transportation and Activities');
+          days.forEach((d) => { T.push(d.head); d.items.forEach((it) => T.push('• ' + it.text + ' ' + it.unit)); });
+          T.push('Terms and Conditions');
+          T.push('NOTE');
+          T.push('');
+          F.terms.forEach((t, i) => T.push((i + 1) + '. ' + t));
+
+          return {
+            iso, guests, dateLine, durLine, options, days,
+            stayLine: stays.map((s) => s.city + ' ' + s.nights + 'N').join(' + '),
+            serviceCount: days.reduce((a, d) => a + d.items.length, 0),
+            hotelsLine: options.map((o) => o.cat + ': ' + o.hotels.map((h) => h.name).join(', ')).join(' · '),
+            terms: F.terms.map((t, i) => ({ n: (i + 1) + '.', text: t })),
+            text: T.join('\n')
+          };
+        }
+
+        renderVals() {
+          const st = this.state;
+          const list = this.enquiries();
+          const cur = list.find((x) => x.id === st.sel);
+          const status = st.status[cur.id];
+          const q = this.build(cur);
+          const patch = (id, v) => Object.assign({}, this.state.status, { [id]: v });
+          const labels = { drafting: 'Drafting', draft: 'Draft ready', sent: 'Sent' };
+          const tones = { drafting: 'warn', draft: 'solid', sent: 'ok' };
+
+          // Connecting WhatsApp brings in the waiting enquiry, which is drafted without any click.
+          const connect = () => {
+            if (this.state.status.e1 !== 'pending') { this.setState({ connected: true }); return; }
+            this.setState({ connected: true, sel: 'e1', status: patch('e1', 'drafting') });
+            clearTimeout(this._d);
+            this._d = setTimeout(() => this.setState({ status: patch('e1', 'draft') }), 1800);
+          };
+          const disconnect = () => this.setState({ connected: false });
+
+          const inbox = list.filter((x) => st.status[x.id] !== 'pending').map((x) => {
+            const b = this.build(x);
+            const s = st.status[x.id];
+            return { agent: x.agent, trip: x.trip, at: x.at, stay: x.dest + ' · ' + b.stayLine, when: b.dateLine, guests: b.guests, statusLabel: labels[s], tone: tones[s], cls: x.id === st.sel ? 'on' : '', pick: () => this.setState({ sel: x.id, copied: '' }) };
+          });
+          const toSend = list.filter((x) => st.status[x.id] === 'draft').length + ' to send';
+
+          const on = st.connected;
+          const flow = [
+            { n: '01', label: 'WhatsApp connected', cls: on ? 'done' : 'cur', line: false },
+            { n: '02', label: 'Enquiry received', cls: on ? 'done' : '', line: true },
+            { n: '03', label: 'Quote auto-drafted', cls: !on ? '' : status === 'drafting' ? 'cur' : 'done', line: true },
+            { n: '04', label: 'Sent on WhatsApp', cls: !on ? '' : status === 'sent' ? 'done' : status === 'draft' ? 'cur' : '', line: true }
+          ];
+          const connectSteps = [
+            { n: '01', text: 'Link your WhatsApp Business number once.' },
+            { n: '02', text: 'Agents send enquiries to that number in the enquiry format below.' },
+            { n: '03', text: 'Each enquiry is read field by field and a quote is drafted from feed data.' },
+            { n: '04', text: 'You review the draft, then send it back on WhatsApp or copy it.' }
+          ];
+
+          // How each field of the message was read. A field is flagged when the software had to interpret it.
+          const A = cur.assumed || {};
+          const dateSet = !!st.dates[cur.id];
+          const read = [
+            ['Lead passenger', cur.lead, false],
+            ['Destination', cur.dest, false],
+            ['Travel date', q.dateLine, !!A.date && !dateSet],
+            ['Guests', cur.adults + (cur.adults === 1 ? ' Adult' : ' Adults'), false],
+            ['Kids age', cur.child ? cur.child + ' years' : 'None', false],
+            ['Nights', q.durLine, !!A.nights],
+            ['Rooms', String(cur.rooms), !!A.rooms],
+            ['Hotel category', cur.cats.join(', '), false],
+            ['Stay', q.stayLine, !!A.stay],
+            ['Remarks', cur.remarks || 'None', false],
+            ['Inclusions', cur.inclusions || 'Standard package', false]
+          ].map((r, i) => ({ k: r[0], v: r[1], flag: r[2], cls: i === 0 ? 'first' : '' }));
+
+          const onDate = (ev) => { const v = ev.target.value; if (v) this.setState({ dates: Object.assign({}, this.state.dates, { [cur.id]: v }) }); };
+          const notes = [];
+          if (A.date) notes.push({ k: 'Travel date', open: !dateSet, text: dateSet ? 'Set to ' + q.dateLine + '.' : '"' + A.date + '" read as ' + q.dateLine + '. Set the exact date:', isDate: true, dateVal: q.iso, onDate });
+          if (A.nights) notes.push({ k: 'No. of Nights', open: true, text: '"' + A.nights + '" read as ' + cur.nights + ' nights.', isDate: false });
+          if (A.rooms) notes.push({ k: 'No. of Rooms', open: true, text: 'Blank, so ' + cur.rooms + (cur.rooms === 1 ? ' room' : ' rooms') + ' for ' + cur.adults + ' adults.', isDate: false });
+          if (A.stay) notes.push({ k: 'Stay', open: true, text: 'No cities given, so the ' + cur.dest + ' ' + cur.nights + '-night package is used: ' + q.stayLine + '.', isDate: false });
+          const openCount = notes.filter((x) => x.open).length;
+          const checkTitle = notes.length === 0 ? 'Every field was read as sent.' : openCount === 0 ? 'Nothing left to check.' : openCount + ' to check before sending';
+
+          const feedRows = [
+            { k: 'Hotels', v: q.hotelsLine },
+            { k: 'Transport and activities', v: q.serviceCount + ' services across ' + q.days.length + ' days' },
+            { k: 'Rates', v: 'MYR, per person on double sharing' },
+            { k: 'Terms', v: 'Malaysia standard, ' + q.terms.length + ' notes' }
+          ];
+
+          const text = q.text;
+          const formatText = this.labels().join('\n');
+          const copyText = (value, key) => () => {
+            const done = () => {
+              this.setState({ copied: key });
+              clearTimeout(this._t);
+              this._t = setTimeout(() => this.setState({ copied: '' }), 1800);
+            };
+            const fallback = () => {
+              const ta = document.createElement('textarea');
+              ta.value = value; ta.style.position = 'fixed'; ta.style.opacity = '0';
+              document.body.appendChild(ta); ta.select();
+              try { document.execCommand('copy'); } catch (err) {}
+              document.body.removeChild(ta);
+              done();
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(value).then(done, fallback);
+            else fallback();
+          };
+          // The reply goes out through the connected WhatsApp number; the prototype only records it as sent.
+          const send = () => this.setState({ status: patch(cur.id, 'sent') });
+
+          return {
+            flow, connectSteps, inbox, toSend, cur, read, notes, checkTitle, feedRows, text, formatText,
+            checkCls: openCount > 0 ? 'warn' : '',
+            connected: on, notConnected: !on, connect, disconnect,
+            summary: 'Lead passenger ' + cur.lead + ' · ' + cur.dest + ' Trip · ' + q.dateLine + ' · ' + q.durLine + ' · ' + q.guests,
+            options: q.options, days: q.days, dayCount: q.days.length + ' days', terms: q.terms,
+            isDrafting: status === 'drafting', hasQuote: status === 'draft' || status === 'sent', isSent: status === 'sent',
+            sendLabel: status === 'sent' ? 'Send again' : 'Send on WhatsApp',
+            copyLabel: st.copied === 'msg' ? 'Copied' : 'Copy',
+            formatLabel: st.copied === 'fmt' ? 'Copied' : 'Copy format',
+            send, copy: copyText(text, 'msg'), copyFormat: copyText(formatText, 'fmt')
+          };
+        }
+      }
+    </script>
+  </body>
+</html>
