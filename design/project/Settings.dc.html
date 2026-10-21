@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Flyland DMC — Settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#ECEFF8}
+a{color:#3D4BC7}a:hover{color:#283277}
+button,select,input,textarea{font-family:inherit}
+header a:focus-visible,header button:focus-visible{outline-color:#FFFFFF}
+.row:hover{background:#F5F6F8 !important}
+.btn-p:hover{background:#283277 !important}
+.btn-s:hover{background:#ECEFF8 !important}
+.tab:hover{background:#ECEFF8 !important}
+.card:hover{box-shadow:0 6px 16px rgba(29,44,92,.14) !important}
+.chip:hover{border-color:#3D4BC7 !important}
+.cell:hover{border-color:#C3C6D4 !important}
+.cell:focus{border-color:#3D4BC7 !important;background:#FFFFFF !important;outline:none;box-shadow:0 0 0 1px #3D4BC7}
+.search:focus-within{border-color:#3D4BC7 !important;box-shadow:0 0 0 1px #3D4BC7}
+.search input:focus-visible{outline:none}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #3D4BC7;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #ECEFF8; color: #323338; font-family: Figtree, 'Segoe UI', sans-serif; font-size: 14px; line-height: 20px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 8px 20px; box-sizing: border-box; background: #283277; color: #FFFFFF">
+<a href="Main.dc.html" style="display: flex; align-items: center; text-decoration: none"><img src="/_blob/c96377ee37809ccd01d937b60c6b77c7" alt="Flyland DMC Services" style="display: block; height: 48px; width: auto"></a>
+<div style="display: flex; align-items: center; gap: 4px; margin-left: auto">
+<span role="img" aria-label="Signed in as Admin" style="width: 36px; height: 36px; border-radius: 50%; background: #C2378F; color: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #FFFFFF">AD</span>
+</div>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; padding: 12px 12px 12px 8px">
+<dc-import name="Sidebar" active="{{sideActive}}" collapsed="{{yes}}" hint-size="60px,640px"></dc-import>
+
+<main style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border-radius: 16px; box-shadow: 0 1px 3px rgba(29,44,92,.06); padding: 24px clamp(16px, 2.4vw, 28px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 26px; line-height: 34px; font-weight: 600">Settings</h1>
+<p style="margin: 0; color: #676879; max-width: 680px">How Flyland talks to customers, numbers its documents and decides who sees what. Admins only.</p>
+</div>
+<span role="status" style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: #00663B; font-weight: 600"><span style="width: 8px; height: 8px; border-radius: 50%; background: #00854D"></span>Changes save as you go</span>
+</div>
+
+<nav aria-label="Settings" style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="7"><button class="tab" onClick="{{t.pick}}" aria-current="{{t.current}}" style="height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid {{t.border}}; background: {{t.bg}}; color: {{t.ink}}; font-size: 13px; font-weight: 600; cursor: pointer">{{t.label}}</button></sc-for>
+</nav>
+
+<sc-if value="{{isWa}}" hint-placeholder-val="{{false}}">
+<section aria-labelledby="st-wa" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px"><div style="display: flex; flex-direction: column; gap: 2px"><h2 id="st-wa" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">WhatsApp lines</h2><span style="color: #676879">Phase 1 connects through the WhatsApp Business app on a phone. The official Cloud API (Zappio) replaces it in Phase 2.</span></div><button class="btn-p" onClick="{{addLine}}" style="height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-weight: 700; cursor: pointer">Add a line</button></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px">
+<sc-for list="{{lines}}" as="l" hint-placeholder-count="2">
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 18px; border: 1px solid #E6E9EF; border-radius: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><strong style="font-size: 16px">{{l.name}}</strong><span style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 13px; background: {{l.chipBg}}; color: {{l.chipInk}}; font-size: 12px; font-weight: 700"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{l.dot}}"></span>{{l.state}}</span></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 12px; font-size: 13px"><span style="color: #676879">Number</span><span>{{l.number}}</span><span style="color: #676879">Used for</span><span>{{l.use}}</span><span style="color: #676879">Last message</span><span>{{l.last}}</span></div>
+<sc-if value="{{l.showQr}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; gap: 14px; align-items: center; padding: 12px; border-radius: 10px; background: #F6F7FB">
+<div role="img" aria-label="QR code placeholder" style="flex: none; width: 112px; height: 112px; border-radius: 8px; background: repeating-linear-gradient(45deg, #323338 0 6px, #FFFFFF 6px 12px); opacity: .85"></div>
+<span style="font-size: 13px">On the phone, open WhatsApp › Linked devices › Link a device, and scan this code. It refreshes every 20 seconds.</span>
+</div>
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><button class="btn-s" onClick="{{l.toggle}}" style="height: 36px; padding: 0 14px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #323338; font-weight: 600; cursor: pointer">{{l.action}}</button></div>
+</div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{isTpl}}" hint-placeholder-val="{{false}}">
+<section aria-labelledby="st-tpl" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 2px"><h2 id="st-tpl" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Message templates</h2><span style="color: #676879">Words in curly brackets are filled in from the trip when the message is built.</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+<div style="flex: 1 1 240px; max-width: 320px; display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{tpls}}" as="t" hint-placeholder-count="7"><button class="card" onClick="{{t.pick}}" aria-current="{{t.current}}" style="display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border: 1.5px solid {{t.border}}; border-radius: 10px; background: {{t.bg}}; text-align: left; color: #323338; cursor: pointer"><strong>{{t.name}}</strong><span style="font-size: 12px; color: #676879">{{t.use}}</span></button></sc-for>
+</div>
+<div style="flex: 999 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 10px; padding: 18px; border: 1px solid #E6E9EF; border-radius: 12px">
+<h3 style="margin: 0; font-size: 16px; font-weight: 700"><label for="st-tpl-txt">{{tpl.name}}</label></h3>
+<span style="color: #676879">{{tpl.use}}</span>
+<sc-if value="{{tpl.locked}}" hint-placeholder-val="{{false}}"><div style="padding: 12px 14px; border-radius: 10px; background: #ECEEFB; color: #283277; font-weight: 600">The quote always follows your Royal sky format, line for line. Edit its notes in Masters › Terms &amp; conditions.</div></sc-if>
+<sc-if value="{{tpl.locked}}" hint-placeholder-val="{{false}}"><div style="padding: 12px; border: 1px solid #E6E9EF; border-radius: 10px; background: #F6F7FB; white-space: pre-wrap; font-size: 14px; line-height: 21px; color: #4B4D5C">{{tpl.text}}</div></sc-if>
+<sc-if value="{{tpl.editable}}" hint-placeholder-val="{{true}}"><textarea id="st-tpl-txt" rows="10" value="{{tpl.text}}" onChange="{{tpl.set}}" style="padding: 12px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 10px; font-size: 14px; line-height: 21px; color: #323338; background: #FFFFFF; resize: vertical"></textarea></sc-if>
+<sc-if value="{{tpl.editable}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px"><span style="font-size: 13px; color: #676879">Insert:</span><sc-for list="{{tpl.fields}}" as="f" hint-placeholder-count="5"><button class="chip" onClick="{{f.add}}" style="height: 30px; padding: 0 10px; border: 1px solid #C3C6D4; border-radius: 15px; background: #FFFFFF; color: #283277; font-size: 13px; font-weight: 600; cursor: pointer">{{f.label}}</button></sc-for></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 700">Preview with the Royal sky trip</span><div style="max-width: 520px; padding: 12px 14px; border-radius: 12px 12px 4px 12px; background: #DCF5E7; white-space: pre-wrap; font-size: 14px; line-height: 21px">{{tpl.preview}}</div></div>
+</sc-if>
+</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{isFu}}" hint-placeholder-val="{{false}}">
+<section aria-labelledby="st-fu" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 2px"><h2 id="st-fu" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Follow-up sequence</h2><span style="color: #676879">Starts when a quote is sent. Stops the moment the customer replies, confirms, or a person marks the enquiry Lost.</span></div>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; max-width: 760px">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="3">
+<li style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid #E6E9EF; border-radius: 12px; opacity: {{s.opacity}}">
+<span style="flex: none; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: #283277; color: #FFFFFF; font-weight: 700">{{s.n}}</span>
+<label style="display: flex; align-items: center; gap: 8px">After<input class="cell" type="number" min="1" aria-label="{{s.daysAria}}" value="{{s.days}}" onChange="{{s.setDays}}" style="width: 64px; height: 36px; padding: 0 8px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 6px; font-size: 14px; text-align: right">days, send</label>
+<strong style="flex: 1 1 180px">{{s.tpl}}</strong>
+<button onClick="{{s.toggle}}" aria-pressed="{{s.on}}" aria-label="{{s.toggleAria}}" style="display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0; border: 0; background: transparent; color: #323338; font-size: 13px; font-weight: 600; cursor: pointer"><span style="position: relative; width: 40px; height: 24px; border-radius: 12px; background: {{s.track}}"><span style="position: absolute; top: 3px; left: {{s.knob}}px; width: 18px; height: 18px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,.25)"></span></span>{{s.state}}</button>
+</li>
+</sc-for>
+</ol>
+<span style="color: #676879">{{fuSummary}}</span>
+</section>
+</sc-if>
+
+<sc-if value="{{isAuto}}" hint-placeholder-val="{{false}}">
+<section aria-labelledby="st-au" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 2px"><h2 id="st-au" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Auto-send rules</h2><span style="color: #676879">What may go to customers without a person pressing Send. Everything else waits in the review queue.</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px; max-width: 860px">
+<sc-for list="{{rules}}" as="r" hint-placeholder-count="4">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px 16px; padding: 16px; border: 1px solid #E6E9EF; border-radius: 12px">
+<div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 4px"><strong style="font-size: 15px">{{r.name}}</strong><span style="color: #4B4D5C">{{r.text}}</span>
+<sc-if value="{{r.hasParam}}" hint-placeholder-val="{{true}}"><label style="display: flex; align-items: center; gap: 8px; margin-top: 6px; color: #4B4D5C">{{r.pre}}<input class="cell" type="number" min="0" aria-label="{{r.paramAria}}" value="{{r.param}}" onChange="{{r.setParam}}" style="width: 88px; height: 34px; padding: 0 8px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 6px; font-size: 14px; text-align: right">{{r.post}}</label></sc-if>
+</div>
+<button onClick="{{r.toggle}}" aria-pressed="{{r.on}}" aria-label="{{r.toggleAria}}" style="display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0; border: 0; background: transparent; color: #323338; font-size: 13px; font-weight: 600; cursor: pointer"><span style="position: relative; width: 40px; height: 24px; border-radius: 12px; background: {{r.track}}"><span style="position: absolute; top: 3px; left: {{r.knob}}px; width: 18px; height: 18px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,.25)"></span></span>{{r.state}}</button>
+</div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{isNum}}" hint-placeholder-val="{{false}}">
+<section aria-labelledby="st-nu" style="display: flex; flex-direction: column; gap: 14px; max-width: 860px">
+<div style="display: flex; flex-direction: column; gap: 2px"><h2 id="st-nu" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Document numbering</h2><span style="color: #676879">Use {trip} for the Trip ID and {n} for a running number.</span></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px">
+<sc-for list="{{nums}}" as="n" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="{{n.id}}" style="font-size: 13px; font-weight: 600; color: #4B4D5C">{{n.label}}</label><input id="{{n.id}}" class="cell" type="{{n.type}}" value="{{n.v}}" onChange="{{n.set}}" style="height: 40px; padding: 0 12px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-size: 14px; color: #323338"><span style="font-size: 13px; color: #676879">Next: <strong style="color: #323338">{{n.example}}</strong></span></div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{isUsers}}" hint-placeholder-val="{{true}}">
+<section aria-labelledby="st-us" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px"><div style="display: flex; flex-direction: column; gap: 2px"><h2 id="st-us" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Users</h2><span style="color: #676879">Each person's role decides which menus they see. Guides sign in to the guide app only.</span></div><button class="btn-p" onClick="{{addUser}}" style="height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-weight: 700; cursor: pointer">Invite user</button></div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<label style="flex: 1 1 220px; max-width: 320px; display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #676879"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="search" aria-label="{{tv.searchAria}}" placeholder="Search" value="{{tv.q}}" onChange="{{tv.onQ}}" style="flex: 1; min-width: 0; border: 0; outline-offset: 4px; background: transparent; font-family: inherit; font-size: 14px; color: #323338"></label>
+<button onClick="{{tv.togglePanel}}" aria-expanded="{{tv.panel}}" style="display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid {{tv.fBorder}}; background: {{tv.fBg}}; color: {{tv.fInk}}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"></path></svg>{{tv.filterLabel}}</button>
+<button onClick="{{tv.startSave}}" style="display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><path d="M17 21v-8H7v8M7 3v5h8"></path></svg>Save view</button>
+<sc-if value="{{tv.hasActive}}" hint-placeholder-val="{{false}}"><button onClick="{{tv.clear}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: transparent; color: #3D4BC7">Clear</button></sc-if>
+<span style="margin-left: auto; font-size: 13px; color: #676879">{{tv.showing}}</span>
+</div>
+<sc-if value="{{tv.hasQuick}}" hint-placeholder-val="{{false}}"><div role="group" aria-label="Quick filter" style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{tv.quick}}" as="qf" hint-placeholder-count="3"><button onClick="{{qf.pick}}" aria-pressed="{{qf.on}}" style="display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid {{qf.border}}; background: {{qf.bg}}; color: {{qf.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{qf.label}}<span style="font-size: 12px; opacity: .8">{{qf.count}}</span></button></sc-for></div></sc-if>
+<sc-if value="{{tv.hasViews}}" hint-placeholder-val="{{false}}"><div role="group" aria-label="Saved views" style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px"><span style="font-size: 13px; color: #676879">Saved views</span><sc-for list="{{tv.views}}" as="sv" hint-placeholder-count="1"><span style="display: inline-flex; align-items: center; height: 30px; border: 1px solid {{sv.border}}; border-radius: 15px; background: {{sv.bg}}; overflow: hidden"><button onClick="{{sv.apply}}" aria-pressed="{{sv.on}}" style="height: 100%; padding: 0 6px 0 12px; border: 0; background: transparent; color: {{sv.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{sv.label}}</button><button onClick="{{sv.del}}" aria-label="{{sv.delAria}}" style="height: 100%; padding: 0 10px 0 4px; border: 0; background: transparent; color: {{sv.ink}}; font-family: inherit; font-size: 15px; cursor: pointer">×</button></span></sc-for></div></sc-if>
+<sc-if value="{{tv.saving}}" hint-placeholder-val="{{false}}"><div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; background: #F6F7FB"><input aria-label="Name this view" placeholder="e.g. Overdue advances" value="{{tv.name}}" onChange="{{tv.onName}}" style="flex: 1 1 220px; max-width: 320px; height: 34px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"><button onClick="{{tv.saveView}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: #3D4BC7; color: #FFFFFF">Save this view</button><button onClick="{{tv.cancelSave}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338">Cancel</button><span style="font-size: 12px; color: #676879">Keeps the search, quick filter, detailed filters and sort.</span></div></sc-if>
+<sc-if value="{{tv.panel}}" hint-placeholder-val="{{false}}">
+<div role="region" aria-label="Detailed filters" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px 16px; padding: 14px; border: 1px solid #E6E9EF; border-radius: 10px; background: #FBFBFD">
+<sc-for list="{{tv.fields}}" as="fd" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<span style="font-size: 13px; font-weight: 600; color: #4B4D5C">{{fd.label}}</span>
+<sc-if value="{{fd.isText}}" hint-placeholder-val="{{true}}"><input aria-label="{{fd.aria}}" placeholder="Contains…" value="{{fd.text}}" onChange="{{fd.onText}}" style="height: 34px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"></sc-if>
+<sc-if value="{{fd.isNum}}" hint-placeholder-val="{{false}}"><span style="display: flex; gap: 6px"><input type="number" aria-label="{{fd.ariaMin}}" placeholder="From" value="{{fd.min}}" onChange="{{fd.onMin}}" style="width: 50%; height: 34px; padding: 0 8px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"><input type="number" aria-label="{{fd.ariaMax}}" placeholder="To" value="{{fd.max}}" onChange="{{fd.onMax}}" style="width: 50%; height: 34px; padding: 0 8px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"></span></sc-if>
+<sc-if value="{{fd.isDate}}" hint-placeholder-val="{{false}}"><span style="display: flex; gap: 6px"><input type="date" aria-label="{{fd.ariaFrom}}" value="{{fd.from}}" onChange="{{fd.onFrom}}" style="width: 50%; min-width: 0; height: 34px; padding: 0 6px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 13px; color: #323338"><input type="date" aria-label="{{fd.ariaTo}}" value="{{fd.to}}" onChange="{{fd.onTo}}" style="width: 50%; min-width: 0; height: 34px; padding: 0 6px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 13px; color: #323338"></span></sc-if>
+<sc-if value="{{fd.isSet}}" hint-placeholder-val="{{false}}"><span role="group" aria-label="{{fd.label}}" style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{fd.opts}}" as="o" hint-placeholder-count="2"><button onClick="{{o.pick}}" aria-pressed="{{o.on}}" style="height: 30px; padding: 0 10px; border-radius: 15px; border: 1px solid {{o.border}}; background: {{o.bg}}; color: {{o.ink}}; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer">{{o.label}}</button></sc-for></span></sc-if>
+</div>
+</sc-for>
+<div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 8px"><button onClick="{{tv.clear}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338">Clear all</button><button onClick="{{tv.togglePanel}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: #3D4BC7; color: #FFFFFF">Done</button></div>
+</div>
+</sc-if>
+<div style="overflow-x: auto; border: 1px solid #E6E9EF; border-radius: 10px"><div role="table" aria-label="Users" style="min-width: 930px">
+<div role="row" style="display: grid; grid-template-columns: 68px minmax(200px, 1.3fr) minmax(220px, 1.4fr) 200px 120px 130px; align-items: center; min-height: 40px; background: #F6F7FB; border-bottom: 1px solid #E6E9EF; font-size: 13px; font-weight: 600; color: #676879"><span role="columnheader" style="padding: 0 12px; text-align: right">Sl. No.</span><sc-for list="{{uh}}" as="c" hint-placeholder-count="4"><span role="columnheader" aria-sort="{{c.ariaSort}}" style="padding: 0 12px; text-align: {{c.align}}"><sc-if value="{{c.sortable}}" hint-placeholder-val="{{true}}"><button onClick="{{c.sort}}" style="display: inline-flex; align-items: center; gap: 4px; min-height: 32px; padding: 0; border: 0; background: transparent; color: inherit; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{c.label}}<span aria-hidden="true" style="font-size: 10px; color: #3D4BC7">{{c.arrow}}</span></button></sc-if><sc-if value="{{c.plainHead}}" hint-placeholder-val="{{false}}">{{c.label}}</sc-if></span></sc-for></div>
+<sc-for list="{{users}}" as="u" hint-placeholder-count="6">
+<div role="row" class="row" style="display: grid; grid-template-columns: 68px minmax(200px, 1.3fr) minmax(220px, 1.4fr) 200px 120px 130px; align-items: center; min-height: 52px; border-bottom: 1px solid #E6E9EF">
+<span role="cell" style="padding: 0 12px; text-align: right; color: #676879; font-variant-numeric: tabular-nums">{{u.sl}}</span>
+<span role="cell" style="display: flex; align-items: center; gap: 10px; padding: 4px 6px 4px 12px"><span aria-hidden="true" style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: {{u.av}}; color: #FFFFFF; font-size: 12px; font-weight: 700">{{u.initials}}</span><input class="cell" aria-label="Name" value="{{u.name}}" onChange="{{u.setName}}" style="flex: 1; min-width: 0; height: 36px; padding: 0 8px; box-sizing: border-box; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; font-weight: 600; color: #323338"></span>
+<span role="cell" style="padding: 4px 6px"><input class="cell" aria-label="Email or phone" value="{{u.login}}" onChange="{{u.setLogin}}" placeholder="name@company.com" style="width: 100%; height: 36px; padding: 0 8px; box-sizing: border-box; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; color: #323338"></span>
+<span role="cell" style="padding: 4px 6px"><select aria-label="Role" value="{{u.role}}" onChange="{{u.setRole}}" style="width: 100%; height: 36px; padding: 0 8px; border: 1px solid #C3C6D4; border-radius: 6px; background: #FFFFFF; font-size: 14px; color: #323338"><option value="Sales executive">Sales executive</option><option value="Sales manager">Sales manager</option><option value="Operations">Operations</option><option value="Accounts">Accounts</option><option value="Admin">Admin</option><option value="Guide">Guide (app only)</option></select></span>
+<span role="cell" style="padding: 0 12px"><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: {{u.chipBg}}; color: {{u.chipInk}}; font-size: 12px; font-weight: 700">{{u.status}}</span></span>
+<span role="cell" style="padding: 0 6px"><button class="btn-s" onClick="{{u.toggle}}" style="height: 34px; padding: 0 12px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: {{u.actInk}}; font-size: 13px; font-weight: 600; cursor: pointer">{{u.action}}</button></span>
+</div>
+</sc-for>
+</div></div>
+<sc-if value="{{tv.hasPages}}" hint-placeholder-val="{{false}}">
+<nav aria-label="Pages" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px">
+<span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; color: #676879">Rows per page<sc-for list="{{tv.sizes}}" as="z" hint-placeholder-count="3"><button onClick="{{z.pick}}" aria-pressed="{{z.on}}" style="min-width: 36px; height: 30px; padding: 0 8px; border-radius: 6px; border: 1px solid {{z.border}}; background: {{z.bg}}; color: {{z.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{z.label}}</button></sc-for></span>
+<span style="display: flex; flex-wrap: wrap; gap: 4px"><button onClick="{{tv.prev}}" aria-label="Previous page" style="width: 34px; height: 34px; border-radius: 6px; border: 1px solid #C3C6D4; background: #FFFFFF; color: {{tv.prevInk}}; font-family: inherit; font-size: 16px; cursor: pointer">‹</button><sc-for list="{{tv.pages}}" as="pg" hint-placeholder-count="3"><button onClick="{{pg.go}}" aria-current="{{pg.current}}" style="min-width: 34px; height: 34px; padding: 0 6px; border-radius: 6px; border: 1px solid #C3C6D4; background: {{pg.bg}}; color: {{pg.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{pg.label}}</button></sc-for><button onClick="{{tv.next}}" aria-label="Next page" style="width: 34px; height: 34px; border-radius: 6px; border: 1px solid #C3C6D4; background: #FFFFFF; color: {{tv.nextInk}}; font-family: inherit; font-size: 16px; cursor: pointer">›</button></span>
+</nav>
+</sc-if>
+
+<h2 style="margin: 12px 0 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Roles &amp; permissions</h2>
+<span style="color: #676879">Tick what each role can do. Admin can always do everything.</span>
+<div style="overflow-x: auto; border: 1px solid #E6E9EF; border-radius: 10px"><div role="table" aria-label="Permissions" style="min-width: 860px">
+<div role="row" style="display: grid; grid-template-columns: minmax(280px, 2fr) repeat(5, minmax(110px, 1fr)); align-items: center; min-height: 44px; background: #F6F7FB; border-bottom: 1px solid #E6E9EF; font-size: 13px; font-weight: 600; color: #676879"><span role="columnheader" style="padding: 0 12px">Can…</span><sc-for list="{{roleCols}}" as="rc" hint-placeholder-count="5"><span role="columnheader" style="padding: 0 8px; text-align: center">{{rc.label}}</span></sc-for></div>
+<sc-for list="{{perms}}" as="p" hint-placeholder-count="9">
+<div role="row" class="row" style="display: grid; grid-template-columns: minmax(280px, 2fr) repeat(5, minmax(110px, 1fr)); align-items: center; min-height: 48px; border-bottom: 1px solid #E6E9EF">
+<span role="rowheader" style="padding: 0 12px">{{p.label}}</span>
+<sc-for list="{{p.cells}}" as="c" hint-placeholder-count="5"><span role="cell" style="display: flex; justify-content: center"><button onClick="{{c.toggle}}" aria-pressed="{{c.on}}" aria-label="{{c.aria}}" style="width: 32px; height: 32px; border: 2px solid {{c.ring}}; border-radius: 8px; background: {{c.bg}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: {{c.cursor}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="opacity: {{c.tick}}"><path d="M20 6 9 17l-5-5"></path></svg></button></span></sc-for>
+</div>
+</sc-for>
+</div></div>
+</section>
+</sc-if>
+
+<sc-if value="{{isPrint}}" hint-placeholder-val="{{false}}">
+<section aria-labelledby="st-pr" style="display: flex; flex-direction: column; gap: 14px; max-width: 980px">
+<div style="display: flex; flex-direction: column; gap: 2px"><h2 id="st-pr" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Print formats</h2><span style="color: #676879">How quotes, invoices and vouchers look when printed or saved as PDF. Staff cost and margin are never printed.</span></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+<sc-for list="{{docs}}" as="dc" hint-placeholder-count="4"><div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border: 1px solid #E6E9EF; border-radius: 12px"><strong style="font-size: 15px">{{dc.name}}</strong><span style="font-size: 13px; color: #676879; flex: 1">{{dc.note}}</span><a href="{{dc.href}}" style="align-self: flex-start; display: inline-flex; align-items: center; height: 34px; padding: 0 12px; border: 1px solid #C3C6D4; border-radius: 8px; color: #283277; font-weight: 600; text-decoration: none">Preview</a></div></sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 18px; border: 1px solid #E6E9EF; border-radius: 12px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px"><strong style="min-width: 200px">Paper size</strong><sc-for list="{{pr.papers}}" as="pp" hint-placeholder-count="2"><button onClick="{{pp.pick}}" aria-pressed="{{pp.on}}" style="height: 34px; padding: 0 14px; border-radius: 17px; border: 1px solid {{pp.border}}; background: {{pp.bg}}; color: {{pp.ink}}; font-size: 13px; font-weight: 600; cursor: pointer">{{pp.label}}</button></sc-for></div>
+<div style="display: flex; align-items: center; gap: 10px"><strong style="min-width: 200px">Show the Flyland logo</strong><button onClick="{{pr.logo.toggle}}" aria-pressed="{{pr.logo.on}}" aria-label="Show the logo" style="display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0; border: 0; background: transparent; color: #323338; font-size: 13px; font-weight: 600; cursor: pointer"><span style="position: relative; width: 40px; height: 24px; border-radius: 12px; background: {{pr.logo.track}}"><span style="position: absolute; top: 3px; left: {{pr.logo.knob}}px; width: 18px; height: 18px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,.25)"></span></span>{{pr.logo.state}}</button></div>
+<div style="display: flex; align-items: center; gap: 10px"><strong style="min-width: 200px">Bank details on invoices</strong><button onClick="{{pr.bank.toggle}}" aria-pressed="{{pr.bank.on}}" aria-label="Bank details on invoices" style="display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0; border: 0; background: transparent; color: #323338; font-size: 13px; font-weight: 600; cursor: pointer"><span style="position: relative; width: 40px; height: 24px; border-radius: 12px; background: {{pr.bank.track}}"><span style="position: absolute; top: 3px; left: {{pr.bank.knob}}px; width: 18px; height: 18px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,.25)"></span></span>{{pr.bank.state}}</button></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="st-foot" style="font-weight: 700">Footer line</label><input id="st-foot" class="cell" value="{{pr.footer}}" onChange="{{pr.setFooter}}" style="height: 40px; padding: 0 12px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-size: 14px; color: #323338"></div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{isCompany}}" hint-placeholder-val="{{false}}">
+<section aria-labelledby="st-co" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px"><div style="display: flex; flex-direction: column; gap: 2px"><h2 id="st-co" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Company &amp; branches</h2><span style="color: #676879">Each company keeps its own invoice series, tax rules and books. Reports can combine them.</span></div><button class="btn-p" onClick="{{addCompany}}" style="height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-weight: 700; cursor: pointer">Add branch</button></div>
+<div style="overflow-x: auto; border: 1px solid #E6E9EF; border-radius: 10px"><div role="table" aria-label="Companies" style="min-width: 940px">
+<div role="row" style="display: grid; grid-template-columns: minmax(220px, 1.4fr) 170px 90px 200px minmax(220px, 1.2fr) 130px; align-items: center; min-height: 40px; background: #F6F7FB; border-bottom: 1px solid #E6E9EF; font-size: 13px; font-weight: 600; color: #676879"><span role="columnheader" style="padding: 0 12px">Company</span><span role="columnheader" style="padding: 0 12px">Country</span><span role="columnheader" style="padding: 0 12px">Currency</span><span role="columnheader" style="padding: 0 12px">Tax ID</span><span role="columnheader" style="padding: 0 12px">Tax rule</span><span role="columnheader" style="padding: 0 12px">Role</span></div>
+<sc-for list="{{companies}}" as="co" hint-placeholder-count="3">
+<div role="row" class="row" style="display: grid; grid-template-columns: minmax(220px, 1.4fr) 170px 90px 200px minmax(220px, 1.2fr) 130px; align-items: center; min-height: 52px; border-bottom: 1px solid #E6E9EF">
+<span role="cell" style="padding: 4px 6px"><input class="cell" aria-label="Company name" value="{{co.name}}" onChange="{{co.setName}}" style="width: 100%; height: 36px; padding: 0 8px; box-sizing: border-box; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; font-weight: 600; color: #323338"></span>
+<span role="cell" style="padding: 0 12px">{{co.country}}</span>
+<span role="cell" style="padding: 0 12px">{{co.cur}}</span>
+<span role="cell" style="padding: 4px 6px"><input class="cell" aria-label="Tax ID" value="{{co.taxid}}" onChange="{{co.setTaxid}}" style="width: 100%; height: 36px; padding: 0 8px; box-sizing: border-box; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; color: #323338"></span>
+<span role="cell" style="padding: 4px 6px"><input class="cell" aria-label="Tax rule" value="{{co.tax}}" onChange="{{co.setTax}}" style="width: 100%; height: 36px; padding: 0 8px; box-sizing: border-box; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; color: #323338"></span>
+<span role="cell" style="padding: 0 12px"><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: {{co.chipBg}}; color: {{co.chipInk}}; font-size: 12px; font-weight: 700">{{co.main}}</span></span>
+</div>
+</sc-for>
+</div></div>
+</section>
+</sc-if>
+
+<sc-if value="{{isLog}}" hint-placeholder-val="{{false}}">
+<section aria-labelledby="st-lg" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px"><div style="display: flex; flex-direction: column; gap: 2px"><h2 id="st-lg" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Audit log</h2><span style="color: #676879">Every change, who made it and when. It cannot be edited.</span></div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<label style="flex: 1 1 220px; max-width: 320px; display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #676879"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="search" aria-label="{{tv.searchAria}}" placeholder="Search" value="{{tv.q}}" onChange="{{tv.onQ}}" style="flex: 1; min-width: 0; border: 0; outline-offset: 4px; background: transparent; font-family: inherit; font-size: 14px; color: #323338"></label>
+<button onClick="{{tv.togglePanel}}" aria-expanded="{{tv.panel}}" style="display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid {{tv.fBorder}}; background: {{tv.fBg}}; color: {{tv.fInk}}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"></path></svg>{{tv.filterLabel}}</button>
+<button onClick="{{tv.startSave}}" style="display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><path d="M17 21v-8H7v8M7 3v5h8"></path></svg>Save view</button>
+<sc-if value="{{tv.hasActive}}" hint-placeholder-val="{{false}}"><button onClick="{{tv.clear}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: transparent; color: #3D4BC7">Clear</button></sc-if>
+<span style="margin-left: auto; font-size: 13px; color: #676879">{{tv.showing}}</span>
+</div>
+<sc-if value="{{tv.hasQuick}}" hint-placeholder-val="{{false}}"><div role="group" aria-label="Quick filter" style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{tv.quick}}" as="qf" hint-placeholder-count="3"><button onClick="{{qf.pick}}" aria-pressed="{{qf.on}}" style="display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid {{qf.border}}; background: {{qf.bg}}; color: {{qf.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{qf.label}}<span style="font-size: 12px; opacity: .8">{{qf.count}}</span></button></sc-for></div></sc-if>
+<sc-if value="{{tv.hasViews}}" hint-placeholder-val="{{false}}"><div role="group" aria-label="Saved views" style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px"><span style="font-size: 13px; color: #676879">Saved views</span><sc-for list="{{tv.views}}" as="sv" hint-placeholder-count="1"><span style="display: inline-flex; align-items: center; height: 30px; border: 1px solid {{sv.border}}; border-radius: 15px; background: {{sv.bg}}; overflow: hidden"><button onClick="{{sv.apply}}" aria-pressed="{{sv.on}}" style="height: 100%; padding: 0 6px 0 12px; border: 0; background: transparent; color: {{sv.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{sv.label}}</button><button onClick="{{sv.del}}" aria-label="{{sv.delAria}}" style="height: 100%; padding: 0 10px 0 4px; border: 0; background: transparent; color: {{sv.ink}}; font-family: inherit; font-size: 15px; cursor: pointer">×</button></span></sc-for></div></sc-if>
+<sc-if value="{{tv.saving}}" hint-placeholder-val="{{false}}"><div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; background: #F6F7FB"><input aria-label="Name this view" placeholder="e.g. Overdue advances" value="{{tv.name}}" onChange="{{tv.onName}}" style="flex: 1 1 220px; max-width: 320px; height: 34px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"><button onClick="{{tv.saveView}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: #3D4BC7; color: #FFFFFF">Save this view</button><button onClick="{{tv.cancelSave}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338">Cancel</button><span style="font-size: 12px; color: #676879">Keeps the search, quick filter, detailed filters and sort.</span></div></sc-if>
+<sc-if value="{{tv.panel}}" hint-placeholder-val="{{false}}">
+<div role="region" aria-label="Detailed filters" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px 16px; padding: 14px; border: 1px solid #E6E9EF; border-radius: 10px; background: #FBFBFD">
+<sc-for list="{{tv.fields}}" as="fd" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<span style="font-size: 13px; font-weight: 600; color: #4B4D5C">{{fd.label}}</span>
+<sc-if value="{{fd.isText}}" hint-placeholder-val="{{true}}"><input aria-label="{{fd.aria}}" placeholder="Contains…" value="{{fd.text}}" onChange="{{fd.onText}}" style="height: 34px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"></sc-if>
+<sc-if value="{{fd.isNum}}" hint-placeholder-val="{{false}}"><span style="display: flex; gap: 6px"><input type="number" aria-label="{{fd.ariaMin}}" placeholder="From" value="{{fd.min}}" onChange="{{fd.onMin}}" style="width: 50%; height: 34px; padding: 0 8px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"><input type="number" aria-label="{{fd.ariaMax}}" placeholder="To" value="{{fd.max}}" onChange="{{fd.onMax}}" style="width: 50%; height: 34px; padding: 0 8px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"></span></sc-if>
+<sc-if value="{{fd.isDate}}" hint-placeholder-val="{{false}}"><span style="display: flex; gap: 6px"><input type="date" aria-label="{{fd.ariaFrom}}" value="{{fd.from}}" onChange="{{fd.onFrom}}" style="width: 50%; min-width: 0; height: 34px; padding: 0 6px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 13px; color: #323338"><input type="date" aria-label="{{fd.ariaTo}}" value="{{fd.to}}" onChange="{{fd.onTo}}" style="width: 50%; min-width: 0; height: 34px; padding: 0 6px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 13px; color: #323338"></span></sc-if>
+<sc-if value="{{fd.isSet}}" hint-placeholder-val="{{false}}"><span role="group" aria-label="{{fd.label}}" style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{fd.opts}}" as="o" hint-placeholder-count="2"><button onClick="{{o.pick}}" aria-pressed="{{o.on}}" style="height: 30px; padding: 0 10px; border-radius: 15px; border: 1px solid {{o.border}}; background: {{o.bg}}; color: {{o.ink}}; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer">{{o.label}}</button></sc-for></span></sc-if>
+</div>
+</sc-for>
+<div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 8px"><button onClick="{{tv.clear}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338">Clear all</button><button onClick="{{tv.togglePanel}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: #3D4BC7; color: #FFFFFF">Done</button></div>
+</div>
+</sc-if>
+<div style="overflow-x: auto; border: 1px solid #E6E9EF; border-radius: 10px"><div role="table" aria-label="Audit log" style="min-width: 890px">
+<div role="row" style="display: grid; grid-template-columns: 68px 150px 170px 120px minmax(320px, 1fr); align-items: center; min-height: 40px; background: #F6F7FB; border-bottom: 1px solid #E6E9EF; font-size: 13px; font-weight: 600; color: #676879"><span role="columnheader" style="padding: 0 12px; text-align: right">Sl. No.</span><sc-for list="{{lh}}" as="c" hint-placeholder-count="4"><span role="columnheader" aria-sort="{{c.ariaSort}}" style="padding: 0 12px; text-align: {{c.align}}"><sc-if value="{{c.sortable}}" hint-placeholder-val="{{true}}"><button onClick="{{c.sort}}" style="display: inline-flex; align-items: center; gap: 4px; min-height: 32px; padding: 0; border: 0; background: transparent; color: inherit; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{c.label}}<span aria-hidden="true" style="font-size: 10px; color: #3D4BC7">{{c.arrow}}</span></button></sc-if><sc-if value="{{c.plainHead}}" hint-placeholder-val="{{false}}">{{c.label}}</sc-if></span></sc-for></div>
+<sc-for list="{{log}}" as="e" hint-placeholder-count="8">
+<div role="row" class="row" style="display: grid; grid-template-columns: 68px 150px 170px 120px minmax(320px, 1fr); align-items: center; min-height: 44px; border-bottom: 1px solid #E6E9EF">
+<span role="cell" style="padding: 0 12px; text-align: right; color: #676879; font-variant-numeric: tabular-nums">{{e.sl}}</span>
+<span role="cell" style="padding: 0 12px; color: #676879; font-variant-numeric: tabular-nums">{{e.when}}</span>
+<span role="cell" style="padding: 0 12px; font-weight: 600">{{e.who}}</span>
+<span role="cell" style="padding: 0 12px"><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 11px; background: #ECEEFB; color: #283277; font-size: 12px; font-weight: 700">{{e.kind}}</span></span>
+<span role="cell" style="padding: 8px 12px">{{e.text}}</span>
+</div>
+</sc-for>
+<sc-if value="{{logEmpty}}" hint-placeholder-val="{{false}}"><div style="padding: 20px; text-align: center; color: #676879">Nothing matches.</div></sc-if>
+</div></div>
+<sc-if value="{{tv.hasPages}}" hint-placeholder-val="{{false}}">
+<nav aria-label="Pages" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px">
+<span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; color: #676879">Rows per page<sc-for list="{{tv.sizes}}" as="z" hint-placeholder-count="3"><button onClick="{{z.pick}}" aria-pressed="{{z.on}}" style="min-width: 36px; height: 30px; padding: 0 8px; border-radius: 6px; border: 1px solid {{z.border}}; background: {{z.bg}}; color: {{z.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{z.label}}</button></sc-for></span>
+<span style="display: flex; flex-wrap: wrap; gap: 4px"><button onClick="{{tv.prev}}" aria-label="Previous page" style="width: 34px; height: 34px; border-radius: 6px; border: 1px solid #C3C6D4; background: #FFFFFF; color: {{tv.prevInk}}; font-family: inherit; font-size: 16px; cursor: pointer">‹</button><sc-for list="{{tv.pages}}" as="pg" hint-placeholder-count="3"><button onClick="{{pg.go}}" aria-current="{{pg.current}}" style="min-width: 34px; height: 34px; padding: 0 6px; border-radius: 6px; border: 1px solid #C3C6D4; background: {{pg.bg}}; color: {{pg.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{pg.label}}</button></sc-for><button onClick="{{tv.next}}" aria-label="Next page" style="width: 34px; height: 34px; border-radius: 6px; border: 1px solid #C3C6D4; background: #FFFFFF; color: {{tv.nextInk}}; font-family: inherit; font-size: 16px; cursor: pointer">›</button></span>
+</nav>
+</sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{false}}"><div role="status" style="position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 20; max-width: calc(100% - 32px); padding: 12px 16px; box-sizing: border-box; border-radius: 10px; background: #323338; color: #FFFFFF; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,.25)">{{toast}}</div></sc-if>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+const STORE = 'flyland-settings-v1';
+const WEEK = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const TABS = [['wa', 'WhatsApp'], ['tpl', 'Message templates'], ['fu', 'Follow-up sequences'], ['auto', 'Auto-send rules'], ['num', 'Document numbering'], ['users', 'Users, roles & permissions'], ['log', 'Audit log'], ['print', 'Print formats'], ['company', 'Company & branches']];
+const ROLES = ['Sales executive', 'Sales manager', 'Operations', 'Accounts', 'Admin'];
+const SAMPLE = { '{customer}': 'Royal sky', '{trip}': '4499560', '{valid_until}': '27 Oct 2026', '{amount}': 'MYR 1,193', '{due_date}': '23 Oct 2026', '{missing}': '• *Ages of the children*\n• *Exact travel date*', '{supplier}': 'Holiday Villa reservations', '{service}': '1 Deluxe Room, Bed and Breakfast', '{dates}': '23–25 Nov 2026', '{pax}': '2 adults + 1 child (7y)' };
+const LOG = [
+  ['Today 14:12', 'Ravi Kumar', 'Trips', 'Ticked “KL Airport to Kuala Lumpur Hotel” on Trip 4499476, from the guide app'],
+  ['Today 13:36', 'Shabna K', 'Quotes', 'Approved and sent quote R1 for Trip 4499560 (Royal sky)'],
+  ['Today 13:30', 'AI', 'Quotes', 'Built quote R1 for Trip 4499560 from the WhatsApp enquiry'],
+  ['Today 12:05', 'Nisha R', 'Bookings', 'Returned Trip 4499530 to sales: hotel not available for 5–7 Nov'],
+  ['Today 11:40', 'Joseph T', 'Payments', 'Recorded the advance for Trip 4499470 (Priya Nambiar)'],
+  ['Today 10:15', 'Admin', 'Settings', 'Changed IBIS KLCC room rate from MYR 380 to MYR 386'],
+  ['Yesterday 18:02', 'Admin', 'Users', 'Invited Fathima N as Sales executive'],
+  ['Yesterday 16:20', 'Joseph T', 'Payments', 'Issued proforma PI-4499498 for Trip 4499498 (Nadia Hassan)']
+];
+
+function seed() {
+  return {
+    lines: [
+      { name: 'Sales line', number: '[Sales WhatsApp number]', use: 'Enquiries, quotes and follow-ups', last: '2 min ago', on: true, qr: false },
+      { name: 'Operations line', number: '[Operations WhatsApp number]', use: 'Guides, suppliers and travellers', last: '18 min ago', on: true, qr: false }
+    ],
+    tpls: [
+      { id: 'quote', name: 'Quote', use: 'Sent when a quote is approved', locked: true, text: 'Hi {customer},\n\nThank you for your query with us. As per your requirements, following are the package details.\n\n*Trip ID {trip}* _(2 Package Category/Options)_\n----------\n*Malaysia Trip*\n• *23 Nov, 2026* _for_ *5 Nights, 6 Days*\n• *2 Adults, 1 Child (7y)*\n\n⏬ *OPTION 1: 3 star*\n…\n\n*Terms and Conditions*\n-------\n**NOTE**\n1. …' },
+      { id: 'ask', name: 'Ask for missing details', use: 'When AI cannot price an enquiry yet', text: 'Hi {customer},\n\nThank you for your enquiry with Flyland DMC Services. To share an exact price, could you please confirm:\n\n{missing}\n\nRegards,\nFlyland DMC Services' },
+      { id: 'fu1', name: 'Follow-up 1 · check-in', use: 'Follow-up sequence, step 1', text: 'Hi {customer}, just checking you received the quote for *Trip ID {trip}*. We can change hotels or dates if you like.\n\nRegards,\nFlyland DMC Services' },
+      { id: 'fu2', name: 'Follow-up 2 · validity', use: 'Follow-up sequence, step 2', text: 'Hi {customer}, a reminder that the quote for *Trip ID {trip}* is valid until {valid_until}. Shall we go ahead and hold the hotels?\n\nRegards,\nFlyland DMC Services' },
+      { id: 'fu3', name: 'Follow-up 3 · expiring', use: 'Follow-up sequence, step 3', text: 'Hi {customer}, the quote for *Trip ID {trip}* expires tomorrow. Reply here and we will refresh it for you.\n\nRegards,\nFlyland DMC Services' },
+      { id: 'rem', name: 'Advance reminder', use: 'Accounts, before the advance is due', text: 'Hi {customer},\n\nA gentle reminder that the advance of *{amount}* for *Trip ID {trip}* is due by {due_date}. Please share the payment reference once done so we can keep your bookings secured.\n\nRegards,\nFlyland DMC Services' },
+      { id: 'sup', name: 'Booking request to supplier', use: 'Bookings, when a hotel or service is requested', text: 'Hello {supplier},\n\nThis is Flyland DMC Services. Please confirm availability for *{service}* on {dates} for {pax}.\nOur reference: Trip ID {trip}.\n\nThank you.' }
+    ],
+    steps: [{ days: 1, tpl: 'Follow-up 1 · check-in', on: true }, { days: 3, tpl: 'Follow-up 2 · validity', on: true }, { days: 6, tpl: 'Follow-up 3 · expiring', on: true }],
+    rules: [
+      { name: 'Clean quotes', text: 'Send a quote by itself when every AI check passes and the dates are outside peak seasons. A person has 15 minutes to stop it first.', pre: 'Only when the total is under MYR', param: 3000, post: '', on: true },
+      { name: 'Advance reminders', text: 'Send the advance reminder when no payment is recorded yet.', pre: 'Send', param: 1, post: 'day(s) before the due date', on: true },
+      { name: 'Follow-ups', text: 'Send follow-up sequence messages without a review.', on: true },
+      { name: 'Traveller itinerary link', text: 'Send travellers their itinerary link as soon as operations shares the day plan with the guide.', on: false }
+    ],
+    nums: { trip: '4499650', rev: '{trip}-R{n}', pi: 'PI-{trip}', inv: 'INV-{trip}', exp: 'EXP-{trip}-{n}' },
+    users: [
+      { name: 'Admin', login: '', role: 'Admin', status: 'Active' },
+      { name: 'Shabna K', login: '', role: 'Sales manager', status: 'Active' },
+      { name: 'Rahul M', login: '', role: 'Sales executive', status: 'Active' },
+      { name: 'Fathima N', login: '', role: 'Sales executive', status: 'Invited' },
+      { name: 'Arjun P', login: '', role: 'Sales executive', status: 'Active' },
+      { name: 'Nisha R', login: '', role: 'Operations', status: 'Active' },
+      { name: 'Joseph T', login: '', role: 'Accounts', status: 'Active' },
+      { name: 'Ravi Kumar', login: '+60 12-345 6789', role: 'Guide', status: 'Active' },
+      { name: 'Faizal Rahman', login: '', role: 'Guide', status: 'Active' },
+      { name: 'Siti Aminah', login: '', role: 'Guide', status: 'Disabled' }
+    ],
+    print: { paper: 'A4', logo: true, bank: true, footer: 'Thank you for travelling with Flyland DMC Services.' },
+    companies: [
+      { name: 'Flyland DMC Services', country: 'Malaysia', cur: 'MYR', taxid: '[Registration / SST no.]', tax: 'Tourism tax MYR 10 per room-night', main: true },
+      { name: '[India company name]', country: 'India', cur: 'INR', taxid: '[GSTIN]', tax: 'GST on tour packages: [rate]', main: false },
+      { name: '[UAE company name]', country: 'United Arab Emirates', cur: 'AED', taxid: '[TRN]', tax: 'VAT 5%', main: false }
+    ],
+    perms: [
+      ['See and reply to enquiries', [1, 1, 0, 0, 1]], ['Build and send quotes', [1, 1, 0, 0, 1]], ['Approve quotes in the review queue', [0, 1, 0, 0, 1]],
+      ['See cost and margin', [0, 1, 0, 1, 1]], ['Confirm hotels and bookings', [0, 0, 1, 0, 1]], ['Build itineraries and assign guides', [0, 0, 1, 0, 1]],
+      ['Issue proforma invoices and invoices', [0, 0, 0, 1, 1]], ['Record payments and approve guide expenses', [0, 0, 0, 1, 1]],
+      ['Edit masters, suppliers and packages', [0, 0, 0, 0, 1]], ['Manage users and settings', [0, 0, 0, 0, 1]]
+    ]
+  };
+}
+
+function load() {
+  const base = seed();
+  try {
+    const raw = window.localStorage.getItem(STORE);
+    const d = raw ? JSON.parse(raw) : null;
+    if (d && typeof d === 'object') Object.keys(base).forEach(function (k) { if (d[k]) base[k] = d[k]; });
+  } catch (e) { /* use the samples */ }
+  return base;
+}
+
+function initials(s) { const w = String(s || '?').trim().split(/\s+/); return ((w[0] || '?')[0] + (w[1] ? w[1][0] : '')).toUpperCase(); }
+function fill(t) { return Object.keys(SAMPLE).reduce(function (a, k) { return a.split(k).join(SAMPLE[k]); }, t); }
+function tog(on) { return { track: on ? '#3D4BC7' : '#9AA0B8', knob: on ? 19 : 3, state: on ? 'On' : 'Off' }; }
+
+// ---- Standard data table: search, Sl. No., quick filter, detailed filter, saved views, sort, pagination ----
+const VIEWS_KEY = 'flyland-views-v1';
+function readViews() { try { return JSON.parse(window.localStorage.getItem(VIEWS_KEY) || '{}') || {}; } catch (e) { return {}; } }
+function stdNum(t) { if (typeof t === 'number') return t; const m = String(t === undefined || t === null ? '' : t).replace(/,/g, '').replace(/−\s*/, '-').match(/^[A-Za-z ]*([-+]?\d+(\.\d+)?)\s*%?$/); return m ? parseFloat(m[1]) : null; }
+function stdView(o) {
+  const tv = Object.assign({ q: '', quick: '', f: {}, sort: null, page: 1, size: 10, panel: false, saving: false, name: '' }, o.tv || {});
+  const set = o.set;
+  const q = String(o.q !== undefined ? o.q : tv.q || '').trim().toLowerCase();
+  const cols = o.cols;
+  const val = function (it, ci) { const v = cols[ci].get(it); return v === undefined || v === null ? '' : v; };
+  const pass = function (it, skipQuick) {
+    if (q && String(o.searchFn ? o.searchFn(it) : cols.map(function (c, ci) { return val(it, ci); }).join(' ')).toLowerCase().indexOf(q) < 0) return false;
+    if (!skipQuick && tv.quick && o.quick > -1 && String(val(it, o.quick)) !== tv.quick) return false;
+    return Object.keys(tv.f).every(function (ci) {
+      const fl = tv.f[ci];
+      const c = cols[ci];
+      if (!c || !fl) return true;
+      const v = val(it, ci);
+      if (c.kind === 'text' && fl.text) return String(v).toLowerCase().indexOf(String(fl.text).toLowerCase()) > -1;
+      if (c.kind === 'set' && fl.set && fl.set.length) return fl.set.indexOf(String(v)) > -1;
+      if (c.kind === 'num') { const n = stdNum(v); if (fl.min !== undefined && fl.min !== '' && (n === null || n < +fl.min)) return false; if (fl.max !== undefined && fl.max !== '' && (n === null || n > +fl.max)) return false; }
+      if (c.kind === 'date') { if (fl.from && (!v || v < fl.from)) return false; if (fl.to && (!v || v > fl.to)) return false; }
+      return true;
+    });
+  };
+  let list = o.items.filter(function (it) { return pass(it, false); });
+  if (tv.sort && cols[tv.sort.i] && cols[tv.sort.i].kind !== 'none') {
+    const i = tv.sort.i;
+    const k = cols[i].kind;
+    const kv = function (it) { const v = val(it, i); return k === 'num' ? (stdNum(v) === null ? -Infinity : stdNum(v)) : String(v).toLowerCase(); };
+    list = list.slice().sort(function (a, b) { const A = kv(a); const Z = kv(b); return (A < Z ? -1 : A > Z ? 1 : 0) * (tv.sort.dir === 'desc' ? -1 : 1); });
+  }
+  const n = list.length;
+  const size = tv.size || 10;
+  const pages = Math.max(1, Math.ceil(n / size));
+  const page = Math.min(Math.max(1, tv.page || 1), pages);
+  const off = o.paged === false ? 0 : (page - 1) * size;
+  const shown = o.paged === false ? list : list.slice(off, off + size);
+  const chip = function (on) { return { bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', border: on ? '#283277' : '#C3C6D4' }; };
+  const nF = Object.keys(tv.f).filter(function (ci) { const fl = tv.f[ci]; return fl && (fl.text || (fl.set && fl.set.length) || fl.min || fl.max || fl.from || fl.to); }).length;
+  const setF = function (ci, patch) { const f = Object.assign({}, tv.f); f[ci] = Object.assign({}, f[ci] || {}, patch); set({ f: f, page: 1 }); };
+  const saved = (o.views || {})[o.key] || [];
+  const cur = JSON.stringify({ q: tv.q, quick: tv.quick, f: tv.f, sort: tv.sort });
+  const write = function (lst) { const vs = Object.assign({}, o.views || {}); vs[o.key] = lst; try { window.localStorage.setItem(VIEWS_KEY, JSON.stringify(vs)); } catch (e) { /* keep in memory */ } return vs; };
+  const qc = {};
+  const base = o.items.filter(function (it) { return pass(it, true); });
+  if (o.quick > -1) base.forEach(function (it) { const v = String(val(it, o.quick)); if (v) qc[v] = (qc[v] || 0) + 1; });
+  const qKeys = Object.keys(qc).sort(function (a, b) { return qc[b] - qc[a]; }).slice(0, 8);
+  return {
+    total: o.items.length, count: n,
+    list: shown.map(function (it, k) { return { item: it, sl: String(off + k + 1) }; }),
+    heads: cols.map(function (c, ci) {
+      const on = !!(tv.sort && tv.sort.i === ci);
+      const can = c.kind !== 'none';
+      return { label: c.label, align: c.align || 'left', sortable: can, plainHead: !can, arrow: on ? (tv.sort.dir === 'desc' ? '▼' : '▲') : '', ariaSort: on ? (tv.sort.dir === 'desc' ? 'descending' : 'ascending') : 'none',
+        sort: function () { set({ sort: on && tv.sort.dir === 'asc' ? { i: ci, dir: 'desc' } : on ? null : { i: ci, dir: 'asc' } }); } };
+    }),
+    ui: {
+      q: tv.q, onQ: function (e) { set({ q: e.target.value, page: 1 }); }, searchAria: 'Search ' + (o.title || 'table'),
+      panel: tv.panel, togglePanel: function () { set({ panel: !tv.panel, saving: false }); },
+      filterLabel: nF ? 'Filters · ' + nF : 'Filters', fBg: nF ? '#ECEEFB' : '#FFFFFF', fInk: nF ? '#283277' : '#323338', fBorder: nF ? '#3D4BC7' : '#C3C6D4',
+      hasActive: !!(q || tv.quick || nF || tv.sort), clear: function () { set({ q: '', quick: '', f: {}, sort: null, page: 1 }); if (o.clearSearch) o.clearSearch(); },
+      showing: n ? 'Showing ' + (off + 1) + '–' + (off + shown.length) + ' of ' + n + (n < o.items.length ? ' (filtered from ' + o.items.length + ')' : '') : 'No matching rows',
+      hasQuick: o.quick > -1 && qKeys.length > 1,
+      quick: [{ label: 'All', count: String(base.length), on: !tv.quick, pick: function () { set({ quick: '', page: 1 }); } }].concat(qKeys.map(function (k) { return { label: k, count: String(qc[k]), on: tv.quick === k, pick: function () { set({ quick: tv.quick === k ? '' : k, page: 1 }); } }; })).map(function (x) { return Object.assign(x, chip(x.on)); }),
+      fields: cols.map(function (c, ci) {
+        if (c.kind === 'none') return null;
+        const fl = tv.f[ci] || {};
+        const opts = c.kind === 'set' ? Object.keys(o.items.reduce(function (a, it) { const v = String(val(it, ci)); if (v) a[v] = 1; return a; }, {})).slice(0, 14) : [];
+        return { label: c.filterLabel || c.label, isText: c.kind === 'text', isNum: c.kind === 'num', isDate: c.kind === 'date', isSet: c.kind === 'set',
+          aria: c.label + ' contains', ariaMin: c.label + ' from', ariaMax: c.label + ' to', ariaFrom: c.label + ' from date', ariaTo: c.label + ' to date',
+          text: fl.text || '', min: fl.min || '', max: fl.max || '', from: fl.from || '', to: fl.to || '',
+          onText: function (e) { setF(ci, { text: e.target.value }); }, onMin: function (e) { setF(ci, { min: e.target.value }); }, onMax: function (e) { setF(ci, { max: e.target.value }); },
+          onFrom: function (e) { setF(ci, { from: e.target.value }); }, onTo: function (e) { setF(ci, { to: e.target.value }); },
+          opts: opts.map(function (v) { const on = (fl.set || []).indexOf(v) > -1; return Object.assign({ label: v, on: on, pick: function () { const st = (fl.set || []).slice(); if (on) st.splice(st.indexOf(v), 1); else st.push(v); setF(ci, { set: st }); } }, chip(on)); }) };
+      }).filter(Boolean),
+      saving: tv.saving, name: tv.name, onName: function (e) { set({ name: e.target.value }); },
+      startSave: function () { set({ saving: true, panel: false, name: '' }); }, cancelSave: function () { set({ saving: false }); },
+      saveView: function () { const nm = String(tv.name || '').trim() || 'View ' + (saved.length + 1); o.saveViews(write(saved.filter(function (v) { return v.name !== nm; }).concat([{ name: nm, q: tv.q, quick: tv.quick, f: tv.f, sort: tv.sort }]))); set({ saving: false, name: '' }); o.flash('Saved view “' + nm + '”. It stays on this device.'); },
+      hasViews: saved.length > 0,
+      views: saved.map(function (v) { const on = JSON.stringify({ q: v.q, quick: v.quick, f: v.f, sort: v.sort }) === cur; return Object.assign({ label: v.name, on: on, delAria: 'Delete saved view ' + v.name, apply: function () { set({ q: v.q || '', quick: v.quick || '', f: v.f || {}, sort: v.sort || null, page: 1 }); }, del: function () { o.saveViews(write(saved.filter(function (x) { return x.name !== v.name; }))); o.flash('Saved view deleted.'); } }, chip(on)); }),
+      hasPages: o.paged !== false && n > 10,
+      sizes: [10, 25, 50].map(function (z) { return Object.assign({ label: String(z), on: size === z, pick: function () { set({ size: z, page: 1 }); } }, chip(size === z)); }),
+      pages: Array.apply(null, { length: pages }).map(function (_, i) { const on = i + 1 === page; return { label: String(i + 1), current: on ? 'page' : 'false', bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', go: function () { set({ page: i + 1 }); } }; }),
+      prev: function () { set({ page: Math.max(1, page - 1) }); }, next: function () { set({ page: Math.min(pages, page + 1) }); },
+      prevInk: page > 1 ? '#323338' : '#9AA0B8', nextInk: page < pages ? '#323338' : '#9AA0B8'
+    }
+  };
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'users', d: load(), tpl: 'rem', toast: '', tv: {}, views: readViews() };
+    try { const n = window.localStorage.getItem('flyland-nav'); if (n && n.indexOf('s-') === 0 && TABS.some(function (t) { return t[0] === n.slice(2); })) { this.state.tab = n.slice(2); window.localStorage.removeItem('flyland-nav'); } } catch (e) { /* storage blocked */ }
+    this.timer = null;
+  }
+
+  componentDidMount() {
+    const self = this;
+    this.onStore = function (e) { if (e && e.key === STORE && e.newValue) { try { self.setState({ d: load() }); } catch (err) { /* ignore */ } } };
+    try { window.addEventListener('storage', this.onStore); } catch (e) { /* no storage events here */ }
+  }
+
+  componentWillUnmount() { if (this.timer) clearTimeout(this.timer); try { window.removeEventListener('storage', this.onStore); } catch (e) { /* ignore */ } }
+
+  componentDidUpdate(pp, ps) {
+    if (ps && ps.d !== this.state.d) { try { window.localStorage.setItem(STORE, JSON.stringify(this.state.d)); } catch (e) { /* keep in memory */ } }
+  }
+
+  flash(msg) {
+    const self = this;
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(function () { self.setState({ toast: '' }); }, 2600);
+    return { toast: msg };
+  }
+
+  setTv(key, patch) { const all = Object.assign({}, this.state.tv || {}); all[key] = Object.assign({}, all[key] || {}, patch); this.setState({ tv: all }); }
+
+  edit(fn, msg) {
+    const d = JSON.parse(JSON.stringify(this.state.d));
+    fn(d);
+    this.setState(Object.assign({ d: d }, msg ? this.flash(msg) : {}));
+  }
+
+  renderVals() {
+    const self = this;
+    const s = this.state;
+    const d = s.d;
+    const V = {
+      yes: true, sideActive: 's-' + s.tab, hasToast: !!s.toast, toast: s.toast,
+      isWa: s.tab === 'wa', isTpl: s.tab === 'tpl', isFu: s.tab === 'fu', isAuto: s.tab === 'auto', isNum: s.tab === 'num', isUsers: s.tab === 'users', isLog: s.tab === 'log', isPrint: s.tab === 'print', isCompany: s.tab === 'company',
+      tabs: TABS.map(function (t) { const on = s.tab === t[0]; return { label: t[1], current: on ? 'page' : 'false', bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', border: on ? '#283277' : '#C3C6D4', pick: function () { self.setState({ tab: t[0] }); } }; })
+    };
+
+    V.lines = d.lines.map(function (l, li) {
+      return {
+        name: l.name, number: l.number, use: l.use || 'Not set', last: l.on ? l.last : '—', showQr: !l.on,
+        state: l.on ? 'Connected' : 'Not connected', dot: l.on ? '#00854D' : '#D83A52', chipBg: l.on ? '#DDF5EA' : '#FDE7EA', chipInk: l.on ? '#00663B' : '#B42840',
+        action: l.on ? 'Disconnect' : 'I have scanned the code',
+        toggle: function () { self.edit(function (x) { x.lines[li].on = !x.lines[li].on; if (x.lines[li].on) x.lines[li].last = 'just now'; }, l.on ? l.name + ' disconnected. Messages wait until it is linked again.' : l.name + ' connected.'); }
+      };
+    });
+    V.addLine = function () { self.edit(function (x) { x.lines.push({ name: 'New line', number: '[WhatsApp number]', use: '', last: '', on: false }); }, 'Scan the code with the new phone to link it.'); };
+
+    const tp = d.tpls.filter(function (t) { return t.id === s.tpl; })[0] || d.tpls[0];
+    const ti = d.tpls.indexOf(tp);
+    V.tpls = d.tpls.map(function (t) { const on = t.id === tp.id; return { name: t.name, use: t.use, current: on ? 'true' : 'false', bg: on ? '#F5F6FF' : '#FFFFFF', border: on ? '#3D4BC7' : '#E6E9EF', pick: function () { self.setState({ tpl: t.id }); } }; });
+    const tokens = Object.keys(SAMPLE).filter(function (k) { return k === '{customer}' || k === '{trip}' || tp.text.indexOf(k) > -1; });
+    V.tpl = {
+      name: tp.name, use: tp.use, text: tp.text, locked: !!tp.locked, editable: !tp.locked, bg: tp.locked ? '#F6F7FB' : '#FFFFFF',
+      preview: fill(tp.text),
+      set: function (e) { const v = e.target.value; self.edit(function (x) { x.tpls[ti].text = v; }); },
+      fields: tokens.map(function (k) { return { label: k, add: function () { self.edit(function (x) { x.tpls[ti].text = x.tpls[ti].text + k; }); } }; })
+    };
+
+    const sent = new Date();
+    V.steps = d.steps.map(function (st, si) {
+      const t = tog(st.on);
+      return {
+        n: si + 1, days: st.days, tpl: st.tpl, on: st.on, opacity: st.on ? 1 : 0.55, track: t.track, knob: t.knob, state: t.state,
+        daysAria: 'Days after the quote for step ' + (si + 1), toggleAria: 'Step ' + (si + 1) + ' on',
+        setDays: function (e) { const v = Math.max(1, parseInt(e.target.value, 10) || 1); self.edit(function (x) { x.steps[si].days = v; }); },
+        toggle: function () { self.edit(function (x) { x.steps[si].on = !x.steps[si].on; }); }
+      };
+    });
+    const onSteps = d.steps.filter(function (st) { return st.on; });
+    V.fuSummary = onSteps.length ? 'A quote sent today (' + WEEK[sent.getDay()] + ') gets follow-ups on ' + onSteps.map(function (st) { const x = new Date(); x.setDate(x.getDate() + Number(st.days)); return WEEK[x.getDay()]; }).join(', ') + ', unless the customer replies first.' : 'All steps are off, so no follow-ups are sent.';
+
+    V.rules = d.rules.map(function (r, ri) {
+      const t = tog(r.on);
+      return {
+        name: r.name, text: r.text, hasParam: r.param !== undefined, pre: r.pre || '', post: r.post || '', param: r.param, on: r.on,
+        track: t.track, knob: t.knob, state: t.state, toggleAria: r.name + ' auto-send', paramAria: r.name + ' setting',
+        setParam: function (e) { const v = parseFloat(e.target.value) || 0; self.edit(function (x) { x.rules[ri].param = v; }); },
+        toggle: function () { self.edit(function (x) { x.rules[ri].on = !x.rules[ri].on; }, r.name + (r.on ? ' now waits for a person.' : ' now sends by itself.')); }
+      };
+    });
+
+    const nx = d.nums;
+    const ex = function (f, n) { return String(f).split('{trip}').join(nx.trip).split('{n}').join(String(n)); };
+    V.nums = [['trip', 'Next Trip ID', 'number', nx.trip], ['rev', 'Quote revision', 'text', ex(nx.rev, 2)], ['pi', 'Proforma invoice', 'text', ex(nx.pi, 1)], ['inv', 'Invoice', 'text', ex(nx.inv, 1)], ['exp', 'Guide expense', 'text', ex(nx.exp, 1)]].map(function (n) {
+      return { id: 'st-n-' + n[0], label: n[1], type: n[2], v: nx[n[0]], example: n[3], set: function (e) { const v = e.target.value; self.edit(function (x) { x.nums[n[0]] = v; }); } };
+    });
+
+    const STATUS = { Active: ['#DDF5EA', '#00663B', 'Disable', '#B42840'], Invited: ['#FFF0DB', '#8A4B00', 'Resend invite', '#323338'], Disabled: ['#F0F1F5', '#4B4D5C', 'Enable', '#323338'] };
+    const AV = { 'Sales executive': '#3D4BC7', 'Sales manager': '#283277', Operations: '#00796B', Accounts: '#B8307F', Admin: '#C2378F', Guide: '#7E3CC4' };
+    const std = function (key, title, items, cols, quick) {
+      return stdView({ key: key, title: title, items: items, cols: cols, quick: quick, tv: (s.tv || {})[key], set: function (patch) { self.setTv(key, patch); }, views: s.views, saveViews: function (vs) { self.setState({ views: vs }); }, flash: function (m) { self.setState(self.flash(m)); } });
+    };
+    const uv = std('settings/users', 'users', d.users.map(function (u, ui) { return { u: u, ui: ui }; }), [
+      { label: 'Name', kind: 'text', get: function (x) { return x.u.name; } }, { label: 'Email or phone', kind: 'text', get: function (x) { return x.u.login; } },
+      { label: 'Role', kind: 'set', get: function (x) { return x.u.role; } }, { label: 'Status', kind: 'set', get: function (x) { return x.u.status; } }, { label: 'Access', kind: 'none', get: function () { return ''; } }], 2);
+    V.uh = uv.heads;
+    V.users = uv.list.map(function (row) { const u = row.item.u; const ui = row.item.ui; const sl = row.sl;
+      const k = STATUS[u.status] || STATUS.Active;
+      const set = function (key) { return function (e) { const v = e.target.value; self.edit(function (x) { x.users[ui][key] = v; }); }; };
+      return {
+        sl: sl, name: u.name, login: u.login, role: u.role, status: u.status, initials: initials(u.name || 'New'), av: AV[u.role] || '#3D4BC7',
+        chipBg: k[0], chipInk: k[1], action: k[2], actInk: k[3],
+        setName: set('name'), setLogin: set('login'), setRole: set('role'),
+        toggle: function () {
+          if (u.status === 'Invited') { self.setState(self.flash('Invite sent again to ' + (u.name || 'the new user') + '.')); return; }
+          self.edit(function (x) { x.users[ui].status = u.status === 'Active' ? 'Disabled' : 'Active'; }, (u.name || 'User') + (u.status === 'Active' ? ' can no longer sign in.' : ' can sign in again.'));
+        }
+      };
+    });
+    V.addUser = function () { self.edit(function (x) { x.users.unshift({ name: '', login: '', role: 'Sales executive', status: 'Invited' }); }, 'New user at the top. Add their name and email or phone; the invite goes to them.'); };
+    V.roleCols = ROLES.map(function (r) { return { label: r }; });
+    V.perms = d.perms.map(function (p, pi) {
+      return {
+        label: p[0],
+        cells: p[1].map(function (v, ci) {
+          const admin = ci === ROLES.length - 1;
+          const on = admin || !!v;
+          return {
+            on: on, tick: on ? 1 : 0, bg: on ? (admin ? '#283277' : '#3D4BC7') : '#FFFFFF', ring: on ? (admin ? '#283277' : '#3D4BC7') : '#9AA0B8', cursor: admin ? 'not-allowed' : 'pointer',
+            aria: ROLES[ci] + ': ' + p[0].toLowerCase(),
+            toggle: function () {
+              if (admin) { self.setState(self.flash('Admin can always do everything.')); return; }
+              self.edit(function (x) { x.perms[pi][1][ci] = v ? 0 : 1; });
+            }
+          };
+        })
+      };
+    });
+
+
+    const pr = d.print;
+    const ptog = function (key, on) { const t = tog(on); return { on: on, track: t.track, knob: t.knob, state: t.state, toggle: function () { self.edit(function (x) { x.print[key] = !x.print[key]; }); } }; };
+    V.pr = { logo: ptog('logo', pr.logo), bank: ptog('bank', pr.bank), footer: pr.footer, setFooter: function (e) { const v = e.target.value; self.edit(function (x) { x.print.footer = v; }); },
+      papers: ['A4', 'Letter'].map(function (pp) { const on = pr.paper === pp; return { label: pp, on: on, bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', border: on ? '#283277' : '#C3C6D4', pick: function () { self.edit(function (x) { x.print.paper = pp; }); } }; }) };
+    V.docs = [['Quotation PDF', 'QuotePDF.dc.html', 'Sent with the WhatsApp quote; flows onto as many pages as the trip needs'], ['Proforma invoice', 'Proforma.dc.html', 'One page, against the confirmed quotation'], ['Invoice', 'Invoice.dc.html', 'One page, after the trip, with payments received'], ['Hotel voucher', 'Voucher.dc.html', 'One page per confirmed hotel']].map(function (x) { return { name: x[0], href: x[1], note: x[2] }; });
+    V.companies = d.companies.map(function (co, ci) {
+      const set = function (key) { return function (e) { const v = e.target.value; self.edit(function (x) { x.companies[ci][key] = v; }); }; };
+      return { name: co.name, country: co.country, cur: co.cur, taxid: co.taxid, tax: co.tax, main: co.main ? 'Main company' : 'Branch', chipBg: co.main ? '#ECEEFB' : '#F0F1F5', chipInk: co.main ? '#283277' : '#4B4D5C', setName: set('name'), setTaxid: set('taxid'), setTax: set('tax') };
+    });
+    V.addCompany = function () { self.edit(function (x) { x.companies.push({ name: '[Company name]', country: '[Country]', cur: '[Currency]', taxid: '[Tax ID]', tax: '[Tax rule]', main: false }); }, 'Branch added. Fill in its details.'); };
+    const lv = std('settings/log', 'audit log', LOG.map(function (e, li) { return { e: e, li: li }; }), [
+      { label: 'When', kind: 'none', get: function (x) { return x.e[0]; } }, { label: 'Who', kind: 'set', get: function (x) { return x.e[1]; } },
+      { label: 'Area', kind: 'set', get: function (x) { return x.e[2]; } }, { label: 'What happened', kind: 'text', get: function (x) { return x.e[3]; } }], 2);
+    V.lh = lv.heads;
+    V.log = lv.list.map(function (row) { const e = row.item.e; return { sl: row.sl, when: e[0], who: e[1], kind: e[2], text: e[3] }; });
+    V.logEmpty = lv.list.length === 0;
+    V.tv = s.tab === 'log' ? lv.ui : uv.ui;
+    return V;
+  }
+}
+</script>
+</body>
+</html>

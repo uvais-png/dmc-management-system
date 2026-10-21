@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Flyland DMC — Review queue</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#ECEFF8}
+a{color:#3D4BC7}a:hover{color:#283277}
+button,select,input,textarea{font-family:inherit}
+.hov-d:hover{background:rgba(255,255,255,.14) !important}
+header a:focus-visible,header button:focus-visible{outline-color:#FFFFFF}
+.btn-p:hover{background:#283277 !important}
+.btn-g:hover{background:#00663B !important}
+.btn-s:hover{background:#ECEFF8 !important}
+.card:hover{box-shadow:0 6px 16px rgba(29,44,92,.14) !important}
+.tab:hover{background:#ECEFF8 !important}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #3D4BC7;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #ECEFF8; color: #323338; font-family: Figtree, 'Segoe UI', sans-serif; font-size: 14px; line-height: 20px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 8px 20px; box-sizing: border-box; background: #283277; color: #FFFFFF">
+<a href="Main.dc.html" style="display: flex; align-items: center; text-decoration: none"><img src="/_blob/c96377ee37809ccd01d937b60c6b77c7" alt="Flyland DMC Services" style="display: block; height: 48px; width: auto"></a>
+<div style="display: flex; align-items: center; gap: 4px; margin-left: auto">
+<span style="display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px; margin-right: 8px; border-radius: 17px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28); font-size: 13px; font-weight: 500"><span style="width: 8px; height: 8px; border-radius: 50%; background: #3DDC97"></span>WhatsApp · 2 lines connected</span>
+<span role="img" aria-label="Signed in as Shabna K, Sales manager" style="width: 36px; height: 36px; margin-left: 6px; border-radius: 50%; background: #3D4BC7; color: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #FFFFFF">SK</span>
+</div>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; padding: 12px 12px 12px 8px">
+<dc-import name="Sidebar" active="review" collapsed="{{yes}}" hint-size="60px,640px"></dc-import>
+
+<main style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border-radius: 16px; box-shadow: 0 1px 3px rgba(29,44,92,.06); padding: 24px clamp(16px, 2.4vw, 28px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 26px; line-height: 34px; font-weight: 600">Review queue</h1>
+<p style="margin: 0; color: #676879; max-width: 640px">Quotes AI has built from WhatsApp enquiries, waiting for a person to check them. Nothing reaches a customer until someone approves it, or it passes every check under an auto-send rule.</p>
+</div>
+<a href="Settings.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border-radius: 18px; background: #ECEEFB; color: #283277; font-size: 13px; font-weight: 600; text-decoration: none"><span style="width: 8px; height: 8px; border-radius: 50%; background: #00854D"></span>Auto-send rule: clean quotes under MYR 3,000</a>
+</div>
+
+<div role="group" aria-label="Filter" style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="4"><button class="tab" onClick="{{f.pick}}" aria-pressed="{{f.on}}" style="display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid {{f.border}}; background: {{f.bg}}; color: {{f.ink}}; font-size: 13px; font-weight: 600; cursor: pointer">{{f.label}}<span style="min-width: 20px; height: 20px; padding: 0 6px; box-sizing: border-box; border-radius: 10px; background: {{f.countBg}}; color: {{f.countInk}}; font-size: 12px; line-height: 20px">{{f.count}}</span></button></sc-for>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 18px">
+
+<section aria-label="Quotes" style="flex: 1 1 100%; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<label style="flex: 1 1 220px; max-width: 320px; display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #676879"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="search" aria-label="{{tv.searchAria}}" placeholder="Search" value="{{tv.q}}" onChange="{{tv.onQ}}" style="flex: 1; min-width: 0; border: 0; outline-offset: 4px; background: transparent; font-family: inherit; font-size: 14px; color: #323338"></label>
+<button onClick="{{tv.togglePanel}}" aria-expanded="{{tv.panel}}" style="display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid {{tv.fBorder}}; background: {{tv.fBg}}; color: {{tv.fInk}}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"></path></svg>{{tv.filterLabel}}</button>
+<button onClick="{{tv.startSave}}" style="display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><path d="M17 21v-8H7v8M7 3v5h8"></path></svg>Save view</button>
+<sc-if value="{{tv.hasActive}}" hint-placeholder-val="{{false}}"><button onClick="{{tv.clear}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: transparent; color: #3D4BC7">Clear</button></sc-if>
+<span style="margin-left: auto; font-size: 13px; color: #676879">{{tv.showing}}</span>
+</div>
+<sc-if value="{{tv.hasQuick}}" hint-placeholder-val="{{false}}"><div role="group" aria-label="Quick filter" style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{tv.quick}}" as="qf" hint-placeholder-count="3"><button onClick="{{qf.pick}}" aria-pressed="{{qf.on}}" style="display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid {{qf.border}}; background: {{qf.bg}}; color: {{qf.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{qf.label}}<span style="font-size: 12px; opacity: .8">{{qf.count}}</span></button></sc-for></div></sc-if>
+<sc-if value="{{tv.hasViews}}" hint-placeholder-val="{{false}}"><div role="group" aria-label="Saved views" style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px"><span style="font-size: 13px; color: #676879">Saved views</span><sc-for list="{{tv.views}}" as="sv" hint-placeholder-count="1"><span style="display: inline-flex; align-items: center; height: 30px; border: 1px solid {{sv.border}}; border-radius: 15px; background: {{sv.bg}}; overflow: hidden"><button onClick="{{sv.apply}}" aria-pressed="{{sv.on}}" style="height: 100%; padding: 0 6px 0 12px; border: 0; background: transparent; color: {{sv.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{sv.label}}</button><button onClick="{{sv.del}}" aria-label="{{sv.delAria}}" style="height: 100%; padding: 0 10px 0 4px; border: 0; background: transparent; color: {{sv.ink}}; font-family: inherit; font-size: 15px; cursor: pointer">×</button></span></sc-for></div></sc-if>
+<sc-if value="{{tv.saving}}" hint-placeholder-val="{{false}}"><div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; background: #F6F7FB"><input aria-label="Name this view" placeholder="e.g. Overdue advances" value="{{tv.name}}" onChange="{{tv.onName}}" style="flex: 1 1 220px; max-width: 320px; height: 34px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"><button onClick="{{tv.saveView}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: #3D4BC7; color: #FFFFFF">Save this view</button><button onClick="{{tv.cancelSave}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338">Cancel</button><span style="font-size: 12px; color: #676879">Keeps the search, quick filter, detailed filters and sort.</span></div></sc-if>
+<sc-if value="{{tv.panel}}" hint-placeholder-val="{{false}}">
+<div role="region" aria-label="Detailed filters" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px 16px; padding: 14px; border: 1px solid #E6E9EF; border-radius: 10px; background: #FBFBFD">
+<sc-for list="{{tv.fields}}" as="fd" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<span style="font-size: 13px; font-weight: 600; color: #4B4D5C">{{fd.label}}</span>
+<sc-if value="{{fd.isText}}" hint-placeholder-val="{{true}}"><input aria-label="{{fd.aria}}" placeholder="Contains…" value="{{fd.text}}" onChange="{{fd.onText}}" style="height: 34px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"></sc-if>
+<sc-if value="{{fd.isNum}}" hint-placeholder-val="{{false}}"><span style="display: flex; gap: 6px"><input type="number" aria-label="{{fd.ariaMin}}" placeholder="From" value="{{fd.min}}" onChange="{{fd.onMin}}" style="width: 50%; height: 34px; padding: 0 8px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"><input type="number" aria-label="{{fd.ariaMax}}" placeholder="To" value="{{fd.max}}" onChange="{{fd.onMax}}" style="width: 50%; height: 34px; padding: 0 8px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"></span></sc-if>
+<sc-if value="{{fd.isDate}}" hint-placeholder-val="{{false}}"><span style="display: flex; gap: 6px"><input type="date" aria-label="{{fd.ariaFrom}}" value="{{fd.from}}" onChange="{{fd.onFrom}}" style="width: 50%; min-width: 0; height: 34px; padding: 0 6px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 13px; color: #323338"><input type="date" aria-label="{{fd.ariaTo}}" value="{{fd.to}}" onChange="{{fd.onTo}}" style="width: 50%; min-width: 0; height: 34px; padding: 0 6px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 13px; color: #323338"></span></sc-if>
+<sc-if value="{{fd.isSet}}" hint-placeholder-val="{{false}}"><span role="group" aria-label="{{fd.label}}" style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{fd.opts}}" as="o" hint-placeholder-count="2"><button onClick="{{o.pick}}" aria-pressed="{{o.on}}" style="height: 30px; padding: 0 10px; border-radius: 15px; border: 1px solid {{o.border}}; background: {{o.bg}}; color: {{o.ink}}; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer">{{o.label}}</button></sc-for></span></sc-if>
+</div>
+</sc-for>
+<div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 8px"><button onClick="{{tv.clear}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338">Clear all</button><button onClick="{{tv.togglePanel}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: #3D4BC7; color: #FFFFFF">Done</button></div>
+</div>
+</sc-if>
+<div style="overflow-x: auto; border: 1px solid #E6E9EF; border-radius: 10px">
+<div role="table" aria-label="Quotes waiting for review" style="min-width: 1200px">
+<div role="row" style="display: grid; grid-template-columns: 68px minmax(170px, 1.1fr) minmax(240px, 1.8fr) 150px 190px 110px 150px 120px; align-items: center; min-height: 40px; background: #F6F7FB; border-bottom: 1px solid #E6E9EF; font-size: 13px; font-weight: 600; color: #676879">
+<span role="columnheader" style="padding: 0 12px; text-align: right">Sl. No.</span>
+<sc-for list="{{heads}}" as="c" hint-placeholder-count="7"><span role="columnheader" aria-sort="{{c.ariaSort}}" style="padding: 0 12px; text-align: {{c.align}}"><sc-if value="{{c.sortable}}" hint-placeholder-val="{{true}}"><button onClick="{{c.sort}}" style="display: inline-flex; align-items: center; gap: 4px; min-height: 32px; padding: 0; border: 0; background: transparent; color: inherit; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{c.label}}<span aria-hidden="true" style="font-size: 10px; color: #3D4BC7">{{c.arrow}}</span></button></sc-if><sc-if value="{{c.plainHead}}" hint-placeholder-val="{{false}}">{{c.label}}</sc-if></span></sc-for>
+</div>
+<sc-for list="{{list}}" as="q" hint-placeholder-count="3">
+<div role="row" class="row" style="display: grid; grid-template-columns: 68px minmax(170px, 1.1fr) minmax(240px, 1.8fr) 150px 190px 110px 150px 120px; align-items: center; min-height: 56px; border-bottom: 1px solid #E6E9EF; background: {{q.bg}}; box-shadow: inset 3px 0 0 {{q.mark}}">
+<span role="cell" style="padding: 0 12px; text-align: right; color: #676879; font-variant-numeric: tabular-nums">{{q.sl}}</span>
+<span role="cell" style="padding: 4px 12px; min-width: 0"><button onClick="{{q.pick}}" aria-current="{{q.current}}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px; max-width: 100%; padding: 4px 0; border: 0; background: transparent; color: #323338; font-family: inherit; text-align: left; cursor: pointer"><strong style="font-size: 14px; color: #283277">{{q.name}}</strong><span style="font-size: 12px; color: #676879">Trip #{{q.trip}}</span></button></span>
+<span role="cell" style="padding: 0 12px; font-size: 13px">{{q.line}}</span>
+<span role="cell" style="padding: 0 12px"><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 6px; background: {{q.chipBg}}; color: {{q.chipInk}}; font-size: 12px; font-weight: 700">{{q.chip}}</span></span>
+<span role="cell" style="padding: 0 12px; font-size: 13px; color: {{q.checksInk}}">{{q.checks}}</span>
+<span role="cell" style="padding: 0 12px">{{q.owner}}</span>
+<span role="cell" style="padding: 0 12px; text-align: right; font-variant-numeric: tabular-nums">{{q.value}}</span>
+<span role="cell" style="padding: 0 12px; font-size: 13px; color: #676879">{{q.age}}</span>
+</div>
+</sc-for>
+<sc-if value="{{listEmpty}}" hint-placeholder-val="{{false}}"><div style="padding: 24px; color: #676879; text-align: center">{{emptyText}}</div></sc-if>
+</div>
+</div>
+<sc-if value="{{tv.hasPages}}" hint-placeholder-val="{{false}}">
+<nav aria-label="Pages" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px">
+<span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; color: #676879">Rows per page<sc-for list="{{tv.sizes}}" as="z" hint-placeholder-count="3"><button onClick="{{z.pick}}" aria-pressed="{{z.on}}" style="min-width: 36px; height: 30px; padding: 0 8px; border-radius: 6px; border: 1px solid {{z.border}}; background: {{z.bg}}; color: {{z.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{z.label}}</button></sc-for></span>
+<span style="display: flex; flex-wrap: wrap; gap: 4px"><button onClick="{{tv.prev}}" aria-label="Previous page" style="width: 34px; height: 34px; border-radius: 6px; border: 1px solid #C3C6D4; background: #FFFFFF; color: {{tv.prevInk}}; font-family: inherit; font-size: 16px; cursor: pointer">‹</button><sc-for list="{{tv.pages}}" as="pg" hint-placeholder-count="3"><button onClick="{{pg.go}}" aria-current="{{pg.current}}" style="min-width: 34px; height: 34px; padding: 0 6px; border-radius: 6px; border: 1px solid #C3C6D4; background: {{pg.bg}}; color: {{pg.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{pg.label}}</button></sc-for><button onClick="{{tv.next}}" aria-label="Next page" style="width: 34px; height: 34px; border-radius: 6px; border: 1px solid #C3C6D4; background: #FFFFFF; color: {{tv.nextInk}}; font-family: inherit; font-size: 16px; cursor: pointer">›</button></span>
+</nav>
+</sc-if>
+</section>
+
+<sc-if value="{{hasSel}}" hint-placeholder-val="{{true}}">
+<section aria-labelledby="rq-h" style="flex: 1 1 100%; min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: 20px; border: 1px solid #E6E9EF; border-radius: 16px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="rq-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">{{sel.name}} · Trip {{sel.trip}}</h2>
+<span style="color: #676879">{{sel.line}} · from {{sel.from}} · built {{sel.age}} by AI, owner {{sel.owner}}</span>
+</div>
+<span style="display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 6px; background: {{sel.chipBg}}; color: {{sel.chipInk}}; font-size: 13px; font-weight: 700">{{sel.chip}}</span>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+<div style="flex: 2 1 320px; display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 12px; border: 1.5px solid transparent; background: linear-gradient(#FFFFFF, #FFFFFF) padding-box, linear-gradient(120deg, #3D4BC7, #8B47D0, #C2378F) border-box">
+<span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 13px; background: linear-gradient(90deg, #3D4BC7, #8B47D0); color: #FFFFFF; font-size: 12px; font-weight: 700"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 5.6L19.5 9.5l-5.7 1.9L12 17l-1.8-5.6L4.5 9.5l5.7-1.9z"></path></svg>AI checks</span>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{sel.checkList}}" as="c" hint-placeholder-count="4"><li style="display: flex; gap: 10px; align-items: flex-start"><span style="flex: none; display: inline-flex; align-items: center; justify-content: center; min-width: 52px; height: 22px; padding: 0 6px; box-sizing: border-box; border-radius: 11px; background: {{c.bg}}; color: {{c.ink}}; font-size: 11px; font-weight: 700">{{c.label}}</span><span>{{c.text}}</span></li></sc-for>
+</ul>
+</div>
+<div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 12px; background: #F6F7FB">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">Staff only · never sent</span>
+<sc-for list="{{sel.money}}" as="m" hint-placeholder-count="2">
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 8px 0; border-top: 1px solid #E6E9EF">
+<strong>{{m.label}}</strong>
+<span style="display: flex; justify-content: space-between"><span style="color: #676879">Cost</span><span style="font-variant-numeric: tabular-nums">{{m.cost}}</span></span>
+<span style="display: flex; justify-content: space-between"><span style="color: #676879">Selling</span><span style="font-variant-numeric: tabular-nums">{{m.sell}}</span></span>
+<span style="display: flex; justify-content: space-between"><span style="color: #676879">Margin</span><strong style="color: #00663B; font-variant-numeric: tabular-nums">{{m.margin}}</strong></span>
+</div>
+</sc-for>
+<sc-if value="{{sel.noMoney}}" hint-placeholder-val="{{false}}"><span style="color: #676879">No price yet. The quote is held until the missing details arrive.</span></sc-if>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-size: 15px; font-weight: 700">{{sel.msgTitle}}</h3>
+<div style="max-height: 520px; overflow-y: auto; padding: 16px; border-radius: 12px; background: #EFE7DE">
+<div style="max-width: 560px; margin-left: auto; padding: 12px 14px; box-sizing: border-box; border-radius: 12px 12px 4px 12px; background: #DCF5E7; box-shadow: 0 1px 1px rgba(29,44,92,.08); font-size: 14px; line-height: 21px; overflow-wrap: anywhere">
+<sc-for list="{{sel.lines}}" as="ln" hint-placeholder-count="12"><div style="min-height: 21px"><sc-for list="{{ln.segs}}" as="sg" hint-placeholder-count="1"><span style="font-weight: {{sg.w}}; font-style: {{sg.i}}">{{sg.t}}</span></sc-for></div></sc-for>
+</div>
+</div>
+</div>
+
+<sc-if value="{{sel.isOpen}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<a class="btn-g" href="{{sel.waHref}}" onClick="{{sel.approve}}" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: 10px; background: #00854D; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none">{{sel.approveLabel}}</a>
+<button class="btn-s" onClick="{{sel.copy}}" style="height: 44px; padding: 0 16px; border: 1px solid #C3C6D4; border-radius: 10px; background: #FFFFFF; color: #323338; font-size: 15px; font-weight: 600; cursor: pointer">Copy message</button>
+<a class="btn-s" href="Lead.dc.html" style="display: inline-flex; align-items: center; height: 44px; padding: 0 16px; border: 1px solid #C3C6D4; border-radius: 10px; background: #FFFFFF; color: #323338; font-size: 15px; font-weight: 600; text-decoration: none">Edit in Trip desk</a>
+<button class="btn-s" onClick="{{sel.toggleBack}}" aria-expanded="{{backOpen}}" style="height: 44px; padding: 0 16px; border: 1px solid #C3C6D4; border-radius: 10px; background: #FFFFFF; color: #B42840; font-size: 15px; font-weight: 600; cursor: pointer">Send back</button>
+</div>
+<sc-if value="{{backOpen}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 12px; background: #FDF3F4">
+<label for="rq-why" style="font-weight: 600">What should {{sel.owner}} change?</label>
+<textarea id="rq-why" rows="3" value="{{backNote}}" onChange="{{onBackNote}}" placeholder="e.g. Use Holiday Villa; the agent prefers beach hotels" style="padding: 10px 12px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 10px; font-size: 14px; resize: vertical"></textarea>
+<div style="display: flex; gap: 8px"><button class="btn-p" onClick="{{sel.sendBack}}" style="height: 40px; padding: 0 16px; border: 0; border-radius: 10px; background: #3D4BC7; color: #FFFFFF; font-weight: 700; cursor: pointer">Send back to {{sel.owner}}</button><button class="btn-s" onClick="{{sel.toggleBack}}" style="height: 40px; padding: 0 16px; border: 1px solid #C3C6D4; border-radius: 10px; background: #FFFFFF; color: #323338; font-weight: 600; cursor: pointer">Cancel</button></div>
+</div>
+</sc-if>
+</sc-if>
+<sc-if value="{{sel.isClosed}}" hint-placeholder-val="{{false}}"><div role="status" style="padding: 12px 14px; border-radius: 10px; background: {{sel.doneBg}}; color: {{sel.doneInk}}; font-weight: 600">{{sel.doneText}}</div></sc-if>
+</section>
+</sc-if>
+</div>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{false}}"><div role="status" style="position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 20; max-width: calc(100% - 32px); padding: 12px 16px; box-sizing: border-box; border-radius: 10px; background: #323338; color: #FFFFFF; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,.25)">{{toast}}</div></sc-if>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1900}}'>
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const WEEK = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const VEH = '1-Sedan (4 Seater)';
+const TERMS = [
+  'Tourism tax of 10 MYR/ room/night included',
+  'Hotel subject to availability at the time of confirmation',
+  'Air tickets and visa is not included',
+  'Meals as indicated in meal plan',
+  'Quote valid till 7 days of issue.',
+  'Tourism tax is prepaid at Metrostar, IBIS Styles and Furama only (all other hotels guest to pay the tourism tax and amount will be refunded later upon showing the receipt)',
+  'Please make sure that the quote matches with the requested requirement, we will not be responsible for discrepancy if any',
+  'Hotel Security Deposit: Please be advised that security deposit might be required by the hotel upon check-in. This deposit is the responsibility of the guest and will be collected by the hotel directly. The amount of the deposit varies from hotel to hotel and will be refunded at check out by the hotel',
+  'Please note that unless specified this rates are not valid for peak season such as Christmas, Chinese new year, Diwali and Eid holidays etc'
+];
+const CHECKIN = { basis: 'pax', name: 'Checkin to hotel', desc: '(check in time is 3pm, guests have to wait at the hotel lobby till check in time)' };
+const CHECKOUT = { basis: 'pax', name: 'Checkout from hotel', desc: '(hotel check-out is before 12:00 PM)' };
+const DAY_LGK1 = [{ basis: 'veh', name: 'LGK Airport to LGK Hotel', desc: 'Arrival & Transfer' }, CHECKIN, { basis: 'veh', name: 'Tour to Eagle square and under water world', desc: 'Duration: 6 hrs)' }, { basis: 'pax', name: 'Underwater world', desc: 'With entry tickets' }];
+const DAY_LGK2 = [{ basis: 'pax', name: 'Island Hopping boat ride SIC', desc: '- (Dayang bunting island conservation fees of RM 20/Adult and RM 10/Child is not included, Guest need to pay the same if accessing fresh water lake)' }, { basis: 'veh', name: 'Tour to Oriental village', desc: '(Duration: 5 hrs -  Including pick up and return)' }, { basis: 'pax', name: 'Oriental Village', desc: 'Skycab, Skybridge, Skyglide, Skyrex, Skydome and 3D Art Museum with entry tickets' }];
+const DAY_LGK_TO_KL = [CHECKOUT, { basis: 'veh', name: 'LGK Hotel to LGK Airport', desc: 'Arrival & Transfer' }, { basis: 'veh', name: 'KL Airport to Kuala Lumpur Hotel', desc: 'Arrival & Transfer' }, CHECKIN, { basis: 'veh', name: 'Tour to Bukit Bintang at evening', desc: '(Duration: 2 hrs)' }];
+const DAY_KL_ARR = [{ basis: 'veh', name: 'KL Airport to Kuala Lumpur Hotel', desc: 'Arrival & Transfer' }, CHECKIN, { basis: 'veh', name: 'Tour to Bukit Bintang at evening', desc: '(Duration: 2 hrs)' }];
+const DAY_GENTING = [{ basis: 'veh', name: 'Tour to Batu caves and genting highlands', desc: '(Duration: 8 hrs)' }, { basis: 'pax', name: 'Genting', desc: 'Cable car tickets (2 way), (Please note Cable car tickets can be upgraded to express tickets at an addition of 20 RM per person, to be confirmed one day prior to the travel)' }];
+const DAY_KL_CITY = [{ basis: 'veh', name: 'Kuala lumpur Half Day City tour', desc: '(Twin tower photostop, KL Tower photostop, National Mosque, National Monument. Independence Square, Choclate outlet and Kings Palace) (Duration: 4 hrs)' }];
+const DAY_KL_DEP = [CHECKOUT, { basis: 'veh', name: 'Drop off to KL Airport', desc: 'Transfer With Putrajaya & Drop off to Airport' }];
+const CHILD_ROOM = ' + 1 Child without Extra Bed/Mattress';
+
+const QUOTES = [
+  { id: 'q1', mins: 12, kind: 'quote', trip: '4499612', name: 'AMAL RAJ', from: 'Royal sky', greet: 'Royal sky', owner: 'Shabna K', age: '12 min ago', line: 'Malaysia · 2 adults · 1–4 Dec · 3★ and 4★',
+    startIso: '2026-12-01', nights: 3, paxLine: '2 Adults', paxShort: '2Ad.', adults: 2,
+    options: [
+      { n: 1, star: 3, pp: 617, total: 1234, cost: 1072, hotels: [{ lbl: '1st, 2nd, 3rd Nights', city: 'Kuala Lumpur', inD: 0, outD: 3, name: 'Star Points Hotel', room: 'Superior Queen Room' }] },
+      { n: 2, star: 4, pp: 930, total: 1860, cost: 1618, hotels: [{ lbl: '1st, 2nd, 3rd Nights', city: 'Kuala Lumpur', inD: 0, outD: 3, name: 'IBIS KLCC', room: 'Standard room (Window room)' }] }
+    ],
+    days: [DAY_KL_ARR, DAY_GENTING, DAY_KL_CITY, DAY_KL_DEP],
+    checks: [['warn', 'Travel date: “dec first week” read as Tue, 1 Dec 2026. Confirm with Royal sky before booking.'], ['warn', 'Duration: “4 days” read as 3 nights, 4 days in Kuala Lumpur.'], ['warn', 'Rooms not given: 1 room assumed for 2 adults.'], ['ok', 'Margin is 15% on both options, above your 12% minimum.'], ['ok', 'Every hotel, transfer and ticket has a rate for these dates.']] },
+  { id: 'q2', mins: 34, kind: 'ask', trip: '4499613', name: 'Meera Nair', from: 'Meera Nair (direct)', owner: 'Fathima N', age: '34 min ago', line: 'Malaysia · 2 adults, 2 children · mid Dec · 4★',
+    text: 'Hi Meera,\n\nThank you for your enquiry with Flyland DMC Services. To share an exact price for your Malaysia trip, could you please confirm:\n\n• *Ages of the 2 children*\n• *Exact travel date* (you mentioned mid December)\n\nChristmas week has peak-season hotel rates, so the date helps us find you the best price.\n\nRegards,\nFlyland DMC Services',
+    checks: [['stop', 'Children’s ages are missing. Child prices depend on age, so the quote is held.'], ['warn', '“mid Dec” would be read as Tue, 15 Dec 2026.'], ['warn', 'Christmas week is peak season; contracted rates may not apply (term 9).']] },
+  { id: 'q3', mins: 6, kind: 'quote', trip: '4499655', name: 'Sneha Joseph', from: 'Sneha Joseph (direct)', greet: 'Sneha', owner: 'Shabna K', age: '6 min ago', line: 'Malaysia · 2 adults · 12–16 Jan 2027 · 3★',
+    startIso: '2027-01-12', nights: 4, paxLine: '2 Adults', paxShort: '2Ad.', adults: 2,
+    options: [{ n: 1, star: 3, pp: 1046, total: 2092, cost: 1818, hotels: [{ lbl: '1st, 2nd Nights', city: 'Langkawi', inD: 0, outD: 2, name: 'Adya', room: 'Deluxe king' }, { lbl: '3rd, 4th Nights', city: 'Kuala Lumpur', inD: 2, outD: 4, name: 'Star Points Hotel', room: 'Superior Queen Room' }] }],
+    days: [DAY_LGK1, DAY_LGK2, DAY_LGK_TO_KL, DAY_GENTING, DAY_KL_DEP],
+    checks: [['ok', 'Every detail came from the enquiry; nothing was assumed.'], ['ok', 'Margin is 15%, above your 12% minimum.'], ['ok', 'Rates are valid for 12–16 Jan 2027, with no blackout dates.'], ['ok', 'Matches the auto-send rule “Clean quotes under MYR 3,000”: it sends itself in 9 minutes if nobody acts.']] },
+  { id: 'q4', mins: 240, kind: 'quote', trip: '4499560', name: 'Royal sky', from: 'Royal sky', greet: 'Royal sky', owner: 'Shabna K', age: 'today 13:30', line: 'Malaysia · 2 adults, 1 child · 23–28 Nov · 3★ and 4★', status: 'sent', doneText: 'Approved by Shabna K and sent on WhatsApp at 13:36.',
+    startIso: '2026-11-23', nights: 5, paxLine: '2 Adults, 1 Child (7y)', paxShort: '2Ad. + 1Ch.', adults: 2, child: 'Child (7y)', ref: '25 SEP 30 BN AN-R1 30 SEP 07 BN NF',
+    options: [
+      { n: 1, star: 3, pp: 1082, pc: 716, total: 2880, cost: 2504, hotels: [{ lbl: '1st, 2nd Nights', city: 'Langkawi', inD: 0, outD: 2, name: 'Adya', room: 'Deluxe king' }, { lbl: '3rd, 4th, 5th Nights', city: 'Kuala Lumpur', inD: 2, outD: 5, name: 'Star Points Hotel', room: 'Superior Queen Room' }] },
+      { n: 2, star: 4, pp: 1592, pc: 791, total: 3975, cost: 3457, hotels: [{ lbl: '1st, 2nd Nights', city: 'Langkawi', inD: 0, outD: 2, name: 'Holiday Villa', room: 'Deluxe Room' }, { lbl: '3rd, 4th, 5th Nights', city: 'Kuala Lumpur', inD: 2, outD: 5, name: 'IBIS KLCC', room: 'Standard room (Window room)' }] }
+    ],
+    days: [DAY_LGK1, DAY_LGK2, DAY_LGK_TO_KL, DAY_GENTING, DAY_KL_CITY, DAY_KL_DEP],
+    checks: [['ok', 'Every detail came from the enquiry; nothing was assumed.'], ['ok', 'Margin is 15% on both options.']] }
+];
+
+function pad(n) { return (n < 10 ? '0' : '') + n; }
+function ordinal(n) { const s = ['th', 'st', 'nd', 'rd']; const v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
+function dateOf(iso, add) { const p = iso.split('-').map(Number); return new Date(p[0], p[1] - 1, p[2] + (add || 0)); }
+function fmt(n) { return Math.round(n).toLocaleString('en-US'); }
+function nowHM() { const d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+
+function quoteText(q) {
+  const start = dateOf(q.startIso);
+  const n = q.options.length;
+  const L = ['Hi ' + q.greet + ',', '', 'Thank you for your query with us. As per your requirements, following are the package details.', '',
+    '*Trip ID ' + q.trip + '* _(' + n + ' Package Category/Option' + (n > 1 ? 's' : '') + ')_', '----------', '*Malaysia Trip*',
+    '• *' + start.getDate() + ' ' + MONTHS[start.getMonth()] + ', ' + start.getFullYear() + '* _for_ *' + q.nights + ' Nights, ' + (q.nights + 1) + ' Days*',
+    '• *' + q.paxLine + '*'];
+  if (q.ref) L.push('• *Ref ID: ' + q.ref + '*');
+  q.options.forEach(function (o) {
+    L.push('', '⏬ *OPTION ' + o.n + ': ' + o.star + ' star*', '', '*Price (MYR):*', '• *' + fmt(o.pp) + ' /- Per Person (Double Sharing)* x ' + q.adults + ' Pax');
+    if (q.child) L.push('• *' + fmt(o.pc) + ' /- Per Child without Extra Bed/Mattress* x 1 ' + q.child + ' ');
+    L.push('', '*Total: ' + fmt(o.total) + '*', '', '🏨  *_Hotels_*', '-----------');
+    o.hotels.forEach(function (h, hi) {
+      const a = dateOf(q.startIso, h.inD);
+      const b = dateOf(q.startIso, h.outD);
+      if (hi) L.push('');
+      L.push('*' + h.lbl + '* _at_ *' + h.city + '*', '_Check-in: ' + a.getDate() + ' ' + MONTHS[a.getMonth()] + '_ & _Check-out: ' + b.getDate() + ' ' + MONTHS[b.getMonth()] + '_', '*' + h.name + '* (' + o.star + ' Star)', 'Bed and Breakfast • 1 ' + h.room + ' (2 Pax' + (q.child ? CHILD_ROOM : '') + ')');
+    });
+  });
+  L.push('', '-------', '⏩ *For All Options*', 'Details below are applicable for all the options.', '-------', '', '🚖  *Transportation and Activities*', '-----------');
+  q.days.forEach(function (items, di) {
+    const d = dateOf(q.startIso, di);
+    if (di) L.push('');
+    L.push('*' + ordinal(di + 1) + ' Day - ' + WEEK[d.getDay()] + ', ' + ordinal(d.getDate()) + ' ' + MONTHS[d.getMonth()] + '\'' + String(d.getFullYear()).slice(2) + '*');
+    items.forEach(function (it) { L.push('• ' + it.name + ' - ' + it.desc + ' _(' + (it.basis === 'veh' ? VEH : q.paxShort) + ')_' + (it.basis === 'veh' ? '   ' : '')); });
+  });
+  L.push('', '*Terms and Conditions*', '-------', '**NOTE**');
+  TERMS.forEach(function (t, i) { L.push((i + 1) + '. ' + t); });
+  return L.join('\n');
+}
+
+function segs(line) {
+  const out = [];
+  const re = /(\*\*[^*]+\*\*|\*[^*]+\*|_[^_]+_)/g;
+  let last = 0;
+  let m;
+  while ((m = re.exec(line))) {
+    if (m.index > last) out.push({ t: line.slice(last, m.index), w: '400', i: 'normal' });
+    let tok = m[0];
+    let bold = false;
+    let ital = false;
+    if (tok.indexOf('**') === 0) { tok = tok.slice(2, -2); bold = true; } else if (tok[0] === '*') { tok = tok.slice(1, -1); bold = true; } else { tok = tok.slice(1, -1); ital = true; }
+    if (tok.length > 1 && tok[0] === '_' && tok[tok.length - 1] === '_') { tok = tok.slice(1, -1); ital = true; }
+    out.push({ t: tok, w: bold ? '700' : '400', i: ital ? 'italic' : 'normal' });
+    last = re.lastIndex;
+  }
+  if (last < line.length) out.push({ t: line.slice(last), w: '400', i: 'normal' });
+  if (!out.length) out.push({ t: ' ', w: '400', i: 'normal' });
+  return out;
+}
+
+// ---- Standard data table: search, Sl. No., quick filter, detailed filter, saved views, sort, pagination ----
+const VIEWS_KEY = 'flyland-views-v1';
+function readViews() { try { return JSON.parse(window.localStorage.getItem(VIEWS_KEY) || '{}') || {}; } catch (e) { return {}; } }
+function stdNum(t) { if (typeof t === 'number') return t; const m = String(t === undefined || t === null ? '' : t).replace(/,/g, '').replace(/−\s*/, '-').match(/^[A-Za-z ]*([-+]?\d+(\.\d+)?)\s*%?$/); return m ? parseFloat(m[1]) : null; }
+function stdView(o) {
+  const tv = Object.assign({ q: '', quick: '', f: {}, sort: null, page: 1, size: 10, panel: false, saving: false, name: '' }, o.tv || {});
+  const set = o.set;
+  const q = String(o.q !== undefined ? o.q : tv.q || '').trim().toLowerCase();
+  const cols = o.cols;
+  const val = function (it, ci) { const v = cols[ci].get(it); return v === undefined || v === null ? '' : v; };
+  const pass = function (it, skipQuick) {
+    if (q && String(o.searchFn ? o.searchFn(it) : cols.map(function (c, ci) { return val(it, ci); }).join(' ')).toLowerCase().indexOf(q) < 0) return false;
+    if (!skipQuick && tv.quick && o.quick > -1 && String(val(it, o.quick)) !== tv.quick) return false;
+    return Object.keys(tv.f).every(function (ci) {
+      const fl = tv.f[ci];
+      const c = cols[ci];
+      if (!c || !fl) return true;
+      const v = val(it, ci);
+      if (c.kind === 'text' && fl.text) return String(v).toLowerCase().indexOf(String(fl.text).toLowerCase()) > -1;
+      if (c.kind === 'set' && fl.set && fl.set.length) return fl.set.indexOf(String(v)) > -1;
+      if (c.kind === 'num') { const n = stdNum(v); if (fl.min !== undefined && fl.min !== '' && (n === null || n < +fl.min)) return false; if (fl.max !== undefined && fl.max !== '' && (n === null || n > +fl.max)) return false; }
+      if (c.kind === 'date') { if (fl.from && (!v || v < fl.from)) return false; if (fl.to && (!v || v > fl.to)) return false; }
+      return true;
+    });
+  };
+  let list = o.items.filter(function (it) { return pass(it, false); });
+  if (tv.sort && cols[tv.sort.i] && cols[tv.sort.i].kind !== 'none') {
+    const i = tv.sort.i;
+    const k = cols[i].kind;
+    const kv = function (it) { const v = val(it, i); return k === 'num' ? (stdNum(v) === null ? -Infinity : stdNum(v)) : String(v).toLowerCase(); };
+    list = list.slice().sort(function (a, b) { const A = kv(a); const Z = kv(b); return (A < Z ? -1 : A > Z ? 1 : 0) * (tv.sort.dir === 'desc' ? -1 : 1); });
+  }
+  const n = list.length;
+  const size = tv.size || 10;
+  const pages = Math.max(1, Math.ceil(n / size));
+  const page = Math.min(Math.max(1, tv.page || 1), pages);
+  const off = o.paged === false ? 0 : (page - 1) * size;
+  const shown = o.paged === false ? list : list.slice(off, off + size);
+  const chip = function (on) { return { bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', border: on ? '#283277' : '#C3C6D4' }; };
+  const nF = Object.keys(tv.f).filter(function (ci) { const fl = tv.f[ci]; return fl && (fl.text || (fl.set && fl.set.length) || fl.min || fl.max || fl.from || fl.to); }).length;
+  const setF = function (ci, patch) { const f = Object.assign({}, tv.f); f[ci] = Object.assign({}, f[ci] || {}, patch); set({ f: f, page: 1 }); };
+  const saved = (o.views || {})[o.key] || [];
+  const cur = JSON.stringify({ q: tv.q, quick: tv.quick, f: tv.f, sort: tv.sort });
+  const write = function (lst) { const vs = Object.assign({}, o.views || {}); vs[o.key] = lst; try { window.localStorage.setItem(VIEWS_KEY, JSON.stringify(vs)); } catch (e) { /* keep in memory */ } return vs; };
+  const qc = {};
+  const base = o.items.filter(function (it) { return pass(it, true); });
+  if (o.quick > -1) base.forEach(function (it) { const v = String(val(it, o.quick)); if (v) qc[v] = (qc[v] || 0) + 1; });
+  const qKeys = Object.keys(qc).sort(function (a, b) { return qc[b] - qc[a]; }).slice(0, 8);
+  return {
+    total: o.items.length, count: n,
+    list: shown.map(function (it, k) { return { item: it, sl: String(off + k + 1) }; }),
+    heads: cols.map(function (c, ci) {
+      const on = !!(tv.sort && tv.sort.i === ci);
+      const can = c.kind !== 'none';
+      return { label: c.label, align: c.align || 'left', sortable: can, plainHead: !can, arrow: on ? (tv.sort.dir === 'desc' ? '▼' : '▲') : '', ariaSort: on ? (tv.sort.dir === 'desc' ? 'descending' : 'ascending') : 'none',
+        sort: function () { set({ sort: on && tv.sort.dir === 'asc' ? { i: ci, dir: 'desc' } : on ? null : { i: ci, dir: 'asc' } }); } };
+    }),
+    ui: {
+      q: tv.q, onQ: function (e) { set({ q: e.target.value, page: 1 }); }, searchAria: 'Search ' + (o.title || 'table'),
+      panel: tv.panel, togglePanel: function () { set({ panel: !tv.panel, saving: false }); },
+      filterLabel: nF ? 'Filters · ' + nF : 'Filters', fBg: nF ? '#ECEEFB' : '#FFFFFF', fInk: nF ? '#283277' : '#323338', fBorder: nF ? '#3D4BC7' : '#C3C6D4',
+      hasActive: !!(q || tv.quick || nF || tv.sort), clear: function () { set({ q: '', quick: '', f: {}, sort: null, page: 1 }); if (o.clearSearch) o.clearSearch(); },
+      showing: n ? 'Showing ' + (off + 1) + '–' + (off + shown.length) + ' of ' + n + (n < o.items.length ? ' (filtered from ' + o.items.length + ')' : '') : 'No matching rows',
+      hasQuick: o.quick > -1 && qKeys.length > 1,
+      quick: [{ label: 'All', count: String(base.length), on: !tv.quick, pick: function () { set({ quick: '', page: 1 }); } }].concat(qKeys.map(function (k) { return { label: k, count: String(qc[k]), on: tv.quick === k, pick: function () { set({ quick: tv.quick === k ? '' : k, page: 1 }); } }; })).map(function (x) { return Object.assign(x, chip(x.on)); }),
+      fields: cols.map(function (c, ci) {
+        if (c.kind === 'none') return null;
+        const fl = tv.f[ci] || {};
+        const opts = c.kind === 'set' ? Object.keys(o.items.reduce(function (a, it) { const v = String(val(it, ci)); if (v) a[v] = 1; return a; }, {})).slice(0, 14) : [];
+        return { label: c.filterLabel || c.label, isText: c.kind === 'text', isNum: c.kind === 'num', isDate: c.kind === 'date', isSet: c.kind === 'set',
+          aria: c.label + ' contains', ariaMin: c.label + ' from', ariaMax: c.label + ' to', ariaFrom: c.label + ' from date', ariaTo: c.label + ' to date',
+          text: fl.text || '', min: fl.min || '', max: fl.max || '', from: fl.from || '', to: fl.to || '',
+          onText: function (e) { setF(ci, { text: e.target.value }); }, onMin: function (e) { setF(ci, { min: e.target.value }); }, onMax: function (e) { setF(ci, { max: e.target.value }); },
+          onFrom: function (e) { setF(ci, { from: e.target.value }); }, onTo: function (e) { setF(ci, { to: e.target.value }); },
+          opts: opts.map(function (v) { const on = (fl.set || []).indexOf(v) > -1; return Object.assign({ label: v, on: on, pick: function () { const st = (fl.set || []).slice(); if (on) st.splice(st.indexOf(v), 1); else st.push(v); setF(ci, { set: st }); } }, chip(on)); }) };
+      }).filter(Boolean),
+      saving: tv.saving, name: tv.name, onName: function (e) { set({ name: e.target.value }); },
+      startSave: function () { set({ saving: true, panel: false, name: '' }); }, cancelSave: function () { set({ saving: false }); },
+      saveView: function () { const nm = String(tv.name || '').trim() || 'View ' + (saved.length + 1); o.saveViews(write(saved.filter(function (v) { return v.name !== nm; }).concat([{ name: nm, q: tv.q, quick: tv.quick, f: tv.f, sort: tv.sort }]))); set({ saving: false, name: '' }); o.flash('Saved view “' + nm + '”. It stays on this device.'); },
+      hasViews: saved.length > 0,
+      views: saved.map(function (v) { const on = JSON.stringify({ q: v.q, quick: v.quick, f: v.f, sort: v.sort }) === cur; return Object.assign({ label: v.name, on: on, delAria: 'Delete saved view ' + v.name, apply: function () { set({ q: v.q || '', quick: v.quick || '', f: v.f || {}, sort: v.sort || null, page: 1 }); }, del: function () { o.saveViews(write(saved.filter(function (x) { return x.name !== v.name; }))); o.flash('Saved view deleted.'); } }, chip(on)); }),
+      hasPages: o.paged !== false && n > 10,
+      sizes: [10, 25, 50].map(function (z) { return Object.assign({ label: String(z), on: size === z, pick: function () { set({ size: z, page: 1 }); } }, chip(size === z)); }),
+      pages: Array.apply(null, { length: pages }).map(function (_, i) { const on = i + 1 === page; return { label: String(i + 1), current: on ? 'page' : 'false', bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', go: function () { set({ page: i + 1 }); } }; }),
+      prev: function () { set({ page: Math.max(1, page - 1) }); }, next: function () { set({ page: Math.min(pages, page + 1) }); },
+      prevInk: page > 1 ? '#323338' : '#9AA0B8', nextInk: page < pages ? '#323338' : '#9AA0B8'
+    }
+  };
+}
+
+const CHECK = { ok: ['Pass', '#DDF5EA', '#00663B'], warn: ['Check', '#FFF0DB', '#8A4B00'], stop: ['Held', '#FDE7EA', '#B42840'] };
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const st = {};
+    QUOTES.forEach(function (q) { st[q.id] = { status: q.status || 'open', doneText: q.doneText || '' }; });
+    this.state = { filter: 'all', sel: 'q1', st: st, backOpen: false, backNote: '', toast: '', tv: {}, views: readViews() };
+    this.timer = null;
+  }
+
+  componentWillUnmount() { if (this.timer) clearTimeout(this.timer); }
+
+  flash(msg) {
+    const self = this;
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(function () { self.setState({ toast: '' }); }, 2600);
+    return { toast: msg };
+  }
+
+  setTv(key, patch) { const all = Object.assign({}, this.state.tv || {}); all[key] = Object.assign({}, all[key] || {}, patch); this.setState({ tv: all }); }
+
+  close(id, status, text) {
+    const st = Object.assign({}, this.state.st);
+    st[id] = { status: status, doneText: text };
+    return { st: st, backOpen: false, backNote: '' };
+  }
+
+  renderVals() {
+    const self = this;
+    const s = this.state;
+    const info = QUOTES.map(function (q) {
+      const x = s.st[q.id];
+      const bad = q.checks.filter(function (c) { return c[0] !== 'ok'; }).length;
+      return { q: q, x: x, open: x.status === 'open', bad: bad, stop: q.checks.some(function (c) { return c[0] === 'stop'; }) };
+    });
+    const groups = {
+      all: info.filter(function (i) { return i.open; }),
+      look: info.filter(function (i) { return i.open && i.bad; }),
+      ready: info.filter(function (i) { return i.open && !i.bad; }),
+      sent: info.filter(function (i) { return !i.open; })
+    };
+    const LABELS = { all: 'Waiting', look: 'Needs a look', ready: 'Ready to send', sent: 'Done today' };
+    const chipOf = function (i) {
+      if (i.x.status === 'sent') return ['Quoted', '#00779E', '#FFFFFF'];
+      if (i.x.status === 'returned') return ['Sent back', '#FDE7EA', '#B42840'];
+      if (i.x.status === 'asked') return ['Asked customer', '#ECEEFB', '#283277'];
+      if (i.stop) return ['Needs info', '#FFCB00', '#323338'];
+      return ['Quote ready', '#8B47D0', '#FFFFFF'];
+    };
+    const V = {
+      filters: Object.keys(LABELS).map(function (k) {
+        const on = s.filter === k;
+        return { label: LABELS[k], count: String(groups[k].length), on: on, bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', border: on ? '#283277' : '#C3C6D4', countBg: on ? 'rgba(255,255,255,.2)' : '#ECEFF8', countInk: on ? '#FFFFFF' : '#323338', pick: function () { const tv = Object.assign({}, self.state.tv); tv['review/queue'] = Object.assign({}, tv['review/queue'] || {}, { page: 1, quick: '' }); self.setState({ filter: k, backOpen: false, tv: tv }); } };
+      }),
+      hasToast: !!s.toast, toast: s.toast, backOpen: s.backOpen, backNote: s.backNote,
+      onBackNote: function (e) { self.setState({ backNote: e.target.value }); },
+      yes: true
+    };
+    const VKEY = 'review/queue';
+    const value = function (i) { return i.q.kind === 'ask' ? '' : Math.min.apply(null, i.q.options.map(function (o) { return o.total; })); };
+    const view = stdView({
+      key: VKEY, title: 'quotes', items: groups[s.filter],
+      cols: [
+        { label: 'Customer', kind: 'text', get: function (i) { return i.q.name; } },
+        { label: 'Enquiry', kind: 'text', get: function (i) { return i.q.line; } },
+        { label: 'Status', kind: 'set', get: function (i) { return chipOf(i)[0]; } },
+        { label: 'Checks', kind: 'num', filterLabel: 'Checks to look at', get: function (i) { return i.bad; } },
+        { label: 'Owner', kind: 'set', get: function (i) { return i.q.owner; } },
+        { label: 'Quote (MYR)', align: 'right', kind: 'num', filterLabel: 'Lowest option (MYR)', get: value },
+        { label: 'Waiting', kind: 'num', filterLabel: 'Waiting (minutes)', get: function (i) { return i.q.mins; } }
+      ],
+      quick: 2,
+      searchFn: function (i) { return [i.q.name, i.q.trip, i.q.line, i.q.from, i.q.owner, chipOf(i)[0]].join(' '); },
+      tv: (s.tv || {})[VKEY], set: function (patch) { self.setTv(VKEY, patch); }, views: s.views,
+      saveViews: function (vs) { self.setState({ views: vs }); }, flash: function (m) { self.setState(self.flash(m)); }
+    });
+    V.tv = view.ui;
+    V.heads = view.heads;
+    V.list = view.list.map(function (x) {
+      const i = x.item;
+      const on = i.q.id === s.sel;
+      const c = chipOf(i);
+      const v = value(i);
+      return {
+        sl: x.sl, name: i.q.name, trip: i.q.trip, line: i.q.line, age: i.q.age, owner: i.q.owner, chip: c[0], chipBg: c[1], chipInk: c[2],
+        value: v === '' ? 'Asking first' : (i.q.options.length > 1 ? 'from ' : '') + fmt(v),
+        checks: i.bad ? i.bad + ' to check · ' + (i.q.checks.length - i.bad) + ' passed' : 'All ' + i.q.checks.length + ' checks passed',
+        checksInk: i.stop ? '#B42840' : i.bad ? '#8A4B00' : '#00663B',
+        current: on ? 'true' : 'false', bg: on ? '#F5F6FF' : '#FFFFFF', mark: on ? '#3D4BC7' : 'transparent',
+        pick: function () { self.setState({ sel: i.q.id, backOpen: false, backNote: '' }); }
+      };
+    });
+    V.listEmpty = view.count === 0;
+    V.emptyText = groups[s.filter].length ? 'No quotes match. Clear the search or filters to see all ' + groups[s.filter].length + '.' : 'Nothing here. New quotes land in this list as enquiries arrive.';
+    const cur = info.filter(function (i) { return i.q.id === s.sel; })[0];
+    V.hasSel = !!cur;
+    if (cur) {
+      const q = cur.q;
+      const text = q.kind === 'ask' ? q.text : quoteText(q);
+      const c = chipOf(cur);
+      const closedTone = cur.x.status === 'returned' ? ['#FDE7EA', '#B42840'] : ['#DDF5EA', '#00663B'];
+      V.sel = {
+        name: q.name, trip: q.trip, line: q.line, from: q.from, owner: q.owner, age: q.age,
+        chip: c[0], chipBg: c[1], chipInk: c[2],
+        checkList: q.checks.map(function (k) { const t = CHECK[k[0]]; return { label: t[0], bg: t[1], ink: t[2], text: k[1] }; }),
+        money: q.kind === 'ask' ? [] : q.options.map(function (o) { return { label: 'Option ' + o.n + ' · ' + o.star + ' star', cost: 'MYR ' + fmt(o.cost), sell: 'MYR ' + fmt(o.total), margin: 'MYR ' + fmt(o.total - o.cost) + ' · ' + Math.round((o.total - o.cost) * 100 / o.cost) + '%' }; }),
+        noMoney: q.kind === 'ask',
+        msgTitle: q.kind === 'ask' ? 'Question AI drafted for the customer' : 'WhatsApp message, exactly as it will be sent',
+        lines: text.split('\n').map(function (l) { return { segs: segs(l) }; }),
+        isOpen: cur.open, isClosed: !cur.open, doneText: cur.x.doneText, doneBg: closedTone[0], doneInk: closedTone[1],
+        approveLabel: q.kind === 'ask' ? 'Send question on WhatsApp' : 'Approve & send on WhatsApp',
+        waHref: 'https://wa.me/?text=' + encodeURIComponent(text),
+        approve: function () {
+          const t = nowHM();
+          if (q.kind === 'ask') self.setState(Object.assign(self.close(q.id, 'asked', 'Question sent at ' + t + '. The quote is built as soon as ' + q.name.split(' ')[0] + ' replies.'), self.flash('Question sent to ' + q.name + '.')));
+          else self.setState(Object.assign(self.close(q.id, 'sent', 'Approved by you and sent on WhatsApp at ' + t + '. Follow-ups start tomorrow.'), self.flash('Trip ' + q.trip + ' approved and sent.')));
+        },
+        copy: function () {
+          try { navigator.clipboard.writeText(text); self.setState(self.flash('Message copied. Paste it into WhatsApp.')); } catch (e) { self.setState(self.flash('Copy is blocked here. Use Approve & send instead.')); }
+        },
+        toggleBack: function () { self.setState({ backOpen: !self.state.backOpen }); },
+        sendBack: function () {
+          const note = self.state.backNote.trim();
+          if (!note) { self.setState(self.flash('Add a note so ' + q.owner + ' knows what to change.')); return; }
+          self.setState(Object.assign(self.close(q.id, 'returned', 'Sent back to ' + q.owner + ': “' + note + '”'), self.flash('Sent back to ' + q.owner + '.')));
+        }
+      };
+    } else V.sel = { checkList: [], money: [], lines: [] };
+    return V;
+  }
+}
+</script>
+</body>
+</html>

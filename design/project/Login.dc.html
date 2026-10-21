@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Flyland DMC — Sign in</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#ECEFF8}
+a{color:#3D4BC7}a:hover{color:#283277}
+.btn-p:hover{background:#283277 !important}
+.btn-s:hover{background:#ECEFF8 !important}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #3D4BC7;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-wrap: wrap; background: #ECEFF8; color: #323338; font-family: Figtree, 'Segoe UI', sans-serif; font-size: 15px; line-height: 22px">
+
+<div style="flex: 1 1 420px; display: flex; flex-direction: column; justify-content: space-between; gap: 32px; padding: clamp(28px, 5vw, 64px); box-sizing: border-box; background: #283277; color: #FFFFFF">
+<img src="/_blob/c96377ee37809ccd01d937b60c6b77c7" alt="Flyland DMC Services" style="display: block; height: 52px; width: auto; align-self: flex-start">
+<div style="display: flex; flex-direction: column; gap: 16px; max-width: 460px">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.2; font-weight: 600">From WhatsApp enquiry to final payment, in one place.</h1>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; color: #D5D9F5">
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C875" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M20 6 9 17l-5-5"></path></svg>Quotes built from your rates in seconds</li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C875" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M20 6 9 17l-5-5"></path></svg>Bookings, itineraries and guides in step</li>
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C875" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M20 6 9 17l-5-5"></path></svg>Proforma, advance, invoice and balance tracked</li>
+</ul>
+</div>
+<span style="font-size: 13px; color: #B9BFEA">Flyland DMC Services · Staff access only</span>
+</div>
+
+<main style="flex: 1 1 420px; display: flex; align-items: center; justify-content: center; padding: clamp(24px, 5vw, 64px) 16px; box-sizing: border-box">
+<div style="width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 24px; padding: clamp(24px, 4vw, 40px); box-sizing: border-box; border-radius: 20px; background: #FFFFFF; box-shadow: 0 8px 32px rgba(29,44,92,.10)">
+
+<sc-if value="{{isSignin}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-family: Poppins, sans-serif; font-size: 24px; line-height: 32px; font-weight: 600">Sign in</h2>
+<span style="color: #676879">Use your work email and password.</span>
+</div>
+<form onSubmit="{{signIn}}" style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="lg-email" style="font-size: 14px; font-weight: 600">Work email</label>
+<input id="lg-email" type="email" autocomplete="username" placeholder="name@company.com" value="{{email}}" onChange="{{onEmail}}" style="height: 48px; padding: 0 14px; box-sizing: border-box; border: 1px solid {{emailBorder}}; border-radius: 10px; font-family: inherit; font-size: 15px; color: #323338">
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><label for="lg-pass" style="font-size: 14px; font-weight: 600">Password</label><button type="button" onClick="{{goForgot}}" style="padding: 0; border: 0; background: transparent; color: #3D4BC7; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">Forgot password?</button></div>
+<div style="display: flex; align-items: center; height: 48px; border: 1px solid {{passBorder}}; border-radius: 10px; overflow: hidden">
+<input id="lg-pass" type="{{passType}}" autocomplete="current-password" value="{{pass}}" onChange="{{onPass}}" style="flex: 1; min-width: 0; height: 100%; padding: 0 14px; box-sizing: border-box; border: 0; font-family: inherit; font-size: 15px; color: #323338">
+<button type="button" onClick="{{toggleShow}}" aria-pressed="{{show}}" style="flex: none; height: 100%; padding: 0 14px; border: 0; border-left: 1px solid #E6E9EF; background: #FFFFFF; color: #3D4BC7; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">{{showLabel}}</button>
+</div>
+</div>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 32px; font-size: 14px; cursor: pointer"><input type="checkbox" checked="{{keep}}" onChange="{{toggleKeep}}" style="width: 18px; height: 18px; accent-color: #3D4BC7">Keep me signed in on this computer</label>
+<sc-if value="{{hasErr}}" hint-placeholder-val="{{false}}"><span role="alert" style="font-size: 14px; color: #B42840">{{err}}</span></sc-if>
+<button type="submit" class="btn-p" style="height: 48px; border: 0; border-radius: 10px; background: #3D4BC7; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">Sign in</button>
+</form>
+<span style="font-size: 13px; color: #676879">New to the team? Ask your admin to add you under Settings › Users.</span>
+</sc-if>
+
+<sc-if value="{{isCode}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-family: Poppins, sans-serif; font-size: 24px; line-height: 32px; font-weight: 600">Check your phone</h2>
+<span style="color: #676879">We sent a 6-digit code by SMS to the number ending 6789.</span>
+</div>
+<form onSubmit="{{verify}}" style="display: flex; flex-direction: column; gap: 16px">
+<label for="lg-code" style="font-size: 14px; font-weight: 600">Code</label>
+<input id="lg-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" value="{{code}}" onChange="{{onCode}}" style="height: 56px; padding: 0 14px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 10px; text-align: center; letter-spacing: 12px; font-family: inherit; font-size: 24px; font-weight: 700; color: #323338">
+<sc-if value="{{hasErr}}" hint-placeholder-val="{{false}}"><span role="alert" style="font-size: 14px; color: #B42840">{{err}}</span></sc-if>
+<button type="submit" class="btn-p" style="height: 48px; border: 0; border-radius: 10px; background: #3D4BC7; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">Verify</button>
+<button type="button" class="btn-s" onClick="{{goSignin}}" style="height: 44px; border: 1px solid #C3C6D4; border-radius: 10px; background: #FFFFFF; color: #323338; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer">Back</button>
+</form>
+</sc-if>
+
+<sc-if value="{{isDone}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span aria-hidden="true" style="display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 50%; background: #DDF5EA; color: #00854D"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+<h2 style="margin: 0; font-family: Poppins, sans-serif; font-size: 24px; line-height: 32px; font-weight: 600">You're signed in</h2>
+<span style="color: #676879">You'll see the menus for your department. Admins see everything.</span>
+</div>
+<a href="Main.dc.html" class="btn-p" style="display: inline-flex; align-items: center; justify-content: center; height: 48px; border-radius: 10px; background: #3D4BC7; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none">Open the dashboard</a>
+<button type="button" class="btn-s" onClick="{{goSignin}}" style="height: 44px; border: 1px solid #C3C6D4; border-radius: 10px; background: #FFFFFF; color: #323338; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer">Sign out</button>
+</sc-if>
+
+<sc-if value="{{isForgot}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-family: Poppins, sans-serif; font-size: 24px; line-height: 32px; font-weight: 600">Reset your password</h2>
+<span style="color: #676879">We'll email you a link to set a new one.</span>
+</div>
+<form onSubmit="{{sendReset}}" style="display: flex; flex-direction: column; gap: 16px">
+<label for="lg-remail" style="font-size: 14px; font-weight: 600">Work email</label>
+<input id="lg-remail" type="email" autocomplete="username" placeholder="name@company.com" value="{{email}}" onChange="{{onEmail}}" style="height: 48px; padding: 0 14px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 10px; font-family: inherit; font-size: 15px; color: #323338">
+<sc-if value="{{hasErr}}" hint-placeholder-val="{{false}}"><span role="alert" style="font-size: 14px; color: #B42840">{{err}}</span></sc-if>
+<sc-if value="{{resetSent}}" hint-placeholder-val="{{false}}"><span role="status" style="padding: 12px 14px; border-radius: 10px; background: #DDF5EA; color: #00663B; font-size: 14px; font-weight: 600">If {{email}} has an account, a reset link is on its way. It works for 30 minutes.</span></sc-if>
+<button type="submit" class="btn-p" style="height: 48px; border: 0; border-radius: 10px; background: #3D4BC7; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">Send reset link</button>
+<button type="button" class="btn-s" onClick="{{goSignin}}" style="height: 44px; border: 1px solid #C3C6D4; border-radius: 10px; background: #FFFFFF; color: #323338; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer">Back to sign in</button>
+</form>
+</sc-if>
+
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 'signin', email: '', pass: '', show: false, keep: true, code: '', err: '', field: '', resetSent: false };
+  }
+
+  renderVals() {
+    const self = this;
+    const s = this.state;
+    const fail = function (err, field) { self.setState({ err: err, field: field || '' }); };
+    return {
+      isSignin: s.step === 'signin', isCode: s.step === 'code', isDone: s.step === 'done', isForgot: s.step === 'forgot',
+      email: s.email, pass: s.pass, code: s.code, keep: s.keep, show: s.show,
+      passType: s.show ? 'text' : 'password', showLabel: s.show ? 'Hide' : 'Show',
+      hasErr: !!s.err, err: s.err, resetSent: s.resetSent,
+      emailBorder: s.field === 'email' ? '#B42840' : '#C3C6D4',
+      passBorder: s.field === 'pass' ? '#B42840' : '#C3C6D4',
+      onEmail: function (e) { self.setState({ email: e.target.value, err: '', field: '', resetSent: false }); },
+      onPass: function (e) { self.setState({ pass: e.target.value, err: '', field: '' }); },
+      onCode: function (e) { self.setState({ code: e.target.value.replace(/\D/g, '').slice(0, 6), err: '' }); },
+      toggleShow: function () { self.setState({ show: !self.state.show }); },
+      toggleKeep: function () { self.setState({ keep: !self.state.keep }); },
+      goForgot: function () { self.setState({ step: 'forgot', err: '', field: '', resetSent: false }); },
+      goSignin: function () { self.setState({ step: 'signin', err: '', field: '', code: '', pass: '', resetSent: false }); },
+      signIn: function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        if (!EMAIL_RE.test(self.state.email.trim())) { fail('Enter your work email, like name@company.com.', 'email'); return; }
+        if (self.state.pass.length < 8) { fail('Your password has at least 8 characters.', 'pass'); return; }
+        self.setState({ step: 'code', err: '', field: '', code: '' });
+      },
+      verify: function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        if (self.state.code.length !== 6) { fail('Enter all 6 digits from the SMS.'); return; }
+        self.setState({ step: 'done', err: '', pass: '' });
+      },
+      sendReset: function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        if (!EMAIL_RE.test(self.state.email.trim())) { fail('Enter your work email, like name@company.com.'); return; }
+        self.setState({ resetSent: true, err: '' });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Flyland DMC — Design system</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#ECEFF8}
+a{color:#3D4BC7}a:hover{color:#283277}
+button,select,input{font-family:inherit}
+.hov:hover{background:#DCDFEC !important}
+header a:focus-visible{outline-color:#FFFFFF}
+.row:hover{background:#F5F6F8 !important}
+.btn-p:hover{background:#283277 !important}
+.btn-s:hover{background:#DCDFEC !important}
+.btn-t:hover{background:#ECEFF8 !important}
+.btn-g:hover{background:#00663B !important}
+.btn-n:hover{background:#B42840 !important}
+.pill:hover{filter:brightness(.94)}
+.tile:hover{box-shadow:0 8px 24px rgba(29,44,92,.12);transform:translateY(-2px)}
+.tab:hover{background:#ECEFF8 !important}
+.field:focus-within{border-color:#3D4BC7 !important;box-shadow:0 0 0 1px #3D4BC7}
+.field input:focus-visible{outline:none}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid #3D4BC7;outline-offset:2px}
+@keyframes aiShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.ai-chip{background:linear-gradient(90deg,#3D4BC7,#8B47D0,#3D4BC7);background-size:200% 100%;animation:aiShimmer 3.2s linear infinite}
+.ai-card{background:linear-gradient(#FFFFFF,#FFFFFF) padding-box,linear-gradient(120deg,#3D4BC7,#8B47D0,#C2378F) border-box;border:1.5px solid transparent}
+.ai-think{background:linear-gradient(90deg,#ECEEFB 20%,#F3EAFC 50%,#ECEEFB 80%);background-size:200% 100%;animation:aiShimmer 1.4s linear infinite}
+@media (prefers-reduced-motion:reduce){.ai-chip,.ai-think{animation:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #ECEFF8; color: #323338; font-family: Figtree, 'Segoe UI', sans-serif; font-size: 14px; line-height: 20px; padding: 12px; box-sizing: border-box">
+<div style="max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px">
+
+<header style="background: #283277; color: #FFFFFF; border-radius: 16px; padding: clamp(24px, 4vw, 48px); display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; align-items: center; gap: 12px">
+<img src="/_blob/c96377ee37809ccd01d937b60c6b77c7" alt="Flyland DMC Services" style="display: block; height: 72px; width: auto">
+<span style="margin-left: auto; display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 14px; background: rgba(255,255,255,.14); font-size: 13px; font-weight: 600">v0.1 · Phase 1 UI</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px; max-width: 820px">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.12; font-weight: 600; letter-spacing: -0.02em">Design system</h1>
+<p style="margin: 0; font-size: 18px; line-height: 28px; color: #D5D8F0">The Flyland DMC Services product system. Bright and board-first in the spirit of monday.com, built for one job: move every WhatsApp enquiry from New to Won in as few clicks as possible. Colourful status labels you change in one click, calm white work surfaces, clear numbers.</p>
+</div>
+<nav aria-label="Sections" style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="#brand" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,.32); color: #FFFFFF; text-decoration: none; font-weight: 600">Brand</a>
+<a href="#colour" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,.32); color: #FFFFFF; text-decoration: none; font-weight: 600">Colour</a>
+<a href="#status" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,.32); color: #FFFFFF; text-decoration: none; font-weight: 600">Status labels</a>
+<a href="#type" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,.32); color: #FFFFFF; text-decoration: none; font-weight: 600">Typography</a>
+<a href="#shape" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,.32); color: #FFFFFF; text-decoration: none; font-weight: 600">Spacing &amp; shape</a>
+<a href="#components" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,.32); color: #FFFFFF; text-decoration: none; font-weight: 600">Components</a>
+<a href="#patterns" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,.32); color: #FFFFFF; text-decoration: none; font-weight: 600">Board patterns</a>
+<a href="#ai" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,.32); color: #FFFFFF; text-decoration: none; font-weight: 600">AI assist</a>
+<a href="#tables" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,.32); color: #FFFFFF; text-decoration: none; font-weight: 600">Data tables</a>
+<a href="#interaction" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,.32); color: #FFFFFF; text-decoration: none; font-weight: 600">Interaction</a>
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 16px; border-radius: 20px; background: #FFFFFF; color: #283277; text-decoration: none; font-weight: 600">Open dashboard<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg></a>
+</nav>
+</header>
+
+<section id="brand" aria-labelledby="b-h" style="background: #FFFFFF; border-radius: 16px; padding: clamp(20px, 3vw, 40px); display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 760px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">00</span>
+<h2 id="b-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 28px; line-height: 36px; font-weight: 600">Brand</h2>
+<p style="margin: 0; color: #676879">The Flyland DMC Services mark: an orbit of dots over a rounded wordmark. White on Flyland navy is the primary lockup and sits in the top bar of every screen. Use navy on white for light surfaces. Keep clear space of at least the big dot’s height on every side, and never stretch, recolour or add effects.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 10px">
+<div style="height: 240px; border-radius: 12px; background: #283277; display: flex; align-items: center; justify-content: center"><img src="/_blob/c96377ee37809ccd01d937b60c6b77c7" alt="Flyland DMC Services logo, white on navy" style="display: block; width: 62%; height: auto"></div>
+<figcaption style="display: flex; flex-direction: column"><span style="font-weight: 600">Primary · white on Flyland navy</span><span style="font-size: 13px; color: #676879">Top bar, login, WhatsApp profile banner</span></figcaption>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 10px">
+<div style="height: 240px; box-sizing: border-box; border-radius: 12px; background: #FFFFFF; border: 1px solid #E6E9EF; display: flex; align-items: center; justify-content: center"><img src="/_blob/a510307e02bc7b98a17ba8dbcf668340" alt="Flyland DMC Services logo, navy on white" style="display: block; width: 62%; height: auto"></div>
+<figcaption style="display: flex; flex-direction: column"><span style="font-weight: 600">On light · navy on white</span><span style="font-size: 13px; color: #676879">Documents, printouts, light pages</span></figcaption>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 10px">
+<div style="height: 240px; border-radius: 12px; background: #ECEFF8; display: flex; align-items: center; justify-content: center"><img src="/_blob/ef36933162effd63da10b799d7b94969" alt="Flyland DMC Services square app icon" style="display: block; width: 160px; height: 160px; border-radius: 36px; box-shadow: 0 8px 24px rgba(29,44,92,.18)"></div>
+<figcaption style="display: flex; flex-direction: column"><span style="font-weight: 600">Square icon</span><span style="font-size: 13px; color: #676879">WhatsApp profile picture, browser tab, phone home screen</span></figcaption>
+</figure>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; height: 120px; padding: 16px; box-sizing: border-box; border-radius: 12px; background: #283277; color: #FFFFFF"><span style="font-family: Poppins, sans-serif; font-size: 18px; font-weight: 600">Flyland navy</span><code style="font-size: 12px; color: #D5D8F0">#283277 · logo, top bar, hover</code></div>
+<div style="display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; height: 120px; padding: 16px; box-sizing: border-box; border-radius: 12px; background: #3D4BC7; color: #FFFFFF"><span style="font-family: Poppins, sans-serif; font-size: 18px; font-weight: 600">Action indigo</span><code style="font-size: 12px; color: #E4E7FA">#3D4BC7 · buttons, links, focus</code></div>
+<div style="display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; height: 120px; padding: 16px; box-sizing: border-box; border-radius: 12px; background: #FFFFFF; border: 1px solid #E6E9EF; color: #323338"><span style="font-family: Poppins, sans-serif; font-size: 18px; font-weight: 600">Logo white</span><code style="font-size: 12px; color: #676879">#FFFFFF · mark on navy</code></div>
+<div style="display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; height: 120px; padding: 16px; box-sizing: border-box; border-radius: 12px; background: #ECEFF8; color: #323338"><span style="font-family: Poppins, sans-serif; font-size: 18px; font-weight: 600">Cloud</span><code style="font-size: 12px; color: #676879">#ECEFF8 · app background</code></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; font-weight: 600">Top bar: the navy band carries the white lockup on every screen</span>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; min-height: 64px; padding: 8px 20px; box-sizing: border-box; border-radius: 12px; background: #283277">
+<img src="/_blob/c96377ee37809ccd01d937b60c6b77c7" alt="" style="display: block; height: 44px; width: auto">
+<span style="flex: 1 1 200px; max-width: 360px; display: flex; align-items: center; height: 38px; padding: 0 12px; box-sizing: border-box; border-radius: 8px; background: #FFFFFF; color: #676879; font-size: 13px">Search name, agent, destination or Trip ID</span>
+<span style="margin-left: auto; display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 16px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28); color: #FFFFFF; font-size: 13px; font-weight: 500"><span style="width: 8px; height: 8px; border-radius: 50%; background: #3DDC97"></span>WhatsApp · 2 lines connected</span>
+</div>
+</div>
+</section>
+
+<section id="colour" aria-labelledby="c-h" style="background: #FFFFFF; border-radius: 16px; padding: clamp(20px, 3vw, 40px); display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">01</span>
+<h2 id="c-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 28px; line-height: 36px; font-weight: 600">Colour</h2>
+<p style="margin: 0; color: #676879; max-width: 720px">Flyland navy carries the brand. A brighter indigo from the same hue does the clicking: buttons, links, focus and selection. Cool greys handle structure, and a soft blue-grey surrounds the white work surface. Feedback colours always come with an icon and a label.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h3 style="margin: 0; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 600">Brand &amp; action</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px">
+<div style="border: 1px solid #E6E9EF; border-radius: 12px; overflow: hidden"><div style="height: 72px; background: #283277; color: #FFFFFF; padding: 10px 12px; box-sizing: border-box; font-weight: 700">Aa 11.6:1</div><div style="padding: 10px 12px; display: flex; flex-direction: column"><span style="font-weight: 600">Flyland navy · brand, hover</span><code style="font-size: 12px; color: #676879">--brand · #283277</code></div></div>
+<div style="border: 1px solid #E6E9EF; border-radius: 12px; overflow: hidden"><div style="height: 72px; background: #3D4BC7; color: #FFFFFF; padding: 10px 12px; box-sizing: border-box; font-weight: 700">Aa 6.9:1</div><div style="padding: 10px 12px; display: flex; flex-direction: column"><span style="font-weight: 600">Action indigo · primary</span><code style="font-size: 12px; color: #676879">--primary · #3D4BC7</code></div></div>
+<div style="border: 1px solid #E6E9EF; border-radius: 12px; overflow: hidden"><div style="height: 72px; background: #DCE0F7"></div><div style="padding: 10px 12px; display: flex; flex-direction: column"><span style="font-weight: 600">Selected</span><code style="font-size: 12px; color: #676879">--primary-selected · #DCE0F7</code></div></div>
+<div style="border: 1px solid #E6E9EF; border-radius: 12px; overflow: hidden"><div style="height: 72px; background: #ECEEFB"></div><div style="padding: 10px 12px; display: flex; flex-direction: column"><span style="font-weight: 600">Primary tint</span><code style="font-size: 12px; color: #676879">--primary-tint · #ECEEFB</code></div></div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h3 style="margin: 0; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 600">Text &amp; surfaces</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px">
+<div style="border: 1px solid #E6E9EF; border-radius: 12px; overflow: hidden"><div style="height: 56px; background: #323338"></div><div style="padding: 10px 12px; display: flex; flex-direction: column"><span style="font-weight: 600">Text primary</span><code style="font-size: 12px; color: #676879">#323338 · 12.6:1</code></div></div>
+<div style="border: 1px solid #E6E9EF; border-radius: 12px; overflow: hidden"><div style="height: 56px; background: #676879"></div><div style="padding: 10px 12px; display: flex; flex-direction: column"><span style="font-weight: 600">Text secondary</span><code style="font-size: 12px; color: #676879">#676879 · 5.5:1</code></div></div>
+<div style="border: 1px solid #E6E9EF; border-radius: 12px; overflow: hidden"><div style="height: 56px; background: #ECEFF8"></div><div style="padding: 10px 12px; display: flex; flex-direction: column"><span style="font-weight: 600">App chrome</span><code style="font-size: 12px; color: #676879">#ECEFF8</code></div></div>
+<div style="border: 1px solid #E6E9EF; border-radius: 12px; overflow: hidden"><div style="height: 56px; background: #FFFFFF; border-bottom: 1px solid #E6E9EF"></div><div style="padding: 10px 12px; display: flex; flex-direction: column"><span style="font-weight: 600">Surface</span><code style="font-size: 12px; color: #676879">#FFFFFF</code></div></div>
+<div style="border: 1px solid #E6E9EF; border-radius: 12px; overflow: hidden"><div style="height: 56px; background: #F6F7FB"></div><div style="padding: 10px 12px; display: flex; flex-direction: column"><span style="font-weight: 600">Subtle</span><code style="font-size: 12px; color: #676879">#F6F7FB</code></div></div>
+<div style="border: 1px solid #E6E9EF; border-radius: 12px; overflow: hidden"><div style="height: 56px; background: #E6E9EF"></div><div style="padding: 10px 12px; display: flex; flex-direction: column"><span style="font-weight: 600">Divider</span><code style="font-size: 12px; color: #676879">#E6E9EF</code></div></div>
+<div style="border: 1px solid #E6E9EF; border-radius: 12px; overflow: hidden"><div style="height: 56px; background: #C3C6D4"></div><div style="padding: 10px 12px; display: flex; flex-direction: column"><span style="font-weight: 600">Control border</span><code style="font-size: 12px; color: #676879">#C3C6D4</code></div></div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h3 style="margin: 0; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 600">Feedback</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 10px; background: #DDF5EA; color: #00663B; font-weight: 600"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span style="display: flex; flex-direction: column">Positive<code style="font-size: 12px; font-weight: 500">#00854D · on #DDF5EA</code></span></div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 10px; background: #FFF0DB; color: #8A4B00; font-weight: 600"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg><span style="display: flex; flex-direction: column">Warning<code style="font-size: 12px; font-weight: 500">#8A4B00 · on #FFF0DB</code></span></div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 10px; background: #FDE7EA; color: #B42840; font-weight: 600"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5M12 16h.01"></path></svg><span style="display: flex; flex-direction: column">Negative<code style="font-size: 12px; font-weight: 500">#D83A52 · ink #B42840</code></span></div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 10px; background: #ECEEFB; color: #283277; font-weight: 600"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg><span style="display: flex; flex-direction: column">Info<code style="font-size: 12px; font-weight: 500">#283277 · on #ECEEFB</code></span></div>
+</div>
+</div>
+</section>
+
+<section id="status" aria-labelledby="s-h" style="background: #FFFFFF; border-radius: 16px; padding: clamp(20px, 3vw, 40px); display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 720px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">02</span>
+<h2 id="s-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 28px; line-height: 36px; font-weight: 600">Status labels</h2>
+<p style="margin: 0; color: #676879">The heart of the system. Nine lead statuses, each a solid colour that fills its board cell. These colours are reserved for status and nothing else. Every label carries its name, and text colour is picked per fill so all nine pass 4.5:1.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 260px">
+<span style="font-size: 12px; font-weight: 600; color: #676879">Try it: click the cell</span>
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) 150px; height: 48px; border: 1px solid #E6E9EF; border-radius: 6px; overflow: hidden">
+<span style="display: flex; align-items: center; padding: 0 14px; font-weight: 600">Amal Raj</span>
+<button class="pill" onClick="{{toggleDemo}}" aria-expanded="{{demoOpen}}" aria-label="{{demoAria}}" style="border: 0; background: {{demo.color}}; color: {{demo.text}}; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .2s ease, filter .15s ease">{{demo.label}}</button>
+</div>
+<sc-if value="{{demoOpen}}" hint-placeholder-val="{{false}}">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 8px; border-radius: 10px; background: #FFFFFF; box-shadow: 0 6px 20px rgba(29,44,92,.18)">
+<sc-for list="{{demoOptions}}" as="o" hint-placeholder-count="9">
+<button class="pill" onClick="{{o.pick}}" aria-current="{{o.current}}" style="height: 36px; padding: 0 8px; border: 0; border-radius: 6px; outline: {{o.ring}}; outline-offset: 2px; background: {{o.color}}; color: {{o.text}}; font-size: 12px; font-weight: 600; cursor: pointer">{{o.label}}</button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</div>
+<div style="border: 1px solid #E6E9EF; border-radius: 12px; overflow: hidden">
+<div style="overflow-x: auto">
+<div style="min-width: 760px">
+<div style="display: grid; grid-template-columns: 170px 120px 110px 90px minmax(240px, 1fr); height: 40px; align-items: center; background: #F6F7FB; font-size: 13px; font-weight: 500; color: #676879">
+<span style="padding: 0 16px">Label</span><span style="padding: 0 12px">Fill</span><span style="padding: 0 12px">Text</span><span style="padding: 0 12px">Contrast</span><span style="padding: 0 12px">Moves on when</span>
+</div>
+<sc-for list="{{statuses}}" as="st" hint-placeholder-count="9">
+<div class="row" style="display: grid; grid-template-columns: 170px 120px 110px 90px minmax(240px, 1fr); min-height: 52px; align-items: center; border-top: 1px solid #E6E9EF">
+<span style="padding: 6px 16px"><span style="display: flex; align-items: center; justify-content: center; height: 36px; border-radius: 6px; background: {{st.color}}; color: {{st.text}}; font-size: 13px; font-weight: 600">{{st.label}}</span></span>
+<code style="padding: 0 12px; font-size: 13px">{{st.color}}</code>
+<code style="padding: 0 12px; font-size: 13px">{{st.textName}}</code>
+<span style="padding: 0 12px; font-weight: 700; font-variant-numeric: tabular-nums">{{st.ratio}}</span>
+<span style="padding: 6px 12px; color: #676879">{{st.next}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; font-weight: 600">Pipeline summary (“battery”): segments in status order, 2 px gaps, counts inside, hover for detail</span>
+<div style="display: flex; gap: 2px; height: 36px; max-width: 760px">
+<span style="flex: 3 1 0; border-radius: 8px 0 0 8px; background: #66A8FF; color: #323338; font-weight: 700; display: flex; align-items: center; justify-content: center">3</span>
+<span style="flex: 2 1 0; background: #FFCB00; color: #323338; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span>
+<span style="flex: 2 1 0; background: #8B47D0; color: #FFFFFF; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span>
+<span style="flex: 3 1 0; background: #00779E; color: #FFFFFF; font-weight: 700; display: flex; align-items: center; justify-content: center">3</span>
+<span style="flex: 3 1 0; background: #FDAB3D; color: #323338; font-weight: 700; display: flex; align-items: center; justify-content: center">3</span>
+<span style="flex: 2 1 0; background: #C2378F; color: #FFFFFF; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span>
+<span style="flex: 2 1 0; background: #00C875; color: #323338; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span>
+<span style="flex: 2 1 0; background: #D83A52; color: #FFFFFF; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span>
+<span style="flex: 1 1 0; border-radius: 0 8px 8px 0; background: #6B6E80; color: #FFFFFF; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span>
+</div>
+</div>
+</section>
+
+<section id="type" aria-labelledby="t-h" style="background: #FFFFFF; border-radius: 16px; padding: clamp(20px, 3vw, 40px); display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 720px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">03</span>
+<h2 id="t-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 28px; line-height: 36px; font-weight: 600">Typography</h2>
+<p style="margin: 0; color: #676879">Poppins for headings and big numbers, with geometric and friendly shapes. Figtree for everything you read and type in, open and clear at 13–14 px. Prices and counts use tabular figures so columns line up.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<div style="flex: 1 1 300px; padding: 24px; border-radius: 12px; background: #F6F7FB; display: flex; flex-direction: column; gap: 8px"><span style="font-family: Poppins, sans-serif; font-size: 64px; line-height: 72px; font-weight: 600">Aa</span><span style="font-weight: 700">Poppins</span><span style="font-size: 13px; color: #676879">Display, headings, KPI numbers · 500 / 600 / 700</span></div>
+<div style="flex: 1 1 300px; padding: 24px; border-radius: 12px; background: #F6F7FB; display: flex; flex-direction: column; gap: 8px"><span style="font-size: 64px; line-height: 72px; font-weight: 600">Aa</span><span style="font-weight: 700">Figtree</span><span style="font-size: 13px; color: #676879">UI, body, tables, forms · 400 / 500 / 600 / 700</span></div>
+</div>
+<div style="border-top: 1px solid #E6E9EF">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; padding: 18px 0; border-bottom: 1px solid #E6E9EF"><code style="width: 190px; font-size: 12px; color: #676879">Display · Poppins 30/38 600</code><span style="font-family: Poppins, sans-serif; font-size: 30px; line-height: 38px; font-weight: 600">Good morning, Shabna</span></div>
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; padding: 18px 0; border-bottom: 1px solid #E6E9EF"><code style="width: 190px; font-size: 12px; color: #676879">KPI · Poppins 32/40 600</code><span style="font-family: Poppins, sans-serif; font-size: 32px; line-height: 40px; font-weight: 600; font-variant-numeric: tabular-nums">MYR 2,880</span></div>
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; padding: 18px 0; border-bottom: 1px solid #E6E9EF"><code style="width: 190px; font-size: 12px; color: #676879">H2 · Poppins 18/26 600</code><span style="font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">Follow-ups due today</span></div>
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; padding: 18px 0; border-bottom: 1px solid #E6E9EF"><code style="width: 190px; font-size: 12px; color: #676879">Group · Poppins 17/24 600</code><span style="font-family: Poppins, sans-serif; font-size: 17px; line-height: 24px; font-weight: 600; color: #3D4BC7">Travelling in October</span></div>
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; padding: 18px 0; border-bottom: 1px solid #E6E9EF"><code style="width: 190px; font-size: 12px; color: #676879">Body · Figtree 14/20 400</code><span>Malaysia 5N/6D — Langkawi 2N + Kuala Lumpur 3N, 2 adults + 1 child.</span></div>
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; padding: 18px 0; border-bottom: 1px solid #E6E9EF"><code style="width: 190px; font-size: 12px; color: #676879">Label · Figtree 14/20 600</code><span style="font-weight: 600">Amal Raj · Royal Sky Holidays</span></div>
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; padding: 18px 0; border-bottom: 1px solid #E6E9EF"><code style="width: 190px; font-size: 12px; color: #676879">Small · Figtree 13/18 400</code><span style="font-size: 13px; line-height: 18px; color: #676879">Parsed from WhatsApp today · 3 assumed</span></div>
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; padding: 18px 0"><code style="width: 190px; font-size: 12px; color: #676879">Overline · Figtree 12/16 600</code><span style="font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">Matched package</span></div>
+</div>
+</section>
+
+<section id="shape" aria-labelledby="sh-h" style="background: #FFFFFF; border-radius: 16px; padding: clamp(20px, 3vw, 40px); display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 720px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">04</span>
+<h2 id="sh-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 28px; line-height: 36px; font-weight: 600">Spacing, radius &amp; elevation</h2>
+<p style="margin: 0; color: #676879">A 4 px grid. Cards breathe at 20 px, page sections stack at 24 px, and board rows are dense: 48–54 px tall with 1 px dividers.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-weight: 600">Spacing</span>
+<div style="display: flex; align-items: center; gap: 12px"><code style="width: 56px; font-size: 12px; color: #676879">4</code><span style="width: 4px; height: 16px; border-radius: 2px; background: #3D4BC7"></span></div>
+<div style="display: flex; align-items: center; gap: 12px"><code style="width: 56px; font-size: 12px; color: #676879">8</code><span style="width: 8px; height: 16px; border-radius: 2px; background: #3D4BC7"></span></div>
+<div style="display: flex; align-items: center; gap: 12px"><code style="width: 56px; font-size: 12px; color: #676879">12</code><span style="width: 12px; height: 16px; border-radius: 2px; background: #3D4BC7"></span></div>
+<div style="display: flex; align-items: center; gap: 12px"><code style="width: 56px; font-size: 12px; color: #676879">16</code><span style="width: 16px; height: 16px; border-radius: 2px; background: #3D4BC7"></span></div>
+<div style="display: flex; align-items: center; gap: 12px"><code style="width: 56px; font-size: 12px; color: #676879">20</code><span style="width: 20px; height: 16px; border-radius: 2px; background: #3D4BC7"></span></div>
+<div style="display: flex; align-items: center; gap: 12px"><code style="width: 56px; font-size: 12px; color: #676879">24</code><span style="width: 24px; height: 16px; border-radius: 2px; background: #3D4BC7"></span></div>
+<div style="display: flex; align-items: center; gap: 12px"><code style="width: 56px; font-size: 12px; color: #676879">32</code><span style="width: 32px; height: 16px; border-radius: 2px; background: #3D4BC7"></span></div>
+<div style="display: flex; align-items: center; gap: 12px"><code style="width: 56px; font-size: 12px; color: #676879">48</code><span style="width: 48px; height: 16px; border-radius: 2px; background: #3D4BC7"></span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-weight: 600">Radius</span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 6px; align-items: center"><span style="width: 64px; height: 48px; border-radius: 4px; border: 2px solid #3D4BC7; background: #ECEEFB"></span><code style="font-size: 12px; color: #676879">4 · chips</code></div>
+<div style="display: flex; flex-direction: column; gap: 6px; align-items: center"><span style="width: 64px; height: 48px; border-radius: 6px; border: 2px solid #3D4BC7; background: #ECEEFB"></span><code style="font-size: 12px; color: #676879">6 · status</code></div>
+<div style="display: flex; flex-direction: column; gap: 6px; align-items: center"><span style="width: 64px; height: 48px; border-radius: 8px; border: 2px solid #3D4BC7; background: #ECEEFB"></span><code style="font-size: 12px; color: #676879">8 · controls</code></div>
+<div style="display: flex; flex-direction: column; gap: 6px; align-items: center"><span style="width: 64px; height: 48px; border-radius: 12px; border: 2px solid #3D4BC7; background: #ECEEFB"></span><code style="font-size: 12px; color: #676879">12 · cards</code></div>
+<div style="display: flex; flex-direction: column; gap: 6px; align-items: center"><span style="width: 64px; height: 48px; border-radius: 16px; border: 2px solid #3D4BC7; background: #ECEEFB"></span><code style="font-size: 12px; color: #676879">16 · panel</code></div>
+<div style="display: flex; flex-direction: column; gap: 6px; align-items: center"><span style="width: 64px; height: 48px; border-radius: 24px; border: 2px solid #3D4BC7; background: #ECEEFB"></span><code style="font-size: 12px; color: #676879">pill</code></div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-weight: 600">Elevation</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 16px; border-radius: 12px; background: #ECEFF8">
+<div style="height: 64px; border-radius: 10px; background: #FFFFFF; border: 1px solid #E6E9EF; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600">0 · flat + border</div>
+<div style="height: 64px; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(29,44,92,.06); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600">1 · work panel</div>
+<div style="height: 64px; border-radius: 10px; background: #FFFFFF; box-shadow: 0 8px 24px rgba(29,44,92,.12); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600">2 · hover lift</div>
+<div style="height: 64px; border-radius: 10px; background: #FFFFFF; box-shadow: 0 6px 20px rgba(29,44,92,.18); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600">3 · popover</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="components" aria-labelledby="co-h" style="background: #FFFFFF; border-radius: 16px; padding: clamp(20px, 3vw, 40px); display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 720px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">05</span>
+<h2 id="co-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 28px; line-height: 36px; font-weight: 600">Components</h2>
+<p style="margin: 0; color: #676879">Every control is a real button, link or input with a 2 px blue focus ring. Hover, press and switch them here.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 32px 40px">
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h3 style="margin: 0; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 600">Buttons</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+<button class="btn-p" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border: 0; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .15s ease"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New enquiry</button>
+<button class="btn-s" style="height: 40px; padding: 0 16px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #323338; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .15s ease">Ask customer</button>
+<button class="btn-t" style="height: 40px; padding: 0 14px; border: 0; border-radius: 8px; background: transparent; color: #323338; font-size: 14px; font-weight: 500; cursor: pointer; transition: background .15s ease">Filter</button>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+<button class="btn-g" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border: 0; border-radius: 8px; background: #00854D; color: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .15s ease"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg>Send on WhatsApp</button>
+<button class="btn-n" style="height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: #D83A52; color: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .15s ease">Mark Lost</button>
+<button disabled style="height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: #ECEFF8; color: #9699A6; font-size: 14px; font-weight: 600; cursor: not-allowed">Below margin floor</button>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+<button class="btn-p" style="height: 32px; padding: 0 12px; border: 0; border-radius: 6px; background: #3D4BC7; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">Small 32</button>
+<button class="btn-p" style="height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer">Medium 40</button>
+<button class="btn-p" style="height: 48px; padding: 0 22px; border: 0; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-size: 15px; font-weight: 600; cursor: pointer">Large 48</button>
+<button class="btn-t" aria-label="More actions" style="width: 44px; height: 44px; border: 0; border-radius: 8px; background: transparent; color: #323338; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg></button>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h3 style="margin: 0; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 600">Inputs</h3>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Lead passenger
+<span class="field" style="display: flex; align-items: center; height: 40px; padding: 0 12px; border: 1px solid #C3C6D4; border-radius: 8px"><input value="{{fieldVal}}" onChange="{{onField}}" style="flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; font-size: 14px; color: #323338"></span>
+<span style="font-weight: 400; color: #676879">As written on the passport</span>
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Travel date
+<span style="display: flex; align-items: center; height: 40px; padding: 0 12px; border: 1px solid #D83A52; border-radius: 8px; box-shadow: 0 0 0 1px #D83A52"><input value="12 Sep 2026" aria-invalid="true" style="flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; font-size: 14px; color: #323338"></span>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-weight: 500; color: #B42840"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5M12 16h.01"></path></svg>Date must be in the future</span>
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Quote currency
+<select style="height: 40px; padding: 0 12px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; font-size: 14px; color: #323338"><option>MYR · Malaysian ringgit</option><option>INR · Indian rupee</option><option>AED · UAE dirham</option><option>USD · US dollar</option></select>
+</label>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h3 style="margin: 0; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 600">Selection</h3>
+<label style="display: inline-flex; align-items: center; gap: 12px; min-height: 44px; cursor: pointer; font-weight: 500">
+<input type="checkbox" role="switch" checked="{{switchOn}}" onChange="{{toggleSwitch}}" style="position: absolute; opacity: 0; width: 1px; height: 1px">
+<span aria-hidden="true" style="position: relative; width: 44px; height: 26px; flex: none; border-radius: 13px; background: {{switchBg}}; transition: background .2s ease"><span style="position: absolute; top: 3px; left: {{switchKnob}}; width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: left .2s ease"></span></span>
+Auto-send high-confidence quotes · <strong>{{switchLabel}}</strong></label>
+<label style="display: inline-flex; align-items: center; gap: 12px; min-height: 44px; cursor: pointer; font-weight: 500"><input type="checkbox" checked="{{checkOn}}" onChange="{{toggleCheck}}" style="width: 20px; height: 20px; margin: 0; accent-color: #3D4BC7; cursor: pointer">Call Anjali Pillai (+4 h task)</label>
+<div role="group" aria-label="Show" style="display: inline-flex; align-self: flex-start; padding: 3px; border-radius: 8px; background: #ECEFF8; gap: 2px">
+<sc-for list="{{segs}}" as="k" hint-placeholder-count="3">
+<button onClick="{{k.pick}}" aria-pressed="{{k.on}}" style="height: 36px; padding: 0 14px; border: 0; border-radius: 6px; background: {{k.bg}}; color: #323338; font-size: 13px; font-weight: {{k.weight}}; box-shadow: {{k.shadow}}; cursor: pointer; transition: background .15s ease">{{k.label}}</button>
+</sc-for>
+</div>
+<div role="tablist" aria-label="Board views" style="display: flex; gap: 4px; border-bottom: 1px solid #E6E9EF">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+<button class="tab" role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="height: 44px; padding: 0 14px; border: 0; border-bottom: 2px solid {{t.line}}; margin-bottom: -1px; border-radius: 6px 6px 0 0; background: transparent; color: {{t.ink}}; font-size: 14px; font-weight: 600; cursor: pointer">{{t.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h3 style="margin: 0; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 600">Chips &amp; flags</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+<span style="padding: 2px 10px; border-radius: 4px; background: #ECEFF8; font-weight: 700">3★</span>
+<span style="padding: 2px 10px; border-radius: 4px; background: #ECEFF8; font-weight: 700">4★</span>
+<span style="padding: 2px 8px; border-radius: 4px; background: #ECEFF8; font-size: 12px; font-weight: 600">Kuala Lumpur</span>
+<span style="padding: 0 6px; border-radius: 4px; background: #FFF4CC; color: #6B4E00; font-size: 11px; line-height: 18px; font-weight: 600">Tentative</span>
+<span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 11px; background: #FFF4CC; color: #6B4E00; font-size: 12px; font-weight: 600">Sample data</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+<span style="display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: 13px; background: #DDF5EA; color: #00663B; font-size: 12px; font-weight: 700"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>High</span>
+<span style="display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: 13px; background: #FFF0DB; color: #8A4B00; font-size: 12px; font-weight: 700"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg>Assumed</span>
+<span style="display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: 13px; background: #FDE7EA; color: #B42840; font-size: 12px; font-weight: 700"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>Missing</span>
+<span style="display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: 13px; background: #ECEEFB; color: #283277; font-size: 12px; font-weight: 700"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Confirmed</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+<span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: #FFF4CC; color: #6B4E00; font-size: 12px; font-weight: 700">Gold · 8%</span>
+<span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: #ECEFF8; color: #323338; font-size: 12px; font-weight: 700">Silver · 10%</span>
+<span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: #F6F7FB; color: #676879; font-size: 12px; font-weight: 700; border: 1px solid #E6E9EF">Standard · 12%</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 13px; background: #DDF5EA; color: #00663B; font-size: 12px; font-weight: 600">Auto WhatsApp</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 13px; background: #EEF0F6; color: #323338; font-size: 12px; font-weight: 600">Task</span>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h3 style="margin: 0; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 600">Avatars</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center">
+<span role="img" aria-label="Shabna K" style="width: 24px; height: 24px; border-radius: 50%; background: #283277; color: #FFFFFF; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">SK</span>
+<span role="img" aria-label="Rahul M" style="width: 32px; height: 32px; border-radius: 50%; background: #7E3CC4; color: #FFFFFF; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">RM</span>
+<span role="img" aria-label="Fathima N" style="width: 40px; height: 40px; border-radius: 50%; background: #00796B; color: #FFFFFF; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">FN</span>
+<span role="img" aria-label="Royal Sky Holidays" style="width: 40px; height: 40px; border-radius: 10px; background: #283277; color: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">RS</span>
+<span style="display: inline-flex; align-items: center">
+<span role="img" aria-label="Shabna K" style="width: 32px; height: 32px; border-radius: 50%; background: #283277; color: #FFFFFF; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #FFFFFF">SK</span>
+<span role="img" aria-label="Rahul M" style="width: 32px; height: 32px; margin-left: -8px; border-radius: 50%; background: #7E3CC4; color: #FFFFFF; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #FFFFFF">RM</span>
+<span role="img" aria-label="Fathima N" style="width: 32px; height: 32px; margin-left: -8px; border-radius: 50%; background: #00796B; color: #FFFFFF; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #FFFFFF">FN</span>
+<span style="width: 32px; height: 32px; margin-left: -8px; border-radius: 50%; background: #ECEFF8; color: #323338; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #FFFFFF">+1</span>
+</span>
+</div>
+<span style="font-size: 13px; color: #676879">People are round, agent companies are rounded squares. Initials are always white on a 4.5:1 fill.</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h3 style="margin: 0; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 600">KPI tile &amp; target meter</h3>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<button class="tile" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 16px; border-radius: 12px; border: 1px solid #E6E9EF; background: #FFFFFF; color: #323338; text-align: left; cursor: pointer; transition: box-shadow .18s ease, transform .18s ease">
+<span style="width: 36px; height: 36px; margin-bottom: 8px; border-radius: 10px; background: #F1E8FB; color: #6A2FB0; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg></span>
+<span style="font-family: Poppins, sans-serif; font-size: 28px; line-height: 36px; font-weight: 600">2</span>
+<span style="font-weight: 600">Quotes to review</span>
+</button>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 12px; background: #F6F7FB">
+<span style="font-size: 13px; font-weight: 600; color: #676879">Parsed, no edit</span>
+<span style="font-family: Poppins, sans-serif; font-size: 24px; line-height: 32px; font-weight: 600">76%</span>
+<div style="position: relative; height: 8px; border-radius: 4px; background: #E1E4EE"><div style="width: 76%; height: 100%; border-radius: 4px; background: #3D4BC7"></div><span style="position: absolute; left: 80%; top: -4px; width: 2px; height: 16px; background: #323338"></span></div>
+<span style="font-size: 12px; color: #676879">Tick = 80% target</span>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h3 style="margin: 0; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 600">WhatsApp thread</h3>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 12px; background: #F2F4F8">
+<div style="align-self: flex-start; max-width: 80%; padding: 8px 12px 4px; border-radius: 12px 12px 12px 4px; background: #FFFFFF; box-shadow: 0 1px 1px rgba(29,44,92,.08); display: flex; flex-direction: column"><span style="font-size: 12px; font-weight: 700; color: #283277">Royal Sky Holidays</span><span>option 2 ok book</span><span style="align-self: flex-end; font-size: 11px; color: #676879">11:08</span></div>
+<span style="align-self: center; padding: 4px 12px; border-radius: 12px; background: #FFF0DB; color: #8A4B00; font-size: 12px; font-weight: 600">Reply received · sequence paused</span>
+<div style="align-self: flex-end; max-width: 80%; padding: 8px 12px 4px; border-radius: 12px 12px 4px 12px; background: #DCF5E7; box-shadow: 0 1px 1px rgba(29,44,92,.08); display: flex; flex-direction: column"><span style="font-size: 12px; font-weight: 700; color: #00663B">Shabna K · via app</span><span>Confirmed, sharing booking details now.</span><span style="align-self: flex-end; font-size: 11px; color: #676879">11:10</span></div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h3 style="margin: 0; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 600">Inline feedback &amp; tooltip</h3>
+<span role="status" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 15px; background: #DDF5EA; color: #00663B; font-size: 13px; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Amal Raj moved to Quoted · logged 10:42</span>
+<div style="display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 10px; background: #FFF0DB; color: #8A4B00; font-size: 13px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg><span><strong>Rate missing for one item.</strong> The quote goes to review and that line shows “on request”.</span></div>
+<span style="align-self: flex-start; padding: 6px 10px; border-radius: 6px; background: #323338; color: #FFFFFF; font-size: 12px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,.18)">Quote ready · 2 enquiries · 10%</span>
+</div>
+
+</div>
+</section>
+
+<section id="patterns" aria-labelledby="p-h" style="background: #FFFFFF; border-radius: 16px; padding: clamp(20px, 3vw, 40px); display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 720px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">06</span>
+<h2 id="p-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 28px; line-height: 36px; font-weight: 600">Board patterns</h2>
+<p style="margin: 0; color: #676879">A group is a coloured title with a 6 px edge running down its rows. Status cells fill edge to edge. Each group ends with an “add” row and a summary row whose battery shows the group’s status mix.</p>
+</div>
+<div style="overflow-x: auto">
+<div style="min-width: 860px">
+<div style="display: flex; align-items: center; gap: 8px; height: 40px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3D4BC7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg><span style="font-family: Poppins, sans-serif; font-size: 17px; font-weight: 600; color: #3D4BC7">Travelling in October</span><span style="font-size: 13px; color: #676879">3 enquiries · 6 pax</span></div>
+<div style="border: 1px solid #E6E9EF; border-left: 0; border-radius: 6px; overflow: hidden">
+<div style="display: grid; grid-template-columns: 6px minmax(220px, 2fr) 72px 150px minmax(140px, 1.2fr) 120px; height: 40px; align-items: center; font-size: 13px; font-weight: 500; color: #676879"><span style="height: 100%; background: #3D4BC7"></span><span style="padding: 0 16px">Enquiry</span><span style="text-align: center">Owner</span><span style="text-align: center">Status</span><span style="padding: 0 12px">Destination</span><span style="padding: 0 12px; text-align: right">Quote</span></div>
+<div class="row" style="display: grid; grid-template-columns: 6px minmax(220px, 2fr) 72px 150px minmax(140px, 1.2fr) 120px; height: 48px; align-items: stretch; border-top: 1px solid #E6E9EF"><span style="background: #3D4BC7"></span><span style="display: flex; align-items: center; padding: 0 16px; font-weight: 600; border-right: 1px solid #E6E9EF">Kiran Babu</span><span style="display: flex; align-items: center; justify-content: center; border-right: 1px solid #E6E9EF"><span style="width: 28px; height: 28px; border-radius: 50%; background: #00796B; color: #FFFFFF; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">FN</span></span><span style="display: flex; align-items: center; justify-content: center; background: #FDAB3D; font-size: 13px; font-weight: 600">Follow-up</span><span style="display: flex; align-items: center; padding: 0 12px; border-right: 1px solid #E6E9EF">Dubai</span><span style="display: flex; align-items: center; justify-content: flex-end; padding: 0 12px; font-weight: 600">AED 3,180</span></div>
+<div class="row" style="display: grid; grid-template-columns: 6px minmax(220px, 2fr) 72px 150px minmax(140px, 1.2fr) 120px; height: 48px; align-items: stretch; border-top: 1px solid #E6E9EF"><span style="background: #3D4BC7"></span><span style="display: flex; align-items: center; padding: 0 16px; font-weight: 600; border-right: 1px solid #E6E9EF">Sneha Joseph</span><span style="display: flex; align-items: center; justify-content: center; border-right: 1px solid #E6E9EF"><span style="width: 28px; height: 28px; border-radius: 50%; background: #283277; color: #FFFFFF; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">SK</span></span><span style="display: flex; align-items: center; justify-content: center; background: #6B6E80; color: #FFFFFF; font-size: 13px; font-weight: 600">Expired</span><span style="display: flex; align-items: center; padding: 0 12px; border-right: 1px solid #E6E9EF">Penang</span><span style="display: flex; align-items: center; justify-content: flex-end; padding: 0 12px; font-weight: 600">MYR 2,390</span></div>
+<div class="row" style="display: grid; grid-template-columns: 6px minmax(220px, 2fr) 72px 150px minmax(140px, 1.2fr) 120px; height: 48px; align-items: stretch; border-top: 1px solid #E6E9EF"><span style="background: #3D4BC7"></span><span style="display: flex; align-items: center; padding: 0 16px; font-weight: 600; border-right: 1px solid #E6E9EF">Farhan Ali</span><span style="display: flex; align-items: center; justify-content: center; border-right: 1px solid #E6E9EF"><span style="width: 28px; height: 28px; border-radius: 50%; background: #00796B; color: #FFFFFF; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">FN</span></span><span style="display: flex; align-items: center; justify-content: center; background: #D83A52; color: #FFFFFF; font-size: 13px; font-weight: 600">Lost</span><span style="display: flex; align-items: center; padding: 0 12px; border-right: 1px solid #E6E9EF">Kuala Lumpur</span><span style="display: flex; align-items: center; justify-content: flex-end; padding: 0 12px; font-weight: 600">AED 4,120</span></div>
+<div style="display: grid; grid-template-columns: 6px minmax(0, 1fr); height: 44px; border-top: 1px solid #E6E9EF"><span style="background: #C3C8F2"></span><span style="display: flex; align-items: center; padding: 0 16px; color: #676879">+ Add enquiry</span></div>
+<div style="display: grid; grid-template-columns: 6px minmax(220px, 2fr) 72px 150px minmax(140px, 1.2fr) 120px; height: 44px; align-items: center; border-top: 1px solid #E6E9EF; background: #FBFBFD"><span></span><span></span><span></span><span style="display: flex; gap: 2px; height: 24px; padding: 0 8px"><span style="flex: 1 1 0; border-radius: 3px; background: #FDAB3D"></span><span style="flex: 1 1 0; border-radius: 3px; background: #D83A52"></span><span style="flex: 1 1 0; border-radius: 3px; background: #6B6E80"></span></span><span></span><span style="padding: 0 12px; text-align: right; font-size: 13px; color: #676879">3 quoted</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="ai" aria-labelledby="ai-h" style="background: #FFFFFF; border-radius: 16px; padding: clamp(20px, 3vw, 40px); display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 720px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">07</span>
+<h2 id="ai-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 28px; line-height: 36px; font-weight: 600">AI assist</h2>
+<p style="margin: 0; color: #676879">AI reads, checks and drafts; people decide and send. Anything AI wrote or suggested wears the gradient, so staff always know where a value came from.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">AI chip</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-height: 64px; padding: 16px; border-radius: 12px; background: #F6F7FB">
+<span class="ai-chip" style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 13px; color: #FFFFFF; font-size: 12px; font-weight: 700"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 5.6L19.5 9.5l-5.7 1.9L12 17l-1.8-5.6L4.5 9.5l5.7-1.9z"></path></svg>AI read this enquiry</span>
+<span class="ai-chip" style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 13px; color: #FFFFFF; font-size: 12px; font-weight: 700">AI</span>
+<span class="ai-chip" style="height: 24px; padding: 0 10px; border-radius: 12px; color: #FFFFFF; font-size: 11px; font-weight: 700; line-height: 24px">AI: check amount</span>
+</div>
+<span style="color: #676879">Marks AI output. White on indigo to purple, 5.4:1 or better. The shimmer is slow and stops under reduced motion.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">AI card</span>
+<div class="ai-card" style="display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; border-radius: 12px">
+<span class="ai-chip" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 13px; color: #FFFFFF; font-size: 12px; font-weight: 700"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 5.6L19.5 9.5l-5.7 1.9L12 17l-1.8-5.6L4.5 9.5l5.7-1.9z"></path></svg>AI suggestions</span>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: 13px"><span style="flex: 1 1 200px">Adya is not available. Alternative in Langkawi: Holiday Villa (4★, MYR 380 per night).</span><span class="btn-s" style="display: inline-flex; align-items: center; height: 34px; padding: 0 12px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; font-size: 13px; font-weight: 600">Quote 4 star</span></div>
+</div>
+<span style="color: #676879">Summaries, suggestions, reminders. Every line offers at most one action, and the action only fills a draft.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">AI working</span>
+<div class="ai-think" role="img" aria-label="AI working state" style="display: flex; align-items: center; gap: 10px; padding: 16px; border-radius: 12px; color: #283277; font-weight: 600"><span class="ai-chip" style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 13px; color: #FFFFFF; font-size: 12px; font-weight: 700">AI</span>Reading the enquiry and checking each detail…</div>
+<span style="color: #676879">Shown while AI reads or drafts, never longer than a couple of seconds. The result replaces it in place.</span>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Where it appears</span><span style="color: #676879">Enquiry summary, quote tips, hotel alternatives, itinerary check, payment reminders, odd guide expenses and the dashboard’s insights.</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Show the confidence</span><span style="color: #676879">Read-backs show a confidence figure and name anything assumed, such as a missing date or child age.</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Nothing sends itself</span><span style="color: #676879">AI never sends to a customer, guide or supplier, and never changes a price. A person presses Send.</span></div>
+</div>
+</section>
+
+<section id="tables" aria-labelledby="tb-h" style="background: #FFFFFF; border-radius: 16px; padding: clamp(20px, 3vw, 40px); display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 760px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">08</span>
+<h2 id="tb-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 28px; line-height: 36px; font-weight: 600">Data tables</h2>
+<p style="margin: 0; color: #676879">Every list in the software uses the same table, so staff learn it once. It is live in the back office, Masters, Settings and the Leads board.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 18px; border: 1px solid #E6E9EF; border-radius: 12px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<span style="flex: 1 1 220px; max-width: 320px; display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; color: #676879"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>Search</span>
+<button style="display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 8px; border: 1px solid #3D4BC7; background: #ECEEFB; color: #283277; font-size: 13px; font-weight: 600"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"></path></svg>Filters · 1</button>
+<button style="display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 8px; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338; font-size: 13px; font-weight: 600">Save view</button>
+<button style="height: 34px; padding: 0 12px; border: 0; background: transparent; color: #3D4BC7; font-size: 13px; font-weight: 600">Clear</button>
+<span style="margin-left: auto; font-size: 13px; color: #676879">Showing 1–10 of 20 (filtered from 29)</span>
+</div>
+<div role="group" aria-label="Quick filter example" style="display: flex; flex-wrap: wrap; gap: 6px"><button style="display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338; font-size: 13px; font-weight: 600">All<span style="font-size: 12px; opacity: .8">29</span></button><button style="display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid #283277; background: #283277; color: #FFFFFF; font-size: 13px; font-weight: 600">Confirmed<span style="font-size: 12px; opacity: .8">20</span></button><button style="display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338; font-size: 13px; font-weight: 600">Requested<span style="font-size: 12px; opacity: .8">4</span></button><button style="display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338; font-size: 13px; font-weight: 600">Declined<span style="font-size: 12px; opacity: .8">3</span></button><button style="display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338; font-size: 13px; font-weight: 600">Pending<span style="font-size: 12px; opacity: .8">2</span></button></div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px"><span style="font-size: 13px; color: #676879">Saved views</span><span style="display: inline-flex; align-items: center; height: 30px; border: 1px solid #283277; border-radius: 15px; background: #283277; color: #FFFFFF; font-size: 13px; font-weight: 600; padding: 0 12px">Confirmed this month ×</span><span style="display: inline-flex; align-items: center; height: 30px; border: 1px solid #C3C6D4; border-radius: 15px; font-size: 13px; font-weight: 600; padding: 0 12px">Langkawi hotels ×</span></div>
+<div style="overflow-x: auto; border: 1px solid #E6E9EF; border-radius: 10px"><div style="min-width: 760px">
+<div style="display: grid; grid-template-columns: 68px minmax(200px, 1.4fr) minmax(220px, 1.6fr) 150px 130px; align-items: center; min-height: 40px; background: #F6F7FB; border-bottom: 1px solid #E6E9EF; font-size: 13px; font-weight: 600; color: #676879"><span style="padding: 0 12px; text-align: right">Sl. No.</span><span style="padding: 0 12px">Supplier <span style="font-size: 10px; color: #3D4BC7">▲</span></span><span style="padding: 0 12px">Service</span><span style="padding: 0 12px">Dates</span><span style="padding: 0 12px">Status</span></div>
+<div style="display: grid; grid-template-columns: 68px minmax(200px, 1.4fr) minmax(220px, 1.6fr) 150px 130px; align-items: center; min-height: 46px; border-bottom: 1px solid #E6E9EF"><span style="padding: 0 12px; text-align: right; color: #676879">1</span><span style="padding: 0 12px; font-weight: 600">Adya Hotel</span><span style="padding: 0 12px">Deluxe king × 1, B&amp;B</span><span style="padding: 0 12px">23 – 25 Nov</span><span style="padding: 0 12px"><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: #DDF5EA; color: #00663B; font-size: 12px; font-weight: 700">Confirmed</span></span></div><div style="display: grid; grid-template-columns: 68px minmax(200px, 1.4fr) minmax(220px, 1.6fr) 150px 130px; align-items: center; min-height: 46px; border-bottom: 1px solid #E6E9EF"><span style="padding: 0 12px; text-align: right; color: #676879">2</span><span style="padding: 0 12px; font-weight: 600">Holiday Villa Beach Resort</span><span style="padding: 0 12px">Deluxe Room × 1, B&amp;B</span><span style="padding: 0 12px">23 – 25 Nov</span><span style="padding: 0 12px"><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: #DDF5EA; color: #00663B; font-size: 12px; font-weight: 700">Confirmed</span></span></div><div style="display: grid; grid-template-columns: 68px minmax(200px, 1.4fr) minmax(220px, 1.6fr) 150px 130px; align-items: center; min-height: 46px; border-bottom: 1px solid #E6E9EF"><span style="padding: 0 12px; text-align: right; color: #676879">3</span><span style="padding: 0 12px; font-weight: 600">IBIS KLCC</span><span style="padding: 0 12px">Standard room (Window room) × 1</span><span style="padding: 0 12px">25 – 28 Nov</span><span style="padding: 0 12px"><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: #DDF5EA; color: #00663B; font-size: 12px; font-weight: 700">Confirmed</span></span></div>
+</div></div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px"><span style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #676879">Rows per page <span style="min-width: 36px; height: 30px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; background: #283277; color: #FFFFFF; font-weight: 600">10</span><span style="min-width: 36px; height: 30px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; border: 1px solid #C3C6D4; color: #323338; font-weight: 600">25</span><span style="min-width: 36px; height: 30px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; border: 1px solid #C3C6D4; color: #323338; font-weight: 600">50</span></span><span style="display: flex; gap: 4px"><span style="width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #C3C6D4; border-radius: 6px; color: #9AA0B8">‹</span><span style="width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; background: #283277; color: #FFFFFF; font-weight: 600">1</span><span style="width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #C3C6D4; border-radius: 6px; font-weight: 600">2</span><span style="width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #C3C6D4; border-radius: 6px">›</span></span></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Every list gets it</span><span style="color: #676879">Search, Sl. No., quick filter, detailed filter, saved views, sort and pagination. Statements with a running balance (P&amp;L, bank, agent statements) stay plain.</span></div><div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Sl. No. counts what you see</span><span style="color: #676879">Numbers follow the current filter, sort and page: page 2 starts at 11. Grouped lists number in display order.</span></div><div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Search looks everywhere</span><span style="color: #676879">One box searches every text column, including the grey sub-lines. Typing resets to page 1.</span></div><div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Quick filter: one click</span><span style="color: #676879">Chips come from the table’s status column with live counts. Click again or “All” to clear.</span></div><div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Detailed filter: per column</span><span style="color: #676879">Text columns get “contains”, numbers and money get from–to, dates get a date range, statuses get pick-many chips. The button shows how many are on.</span></div><div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Saved views</span><span style="color: #676879">Name the current search, filters and sort and get it back in one click. Views live on the device; delete with ×.</span></div><div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Sort from the header</span><span style="color: #676879">Click a column name: ascending ▲, again for descending ▼, a third time to clear. Money in different currencies sorts by its MYR value.</span></div><div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Pagination</span><span style="color: #676879">10 rows by default; 25 or 50 on request. The count always says what is shown and what was filtered out.</span></div>
+</div>
+</section>
+
+<section id="interaction" aria-labelledby="i-h" style="background: #FFFFFF; border-radius: 16px; padding: clamp(20px, 3vw, 40px); display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 720px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">09</span>
+<h2 id="i-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 28px; line-height: 36px; font-weight: 600">Interaction principles</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">One click to change status</span><span style="color: #676879">Status cells open the label picker in place. The change logs with time and user and confirms inline. No modal.</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Everything filters everything</span><span style="color: #676879">KPI tiles, battery segments, agent rows and owner avatars all filter the same table, and a chip shows what’s active with one-click clear.</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Calm motion</span><span style="color: #676879">150–200 ms ease for colour and lift, 300 ms for bars. Hover lifts a tile 2 px; rows tint #F5F6F8.</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Visible focus, real targets</span><span style="color: #676879">2 px blue ring with 2 px offset on every control. Nav and primary actions are at least 44 px; board rows 48–54 px.</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Colour is never alone</span><span style="color: #676879">Statuses carry their names, flags carry icons, chart series carry legends and tooltips.</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px; background: #F6F7FB"><span style="font-weight: 700">Staff-only numbers stay hidden</span><span style="color: #676879">Cost, margin and margin % sit behind a switch and never reach the WhatsApp preview.</span></div>
+</div>
+</section>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":6400}}'>
+const STATUSES = [
+  { key: 'new', label: 'New', color: '#66A8FF', text: '#323338', ratio: '5.2:1', next: 'Parsed from WhatsApp' },
+  { key: 'info', label: 'Needs info', color: '#FFCB00', text: '#323338', ratio: '8.3:1', next: 'Customer answers the missing field' },
+  { key: 'ready', label: 'Quote ready', color: '#8B47D0', text: '#FFFFFF', ratio: '5.4:1', next: 'Staff approves or auto-send rule passes' },
+  { key: 'quoted', label: 'Quoted', color: '#00779E', text: '#FFFFFF', ratio: '5.1:1', next: 'Customer replies or a follow-up fires' },
+  { key: 'follow', label: 'Follow-up', color: '#FDAB3D', text: '#323338', ratio: '6.6:1', next: 'Reply, expiry, or the sequence ends' },
+  { key: 'nego', label: 'Negotiation', color: '#C2378F', text: '#FFFFFF', ratio: '5.0:1', next: 'Executive marks Won or Lost' },
+  { key: 'won', label: 'Won', color: '#00C875', text: '#323338', ratio: '5.7:1', next: 'Hands over to booking' },
+  { key: 'lost', label: 'Lost', color: '#D83A52', text: '#FFFFFF', ratio: '4.5:1', next: 'Lost reason recorded' },
+  { key: 'expired', label: 'Expired', color: '#6B6E80', text: '#FFFFFF', ratio: '5.0:1', next: 'Staff closes as Lost or follows up' }
+];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { demo: 'ready', demoOpen: false, switchOn: false, checkOn: true, seg: 'all', tab: 'table', fieldVal: 'Amal Raj' };
+  }
+
+  renderVals() {
+    const self = this;
+    const s = this.state;
+    const demo = STATUSES.filter(function (x) { return x.key === s.demo; })[0];
+    const segDefs = [{ key: 'all', label: 'All' }, { key: 'task', label: 'Tasks' }, { key: 'auto', label: 'Auto WhatsApp' }];
+    const tabDefs = [{ key: 'table', label: 'Main table' }, { key: 'kanban', label: 'Kanban' }, { key: 'follow', label: 'Follow-ups' }];
+    return {
+      statuses: STATUSES.map(function (x) { return Object.assign({}, x, { textName: x.text === '#FFFFFF' ? 'White' : 'Ink #323338' }); }),
+      demo: demo,
+      demoOpen: s.demoOpen,
+      demoAria: 'Status ' + demo.label + '. Change status',
+      toggleDemo: function () { self.setState({ demoOpen: !self.state.demoOpen }); },
+      demoOptions: STATUSES.map(function (o) {
+        return Object.assign({}, o, {
+          current: o.key === s.demo,
+          ring: o.key === s.demo ? '2px solid #323338' : '2px solid transparent',
+          pick: function () { self.setState({ demo: o.key, demoOpen: false }); }
+        });
+      }),
+      switchOn: s.switchOn,
+      switchBg: s.switchOn ? '#3D4BC7' : '#C3C6D4',
+      switchKnob: s.switchOn ? '21px' : '3px',
+      switchLabel: s.switchOn ? 'On' : 'Off',
+      toggleSwitch: function () { self.setState({ switchOn: !self.state.switchOn }); },
+      checkOn: s.checkOn,
+      toggleCheck: function () { self.setState({ checkOn: !self.state.checkOn }); },
+      segs: segDefs.map(function (k) {
+        const on = s.seg === k.key;
+        return Object.assign({}, k, { on: on, bg: on ? '#FFFFFF' : 'transparent', weight: on ? 600 : 500, shadow: on ? '0 1px 3px rgba(29,44,92,.16)' : 'none', pick: function () { self.setState({ seg: k.key }); } });
+      }),
+      tabs: tabDefs.map(function (t) {
+        const on = s.tab === t.key;
+        return Object.assign({}, t, { on: on, line: on ? '#3D4BC7' : 'transparent', ink: on ? '#283277' : '#676879', pick: function () { self.setState({ tab: t.key }); } });
+      }),
+      fieldVal: s.fieldVal,
+      onField: function (e) { self.setState({ fieldVal: e.target.value }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

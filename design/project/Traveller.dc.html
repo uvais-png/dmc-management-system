@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Malaysia trip — Flyland</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#F2F4F8}</style>
+</helmet>
+<div style="min-height: 100vh; background: #F2F4F8; color: #323338; font-family: Figtree, 'Segoe UI', sans-serif; font-size: 15px; line-height: 22px">
+<div style="background: #283277; color: #FFFFFF">
+<div style="max-width: 520px; margin: 0 auto; padding: 20px 20px 64px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<img src="/_blob/c96377ee37809ccd01d937b60c6b77c7" alt="Flyland DMC Services" style="display: block; height: 36px; width: auto; align-self: flex-start">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 26px; line-height: 34px; font-weight: 600">Your Malaysia trip</h1>
+<span style="color: #D5D9F5">Trip {{tripId}} · {{guest}}</span>
+<span style="color: #D5D9F5">{{dates}} · {{pax}}</span>
+</div>
+</div>
+</div>
+
+<div style="max-width: 520px; margin: -44px auto 0; padding: 0 16px 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+
+<section aria-labelledby="tv-now-h" style="display: flex; flex-direction: column; gap: 12px; padding: 18px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.10)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<h2 id="tv-now-h" style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #3D4BC7">Today · {{todayTitle}}</h2>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #00663B; font-weight: 600"><span style="width: 8px; height: 8px; border-radius: 50%; background: #00C875"></span>Live from your guide</span>
+</div>
+<sc-if value="{{hasNext}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; color: #676879">Next at {{next.time}}</span>
+<strong style="font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">{{next.name}}</strong>
+</div>
+</sc-if>
+<sc-if value="{{todayDone}}" hint-placeholder-val="{{false}}"><strong style="font-family: Poppins, sans-serif; font-size: 18px; font-weight: 600">Today's plan is complete. Rest well!</strong></sc-if>
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="flex: 1; height: 8px; border-radius: 4px; background: #E6E9EF"><div style="width: {{todayPct}}%; height: 100%; border-radius: 4px; background: #00854D"></div></div>
+<span style="font-size: 13px; font-weight: 700">{{todayProgress}}</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; padding-top: 12px; border-top: 1px solid #E6E9EF">
+<span aria-hidden="true" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: #3D4BC7; color: #FFFFFF; font-weight: 700">{{guide.initials}}</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-size: 13px; color: #676879">Your guide today</span><strong>{{guide.name}}</strong></div>
+<a href="{{guide.tel}}" aria-label="Call your guide" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 22px; background: #ECEEFB; color: #3D4BC7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2z"></path></svg></a>
+<a href="{{guide.wa}}" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp your guide" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 22px; background: #DDF5EA; color: #00663B"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"></path></svg></a>
+</div>
+</section>
+
+<section aria-labelledby="tv-plan-h" style="display: flex; flex-direction: column; gap: 10px">
+<h2 id="tv-plan-h" style="margin: 8px 4px 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">Day by day</h2>
+<sc-for list="{{days}}" as="d" hint-placeholder-count="6">
+<div style="border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08); border: 1.5px solid {{d.border}}; overflow: hidden">
+<button onClick="{{d.toggle}}" aria-expanded="{{d.open}}" style="width: 100%; display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 12px 14px 12px 16px; border: 0; background: transparent; text-align: left; font-family: inherit; color: #323338; cursor: pointer">
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span style="display: flex; align-items: center; gap: 8px"><strong style="font-size: 16px">{{d.title}}</strong><sc-if value="{{d.isToday}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 11px; background: #3D4BC7; color: #FFFFFF; font-size: 12px; font-weight: 700">Today</span></sc-if></span>
+<span style="font-size: 13px; line-height: 18px; color: #676879">{{d.sub}}</span>
+</span>
+<span style="flex: none; font-size: 13px; font-weight: 700; color: {{d.sumInk}}">{{d.summary}}</span>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#676879" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; transform: rotate({{d.rot}}deg)"><path d="m6 9 6 6 6-6"></path></svg>
+</button>
+<sc-if value="{{d.open}}" hint-placeholder-val="{{false}}">
+<ol style="margin: 0; padding: 4px 16px 16px; list-style: none; display: flex; flex-direction: column; gap: 14px; border-top: 1px solid #E6E9EF">
+<sc-for list="{{d.items}}" as="it" hint-placeholder-count="3">
+<li style="display: flex; gap: 12px; padding-top: 12px">
+<span style="flex: none; width: 44px; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: {{it.timeInk}}">{{it.time}}</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font-weight: 600; text-decoration: {{it.deco}}">{{it.name}}</span>
+<sc-if value="{{it.hasDesc}}" hint-placeholder-val="{{true}}"><span style="font-size: 13px; line-height: 19px; color: #676879">{{it.desc}}</span></sc-if>
+<sc-if value="{{it.hasChip}}" hint-placeholder-val="{{false}}"><span style="align-self: flex-start; display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 11px; background: {{it.chipBg}}; color: {{it.chipInk}}; font-size: 12px; font-weight: 700">{{it.chip}}</span></sc-if>
+<sc-if value="{{it.hasPhotos}}" hint-placeholder-val="{{false}}"><div style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{it.photos}}" as="ph" hint-placeholder-count="2"><img src="{{ph.src}}" alt="{{ph.alt}}" style="display: block; width: 72px; height: 72px; object-fit: cover; border-radius: 10px"></sc-for></div></sc-if>
+</div>
+</li>
+</sc-for>
+</ol>
+</sc-if>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="tv-ho-h" style="display: flex; flex-direction: column; gap: 10px; padding: 18px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<h2 id="tv-ho-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">Your hotels</h2>
+<sc-for list="{{hotels}}" as="h" hint-placeholder-count="2">
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #E6E9EF">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column"><strong>{{h.name}}, {{h.city}}</strong><span style="font-size: 13px; line-height: 18px; color: #676879">{{h.room}} · Bed and Breakfast</span><span style="font-size: 13px; line-height: 18px; color: #676879">{{h.stay}}</span></div>
+<a href="{{h.map}}" target="_blank" rel="noopener noreferrer" aria-label="{{h.mapAria}}" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 22px; background: #ECEEFB; color: #3D4BC7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg></a>
+</div>
+</sc-for>
+<span style="font-size: 13px; line-height: 19px; color: #676879">Check-in is from 3 pm and check-out is before 12 pm. Some hotels ask for a security deposit at check-in; it is refunded when you check out.</span>
+</section>
+
+<section aria-labelledby="tv-pay-h" style="display: flex; flex-direction: column; gap: 8px; padding: 18px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<h2 id="tv-pay-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">Payment and vouchers</h2>
+<span style="display: inline-flex; align-items: center; gap: 8px; color: #00663B; font-weight: 700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Paid in full. Thank you!</span>
+<span style="font-size: 14px; color: #676879">Your hotel vouchers and invoice were sent to you on WhatsApp.</span>
+</section>
+
+<section aria-labelledby="tv-help-h" style="display: flex; flex-direction: column; gap: 12px; padding: 18px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<h2 id="tv-help-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">Need help?</h2>
+<div style="display: flex; gap: 10px">
+<a href="{{opsTel}}" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; height: 48px; border: 1px solid #C3C6D4; border-radius: 12px; color: #323338; font-weight: 700; text-decoration: none">Call Flyland</a>
+<a href="{{opsWa}}" target="_blank" rel="noopener noreferrer" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; height: 48px; border-radius: 12px; background: #00854D; color: #FFFFFF; font-weight: 700; text-decoration: none">WhatsApp Flyland</a>
+</div>
+<span style="font-size: 13px; color: #676879">In an emergency in Malaysia, dial 999.</span>
+</section>
+
+<p style="margin: 4px 0 0; text-align: center; font-size: 13px; color: #676879">Flyland DMC Services · This page updates as your guide ticks each stop.</p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2300}}'>
+const GSTORE = 'flyland-guide-app-v1';
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const WEEK = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const START = -3;
+const OPS_PHONE = '+60320000000';
+const GUIDES = { faizal: { name: 'Faizal Rahman', phone: '' }, ravi: { name: 'Ravi Kumar', phone: '+60123456789' } };
+const CHECKIN_DESC = '(check in time is 3pm, guests have to wait at the hotel lobby till check in time)';
+const DAYS = [
+  { n: 1, city: 'Langkawi', guides: ['faizal'], items: [
+    { id: 'd1a', time: '10:00', name: 'LGK Airport to LGK Hotel', desc: 'Arrival & Transfer', status: 'done', doneAt: '10:22' },
+    { id: 'd1b', time: '15:00', name: 'Checkin to hotel', desc: CHECKIN_DESC, status: 'done', doneAt: '15:04' },
+    { id: 'd1c', time: '16:00', name: 'Tour to Eagle square and under water world', desc: 'Duration: 6 hrs)', status: 'done', doneAt: '16:10' },
+    { id: 'd1d', time: '17:00', name: 'Underwater world', desc: 'With entry tickets', status: 'done', doneAt: '17:15' }
+  ] },
+  { n: 2, city: 'Langkawi', guides: ['faizal'], items: [
+    { id: 'd2a', time: '09:00', name: 'Island Hopping boat ride SIC', desc: '- (Dayang bunting island conservation fees of RM 20/Adult and RM 10/Child is not included, Guest need to pay the same if accessing fresh water lake)', status: 'done', doneAt: '09:12' },
+    { id: 'd2b', time: '13:00', name: 'Tour to Oriental village', desc: '(Duration: 5 hrs -  Including pick up and return)', status: 'done', doneAt: '13:05' },
+    { id: 'd2c', time: '14:00', name: 'Oriental Village', desc: 'Skycab, Skybridge, Skyglide, Skyrex, Skydome and 3D Art Museum with entry tickets', status: 'done', doneAt: '14:20' }
+  ] },
+  { n: 3, city: 'Langkawi to Kuala Lumpur', guides: ['faizal', 'ravi'], items: [
+    { id: 'd3x', time: '09:30', name: 'Checkout from hotel', desc: '(hotel check-out is before 12:00 PM)', status: 'done', doneAt: '09:40' },
+    { id: 'd3y', time: '10:30', name: 'LGK Hotel to LGK Airport', desc: 'Arrival & Transfer', status: 'done', doneAt: '10:35' },
+    { id: 'd3a', time: '14:05', name: 'KL Airport to Kuala Lumpur Hotel', desc: 'Arrival & Transfer', status: 'done', doneAt: '14:12' },
+    { id: 'd3b', time: '15:00', name: 'Checkin to hotel', desc: CHECKIN_DESC, status: 'done', doneAt: '15:08' },
+    { id: 'd3c', time: '18:00', name: 'Tour to Bukit Bintang at evening', desc: '(Duration: 2 hrs)', status: 'done', doneAt: '19:05' }
+  ] },
+  { n: 4, city: 'Batu Caves and Genting Highlands', guides: ['ravi'], items: [
+    { id: 'd4a', time: '08:30', name: 'Pickup from hotel lobby', desc: 'Tour to Batu caves and genting highlands (Duration: 8 hrs)', status: 'done', doneAt: '08:34' },
+    { id: 'd4b', time: '09:15', name: 'Batu Caves', desc: 'Temple caves at the top of 272 steps. Please cover knees and shoulders; sarongs can be rented at the entrance.' },
+    { id: 'd4c', time: '11:30', name: 'Genting cable car', desc: 'Cable car tickets (2 way)' },
+    { id: 'd4d', time: '12:30', name: 'Genting Highlands free time', desc: 'Lunch is not included. Meet your guide at the cable car station by 16:00.' },
+    { id: 'd4e', time: '17:30', name: 'Drop at hotel', desc: '' }
+  ] },
+  { n: 5, city: 'Kuala Lumpur', guides: ['ravi'], items: [
+    { id: 'd5a', time: '09:00', name: 'Kuala lumpur Half Day City tour', desc: '(Twin tower photostop, KL Tower photostop, National Mosque, National Monument. Independence Square, Choclate outlet and Kings Palace) (Duration: 4 hrs)' },
+    { id: 'd5b', time: '13:00', name: 'Drop at hotel', desc: '' }
+  ] },
+  { n: 6, city: 'Kuala Lumpur, going home', guides: ['ravi'], items: [
+    { id: 'd6a', time: '10:00', name: 'Checkout from hotel', desc: '(hotel check-out is before 12:00 PM)' },
+    { id: 'd6b', time: '10:30', name: 'Drop off to KL Airport', desc: 'Transfer With Putrajaya & Drop off to Airport' }
+  ] }
+];
+const HOTELS = [
+  { name: 'Holiday Villa', city: 'Langkawi', room: 'Deluxe Room', from: 1, to: 3, q: 'Holiday Villa Beach Resort Langkawi' },
+  { name: 'IBIS KLCC', city: 'Kuala Lumpur', room: 'Standard room (Window room)', from: 3, to: 6, q: 'ibis Kuala Lumpur City Centre' }
+];
+
+function today0() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+function dayDate(n) { const d = today0(); d.setDate(d.getDate() + START + n - 1); return d; }
+function dMed(d) { return WEEK[d.getDay()] + ', ' + d.getDate() + ' ' + MONTHS[d.getMonth()]; }
+function initials(s) { const w = String(s).trim().split(/\s+/); return (w[0][0] + (w[1] ? w[1][0] : '')).toUpperCase(); }
+
+function readGuide() {
+  const out = {};
+  try {
+    const raw = window.localStorage.getItem(GSTORE);
+    const d = raw ? JSON.parse(raw) : null;
+    const t = d && Array.isArray(d.trips) ? d.trips.filter(function (x) { return x.id === '4499476'; })[0] : null;
+    if (t) t.days.forEach(function (day) { day.items.forEach(function (i) { out[i.id] = i; }); });
+  } catch (e) { /* no live data on this device: show the plan as shared */ }
+  return out;
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: { 4: true }, live: readGuide() };
+    this.onStorage = this.onStorage.bind(this);
+  }
+
+  componentDidMount() { try { window.addEventListener('storage', this.onStorage); } catch (e) { /* ignore */ } }
+  componentWillUnmount() { try { window.removeEventListener('storage', this.onStorage); } catch (e) { /* ignore */ } }
+  onStorage(e) { if (e && e.key === GSTORE) this.setState({ live: readGuide() }); }
+
+  renderVals() {
+    const self = this;
+    const s = this.state;
+    const todayN = 1 - START;
+    const merged = DAYS.map(function (d) {
+      return Object.assign({}, d, { items: d.items.map(function (i) {
+        const g = s.live[i.id];
+        const status = g ? g.status : i.status || (d.n < todayN ? 'done' : 'planned');
+        return Object.assign({}, i, { status: status, doneAt: g ? g.doneAt : i.doneAt || '', photos: g && g.photos ? g.photos : [] });
+      }) });
+    });
+    const today = merged.filter(function (d) { return d.n === todayN; })[0];
+    const next = today.items.filter(function (i) { return i.status === 'planned'; })[0];
+    const handled = today.items.filter(function (i) { return i.status !== 'planned'; }).length;
+    const guide = GUIDES[today.guides[today.guides.length - 1]];
+    return {
+      tripId: '4499476', guest: 'Arun Menon', pax: '2 adults, 1 child',
+      dates: dMed(dayDate(1)) + ' – ' + dMed(dayDate(6)),
+      todayTitle: 'Day ' + todayN + ' of 6',
+      hasNext: !!next, todayDone: !next, next: next ? { time: next.time, name: next.name } : { time: '', name: '' },
+      todayPct: Math.round(handled * 100 / today.items.length), todayProgress: handled + ' of ' + today.items.length + ' done',
+      guide: { name: guide.name, initials: initials(guide.name), tel: 'tel:' + guide.phone, wa: 'https://wa.me/' + guide.phone.replace(/\D/g, '') },
+      opsTel: 'tel:' + OPS_PHONE, opsWa: 'https://wa.me/' + OPS_PHONE.replace(/\D/g, ''),
+      days: merged.map(function (d) {
+        const open = !!s.open[d.n];
+        const done = d.items.filter(function (i) { return i.status !== 'planned'; }).length;
+        const isToday = d.n === todayN;
+        const firstOpen = isToday ? d.items.filter(function (i) { return i.status === 'planned'; })[0] : null;
+        return {
+          title: 'Day ' + d.n + ' · ' + dMed(dayDate(d.n)), isToday: isToday, open: open, rot: open ? 180 : 0,
+          sub: d.city + ' · Guide ' + d.guides.map(function (k) { return GUIDES[k].name; }).join(', then '),
+          summary: done === d.items.length ? 'Done' : done ? done + '/' + d.items.length : d.n > todayN ? 'Coming up' : '',
+          sumInk: done === d.items.length ? '#00663B' : '#676879',
+          border: isToday ? '#3D4BC7' : '#FFFFFF',
+          toggle: function () { const o = Object.assign({}, self.state.open); o[d.n] = !o[d.n]; self.setState({ open: o }); },
+          items: d.items.map(function (i) {
+            const isNext = !!(firstOpen && firstOpen.id === i.id);
+            const chip = i.status === 'done' ? 'Done ' + i.doneAt : i.status === 'skipped' ? 'Skipped' : isNext ? 'Up next' : '';
+            return {
+              time: i.time, name: i.name, desc: i.desc, hasDesc: !!i.desc,
+              timeInk: i.status === 'planned' ? '#323338' : '#676879', deco: i.status === 'skipped' ? 'line-through' : 'none',
+              hasChip: !!chip, chip: chip,
+              chipBg: i.status === 'done' ? '#DDF5EA' : isNext ? '#3D4BC7' : '#F0F1F5',
+              chipInk: i.status === 'done' ? '#00663B' : isNext ? '#FFFFFF' : '#4B4D5C',
+              hasPhotos: i.photos.length > 0,
+              photos: i.photos.map(function (p, pi) { return { src: p.src, alt: 'Photo ' + (pi + 1) + ' from ' + i.name }; })
+            };
+          })
+        };
+      }),
+      hotels: HOTELS.map(function (h) {
+        return { name: h.name, city: h.city, room: h.room, stay: dMed(dayDate(h.from)) + ' to ' + dMed(dayDate(h.to)), map: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(h.q), mapAria: 'Directions to ' + h.name };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Flyland DMC — Suppliers</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#ECEFF8}
+a{color:#3D4BC7}a:hover{color:#283277}
+button,select,input,textarea{font-family:inherit}
+header a:focus-visible,header button:focus-visible{outline-color:#FFFFFF}
+.row:hover{background:#F5F6F8 !important}
+.btn-p:hover{background:#283277 !important}
+.btn-g:hover{background:#00663B !important}
+.btn-s:hover{background:#ECEFF8 !important}
+.tab:hover{background:#ECEFF8 !important}
+.card:hover{box-shadow:0 6px 16px rgba(29,44,92,.14) !important}
+.del:hover{background:#FDE7EA !important;color:#B42840 !important}
+.cell:hover{border-color:#C3C6D4 !important}
+.cell:focus{border-color:#3D4BC7 !important;background:#FFFFFF !important;outline:none;box-shadow:0 0 0 1px #3D4BC7}
+.search:focus-within{border-color:#3D4BC7 !important;box-shadow:0 0 0 1px #3D4BC7}
+.search input:focus-visible{outline:none}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #3D4BC7;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #ECEFF8; color: #323338; font-family: Figtree, 'Segoe UI', sans-serif; font-size: 14px; line-height: 20px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 8px 20px; box-sizing: border-box; background: #283277; color: #FFFFFF">
+<a href="Main.dc.html" style="display: flex; align-items: center; text-decoration: none"><img src="/_blob/c96377ee37809ccd01d937b60c6b77c7" alt="Flyland DMC Services" style="display: block; height: 48px; width: auto"></a>
+<div style="display: flex; align-items: center; gap: 4px; margin-left: auto">
+<span role="img" aria-label="Signed in as Admin" style="width: 36px; height: 36px; border-radius: 50%; background: #C2378F; color: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #FFFFFF">AD</span>
+</div>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; padding: 12px 12px 12px 8px">
+<dc-import name="Sidebar" active="suppliers" collapsed="{{yes}}" hint-size="60px,640px"></dc-import>
+
+<main style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border-radius: 16px; box-shadow: 0 1px 3px rgba(29,44,92,.06); padding: 24px clamp(16px, 2.4vw, 28px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 26px; line-height: 34px; font-weight: 600">Suppliers</h1>
+<p style="margin: 0; color: #676879; max-width: 640px">Hotels, transport and activity providers, with their contracts and the rates you agreed.</p>
+</div>
+<button class="btn-p" onClick="{{addSupplier}}" style="display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Add supplier</button>
+</div>
+
+<sc-if value="{{hasAi}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px 12px; padding: 12px 14px; border-radius: 10px; border: 1.5px solid transparent; background: linear-gradient(#FFFFFF, #FFFFFF) padding-box, linear-gradient(120deg, #3D4BC7, #8B47D0, #C2378F) border-box">
+<span style="flex: none; display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 12px; background: linear-gradient(90deg, #3D4BC7, #8B47D0); color: #FFFFFF; font-size: 11px; font-weight: 700"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 5.6L19.5 9.5l-5.7 1.9L12 17l-1.8-5.6L4.5 9.5l5.7-1.9z"></path></svg>AI check</span>
+<ul style="flex: 1 1 320px; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px"><sc-for list="{{ai}}" as="a" hint-placeholder-count="1"><li>{{a.text}}</li></sc-for></ul>
+</div>
+</sc-if>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 18px">
+
+<section aria-labelledby="sd-h" style="flex: 1 1 100%; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+<h2 id="sd-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Supplier directory</h2>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<label style="flex: 1 1 220px; max-width: 320px; display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #676879"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="search" aria-label="{{tv.searchAria}}" placeholder="Search" value="{{tv.q}}" onChange="{{tv.onQ}}" style="flex: 1; min-width: 0; border: 0; outline-offset: 4px; background: transparent; font-family: inherit; font-size: 14px; color: #323338"></label>
+<button onClick="{{tv.togglePanel}}" aria-expanded="{{tv.panel}}" style="display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid {{tv.fBorder}}; background: {{tv.fBg}}; color: {{tv.fInk}}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"></path></svg>{{tv.filterLabel}}</button>
+<button onClick="{{tv.startSave}}" style="display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><path d="M17 21v-8H7v8M7 3v5h8"></path></svg>Save view</button>
+<sc-if value="{{tv.hasActive}}" hint-placeholder-val="{{false}}"><button onClick="{{tv.clear}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: transparent; color: #3D4BC7">Clear</button></sc-if>
+<span style="margin-left: auto; font-size: 13px; color: #676879">{{tv.showing}}</span>
+</div>
+<sc-if value="{{tv.hasQuick}}" hint-placeholder-val="{{false}}"><div role="group" aria-label="Quick filter" style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{tv.quick}}" as="qf" hint-placeholder-count="3"><button onClick="{{qf.pick}}" aria-pressed="{{qf.on}}" style="display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid {{qf.border}}; background: {{qf.bg}}; color: {{qf.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{qf.label}}<span style="font-size: 12px; opacity: .8">{{qf.count}}</span></button></sc-for></div></sc-if>
+<sc-if value="{{tv.hasViews}}" hint-placeholder-val="{{false}}"><div role="group" aria-label="Saved views" style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px"><span style="font-size: 13px; color: #676879">Saved views</span><sc-for list="{{tv.views}}" as="sv" hint-placeholder-count="1"><span style="display: inline-flex; align-items: center; height: 30px; border: 1px solid {{sv.border}}; border-radius: 15px; background: {{sv.bg}}; overflow: hidden"><button onClick="{{sv.apply}}" aria-pressed="{{sv.on}}" style="height: 100%; padding: 0 6px 0 12px; border: 0; background: transparent; color: {{sv.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{sv.label}}</button><button onClick="{{sv.del}}" aria-label="{{sv.delAria}}" style="height: 100%; padding: 0 10px 0 4px; border: 0; background: transparent; color: {{sv.ink}}; font-family: inherit; font-size: 15px; cursor: pointer">×</button></span></sc-for></div></sc-if>
+<sc-if value="{{tv.saving}}" hint-placeholder-val="{{false}}"><div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; background: #F6F7FB"><input aria-label="Name this view" placeholder="e.g. Overdue advances" value="{{tv.name}}" onChange="{{tv.onName}}" style="flex: 1 1 220px; max-width: 320px; height: 34px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"><button onClick="{{tv.saveView}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: #3D4BC7; color: #FFFFFF">Save this view</button><button onClick="{{tv.cancelSave}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338">Cancel</button><span style="font-size: 12px; color: #676879">Keeps the search, quick filter, detailed filters and sort.</span></div></sc-if>
+<sc-if value="{{tv.panel}}" hint-placeholder-val="{{false}}">
+<div role="region" aria-label="Detailed filters" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px 16px; padding: 14px; border: 1px solid #E6E9EF; border-radius: 10px; background: #FBFBFD">
+<sc-for list="{{tv.fields}}" as="fd" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<span style="font-size: 13px; font-weight: 600; color: #4B4D5C">{{fd.label}}</span>
+<sc-if value="{{fd.isText}}" hint-placeholder-val="{{true}}"><input aria-label="{{fd.aria}}" placeholder="Contains…" value="{{fd.text}}" onChange="{{fd.onText}}" style="height: 34px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"></sc-if>
+<sc-if value="{{fd.isNum}}" hint-placeholder-val="{{false}}"><span style="display: flex; gap: 6px"><input type="number" aria-label="{{fd.ariaMin}}" placeholder="From" value="{{fd.min}}" onChange="{{fd.onMin}}" style="width: 50%; height: 34px; padding: 0 8px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"><input type="number" aria-label="{{fd.ariaMax}}" placeholder="To" value="{{fd.max}}" onChange="{{fd.onMax}}" style="width: 50%; height: 34px; padding: 0 8px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"></span></sc-if>
+<sc-if value="{{fd.isDate}}" hint-placeholder-val="{{false}}"><span style="display: flex; gap: 6px"><input type="date" aria-label="{{fd.ariaFrom}}" value="{{fd.from}}" onChange="{{fd.onFrom}}" style="width: 50%; min-width: 0; height: 34px; padding: 0 6px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 13px; color: #323338"><input type="date" aria-label="{{fd.ariaTo}}" value="{{fd.to}}" onChange="{{fd.onTo}}" style="width: 50%; min-width: 0; height: 34px; padding: 0 6px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 13px; color: #323338"></span></sc-if>
+<sc-if value="{{fd.isSet}}" hint-placeholder-val="{{false}}"><span role="group" aria-label="{{fd.label}}" style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{fd.opts}}" as="o" hint-placeholder-count="2"><button onClick="{{o.pick}}" aria-pressed="{{o.on}}" style="height: 30px; padding: 0 10px; border-radius: 15px; border: 1px solid {{o.border}}; background: {{o.bg}}; color: {{o.ink}}; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer">{{o.label}}</button></sc-for></span></sc-if>
+</div>
+</sc-for>
+<div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 8px"><button onClick="{{tv.clear}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338">Clear all</button><button onClick="{{tv.togglePanel}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: #3D4BC7; color: #FFFFFF">Done</button></div>
+</div>
+</sc-if>
+<div style="overflow-x: auto; border: 1px solid #E6E9EF; border-radius: 10px">
+<div role="table" aria-label="Suppliers" style="min-width: 1108px">
+<div role="row" style="display: grid; grid-template-columns: 68px minmax(200px, 1.6fr) 110px 150px 150px 130px 100px minmax(200px, 1.4fr); align-items: center; min-height: 40px; background: #F6F7FB; border-bottom: 1px solid #E6E9EF; font-size: 13px; font-weight: 600; color: #676879">
+<span role="columnheader" style="padding: 0 12px; text-align: right">Sl. No.</span>
+<sc-for list="{{heads}}" as="c" hint-placeholder-count="7"><span role="columnheader" aria-sort="{{c.ariaSort}}" style="padding: 0 12px; text-align: {{c.align}}"><sc-if value="{{c.sortable}}" hint-placeholder-val="{{true}}"><button onClick="{{c.sort}}" style="display: inline-flex; align-items: center; gap: 4px; min-height: 32px; padding: 0; border: 0; background: transparent; color: inherit; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{c.label}}<span aria-hidden="true" style="font-size: 10px; color: #3D4BC7">{{c.arrow}}</span></button></sc-if><sc-if value="{{c.plainHead}}" hint-placeholder-val="{{false}}">{{c.label}}</sc-if></span></sc-for>
+</div>
+<sc-for list="{{list}}" as="s" hint-placeholder-count="6">
+<div role="row" class="row" style="display: grid; grid-template-columns: 68px minmax(200px, 1.6fr) 110px 150px 150px 130px 100px minmax(200px, 1.4fr); align-items: center; min-height: 52px; border-bottom: 1px solid #E6E9EF; background: {{s.bg}}; box-shadow: inset 3px 0 0 {{s.mark}}">
+<span role="cell" style="padding: 0 12px; text-align: right; color: #676879; font-variant-numeric: tabular-nums">{{s.sl}}</span>
+<span role="cell" style="padding: 4px 12px; min-width: 0"><button onClick="{{s.pick}}" aria-current="{{s.current}}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px; max-width: 100%; padding: 4px 0; border: 0; background: transparent; color: #323338; font-family: inherit; text-align: left; cursor: pointer"><strong style="font-size: 14px; color: #283277">{{s.name}}</strong><span style="font-size: 12px; color: #676879">{{s.contact}}</span></button></span>
+<span role="cell" style="padding: 0 12px">{{s.type}}</span>
+<span role="cell" style="padding: 0 12px">{{s.city}}</span>
+<span role="cell" style="padding: 0 12px"><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: {{s.chipBg}}; color: {{s.chipInk}}; font-size: 12px; font-weight: 700">{{s.chip}}</span></span>
+<span role="cell" style="padding: 0 12px; font-variant-numeric: tabular-nums">{{s.ends}}</span>
+<span role="cell" style="padding: 0 12px; text-align: right; font-variant-numeric: tabular-nums">{{s.rates}}</span>
+<span role="cell" style="padding: 0 12px; font-size: 13px; color: #4B4D5C">{{s.terms}}</span>
+</div>
+</sc-for>
+<sc-if value="{{listEmpty}}" hint-placeholder-val="{{false}}"><div style="padding: 20px; color: #676879; text-align: center">{{emptyText}}</div></sc-if>
+</div>
+</div>
+<sc-if value="{{tv.hasPages}}" hint-placeholder-val="{{false}}">
+<nav aria-label="Pages" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px">
+<span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; color: #676879">Rows per page<sc-for list="{{tv.sizes}}" as="z" hint-placeholder-count="3"><button onClick="{{z.pick}}" aria-pressed="{{z.on}}" style="min-width: 36px; height: 30px; padding: 0 8px; border-radius: 6px; border: 1px solid {{z.border}}; background: {{z.bg}}; color: {{z.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{z.label}}</button></sc-for></span>
+<span style="display: flex; flex-wrap: wrap; gap: 4px"><button onClick="{{tv.prev}}" aria-label="Previous page" style="width: 34px; height: 34px; border-radius: 6px; border: 1px solid #C3C6D4; background: #FFFFFF; color: {{tv.prevInk}}; font-family: inherit; font-size: 16px; cursor: pointer">‹</button><sc-for list="{{tv.pages}}" as="pg" hint-placeholder-count="3"><button onClick="{{pg.go}}" aria-current="{{pg.current}}" style="min-width: 34px; height: 34px; padding: 0 6px; border-radius: 6px; border: 1px solid #C3C6D4; background: {{pg.bg}}; color: {{pg.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{pg.label}}</button></sc-for><button onClick="{{tv.next}}" aria-label="Next page" style="width: 34px; height: 34px; border-radius: 6px; border: 1px solid #C3C6D4; background: #FFFFFF; color: {{tv.nextInk}}; font-family: inherit; font-size: 16px; cursor: pointer">›</button></span>
+</nav>
+</sc-if>
+</section>
+
+<sc-if value="{{hasSel}}" hint-placeholder-val="{{true}}">
+<section aria-labelledby="sp-h" style="flex: 1 1 100%; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="sp-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 22px; line-height: 30px; font-weight: 600">{{sel.title}}</h2>
+<span style="color: #676879">{{sel.type}} · {{sel.cityTxt}}</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<a class="btn-g" href="{{sel.wa}}" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 8px; background: #00854D; color: #FFFFFF; font-weight: 700; text-decoration: none">Message on WhatsApp</a>
+<button class="btn-s" onClick="{{sel.remove}}" style="height: 40px; padding: 0 14px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #B42840; font-weight: 600; cursor: pointer">Remove supplier</button>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 18px; border: 1px solid #E6E9EF; border-radius: 12px">
+<h3 style="margin: 0; font-size: 16px; font-weight: 700">Details</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px 16px">
+<sc-for list="{{sel.fields}}" as="f" hint-placeholder-count="8">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<label for="{{f.id}}" style="font-size: 13px; font-weight: 600; color: #4B4D5C">{{f.label}}</label>
+<input id="{{f.id}}" type="{{f.type}}" value="{{f.v}}" placeholder="{{f.ph}}" onChange="{{f.set}}" style="height: 40px; padding: 0 12px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-size: 14px; color: #323338">
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 18px; border: 1px solid #E6E9EF; border-radius: 12px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px"><h3 style="margin: 0; font-size: 16px; font-weight: 700">Contracts</h3><button class="btn-s" onClick="{{sel.addContract}}" style="height: 36px; padding: 0 12px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #323338; font-weight: 600; cursor: pointer">Add contract</button></div>
+<div style="overflow-x: auto"><div role="table" aria-label="Contracts" style="min-width: 620px">
+<div role="row" style="display: grid; grid-template-columns: minmax(180px, 1.4fr) 160px 160px 150px 52px; align-items: center; min-height: 36px; background: #F6F7FB; border-radius: 6px; font-size: 13px; font-weight: 600; color: #676879"><span role="columnheader" style="padding: 0 12px">Contract</span><span role="columnheader" style="padding: 0 12px">Valid from</span><span role="columnheader" style="padding: 0 12px">Valid to</span><span role="columnheader" style="padding: 0 12px">Status</span><span role="columnheader"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Remove</span></span></div>
+<sc-for list="{{sel.contracts}}" as="c" hint-placeholder-count="1">
+<div role="row" class="row" style="display: grid; grid-template-columns: minmax(180px, 1.4fr) 160px 160px 150px 52px; align-items: center; min-height: 48px; border-bottom: 1px solid #E6E9EF">
+<span role="cell" style="padding: 4px 6px"><input class="cell" aria-label="Contract name" value="{{c.name}}" onChange="{{c.setName}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 8px; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; color: #323338"></span>
+<span role="cell" style="padding: 4px 6px"><input class="cell" type="date" aria-label="Valid from" value="{{c.from}}" onChange="{{c.setFrom}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 8px; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; color: #323338"></span>
+<span role="cell" style="padding: 4px 6px"><input class="cell" type="date" aria-label="Valid to" value="{{c.to}}" onChange="{{c.setTo}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 8px; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; color: #323338"></span>
+<span role="cell" style="padding: 0 12px"><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: {{c.chipBg}}; color: {{c.chipInk}}; font-size: 12px; font-weight: 700">{{c.chip}}</span></span>
+<span role="cell" style="display: flex; justify-content: center"><button class="del" onClick="{{c.del}}" aria-label="Remove contract" style="width: 36px; height: 36px; border: 0; border-radius: 8px; background: transparent; color: #676879; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"></path></svg></button></span>
+</div>
+</sc-for>
+</div></div>
+<sc-if value="{{sel.noContracts}}" hint-placeholder-val="{{false}}"><span style="color: #676879">No contract yet. Quotes using this supplier are flagged in the review queue.</span></sc-if>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 18px; border: 1px solid #E6E9EF; border-radius: 12px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px"><h3 style="margin: 0; font-size: 16px; font-weight: 700">Agreed rates (MYR)</h3><button class="btn-s" onClick="{{sel.addRate}}" style="height: 36px; padding: 0 12px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #323338; font-weight: 600; cursor: pointer">Add rate</button></div>
+<div style="overflow-x: auto"><div role="table" aria-label="Agreed rates" style="min-width: 560px">
+<div role="row" style="display: grid; grid-template-columns: minmax(220px, 2fr) minmax(160px, 1fr) 130px 52px; align-items: center; min-height: 36px; background: #F6F7FB; border-radius: 6px; font-size: 13px; font-weight: 600; color: #676879"><span role="columnheader" style="padding: 0 12px">Item</span><span role="columnheader" style="padding: 0 12px">Charged per</span><span role="columnheader" style="padding: 0 12px; text-align: right">Rate</span><span role="columnheader"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Remove</span></span></div>
+<sc-for list="{{sel.rates}}" as="r" hint-placeholder-count="3">
+<div role="row" class="row" style="display: grid; grid-template-columns: minmax(220px, 2fr) minmax(160px, 1fr) 130px 52px; align-items: center; min-height: 48px; border-bottom: 1px solid #E6E9EF">
+<span role="cell" style="padding: 4px 6px"><input class="cell" aria-label="Item" value="{{r.item}}" onChange="{{r.setItem}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 8px; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; color: #323338"></span>
+<span role="cell" style="padding: 4px 6px"><input class="cell" aria-label="Charged per" value="{{r.unit}}" onChange="{{r.setUnit}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 8px; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; color: #323338"></span>
+<span role="cell" style="padding: 4px 6px"><input class="cell" type="number" aria-label="Rate in MYR" value="{{r.rate}}" onChange="{{r.setRate}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 8px; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; color: #323338; text-align: right; font-variant-numeric: tabular-nums"></span>
+<span role="cell" style="display: flex; justify-content: center"><button class="del" onClick="{{r.del}}" aria-label="{{r.delAria}}" style="width: 36px; height: 36px; border: 0; border-radius: 8px; background: transparent; color: #676879; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"></path></svg></button></span>
+</div>
+</sc-for>
+</div></div>
+<span style="font-size: 13px; color: #676879">Hotel rates here feed Masters › Hotels &amp; room rates, which the quote engine reads.</span>
+</div>
+</section>
+</sc-if>
+</div>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{false}}"><div role="status" style="position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 20; max-width: calc(100% - 32px); padding: 12px 16px; box-sizing: border-box; border-radius: 10px; background: #323338; color: #FFFFFF; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,.25)">{{toast}}</div></sc-if>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1900}}'>
+const STORE = 'flyland-suppliers-v1';
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const TYPES = ['Hotel', 'Transport', 'Activity'];
+const FIELDS = [
+  { k: 'name', l: 'Name', ph: 'Supplier name' }, { k: 'city', l: 'City', ph: 'City' },
+  { k: 'contact', l: 'Contact person', ph: 'Name' }, { k: 'phone', l: 'Phone / WhatsApp', ph: '+60 …', t: 'tel' },
+  { k: 'email', l: 'Email', ph: 'reservations@…', t: 'email' }, { k: 'terms', l: 'Payment terms', ph: 'e.g. Full payment 7 days before arrival' },
+  { k: 'bank', l: 'Bank details', ph: 'Bank, account no.' }, { k: 'notes', l: 'Notes', ph: 'Anything ops should know' }
+];
+
+function pad(n) { return (n < 10 ? '0' : '') + n; }
+function dateOf(iso) { const p = String(iso || '').split('-').map(Number); return p.length === 3 && p[0] ? new Date(p[0], p[1] - 1, p[2]) : null; }
+function daysLeft(iso) { const d = dateOf(iso); if (!d) return null; const t = new Date(); t.setHours(0, 0, 0, 0); return Math.round((d - t) / 86400000); }
+function isoDays(off) { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + off); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+function dLong(iso) { const d = dateOf(iso); return d ? d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear() : ''; }
+function uid() { return 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+
+function sup(id, name, type, city, terms, contracts, rates) {
+  return { id: id, name: name, type: type, city: city, contact: 'Reservations desk', phone: '', email: '', terms: terms, bank: '', notes: '',
+    contracts: contracts.map(function (c, i) { return { id: id + 'c' + i, name: c[0], from: c[1], to: c[2] }; }),
+    rates: rates.map(function (r, i) { return { id: id + 'r' + i, item: r[0], unit: r[1], rate: String(r[2]) }; }) };
+}
+
+function seed() {
+  return [
+    sup('s1', 'Adya Hotel', 'Hotel', 'Langkawi', 'Full payment 7 days before check-in', [['2026–27 contract', '2026-04-01', '2027-03-31']], [['Deluxe king, Bed and Breakfast', 'Room per night', 210], ['Extra bed', 'Night', 90], ['Child with bed', 'Night', 70], ['Child without bed', 'Night', 52]]),
+    sup('s2', 'Holiday Villa Beach Resort', 'Hotel', 'Langkawi', 'Full payment 7 days before check-in', [['2026–27 contract', '2026-04-01', '2027-03-31']], [['Deluxe Room, Bed and Breakfast', 'Room per night', 380], ['Extra bed', 'Night', 120], ['Child with bed', 'Night', 95], ['Child without bed', 'Night', 68]]),
+    sup('s3', 'Star Points Hotel', 'Hotel', 'Kuala Lumpur', 'Credit, 15 days after check-out', [['2026–27 contract', '2026-04-01', '2027-03-31']], [['Superior Queen Room, Bed and Breakfast', 'Room per night', 204], ['Extra bed', 'Night', 85], ['Child with bed', 'Night', 65], ['Child without bed', 'Night', 53]]),
+    sup('s4', 'IBIS KLCC', 'Hotel', 'Kuala Lumpur', 'Full payment 14 days before check-in', [['2026 contract', '2026-01-01', isoDays(41)]], [['Standard room (Window room), Bed and Breakfast', 'Room per night', 386], ['Extra bed', 'Night', 110], ['Child with bed', 'Night', 85], ['Child without bed', 'Night', 64]]),
+    sup('s5', 'Langkawi transport partner', 'Transport', 'Langkawi', 'Monthly statement, 30 days', [['2026–27 contract', '2026-04-01', '2027-03-31']], [['LGK Airport to LGK Hotel, Sedan', 'Vehicle', 45], ['Eagle Square + Underwater World, 6 hrs, Sedan', 'Vehicle', 85], ['Oriental Village tour, 5 hrs, Sedan', 'Vehicle', 75]]),
+    sup('s6', 'Kuala Lumpur transport partner', 'Transport', 'Kuala Lumpur', 'Monthly statement, 30 days', [['2026–27 contract', '2026-04-01', '2027-03-31']], [['KL Airport to hotel, Sedan', 'Vehicle', 75], ['Batu Caves + Genting Highlands, 8 hrs, Sedan', 'Vehicle', 135], ['City tour, 4 hrs, Sedan', 'Vehicle', 60]]),
+    sup('s7', 'Oriental Village tickets', 'Activity', 'Langkawi', 'Pay at booking', [], [['Rides & 3D Art Museum, adult', 'Person', 80], ['Rides & 3D Art Museum, child', 'Person', 65]]),
+    sup('s8', 'Genting cable car tickets', 'Activity', 'Genting Highlands', 'Pay at booking', [['Agent rates 2026', '2026-01-01', '2026-12-31']], [['Cable car 2-way, adult', 'Person', 25], ['Cable car 2-way, child', 'Person', 20]])
+  ];
+}
+
+function load() {
+  try {
+    const raw = window.localStorage.getItem(STORE);
+    const d = raw ? JSON.parse(raw) : null;
+    if (Array.isArray(d)) return d;
+  } catch (e) { /* use the samples */ }
+  return seed();
+}
+
+// ---- Standard data table: search, Sl. No., quick filter, detailed filter, saved views, sort, pagination ----
+const VIEWS_KEY = 'flyland-views-v1';
+function readViews() { try { return JSON.parse(window.localStorage.getItem(VIEWS_KEY) || '{}') || {}; } catch (e) { return {}; } }
+function stdNum(t) { if (typeof t === 'number') return t; const m = String(t === undefined || t === null ? '' : t).replace(/,/g, '').replace(/−\s*/, '-').match(/^[A-Za-z ]*([-+]?\d+(\.\d+)?)\s*%?$/); return m ? parseFloat(m[1]) : null; }
+function stdView(o) {
+  const tv = Object.assign({ q: '', quick: '', f: {}, sort: null, page: 1, size: 10, panel: false, saving: false, name: '' }, o.tv || {});
+  const set = o.set;
+  const q = String(o.q !== undefined ? o.q : tv.q || '').trim().toLowerCase();
+  const cols = o.cols;
+  const val = function (it, ci) { const v = cols[ci].get(it); return v === undefined || v === null ? '' : v; };
+  const pass = function (it, skipQuick) {
+    if (q && String(o.searchFn ? o.searchFn(it) : cols.map(function (c, ci) { return val(it, ci); }).join(' ')).toLowerCase().indexOf(q) < 0) return false;
+    if (!skipQuick && tv.quick && o.quick > -1 && String(val(it, o.quick)) !== tv.quick) return false;
+    return Object.keys(tv.f).every(function (ci) {
+      const fl = tv.f[ci];
+      const c = cols[ci];
+      if (!c || !fl) return true;
+      const v = val(it, ci);
+      if (c.kind === 'text' && fl.text) return String(v).toLowerCase().indexOf(String(fl.text).toLowerCase()) > -1;
+      if (c.kind === 'set' && fl.set && fl.set.length) return fl.set.indexOf(String(v)) > -1;
+      if (c.kind === 'num') { const n = stdNum(v); if (fl.min !== undefined && fl.min !== '' && (n === null || n < +fl.min)) return false; if (fl.max !== undefined && fl.max !== '' && (n === null || n > +fl.max)) return false; }
+      if (c.kind === 'date') { if (fl.from && (!v || v < fl.from)) return false; if (fl.to && (!v || v > fl.to)) return false; }
+      return true;
+    });
+  };
+  let list = o.items.filter(function (it) { return pass(it, false); });
+  if (tv.sort && cols[tv.sort.i] && cols[tv.sort.i].kind !== 'none') {
+    const i = tv.sort.i;
+    const k = cols[i].kind;
+    const kv = function (it) { const v = val(it, i); return k === 'num' ? (stdNum(v) === null ? -Infinity : stdNum(v)) : String(v).toLowerCase(); };
+    list = list.slice().sort(function (a, b) { const A = kv(a); const Z = kv(b); return (A < Z ? -1 : A > Z ? 1 : 0) * (tv.sort.dir === 'desc' ? -1 : 1); });
+  }
+  const n = list.length;
+  const size = tv.size || 10;
+  const pages = Math.max(1, Math.ceil(n / size));
+  const page = Math.min(Math.max(1, tv.page || 1), pages);
+  const off = o.paged === false ? 0 : (page - 1) * size;
+  const shown = o.paged === false ? list : list.slice(off, off + size);
+  const chip = function (on) { return { bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', border: on ? '#283277' : '#C3C6D4' }; };
+  const nF = Object.keys(tv.f).filter(function (ci) { const fl = tv.f[ci]; return fl && (fl.text || (fl.set && fl.set.length) || fl.min || fl.max || fl.from || fl.to); }).length;
+  const setF = function (ci, patch) { const f = Object.assign({}, tv.f); f[ci] = Object.assign({}, f[ci] || {}, patch); set({ f: f, page: 1 }); };
+  const saved = (o.views || {})[o.key] || [];
+  const cur = JSON.stringify({ q: tv.q, quick: tv.quick, f: tv.f, sort: tv.sort });
+  const write = function (lst) { const vs = Object.assign({}, o.views || {}); vs[o.key] = lst; try { window.localStorage.setItem(VIEWS_KEY, JSON.stringify(vs)); } catch (e) { /* keep in memory */ } return vs; };
+  const qc = {};
+  const base = o.items.filter(function (it) { return pass(it, true); });
+  if (o.quick > -1) base.forEach(function (it) { const v = String(val(it, o.quick)); if (v) qc[v] = (qc[v] || 0) + 1; });
+  const qKeys = Object.keys(qc).sort(function (a, b) { return qc[b] - qc[a]; }).slice(0, 8);
+  return {
+    total: o.items.length, count: n,
+    list: shown.map(function (it, k) { return { item: it, sl: String(off + k + 1) }; }),
+    heads: cols.map(function (c, ci) {
+      const on = !!(tv.sort && tv.sort.i === ci);
+      const can = c.kind !== 'none';
+      return { label: c.label, align: c.align || 'left', sortable: can, plainHead: !can, arrow: on ? (tv.sort.dir === 'desc' ? '▼' : '▲') : '', ariaSort: on ? (tv.sort.dir === 'desc' ? 'descending' : 'ascending') : 'none',
+        sort: function () { set({ sort: on && tv.sort.dir === 'asc' ? { i: ci, dir: 'desc' } : on ? null : { i: ci, dir: 'asc' } }); } };
+    }),
+    ui: {
+      q: tv.q, onQ: function (e) { set({ q: e.target.value, page: 1 }); }, searchAria: 'Search ' + (o.title || 'table'),
+      panel: tv.panel, togglePanel: function () { set({ panel: !tv.panel, saving: false }); },
+      filterLabel: nF ? 'Filters · ' + nF : 'Filters', fBg: nF ? '#ECEEFB' : '#FFFFFF', fInk: nF ? '#283277' : '#323338', fBorder: nF ? '#3D4BC7' : '#C3C6D4',
+      hasActive: !!(q || tv.quick || nF || tv.sort), clear: function () { set({ q: '', quick: '', f: {}, sort: null, page: 1 }); if (o.clearSearch) o.clearSearch(); },
+      showing: n ? 'Showing ' + (off + 1) + '–' + (off + shown.length) + ' of ' + n + (n < o.items.length ? ' (filtered from ' + o.items.length + ')' : '') : 'No matching rows',
+      hasQuick: o.quick > -1 && qKeys.length > 1,
+      quick: [{ label: 'All', count: String(base.length), on: !tv.quick, pick: function () { set({ quick: '', page: 1 }); } }].concat(qKeys.map(function (k) { return { label: k, count: String(qc[k]), on: tv.quick === k, pick: function () { set({ quick: tv.quick === k ? '' : k, page: 1 }); } }; })).map(function (x) { return Object.assign(x, chip(x.on)); }),
+      fields: cols.map(function (c, ci) {
+        if (c.kind === 'none') return null;
+        const fl = tv.f[ci] || {};
+        const opts = c.kind === 'set' ? Object.keys(o.items.reduce(function (a, it) { const v = String(val(it, ci)); if (v) a[v] = 1; return a; }, {})).slice(0, 14) : [];
+        return { label: c.filterLabel || c.label, isText: c.kind === 'text', isNum: c.kind === 'num', isDate: c.kind === 'date', isSet: c.kind === 'set',
+          aria: c.label + ' contains', ariaMin: c.label + ' from', ariaMax: c.label + ' to', ariaFrom: c.label + ' from date', ariaTo: c.label + ' to date',
+          text: fl.text || '', min: fl.min || '', max: fl.max || '', from: fl.from || '', to: fl.to || '',
+          onText: function (e) { setF(ci, { text: e.target.value }); }, onMin: function (e) { setF(ci, { min: e.target.value }); }, onMax: function (e) { setF(ci, { max: e.target.value }); },
+          onFrom: function (e) { setF(ci, { from: e.target.value }); }, onTo: function (e) { setF(ci, { to: e.target.value }); },
+          opts: opts.map(function (v) { const on = (fl.set || []).indexOf(v) > -1; return Object.assign({ label: v, on: on, pick: function () { const st = (fl.set || []).slice(); if (on) st.splice(st.indexOf(v), 1); else st.push(v); setF(ci, { set: st }); } }, chip(on)); }) };
+      }).filter(Boolean),
+      saving: tv.saving, name: tv.name, onName: function (e) { set({ name: e.target.value }); },
+      startSave: function () { set({ saving: true, panel: false, name: '' }); }, cancelSave: function () { set({ saving: false }); },
+      saveView: function () { const nm = String(tv.name || '').trim() || 'View ' + (saved.length + 1); o.saveViews(write(saved.filter(function (v) { return v.name !== nm; }).concat([{ name: nm, q: tv.q, quick: tv.quick, f: tv.f, sort: tv.sort }]))); set({ saving: false, name: '' }); o.flash('Saved view “' + nm + '”. It stays on this device.'); },
+      hasViews: saved.length > 0,
+      views: saved.map(function (v) { const on = JSON.stringify({ q: v.q, quick: v.quick, f: v.f, sort: v.sort }) === cur; return Object.assign({ label: v.name, on: on, delAria: 'Delete saved view ' + v.name, apply: function () { set({ q: v.q || '', quick: v.quick || '', f: v.f || {}, sort: v.sort || null, page: 1 }); }, del: function () { o.saveViews(write(saved.filter(function (x) { return x.name !== v.name; }))); o.flash('Saved view deleted.'); } }, chip(on)); }),
+      hasPages: o.paged !== false && n > 10,
+      sizes: [10, 25, 50].map(function (z) { return Object.assign({ label: String(z), on: size === z, pick: function () { set({ size: z, page: 1 }); } }, chip(size === z)); }),
+      pages: Array.apply(null, { length: pages }).map(function (_, i) { const on = i + 1 === page; return { label: String(i + 1), current: on ? 'page' : 'false', bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', go: function () { set({ page: i + 1 }); } }; }),
+      prev: function () { set({ page: Math.max(1, page - 1) }); }, next: function () { set({ page: Math.min(pages, page + 1) }); },
+      prevInk: page > 1 ? '#323338' : '#9AA0B8', nextInk: page < pages ? '#323338' : '#9AA0B8'
+    }
+  };
+}
+
+function bestEnd(s) { return s.contracts.reduce(function (a, c) { return c.to && (!a || c.to > a) ? c.to : a; }, ''); }
+const GROUP = ['Expired', 'Ending soon', 'Active', 'No contract'];
+const TYPE_LABEL = { Hotel: 'Hotels', Transport: 'Transport', Activity: 'Activities' };
+
+function statusOf(s) {
+  if (!s.contracts.length) return ['No contract', '#F0F1F5', '#4B4D5C', 3];
+  const best = s.contracts.reduce(function (a, c) { const n = daysLeft(c.to); return n !== null && (a === null || n > a) ? n : a; }, null);
+  if (best === null) return ['No end date', '#F0F1F5', '#4B4D5C', 3];
+  if (best < 0) return ['Expired', '#FDE7EA', '#B42840', 0];
+  if (best <= 60) return ['Ends in ' + best + ' days', '#FFF0DB', '#8A4B00', 1];
+  return ['Active', '#DDF5EA', '#00663B', 2];
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { list: load(), sel: 's4', toast: '', tv: {}, views: readViews() };
+    this.timer = null;
+  }
+
+  componentWillUnmount() { if (this.timer) clearTimeout(this.timer); }
+
+  componentDidUpdate(pp, ps) {
+    if (ps && ps.list !== this.state.list) { try { window.localStorage.setItem(STORE, JSON.stringify(this.state.list)); } catch (e) { /* keep in memory */ } }
+  }
+
+  flash(msg) {
+    const self = this;
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(function () { self.setState({ toast: '' }); }, 2600);
+    return { toast: msg };
+  }
+
+  setTv(key, patch) { const all = Object.assign({}, this.state.tv || {}); all[key] = Object.assign({}, all[key] || {}, patch); this.setState({ tv: all }); }
+
+  patch(id, fn) {
+    return this.state.list.map(function (s) { if (s.id !== id) return s; const c = JSON.parse(JSON.stringify(s)); fn(c); return c; });
+  }
+
+  renderVals() {
+    const self = this;
+    const st = this.state;
+    const VKEY = 'suppliers/directory';
+    const view = stdView({
+      key: VKEY, title: 'suppliers', items: st.list,
+      cols: [
+        { label: 'Supplier', kind: 'text', get: function (x) { return x.name || 'New supplier'; } },
+        { label: 'Type', kind: 'set', get: function (x) { return TYPE_LABEL[x.type] || x.type; } },
+        { label: 'City', kind: 'set', get: function (x) { return x.city; } },
+        { label: 'Contract', kind: 'set', get: function (x) { const k = statusOf(x); return k[0] === 'No end date' ? k[0] : GROUP[k[3]]; } },
+        { label: 'Contract ends', kind: 'date', get: function (x) { return bestEnd(x); } },
+        { label: 'Agreed rates', align: 'right', kind: 'num', get: function (x) { return x.rates.length; } },
+        { label: 'Payment terms', kind: 'text', get: function (x) { return x.terms; } }
+      ],
+      quick: 1,
+      searchFn: function (x) { return [x.name, x.type, x.city, x.contact, x.phone, x.email, x.terms, x.notes].join(' '); },
+      tv: (st.tv || {})[VKEY], set: function (patch) { self.setTv(VKEY, patch); }, views: st.views,
+      saveViews: function (vs) { self.setState({ views: vs }); }, flash: function (m) { self.setState(self.flash(m)); }
+    });
+    const ai = [];
+    st.list.forEach(function (s) {
+      s.contracts.forEach(function (c) { const n = daysLeft(c.to); if (n !== null && n >= 0 && n <= 60) ai.push(s.name + ': “' + c.name + '” ends on ' + dLong(c.to) + ' (' + n + ' days). Quotes after that date would use rates you have not agreed; renew it first.'); else if (n !== null && n < 0) ai.push(s.name + ': “' + c.name + '” ended on ' + dLong(c.to) + '.'); });
+      if (!s.contracts.length) ai.push(s.name + ' has no contract on file. Add one so its rates are checked before quoting.');
+    });
+    const cur = st.list.filter(function (s) { return s.id === st.sel; })[0];
+    const V = {
+      yes: true, hasToast: !!st.toast, toast: st.toast,
+      hasAi: ai.length > 0, ai: ai.map(function (t) { return { text: t }; }),
+      tv: view.ui, heads: view.heads,
+      list: view.list.map(function (x) {
+        const s = x.item;
+        const on = s.id === st.sel;
+        const k = statusOf(s);
+        const end = bestEnd(s);
+        return { sl: x.sl, name: s.name || 'New supplier', contact: s.contact || 'No contact yet', type: TYPE_LABEL[s.type] || s.type, city: s.city || 'No city yet', chip: k[0], chipBg: k[1], chipInk: k[2], ends: end ? dLong(end) : '—', rates: String(s.rates.length), terms: s.terms || '—',
+          current: on ? 'true' : 'false', bg: on ? '#F5F6FF' : '#FFFFFF', mark: on ? '#3D4BC7' : 'transparent', pick: function () { self.setState({ sel: s.id }); } };
+      }),
+      listEmpty: view.count === 0,
+      emptyText: st.list.length ? 'No suppliers match. Clear the search or filters to see all ' + st.list.length + '.' : 'No suppliers yet. Add the first one.',
+      hasSel: !!cur,
+      addSupplier: function () {
+        const qt = ((st.tv || {})[VKEY] || {}).quick;
+        const s = { id: uid(), name: '', type: TYPES.filter(function (t) { return TYPE_LABEL[t] === qt; })[0] || 'Hotel', city: '', contact: '', phone: '', email: '', terms: '', bank: '', notes: '', contracts: [], rates: [] };
+        const tv = Object.assign({}, st.tv); tv[VKEY] = Object.assign({}, tv[VKEY] || {}, { q: '', f: {}, sort: null, page: 1 });
+        self.setState(Object.assign({ list: [s].concat(st.list), sel: s.id, tv: tv }, self.flash('New supplier added. Fill in the details; they save as you type.')));
+      }
+    };
+    if (!cur) { V.sel = { fields: [], contracts: [], rates: [] }; return V; }
+    const id = cur.id;
+    V.sel = {
+      title: cur.name || 'New supplier', type: cur.type, cityTxt: cur.city || 'No city yet',
+      wa: 'https://wa.me/' + String(cur.phone || '').replace(/\D/g, '') + '?text=' + encodeURIComponent('Hello ' + (cur.contact || cur.name) + ', this is Flyland DMC Services.'),
+      remove: function () { self.setState(Object.assign({ list: st.list.filter(function (s) { return s.id !== id; }), sel: '' }, self.flash((cur.name || 'Supplier') + ' removed.'))); },
+      fields: FIELDS.map(function (f) { return { id: 'sp-' + f.k, label: f.l, type: f.t || 'text', ph: f.ph, v: cur[f.k] || '', set: function (e) { const v = e.target.value; self.setState({ list: self.patch(id, function (s) { s[f.k] = v; }) }); } }; }),
+      noContracts: cur.contracts.length === 0,
+      addContract: function () { self.setState({ list: self.patch(id, function (s) { s.contracts.push({ id: uid(), name: 'New contract', from: isoDays(0), to: isoDays(365) }); }) }); },
+      contracts: cur.contracts.map(function (c, ci) {
+        const n = daysLeft(c.to);
+        const k = n === null ? ['No end date', '#F0F1F5', '#4B4D5C'] : n < 0 ? ['Expired', '#FDE7EA', '#B42840'] : n <= 60 ? ['Ends in ' + n + ' days', '#FFF0DB', '#8A4B00'] : ['Active', '#DDF5EA', '#00663B'];
+        const set = function (key) { return function (e) { const v = e.target.value; self.setState({ list: self.patch(id, function (s) { s.contracts[ci][key] = v; }) }); }; };
+        return { name: c.name, from: c.from, to: c.to, chip: k[0], chipBg: k[1], chipInk: k[2], setName: set('name'), setFrom: set('from'), setTo: set('to'), del: function () { self.setState({ list: self.patch(id, function (s) { s.contracts.splice(ci, 1); }) }); } };
+      }),
+      addRate: function () { self.setState({ list: self.patch(id, function (s) { s.rates.push({ id: uid(), item: '', unit: '', rate: '' }); }) }); },
+      rates: cur.rates.map(function (r, ri) {
+        const set = function (key) { return function (e) { const v = e.target.value; self.setState({ list: self.patch(id, function (s) { s.rates[ri][key] = v; }) }); }; };
+        return { item: r.item, unit: r.unit, rate: r.rate, setItem: set('item'), setUnit: set('unit'), setRate: set('rate'), delAria: 'Remove ' + (r.item || 'rate'), del: function () { self.setState({ list: self.patch(id, function (s) { s.rates.splice(ri, 1); }) }); } };
+      })
+    };
+    return V;
+  }
+}
+</script>
+</body>
+</html>
