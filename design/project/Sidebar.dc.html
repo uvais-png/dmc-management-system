@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Flyland DMC — Sidebar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<nav aria-label="Main" style="width: {{width}}; max-width: 100%; flex: none; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px; padding: 8px 6px 16px; background: #ECEFF8; font-family: Figtree, 'Segoe UI', sans-serif; font-size: 14px; line-height: 20px; color: #323338">
+
+<sc-if value="{{expanded}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; align-items: flex-end; gap: 6px; padding: 0 4px 10px">
+<label style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 600; color: #676879">Department view
+<select value="{{role}}" onChange="{{onRole}}" style="height: 40px; padding: 0 10px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 500; color: #323338; cursor: pointer">
+<option value="admin">Admin · everything</option>
+<option value="sales">Sales · CRM</option>
+<option value="ops">Ops · bookings &amp; operations</option>
+<option value="accounts">Accounts · finance</option>
+</select>
+</label>
+<button class="hov" onClick="{{collapse}}" aria-label="Collapse sidebar" title="Collapse sidebar" style="width: 40px; height: 40px; flex: none; border: 0; border-radius: 8px; background: transparent; color: #323338; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"></path></svg></button>
+</div>
+<span style="padding: 0 10px 6px; font-size: 12px; color: #676879">{{roleNote}}</span>
+
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="11">
+<sc-if value="{{g.single}}" hint-placeholder-val="{{false}}">
+<a class="hov" href="{{g.href}}" aria-current="{{g.currentAttr}}" style="display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 10px; border-radius: 8px; background: {{g.bg}}; color: {{g.ink}}; text-decoration: none; font-weight: 600">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{g.icon}}"></path></svg>
+<span style="flex: 1">{{g.label}}</span></a>
+</sc-if>
+<sc-if value="{{g.multi}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column">
+<button class="hov" onClick="{{g.toggle}}" aria-expanded="{{g.open}}" style="display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; padding: 0 10px; border: 0; border-radius: 8px; background: transparent; color: {{g.ink}}; font-family: inherit; font-size: 14px; font-weight: 600; text-align: left; cursor: pointer; opacity: {{g.opacity}}">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{g.icon}}"></path></svg>
+<span style="flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{g.label}}</span>
+<sc-if value="{{g.allLocked}}" hint-placeholder-val="{{false}}"><span title="Coming soon" style="flex: none; display: inline-flex; align-items: center; color: #7C7F93"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">, coming soon</span></span></sc-if>
+<sc-if value="{{g.someLive}}" hint-placeholder-val="{{true}}"><span style="flex: none; font-size: 11px; font-weight: 600; color: #676879">{{g.liveCount}}/{{g.total}}</span></sc-if>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; transform: rotate({{g.rot}}deg); transition: transform .2s ease"><path d="m6 9 6 6 6-6"></path></svg>
+</button>
+<sc-if value="{{g.open}}" hint-placeholder-val="{{false}}">
+<sc-if value="{{g.hasNote}}" hint-placeholder-val="{{false}}"><span style="margin: 0 0 4px 42px; font-size: 12px; color: #676879">{{g.note}}</span></sc-if>
+<ul style="list-style: none; margin: 0 0 8px 19px; padding: 0; display: flex; flex-direction: column; gap: 1px; border-left: 2px solid #DCDFEC">
+<sc-for list="{{g.items}}" as="it" hint-placeholder-count="6">
+<li style="display: flex">
+<sc-if value="{{it.live}}" hint-placeholder-val="{{true}}">
+<a class="hov" href="{{it.href}}" onClick="{{it.go}}" aria-current="{{it.currentAttr}}" style="flex: 1; display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 4px 10px 4px 14px; margin-left: -2px; border-left: 2px solid {{it.rail}}; border-radius: 0 8px 8px 0; background: {{it.bg}}; color: #323338; text-decoration: none; font-weight: {{it.weight}}">
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span>{{it.label}}</span><sc-if value="{{it.hasSub}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; line-height: 16px; font-weight: 400; color: #676879">{{it.sub}}</span></sc-if></span>
+<sc-if value="{{it.hasCount}}" hint-placeholder-val="{{false}}"><span style="flex: none; min-width: 20px; height: 20px; padding: 0 6px; box-sizing: border-box; border-radius: 10px; background: {{it.countBg}}; color: {{it.countInk}}; font-size: 11px; font-weight: 700; line-height: 20px; text-align: center">{{it.count}}</span></sc-if>
+</a>
+</sc-if>
+<sc-if value="{{it.locked}}" hint-placeholder-val="{{false}}">
+<span aria-disabled="true" title="{{it.tip}}" style="flex: 1; display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 4px 10px 4px 14px; color: #7C7F93; cursor: not-allowed; user-select: none">
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span>{{it.label}}</span><sc-if value="{{it.hasSub}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; line-height: 16px">{{it.sub}}</span></sc-if></span>
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">, coming soon</span>
+</span>
+</sc-if>
+</li>
+</sc-for>
+</ul>
+</sc-if>
+</div>
+</sc-if>
+</sc-for>
+
+<div style="margin: 14px 4px 0; padding: 14px; border-radius: 12px; background: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; font-weight: 600">WhatsApp lines</span>
+<div style="display: flex; align-items: center; gap: 10px"><span style="width: 8px; height: 8px; flex: none; border-radius: 50%; background: #00854D"></span><span style="display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 600">B2B agents</span><span style="font-size: 12px; color: #676879">Connected · synced 1 min ago</span></span></div>
+<div style="display: flex; align-items: center; gap: 10px"><span style="width: 8px; height: 8px; flex: none; border-radius: 50%; background: #00854D"></span><span style="display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 600">B2C travellers</span><span style="font-size: 12px; color: #676879">Connected · synced 3 min ago</span></span></div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; font-size: 12px; color: #676879"><span>Daily send cap</span><span style="font-weight: 600; color: #323338">142 / 400</span></div>
+<div style="height: 6px; border-radius: 3px; background: #E6E9EF"><div style="width: 35.5%; height: 100%; border-radius: 3px; background: #3D4BC7"></div></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isCollapsed}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: {{railDir}}; align-items: center; gap: 4px; max-width: 100%; overflow-x: auto">
+<button class="hov" onClick="{{expand}}" aria-label="Expand sidebar" title="Expand sidebar" style="width: 44px; height: 44px; margin-bottom: 6px; border: 0; border-radius: 10px; background: transparent; color: #323338; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13 17 5-5-5-5M6 17l5-5-5-5"></path></svg></button>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="11">
+<button class="hov" onClick="{{g.openFromRail}}" aria-label="{{g.railAria}}" title="{{g.label}}" style="position: relative; width: 44px; height: 44px; border: 0; border-radius: 10px; background: {{g.railBg}}; color: {{g.railInk}}; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: {{g.opacity}}">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{g.icon}}"></path></svg>
+<sc-if value="{{g.allLocked}}" hint-placeholder-val="{{false}}"><span style="position: absolute; right: 3px; bottom: 3px; width: 14px; height: 14px; border-radius: 50%; background: #DCDFEC; color: #4B4D5C; display: flex; align-items: center; justify-content: center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></span></sc-if>
+</button>
+</sc-for>
+</div>
+</sc-if>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["dashboard","leads","inbox","review","quotes","followups","contacts"],"default":"dashboard"},"collapsed":{"editor":"boolean","default":false},"$preview":{"width":280,"height":1560}}'>
+const ICONS = {
+  dash: 'M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z',
+  crm: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8',
+  book: 'M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM16 2v4M8 2v4M3 10h18M9 15l2 2 4-4',
+  ops: 'M3 16V7a2 2 0 0 1 2-2h10l6 5v6h-2M3 16h2M9 16h6M15 5v5h6M7 19a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM17 19a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
+  supp: 'M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6M9 10h.01M15 10h.01',
+  fin: 'M20 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4M3 7h17a1 1 0 0 1 1 1v4h-4a2 2 0 0 0 0 4h4',
+  pkg: 'M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8',
+  mast: 'M12 8c4.4 0 8-1.3 8-3s-3.6-3-8-3-8 1.3-8 3 3.6 3 8 3zM4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3',
+  portal: 'M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3',
+  rep: 'M3 3v18h18M8 17v-5M13 17V8M18 17v-8',
+  set: 'M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1M15 4v4M9 10v4M17 16v4'
+};
+
+const PHASE_LONG = { P2: 'Phase 2', P3: 'Phase 3', P4: 'Phase 4', P5: 'Phase 5', 'P2–P4': 'Phases 2 to 4' };
+
+const NAV = [
+  { id: 'dash', label: 'Dashboard', icon: ICONS.dash, depts: ['sales', 'ops', 'accounts'], single: true, itemId: 'dashboard', href: 'Main.dc.html' },
+  { id: 'crm', label: 'CRM & Sales', icon: ICONS.crm, depts: ['sales'], items: [
+    { id: 'leads', label: 'Leads / Enquiries', phase: 'P1', href: 'Board.dc.html', count: '20' },
+    { id: 'inbox', label: 'Inbox · WhatsApp', phase: 'P1', href: 'Lead.dc.html', count: '4', countTone: 'alert' },
+    { id: 'review', label: 'Review queue', phase: 'P1', href: 'ReviewQueue.dc.html', count: '3', countTone: 'alert' },
+    { id: 'quotes', label: 'Quotations', phase: 'P1', href: 'Lead.dc.html', more: '+P2', moreTip: 'Revisions and PDF quotes arrive in Phase 2' },
+    { id: 'followups', label: 'Follow-ups', phase: 'P1', href: 'Main.dc.html', count: '7' },
+    { id: 'contacts', label: 'Contacts', sub: 'Agents & travellers', phase: 'P1', href: 'CRM.dc.html' },
+    { id: 'credit', label: 'Agent groups & credit limits', phase: 'P4', href: 'CRM.dc.html' },
+    { id: 'campaigns', label: 'Campaigns', sub: 'WhatsApp templates & broadcasts', phase: 'P5', href: 'CRM.dc.html' }
+  ] },
+  { id: 'bookings', label: 'Bookings / Reservations', icon: ICONS.book, depts: ['ops'], items: [
+    { id: 'files', label: 'Trip files', sub: 'Every trip by stage', phase: 'P3', href: 'TripFiles.dc.html' },
+    { id: 'bk-list', label: 'Bookings', sub: 'Confirmed files', phase: 'P3', href: 'Bookings.dc.html' },
+    { id: 'bk-cal', label: 'Booking calendar', phase: 'P3', href: 'Bookings.dc.html' },
+    { id: 'bk-amend', label: 'Amendments & cancellations', phase: 'P3', href: 'Bookings.dc.html' },
+    { id: 'bk-vouchers', label: 'Vouchers', sub: 'Hotel, transfer, activity', phase: 'P3', href: 'Bookings.dc.html' },
+    { id: 'bk-itin', label: 'Guest itinerary', phase: 'P3', href: 'Bookings.dc.html' },
+    { id: 'bk-rooming', label: 'Rooming list', phase: 'P3', href: 'Bookings.dc.html' }
+  ] },
+  { id: 'ops', label: 'Operations', icon: ICONS.ops, depts: ['ops'], items: [
+    { id: 'op-arr', label: 'Arrivals & departures', phase: 'P3', href: 'Operations.dc.html' },
+    { id: 'op-dispatch', label: 'Transfer dispatch', phase: 'P3', href: 'Operations.dc.html' },
+    { id: 'op-drivers', label: 'Drivers & vehicles', phase: 'P3', href: 'Operations.dc.html' },
+    { id: 'op-guides', label: 'Guides', phase: 'P3', href: 'Operations.dc.html' },
+    { id: 'op-sheet', label: 'Daily ops sheet', phase: 'P3', href: 'Operations.dc.html' },
+    { id: 'op-incidents', label: 'Incidents / guest issues', phase: 'P3', href: 'Operations.dc.html' }
+  ] },
+  { id: 'supp', label: 'Purchase / Suppliers', icon: ICONS.supp, depts: [], items: [
+    { id: 'suppliers', label: 'Suppliers', sub: 'Hotels, transport, activity providers', phase: 'P1', href: 'Suppliers.dc.html' },
+    { id: 'contracts', label: 'Supplier contracts & rates', phase: 'P1', href: 'Suppliers.dc.html' },
+    { id: 'pu-allot', label: 'Allotments / room blocks', phase: 'P3', href: 'Purchasing.dc.html' },
+    { id: 'pu-req', label: 'Booking requests to supplier', phase: 'P3', href: 'Purchasing.dc.html' },
+    { id: 'pu-conf', label: 'Supplier confirmations', phase: 'P3', href: 'Purchasing.dc.html' },
+    { id: 'pu-po', label: 'Purchase orders', phase: 'P3', href: 'Purchasing.dc.html' }
+  ] },
+  { id: 'fin', label: 'Finance & Accounts', icon: ICONS.fin, depts: ['accounts'], items: [
+    { id: 'fi-pf', label: 'Proforma invoices', phase: 'P4', href: 'Finance.dc.html' },
+    { id: 'fi-inv', label: 'Sales invoices', phase: 'P4', href: 'Finance.dc.html' },
+    { id: 'fi-rcpt', label: 'Receipts & payment links', phase: 'P4', href: 'Finance.dc.html' },
+    { id: 'fi-cn', label: 'Credit notes / refunds', phase: 'P4', href: 'Finance.dc.html' },
+    { id: 'fi-bills', label: 'Supplier bills', phase: 'P4', href: 'Finance.dc.html' },
+    { id: 'fi-spay', label: 'Supplier payments', phase: 'P4', href: 'Finance.dc.html' },
+    { id: 'fi-astmt', label: 'Agent statements', phase: 'P4', href: 'Finance.dc.html' },
+    { id: 'fi-sstmt', label: 'Supplier statements', phase: 'P4', href: 'Finance.dc.html' },
+    { id: 'fi-exp', label: 'Expenses', phase: 'P4', href: 'Finance.dc.html' },
+    { id: 'fi-bank', label: 'Bank & cash', phase: 'P4', href: 'Finance.dc.html' },
+    { id: 'fi-jnl', label: 'Journal entries', phase: 'P4', href: 'Finance.dc.html' },
+    { id: 'fi-coa', label: 'Chart of accounts', phase: 'P4', href: 'Finance.dc.html' },
+    { id: 'fi-tax', label: 'Tax', sub: 'GST, VAT, SST', phase: 'P4', href: 'Finance.dc.html' },
+    { id: 'fi-fx', label: 'Currency gain / loss', phase: 'P4', href: 'Finance.dc.html' }
+  ] },
+  { id: 'pkg', label: 'Packages & Products', icon: ICONS.pkg, depts: [], items: [
+    { id: 'packages', label: 'Packages & variants', phase: 'P1', href: 'Packages.dc.html' },
+    { id: 'fixed', label: 'Fixed departures / group tours', phase: 'P3', href: 'Packages.dc.html' },
+    { id: 'addons', label: 'Add-ons & upsells', phase: 'P1', href: 'Packages.dc.html' }
+  ] },
+  { id: 'mast', label: 'Masters', icon: ICONS.mast, depts: [], items: [
+    { id: 'm-countries', label: 'Countries & cities', phase: 'P1', href: 'Masters.dc.html' },
+    { id: 'm-fx', label: 'Currencies & exchange rates', phase: 'P1', href: 'Masters.dc.html' },
+    { id: 'm-hotels', label: 'Hotels & room rates', phase: 'P1', href: 'Masters.dc.html' },
+    { id: 'm-seasons', label: 'Seasons & blackout dates', phase: 'P1', href: 'Masters.dc.html' },
+    { id: 'm-transfers', label: 'Transfers & vehicle types', phase: 'P1', href: 'Masters.dc.html' },
+    { id: 'm-tours', label: 'Tours & activities', phase: 'P1', href: 'Masters.dc.html' },
+    { id: 'm-taxes', label: 'Taxes & fees', phase: 'P1', href: 'Masters.dc.html' },
+    { id: 'm-markup', label: 'Markup rules', phase: 'P1', href: 'Masters.dc.html' },
+    { id: 'm-terms', label: 'Terms & conditions', phase: 'P1', href: 'Masters.dc.html' }
+  ] },
+  { id: 'portal', label: 'Agent Portal', icon: ICONS.portal, depts: [], note: 'Separate login for agents', items: [
+    { id: 'ap-quote', label: 'Self-quote', phase: 'P5', href: 'AgentPortal.dc.html' },
+    { id: 'ap-bookings', label: 'My bookings', phase: 'P5', href: 'AgentPortal.dc.html' },
+    { id: 'ap-pay', label: 'My invoices & payments', phase: 'P5', href: 'AgentPortal.dc.html' },
+    { id: 'ap-stmt', label: 'Statement', phase: 'P5', href: 'AgentPortal.dc.html' }
+  ] },
+  { id: 'rep', label: 'Reports', icon: ICONS.rep, depts: [], items: [
+    { id: 'rp-sales', label: 'Sales', sub: 'Enquiries, conversion, lost reasons, executives', phase: 'P2', href: 'Reports.dc.html' },
+    { id: 'rp-bookings', label: 'Bookings', sub: 'By destination, agent, month', phase: 'P3', href: 'Reports.dc.html' },
+    { id: 'rp-supp', label: 'Supplier performance', phase: 'P3', href: 'Reports.dc.html' },
+    { id: 'rp-profit', label: 'Profit per file', phase: 'P4', href: 'Reports.dc.html' },
+    { id: 'rp-ageing', label: 'Receivables & payables ageing', phase: 'P4', href: 'Reports.dc.html' },
+    { id: 'rp-pl', label: 'P&L, balance sheet, cash flow', phase: 'P4', href: 'Reports.dc.html' }
+  ] },
+  { id: 'set', label: 'Settings', icon: ICONS.set, depts: [], items: [
+    { id: 's-wa', label: 'WhatsApp', phase: 'P1', href: 'Settings.dc.html', more: '+P2', moreTip: 'Zappio (official Cloud API) arrives in Phase 2' },
+    { id: 's-fu', label: 'Follow-up sequences', phase: 'P1', href: 'Settings.dc.html' },
+    { id: 's-tpl', label: 'Message templates', phase: 'P1', href: 'Settings.dc.html' },
+    { id: 's-auto', label: 'Auto-send rules', phase: 'P1', href: 'Settings.dc.html' },
+    { id: 's-num', label: 'Document numbering', sub: 'Trip ID, invoice series', phase: 'P1', href: 'Settings.dc.html' },
+    { id: 's-users', label: 'Users, roles & permissions', phase: 'P1', href: 'Settings.dc.html' },
+    { id: 's-log', label: 'Audit log', phase: 'P1', href: 'Settings.dc.html' },
+    { id: 's-print', label: 'Print formats', sub: 'Quote PDF, voucher, invoice', phase: 'P2–P4', href: 'Settings.dc.html' },
+    { id: 's-company', label: 'Company & branches', sub: 'India, UAE, multi-company', phase: 'P4', href: 'Settings.dc.html' }
+  ] }
+];
+
+const ROLE_NOTE = {
+  admin: 'All 11 module groups',
+  sales: 'Dashboard + CRM & Sales',
+  ops: 'Dashboard + Bookings + Operations',
+  accounts: 'Dashboard + Finance & Accounts'
+};
+
+function phaseRange(items) {
+  const ps = items.map(function (i) { return i.phase; }).filter(function (p) { return p !== 'P1'; });
+  const uniq = ps.filter(function (p, i) { return ps.indexOf(p) === i; });
+  return uniq.length === 1 ? uniq[0] : uniq[0] + '+';
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const active = (props && props.active) || 'dashboard';
+    const open = {};
+    NAV.forEach(function (g) {
+      if (g.items && g.items.some(function (i) { return i.id === active; })) open[g.id] = true;
+    });
+    this.state = { role: 'admin', open: open, collapsed: !!(props && props.collapsed), narrow: false };
+  }
+
+  componentDidMount() {
+    const self = this;
+    this.onResize = function () {
+      const narrow = window.innerWidth < 760;
+      if (narrow !== self.state.narrow) self.setState(narrow ? { narrow: true, collapsed: true } : { narrow: false });
+    };
+    try { window.addEventListener('resize', this.onResize); } catch (e) { /* no window events */ }
+    this.onResize();
+  }
+
+  componentWillUnmount() {
+    try { window.removeEventListener('resize', this.onResize); } catch (e) { /* no window events */ }
+  }
+
+  renderVals() {
+    const self = this;
+    const s = this.state;
+    const active = this.props.active || 'dashboard';
+    const visible = NAV.filter(function (g) { return s.role === 'admin' || g.depts.indexOf(s.role) !== -1; });
+
+    const groups = visible.map(function (g) {
+      const items = (g.items || []).map(function (it) {
+        const live = !!it.href;
+        const current = it.id === active;
+        return Object.assign({}, it, {
+          live: live,
+          locked: !live,
+          currentAttr: current ? 'page' : 'false',
+          bg: current ? '#DCE0F7' : 'transparent',
+          rail: current ? '#3D4BC7' : 'transparent',
+          weight: current ? 600 : 400,
+          hasSub: !!it.sub,
+          hasMore: !!it.more,
+          hasCount: !!it.count,
+          countBg: it.countTone === 'alert' ? '#D83A52' : '#DCDFEC',
+          countInk: it.countTone === 'alert' ? '#FFFFFF' : '#323338',
+          phaseLong: PHASE_LONG[it.phase] || it.phase,
+          tip: 'Coming soon',
+          go: function () { try { window.localStorage.setItem('flyland-nav', it.id || ''); } catch (e) { /* storage blocked */ } }
+        });
+      });
+      const liveCount = items.filter(function (i) { return i.live; }).length;
+      const allLocked = !g.single && liveCount === 0;
+      const hasActive = g.single ? g.itemId === active : items.some(function (i) { return i.id === active; });
+      const open = !!s.open[g.id];
+      return Object.assign({}, g, {
+        items: items,
+        single: !!g.single,
+        multi: !g.single,
+        total: items.length,
+        liveCount: liveCount,
+        someLive: !g.single && liveCount > 0 && liveCount < items.length,
+        allLocked: allLocked,
+        phase: allLocked ? phaseRange(items) : '',
+        hasNote: !!g.note,
+        open: open,
+        rot: open ? 180 : 0,
+        opacity: allLocked ? 0.7 : 1,
+        currentAttr: hasActive ? 'page' : 'false',
+        bg: hasActive ? '#DCE0F7' : 'transparent',
+        ink: hasActive ? '#283277' : '#323338',
+        railBg: hasActive ? '#DCE0F7' : 'transparent',
+        railInk: hasActive ? '#283277' : '#323338',
+        railAria: g.label + (allLocked ? ', coming soon' : '') + '. Open in sidebar',
+        toggle: function () {
+          const next = Object.assign({}, self.state.open);
+          next[g.id] = !open;
+          self.setState({ open: next });
+        },
+        openFromRail: function () {
+          if (g.single) { self.setState({ collapsed: false }); return; }
+          const next = Object.assign({}, self.state.open);
+          next[g.id] = true;
+          self.setState({ collapsed: false, open: next });
+        }
+      });
+    });
+
+    return {
+      width: s.narrow ? '100%' : s.collapsed ? '60px' : '272px',
+      railDir: s.narrow ? 'row' : 'column',
+      expanded: !s.collapsed,
+      isCollapsed: s.collapsed,
+      collapse: function () { self.setState({ collapsed: true }); },
+      expand: function () { self.setState({ collapsed: false }); },
+      role: s.role,
+      roleNote: 'Showing ' + ROLE_NOTE[s.role],
+      onRole: function (e) {
+        const role = e.target.value;
+        const next = Object.assign({}, self.state.open);
+        if (role !== 'admin') {
+          NAV.forEach(function (g) { if (!g.single && g.depts.indexOf(role) !== -1) next[g.id] = true; });
+        }
+        self.setState({ role: role, open: next });
+      },
+      groups: groups
+    };
+  }
+}
+</script>
+</body>
+</html>

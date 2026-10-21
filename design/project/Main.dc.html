@@ -1,0 +1,962 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Flyland DMC — Dashboard</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#ECEFF8}
+a{color:#3D4BC7}a:hover{color:#283277}
+button,select,input{font-family:inherit}
+.hov:hover{background:#DCDFEC !important}
+.hov-d:hover{background:rgba(255,255,255,.14) !important}
+header a:focus-visible,header button:focus-visible{outline-color:#FFFFFF}
+.hov-w:hover{background:#F5F6F8 !important}
+.btn-p:hover{background:#283277 !important}
+.btn-s:hover{background:#DCDFEC !important}
+.tile:hover{box-shadow:0 8px 24px rgba(29,44,92,.12);transform:translateY(-2px)}
+.seg:hover{filter:brightness(.93)}
+.pill:hover{filter:brightness(.94)}
+.search:focus-within{border-color:#3D4BC7 !important;box-shadow:0 0 0 1px #3D4BC7}
+@keyframes aiShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.ai-chip{background:linear-gradient(90deg,#3D4BC7,#8B47D0,#3D4BC7);background-size:200% 100%;animation:aiShimmer 3.2s linear infinite}
+.ai-card{background:linear-gradient(#FFFFFF,#FFFFFF) padding-box,linear-gradient(120deg,#3D4BC7,#8B47D0,#C2378F) border-box;border:1.5px solid transparent}
+@media (prefers-reduced-motion:reduce){.ai-chip{animation:none}}
+.search input:focus-visible{outline:none}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid #3D4BC7;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #ECEFF8; color: #323338; font-family: Figtree, 'Segoe UI', sans-serif; font-size: 14px; line-height: 20px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 8px 20px; box-sizing: border-box; background: #283277; color: #FFFFFF">
+<a href="Main.dc.html" style="display: flex; align-items: center; text-decoration: none">
+<img src="/_blob/c96377ee37809ccd01d937b60c6b77c7" alt="Flyland DMC Services" style="display: block; height: 48px; width: auto">
+</a>
+<label class="search" style="flex: 1 1 260px; max-width: 440px; display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; background: #FFFFFF; border: 1px solid #D0D4E4; border-radius: 8px; box-sizing: border-box; color: #676879">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+<input aria-label="Search enquiries" placeholder="Search name, agent, destination or Trip ID" value="{{query}}" onChange="{{onQuery}}" style="flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; font-size: 14px; color: #323338">
+</label>
+<div style="display: flex; align-items: center; gap: 4px; margin-left: auto">
+<span style="display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px; margin-right: 8px; border-radius: 17px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28); color: #FFFFFF; font-size: 13px; font-weight: 500"><span style="width: 8px; height: 8px; border-radius: 50%; background: #3DDC97"></span>WhatsApp · 2 lines connected</span>
+<button class="hov-d" aria-label="Notifications, 3 new" style="position: relative; width: 44px; height: 44px; border: 0; border-radius: 8px; background: transparent; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"></path></svg>
+<span style="position: absolute; top: 7px; right: 7px; min-width: 16px; height: 16px; padding: 0 4px; box-sizing: border-box; border-radius: 8px; background: #D83A52; color: #FFFFFF; font-size: 10px; font-weight: 700; line-height: 16px">3</span>
+</button>
+<button class="hov-d" aria-label="Inbox" style="width: 44px; height: 44px; border: 0; border-radius: 8px; background: transparent; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-6l-2 3h-4l-2-3H2"></path><path d="M5.5 5h13L22 12v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6z"></path></svg>
+</button>
+<span role="img" aria-label="Signed in as Shabna K, Sales manager" style="width: 36px; height: 36px; margin-left: 6px; border-radius: 50%; background: #3D4BC7; color: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #FFFFFF">SK</span>
+</div>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; padding: 12px 12px 12px 8px">
+
+<dc-import name="Sidebar" active="dashboard" hint-size="272px,1560px"></dc-import>
+
+<main style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border-radius: 16px; box-shadow: 0 1px 3px rgba(29,44,92,.06); padding: 28px clamp(16px, 3vw, 36px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px">
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 13px; font-weight: 500; color: #676879">Monday, 12 October 2026<span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 11px; background: #FFF4CC; color: #6B4E00; font-size: 12px; font-weight: 600">Sample data</span></div>
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 30px; line-height: 38px; font-weight: 600; letter-spacing: -0.01em">Good morning, Shabna</h1>
+<p style="margin: 0; font-size: 15px; color: #676879">{{taskOpen}} follow-ups are due today and {{readyCount}} quotes are waiting for review.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px">
+<label style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 600; color: #676879">Executive
+<select value="{{owner}}" onChange="{{onOwner}}" style="height: 40px; min-width: 180px; padding: 0 12px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; font-size: 14px; color: #323338; cursor: pointer">
+<option value="all">All executives</option>
+<option value="SK">Shabna K</option>
+<option value="RM">Rahul M</option>
+<option value="FN">Fathima N</option>
+<option value="AP">Arjun P</option>
+</select>
+</label>
+<label style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 600; color: #676879">Agent
+<select value="{{agent}}" onChange="{{onAgent}}" style="height: 40px; min-width: 200px; padding: 0 12px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; font-size: 14px; color: #323338; cursor: pointer">
+<option value="all">All agents &amp; direct</option>
+<option value="Direct · B2C">Direct travellers (B2C)</option>
+<option value="Royal Sky Holidays">Royal Sky Holidays</option>
+<option value="Wanderlust Trips">Wanderlust Trips</option>
+<option value="Al Noor Travels">Al Noor Travels</option>
+<option value="Gulf Pearl Travels">Gulf Pearl Travels</option>
+<option value="Kerala Holidays Hub">Kerala Holidays Hub</option>
+<option value="Sky Wings Tours">Sky Wings Tours</option>
+<option value="Malabar Tours &amp; Travels">Malabar Tours &amp; Travels</option>
+<option value="TripNest Holidays">TripNest Holidays</option>
+<option value="Coastal Escapes">Coastal Escapes</option>
+<option value="Desert Rose Holidays">Desert Rose Holidays</option>
+<option value="Horizon Trails">Horizon Trails</option>
+<option value="Bluewave Travel Co.">Bluewave Travel Co.</option>
+</select>
+</label>
+<a class="btn-p" href="Lead.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-weight: 600; text-decoration: none; transition: background .15s ease">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New enquiry</a>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px">
+<button class="tile" onClick="{{tileNew}}" aria-pressed="{{selNew}}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 18px; border-radius: 12px; border: 1px solid {{bNew}}; background: {{bgNew}}; color: #323338; text-align: left; cursor: pointer; transition: box-shadow .18s ease, transform .18s ease">
+<span style="width: 40px; height: 40px; margin-bottom: 10px; border-radius: 10px; background: #ECEEFB; color: #283277; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.1-5.2A8.5 8.5 0 1 1 21 11.5z"></path><path d="M12 8v7M8.5 11.5h7"></path></svg></span>
+<span style="font-family: Poppins, sans-serif; font-size: 32px; line-height: 40px; font-weight: 600">{{newCount}}</span>
+<span style="font-size: 14px; font-weight: 600">New enquiries</span>
+<span style="font-size: 13px; color: #676879">Parsed from WhatsApp today</span>
+</button>
+<button class="tile" onClick="{{tileReady}}" aria-pressed="{{selReady}}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 18px; border-radius: 12px; border: 1px solid {{bReady}}; background: {{bgReady}}; color: #323338; text-align: left; cursor: pointer; transition: box-shadow .18s ease, transform .18s ease">
+<span style="width: 40px; height: 40px; margin-bottom: 10px; border-radius: 10px; background: #F1E8FB; color: #6A2FB0; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M8 13h8M8 17h5"></path></svg></span>
+<span style="font-family: Poppins, sans-serif; font-size: 32px; line-height: 40px; font-weight: 600">{{readyCount}}</span>
+<span style="font-size: 14px; font-weight: 600">Quotes to review</span>
+<span style="font-size: 13px; color: #676879">Built, waiting for approval</span>
+</button>
+<a class="tile" href="#followups" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 18px; border-radius: 12px; border: 1px solid #E6E9EF; background: #FFFFFF; color: #323338; text-decoration: none; transition: box-shadow .18s ease, transform .18s ease">
+<span style="width: 40px; height: 40px; margin-bottom: 10px; border-radius: 10px; background: #FFF0DB; color: #8A4B00; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>
+<span style="font-family: Poppins, sans-serif; font-size: 32px; line-height: 40px; font-weight: 600">{{taskOpen}}</span>
+<span style="font-size: 14px; font-weight: 600">Follow-ups due today</span>
+<span style="font-size: 13px; color: #676879"><span style="color: #C9304A; font-weight: 600">{{taskOverdue}} overdue</span> · jump to list</span>
+</a>
+<button class="tile" onClick="{{tileWon}}" aria-pressed="{{selWon}}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 18px; border-radius: 12px; border: 1px solid {{bWon}}; background: {{bgWon}}; color: #323338; text-align: left; cursor: pointer; transition: box-shadow .18s ease, transform .18s ease">
+<span style="width: 40px; height: 40px; margin-bottom: 10px; border-radius: 10px; background: #DDF5EA; color: #00663B; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"></path><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"></path></svg></span>
+<span style="font-family: Poppins, sans-serif; font-size: 32px; line-height: 40px; font-weight: 600">{{wonCount}}</span>
+<span style="font-size: 14px; font-weight: 600">Won this month</span>
+<span style="font-size: 13px; color: #676879">Win rate {{winRate}}% of closed</span>
+</button>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 18px; border-radius: 12px; border: 1px solid #E6E9EF; background: #FFFFFF">
+<span style="width: 40px; height: 40px; margin-bottom: 10px; border-radius: 10px; background: #EEF0F6; color: #323338; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2h4M12 14l3-3"></path><circle cx="12" cy="14" r="8"></circle></svg></span>
+<span style="font-family: Poppins, sans-serif; font-size: 32px; line-height: 40px; font-weight: 600">4m 12s</span>
+<span style="font-size: 14px; font-weight: 600">Quote turnaround</span>
+<span style="display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: #00663B; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Under 5 min target</span>
+</div>
+</div>
+
+<section aria-labelledby="wf-h" style="border: 1px solid #E6E9EF; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="wf-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">Trip workflow</h2>
+<span style="font-size: 13px; color: #676879">Where every trip stands, from enquiry to payment, across all departments</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; font-weight: 600"><a href="Workflow.dc.html" style="text-decoration: none">How the workflow runs</a><a href="Lead.dc.html" style="text-decoration: none">Open Trip desk</a><a href="TripFiles.dc.html" style="text-decoration: none">All trip files</a></div>
+</div>
+<ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{wfStages}}" as="w" hint-placeholder-count="8">
+<li style="flex: 1 1 128px; min-width: 0; display: flex">
+<a class="tile" href="{{w.href}}" style="flex: 1; display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border-radius: 10px; background: {{w.tint}}; color: #323338; text-decoration: none; transition: box-shadow .18s ease, transform .18s ease">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: {{w.ink}}"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{w.color}}"></span>{{w.dept}}</span>
+<span style="font-family: Poppins, sans-serif; font-size: 26px; line-height: 34px; font-weight: 600; font-variant-numeric: tabular-nums">{{w.count}}</span>
+<span style="font-size: 13px; font-weight: 600">{{w.label}}</span>
+</a>
+</li>
+</sc-for>
+</ol>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+<sc-for list="{{depts}}" as="d" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 12px; border: 1px solid #E6E9EF">
+<div style="display: flex; align-items: center; gap: 10px"><span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 8px; background: {{d.color}}; color: #FFFFFF; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{d.short}}</span><strong>{{d.name}}</strong></div>
+<sc-for list="{{d.rows}}" as="dr" hint-placeholder-count="3"><div style="display: flex; justify-content: space-between; gap: 8px; font-size: 13px"><span style="color: #676879">{{dr.label}}</span><strong style="color: {{dr.ink}}; font-variant-numeric: tabular-nums">{{dr.value}}</strong></div></sc-for>
+</div>
+</sc-for>
+</div>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+<section aria-labelledby="ai-h" class="ai-card" style="flex: 3 1 460px; min-width: 0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-bottom: 8px">
+<span class="ai-chip" style="display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 14px; color: #FFFFFF; font-size: 12px; font-weight: 700"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 5.6L19.5 9.5l-5.7 1.9L12 17l-1.8-5.6L4.5 9.5l5.7-1.9z"></path><path d="M19 15l.9 2.6 2.6.9-2.6.9L19 22l-.9-2.6-2.6-.9 2.6-.9z"></path></svg>AI</span>
+<h2 id="ai-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">Insights for today</h2>
+</div>
+<sc-for list="{{insights}}" as="ins" hint-placeholder-count="4">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px 0; border-top: 1px solid #E6E9EF">
+<span style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 2px"><strong>{{ins.title}}</strong><span style="font-size: 13px; color: #676879">{{ins.text}}</span></span>
+<sc-if value="{{ins.isCopy}}" hint-placeholder-val="{{false}}"><button class="btn-s" onClick="{{ins.copy}}" style="height: 36px; padding: 0 14px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #323338; font-size: 13px; font-weight: 600; cursor: pointer">{{ins.action}}</button></sc-if>
+<sc-if value="{{ins.isLink}}" hint-placeholder-val="{{true}}"><a class="btn-s" href="{{ins.href}}" style="display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #323338; font-size: 13px; font-weight: 600; text-decoration: none">{{ins.action}}</a></sc-if>
+</div>
+</sc-for>
+<sc-if value="{{hasAiNote}}" hint-placeholder-val="{{false}}"><span role="status" style="align-self: flex-start; margin-top: 6px; padding: 6px 12px; border-radius: 15px; background: {{aiNoteBg}}; color: {{aiNoteInk}}; font-size: 13px; font-weight: 600">{{aiNote}}</span></sc-if>
+</section>
+
+<section aria-labelledby="ot-h" style="flex: 2 1 300px; min-width: 0; border: 1px solid #E6E9EF; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="ot-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">On trip now</h2>
+<span style="font-size: 13px; color: #676879">Live from the guide app</span>
+</div>
+<sc-for list="{{onTrip}}" as="ot" hint-placeholder-count="1">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 10px; background: #F6F7FB">
+<div style="display: flex; justify-content: space-between; gap: 8px"><strong>{{ot.name}}</strong><span style="font-size: 12px; color: #676879">#{{ot.trip}}</span></div>
+<span style="font-size: 13px; color: #676879">{{ot.dest}} · {{ot.dayTxt}} · Guide {{ot.guide}}</span>
+<div style="display: flex; align-items: center; gap: 10px"><div style="flex: 1; height: 8px; border-radius: 4px; background: #DCDFEC"><div style="width: {{ot.pct}}%; height: 100%; border-radius: 4px; background: #00854D"></div></div><strong style="font-size: 13px">{{ot.progress}}</strong></div>
+<span style="font-size: 12px; color: #00663B">{{ot.last}}</span>
+<a href="Lead.dc.html" style="align-self: flex-start; font-size: 13px; font-weight: 600; text-decoration: none">Track in Trip desk</a>
+</div>
+</sc-for>
+<sc-if value="{{noTrip}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #676879">No trips running for this executive today.</span></sc-if>
+</section>
+</div>
+
+<section aria-labelledby="pipe-h"style="border: 1px solid #E6E9EF; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px">
+<h2 id="pipe-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">Sales pipeline</h2>
+<span style="font-size: 13px; color: #676879">{{total}} enquiries this month · click a status to filter the table</span>
+</div>
+<div style="display: flex; gap: 2px; height: 44px">
+<sc-for list="{{battery}}" as="seg" hint-placeholder-count="9">
+<button class="seg" onClick="{{seg.pick}}" onMouseEnter="{{seg.enter}}" onMouseLeave="{{segLeave}}" aria-label="{{seg.aria}}" aria-pressed="{{seg.selected}}" style="position: relative; flex-grow: {{seg.count}}; flex-basis: 0; min-width: 30px; border: 0; padding: 0; border-radius: {{seg.radius}}; background: {{seg.color}}; color: {{seg.text}}; opacity: {{seg.opacity}}; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity .2s ease, filter .15s ease">{{seg.count}}<sc-if value="{{seg.hovered}}" hint-placeholder-val="{{false}}"><span role="tooltip" style="position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); z-index: 5; white-space: nowrap; padding: 6px 10px; border-radius: 6px; background: #323338; color: #FFFFFF; font-size: 12px; font-weight: 500; line-height: 16px; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,.18)">{{seg.label}} · {{seg.count}} enquiries · {{seg.pct}}%</span></sc-if></button>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{statusSummary}}" as="st" hint-placeholder-count="9">
+<button class="hov-w" onClick="{{st.pick}}" aria-pressed="{{st.selected}}" style="display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px 0 10px; border-radius: 18px; border: 1px solid {{st.border}}; background: {{st.bg}}; color: #323338; font-size: 13px; cursor: pointer; transition: background .15s ease"><span style="width: 12px; height: 12px; border-radius: 3px; background: {{st.color}}"></span>{{st.label}}<span style="font-weight: 700">{{st.count}}</span></button>
+</sc-for>
+</div>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+
+<section id="followups" aria-labelledby="fu-h" style="flex: 3 1 520px; min-width: 0; border: 1px solid #E6E9EF; border-radius: 12px; padding: 20px 20px 8px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="fu-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">Follow-ups due today</h2>
+<span style="font-size: 13px; color: #676879">{{taskOpen}} open · <span style="color: #C9304A; font-weight: 600">{{taskOverdue}} overdue</span> · sequence pauses when the customer replies</span>
+</div>
+<div role="group" aria-label="Show" style="display: inline-flex; padding: 3px; border-radius: 8px; background: #ECEFF8; gap: 2px">
+<sc-for list="{{kinds}}" as="k" hint-placeholder-count="3">
+<button onClick="{{k.pick}}" aria-pressed="{{k.on}}" style="height: 34px; padding: 0 14px; border: 0; border-radius: 6px; background: {{k.bg}}; color: #323338; font-size: 13px; font-weight: {{k.weight}}; box-shadow: {{k.shadow}}; cursor: pointer; transition: background .15s ease">{{k.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{tasks}}" as="t" hint-placeholder-count="7">
+<div class="hov-w" style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px 8px; border-top: 1px solid #E6E9EF; border-radius: 4px; opacity: {{t.opacity}}; transition: opacity .2s ease">
+<input type="checkbox" id="{{t.cid}}" checked="{{t.done}}" onChange="{{t.toggle}}" style="width: 20px; height: 20px; margin: 0; accent-color: #3D4BC7; cursor: pointer; flex: none">
+<div style="width: 64px; flex: none; display: flex; flex-direction: column; gap: 2px">
+<span style="font-weight: 600; font-variant-numeric: tabular-nums">{{t.time}}</span>
+<sc-if value="{{t.showOverdue}}" hint-placeholder-val="{{false}}"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #C9304A">Overdue</span></sc-if>
+</div>
+<label for="{{t.cid}}" style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 2px; cursor: pointer">
+<span style="font-weight: 600; text-decoration: {{t.deco}}">{{t.title}}</span>
+<span style="font-size: 13px; color: #676879">{{t.detail}}</span>
+</label>
+<sc-if value="{{t.isAuto}}" hint-placeholder-val="{{true}}">
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 13px; background: #DDF5EA; color: #00663B; font-size: 12px; font-weight: 600; white-space: nowrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.1-5.2A8.5 8.5 0 1 1 21 11.5z"></path></svg>Auto WhatsApp</span>
+</sc-if>
+<sc-if value="{{t.isTask}}" hint-placeholder-val="{{false}}">
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 13px; background: #EEF0F6; color: #323338; font-size: 12px; font-weight: 600; white-space: nowrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8"></path><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"></path></svg>Task</span>
+</sc-if>
+<span role="img" aria-label="{{t.ownerName}}" style="width: 28px; height: 28px; flex: none; border-radius: 50%; background: {{t.ownerColor}}; color: #FFFFFF; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">{{t.owner}}</span>
+<button class="btn-s" style="height: 36px; min-width: 76px; padding: 0 14px; border: 1px solid #C3C6D4; border-radius: 6px; background: #FFFFFF; color: #323338; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .15s ease">{{t.action}}</button>
+</div>
+</sc-for>
+<sc-if value="{{tasksEmpty}}" hint-placeholder-val="{{false}}">
+<div style="padding: 28px 8px; border-top: 1px solid #E6E9EF; text-align: center; color: #676879">Nothing due for this executive today.</div>
+</sc-if>
+</div>
+</section>
+
+<div style="flex: 2 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+
+<section aria-labelledby="ch-h" style="border: 1px solid #E6E9EF; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="ch-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">Enquiries vs quotes sent</h2>
+<span style="font-size: 13px; color: #676879">29 Sep – 12 Oct · {{sumR}} received · {{sumQ}} quoted ({{quoteRate}}%)</span>
+</div>
+<div style="display: flex; gap: 16px; font-size: 13px">
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #B4BBEE"></span>Received</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #3D4BC7"></span>Quoted</span>
+</div>
+<div style="position: relative; height: 180px; margin: 8px 0 0 22px">
+<div style="position: absolute; left: 0; right: 0; bottom: 0; border-top: 1px solid #C3C6D4"><span style="position: absolute; left: -22px; top: -9px; font-size: 11px; color: #676879">0</span></div>
+<div style="position: absolute; left: 0; right: 0; bottom: 33.33%; border-top: 1px dashed #E6E9EF"><span style="position: absolute; left: -22px; top: -9px; font-size: 11px; color: #676879">1</span></div>
+<div style="position: absolute; left: 0; right: 0; bottom: 66.66%; border-top: 1px dashed #E6E9EF"><span style="position: absolute; left: -22px; top: -9px; font-size: 11px; color: #676879">2</span></div>
+<div style="position: absolute; left: 0; right: 0; bottom: 100%; border-top: 1px dashed #E6E9EF"><span style="position: absolute; left: -22px; top: -9px; font-size: 11px; color: #676879">3</span></div>
+<div style="position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 4px">
+<sc-for list="{{days}}" as="d" hint-placeholder-count="14">
+<div onMouseEnter="{{d.enter}}" onMouseLeave="{{dayLeave}}" style="position: relative; flex: 1; height: 100%; display: flex; align-items: flex-end; justify-content: center; gap: 2px; border-radius: 4px; background: {{d.hoverBg}}">
+<span style="width: 38%; max-width: 9px; height: {{d.rh}}%; border-radius: 4px 4px 0 0; background: #B4BBEE"></span>
+<span style="width: 38%; max-width: 9px; height: {{d.qh}}%; border-radius: 4px 4px 0 0; background: #3D4BC7"></span>
+<sc-if value="{{d.hovered}}" hint-placeholder-val="{{false}}">
+<div role="tooltip" style="position: absolute; bottom: calc(100% + 8px); left: {{d.tipLeft}}; right: {{d.tipRight}}; transform: {{d.tipTx}}; z-index: 5; min-width: 132px; padding: 8px 10px; border-radius: 8px; background: #323338; color: #FFFFFF; font-size: 12px; line-height: 18px; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,.18)">
+<div style="font-weight: 700; margin-bottom: 2px">{{d.label}}</div>
+<div style="display: flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #B4BBEE"></span>Received<span style="margin-left: auto; font-weight: 700">{{d.r}}</span></div>
+<div style="display: flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #3D4BC7; box-shadow: 0 0 0 1px #FFFFFF"></span>Quoted<span style="margin-left: auto; font-weight: 700">{{d.q}}</span></div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; gap: 4px; margin-left: 22px">
+<sc-for list="{{days}}" as="d" hint-placeholder-count="14">
+<span style="flex: 1; text-align: center; font-size: 11px; color: #676879; font-variant-numeric: tabular-nums">{{d.short}}</span>
+</sc-for>
+</div>
+</section>
+
+<section aria-labelledby="de-h" style="border: 1px solid #E6E9EF; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px">
+<h2 id="de-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">By destination</h2>
+<span style="font-size: 13px; color: #676879">enquiries</span>
+</div>
+<sc-for list="{{destRows}}" as="dr" hint-placeholder-count="6">
+<div style="display: grid; grid-template-columns: minmax(96px, 128px) minmax(0, 1fr) 28px; align-items: center; gap: 12px">
+<div style="display: flex; flex-direction: column; min-width: 0">
+<span style="font-size: 13px; font-weight: 600">{{dr.name}}</span>
+<sc-if value="{{dr.hasNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 11px; line-height: 14px; color: #676879">Not set up · to executive</span></sc-if>
+</div>
+<div style="height: 12px; border-radius: 6px; background: #F0F2F7"><div style="height: 100%; width: {{dr.w}}%; border-radius: 6px; background: {{dr.color}}; transition: width .3s ease"></div></div>
+<span style="text-align: right; font-weight: 700; font-variant-numeric: tabular-nums">{{dr.count}}</span>
+</div>
+</sc-for>
+</section>
+
+</div>
+</div>
+
+<section aria-labelledby="pi-h" style="border: 1px solid #E6E9EF; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px">
+<h2 id="pi-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">Pilot success measures</h2>
+<span style="font-size: 13px; color: #676879">Phase 1 go-live targets · tick marks show the target</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 10px; background: #F6F7FB">
+<span style="font-size: 13px; font-weight: 600; color: #676879">Quote turnaround</span>
+<span style="font-family: Poppins, sans-serif; font-size: 24px; line-height: 32px; font-weight: 600">4m 12s</span>
+<div style="position: relative; height: 8px; border-radius: 4px; background: #E1E4EE"><div style="width: 70%; height: 100%; border-radius: 4px; background: #3D4BC7"></div><span style="position: absolute; left: 83.3%; top: -4px; width: 2px; height: 16px; background: #323338"></span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px"><span style="color: #676879">Target under 5 min</span><span style="display: inline-flex; align-items: center; gap: 4px; font-weight: 700; color: #00663B"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>On track</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 10px; background: #F6F7FB">
+<span style="font-size: 13px; font-weight: 600; color: #676879">Parsed with no manual edit</span>
+<span style="font-family: Poppins, sans-serif; font-size: 24px; line-height: 32px; font-weight: 600">76%</span>
+<div style="position: relative; height: 8px; border-radius: 4px; background: #E1E4EE"><div style="width: 76%; height: 100%; border-radius: 4px; background: #3D4BC7"></div><span style="position: absolute; left: 80%; top: -4px; width: 2px; height: 16px; background: #323338"></span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px"><span style="color: #676879">Target 80% of templates</span><span style="display: inline-flex; align-items: center; gap: 4px; font-weight: 700; color: #8A4B00"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg>Below target</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 10px; background: #F6F7FB">
+<span style="font-size: 13px; font-weight: 600; color: #676879">Follow-ups on schedule</span>
+<span style="font-family: Poppins, sans-serif; font-size: 24px; line-height: 32px; font-weight: 600">100%</span>
+<div style="position: relative; height: 8px; border-radius: 4px; background: #E1E4EE"><div style="width: 100%; height: 100%; border-radius: 4px; background: #3D4BC7"></div><span style="position: absolute; left: calc(100% - 2px); top: -4px; width: 2px; height: 16px; background: #323338"></span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px"><span style="color: #676879">Target zero missed</span><span style="display: inline-flex; align-items: center; gap: 4px; font-weight: 700; color: #00663B"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>On track</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 10px; background: #F6F7FB">
+<span style="font-size: 13px; font-weight: 600; color: #676879">Price within 1% of manual</span>
+<span style="font-family: Poppins, sans-serif; font-size: 24px; line-height: 32px; font-weight: 600">19 / 20</span>
+<div style="position: relative; height: 8px; border-radius: 4px; background: #E1E4EE"><div style="width: 95%; height: 100%; border-radius: 4px; background: #3D4BC7"></div><span style="position: absolute; left: calc(100% - 2px); top: -4px; width: 2px; height: 16px; background: #323338"></span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px"><span style="color: #676879">Target 20 sample enquiries</span><span style="display: inline-flex; align-items: center; gap: 4px; font-weight: 700; color: #8A4B00"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg>1 to fix</span></div>
+</div>
+</div>
+</section>
+
+<section id="agents" aria-labelledby="ag-h" style="border: 1px solid #E6E9EF; border-radius: 12px; padding: 20px 0 0; display: flex; flex-direction: column; gap: 14px; overflow: hidden">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 0 20px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="ag-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">Agents</h2>
+<span style="font-size: 13px; color: #676879">{{agentActive}} agents sent enquiries this month · {{agentQuiet}} quiet · click a row to filter the dashboard</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-left: auto">
+<button class="btn-s" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #323338; font-size: 14px; font-weight: 500; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>Markup groups</button>
+<button class="btn-p" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .15s ease"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Add agent</button>
+</div>
+</div>
+<div style="overflow-x: auto">
+<div style="min-width: 1020px">
+<div style="display: grid; grid-template-columns: minmax(250px, 2.2fr) 150px 92px 80px 64px minmax(170px, 1.4fr) 72px 170px; height: 40px; align-items: center; border-top: 1px solid #E6E9EF; font-size: 13px; font-weight: 500; color: #676879">
+<span style="padding: 0 20px">Agent</span>
+<span style="padding: 0 12px">Markup group</span>
+<span style="padding: 0 12px; text-align: right">Enquiries</span>
+<span style="padding: 0 12px; text-align: right">Quoted</span>
+<span style="padding: 0 12px; text-align: right">Won</span>
+<span style="padding: 0 12px">Pipeline</span>
+<span style="text-align: center">Owner</span>
+<span style="padding: 0 12px">Last enquiry</span>
+</div>
+<sc-for list="{{agentRows}}" as="a" hint-placeholder-count="13">
+<button class="hov-w" onClick="{{a.pick}}" aria-pressed="{{a.on}}" aria-label="{{a.aria}}" style="display: grid; grid-template-columns: minmax(250px, 2.2fr) 150px 92px 80px 64px minmax(170px, 1.4fr) 72px 170px; width: 100%; min-height: 58px; align-items: center; padding: 0; border: 0; border-top: 1px solid #E6E9EF; background: {{a.bg}}; color: #323338; font-size: 14px; text-align: left; cursor: pointer; transition: background .15s ease">
+<span style="display: flex; align-items: center; gap: 12px; padding: 6px 12px 6px 20px; min-width: 0">
+<span aria-hidden="true" style="width: 36px; height: 36px; flex: none; border-radius: 9px; background: {{a.color}}; color: #FFFFFF; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{a.initials}}</span>
+<span style="display: flex; flex-direction: column; min-width: 0">
+<span style="font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{a.name}}</span>
+<span style="font-size: 12px; color: #676879; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{a.city}} · quotes in {{a.cur}}</span>
+</span>
+</span>
+<span style="padding: 0 12px"><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: {{a.groupBg}}; color: {{a.groupInk}}; font-size: 12px; font-weight: 700; white-space: nowrap">{{a.group}} · {{a.markup}}</span></span>
+<span style="padding: 0 12px; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums">{{a.enq}}</span>
+<span style="padding: 0 12px; text-align: right; font-variant-numeric: tabular-nums">{{a.quoted}}</span>
+<span style="padding: 0 12px; text-align: right; font-variant-numeric: tabular-nums">{{a.won}}</span>
+<span style="padding: 0 12px">
+<sc-if value="{{a.hasLeads}}" hint-placeholder-val="{{true}}">
+<span style="display: flex; gap: 2px; height: 20px">
+<sc-for list="{{a.battery}}" as="b" hint-placeholder-count="3"><span title="{{b.tip}}" style="flex-grow: {{b.count}}; flex-basis: 0; border-radius: 3px; background: {{b.color}}"></span></sc-for>
+</span>
+</sc-if>
+<sc-if value="{{a.noLeads}}" hint-placeholder-val="{{false}}"><span style="display: block; height: 20px; border-radius: 3px; border: 1.5px dashed #C3C6D4; box-sizing: border-box"></span></sc-if>
+</span>
+<span style="display: flex; justify-content: center"><span role="img" aria-label="{{a.ownerName}}" style="width: 28px; height: 28px; border-radius: 50%; background: {{a.ownerColor}}; color: #FFFFFF; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">{{a.owner}}</span></span>
+<span style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 6px 12px">
+<span style="font-size: 13px">{{a.last}}</span>
+<sc-if value="{{a.isQuiet}}" hint-placeholder-val="{{false}}"><span style="font-size: 11px; line-height: 16px; padding: 0 6px; border-radius: 4px; background: #FFF0DB; color: #8A4B00; font-weight: 700">Quiet {{a.quietDays}} days · re-engage</span></sc-if>
+</span>
+</button>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="re-h"style="border: 1px solid #E6E9EF; border-radius: 12px; padding: 20px 0 0; display: flex; flex-direction: column; gap: 14px; overflow: hidden">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 0 20px">
+<h2 id="re-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">Recent enquiries</h2>
+<span style="font-size: 13px; color: #676879">Showing {{shownCount}} of {{matchCount}}</span>
+<sc-if value="{{hasFilter}}" hint-placeholder-val="{{false}}">
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 4px 0 12px; border-radius: 15px; background: #ECEEFB; color: #283277; font-size: 13px; font-weight: 600">{{filterLabel}}<button onClick="{{clearFilter}}" aria-label="Clear filters" style="width: 24px; height: 24px; border: 0; border-radius: 12px; background: transparent; color: #283277; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></span>
+</sc-if>
+<sc-if value="{{hasLog}}" hint-placeholder-val="{{false}}">
+<span role="status" style="display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 15px; background: #DDF5EA; color: #00663B; font-size: 13px; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>{{log}}</span>
+</sc-if>
+<a href="Board.dc.html" style="margin-left: auto; display: inline-flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 600; text-decoration: none">Open leads board<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg></a>
+</div>
+<div style="overflow-x: auto">
+<div style="min-width: 1040px">
+<div style="display: grid; grid-template-columns: minmax(240px, 2.4fr) 72px 150px minmax(150px, 1.3fr) 128px 92px 124px 132px; height: 40px; align-items: center; border-top: 1px solid #E6E9EF; font-size: 13px; font-weight: 500; color: #676879">
+<span style="padding: 0 20px">Enquiry</span>
+<span style="text-align: center">Owner</span>
+<span style="text-align: center">Status</span>
+<span style="padding: 0 12px">Destination</span>
+<span style="padding: 0 12px">Travel</span>
+<span style="padding: 0 12px">Pax</span>
+<span style="padding: 0 12px; text-align: right">Quote</span>
+<span style="padding: 0 12px">Parse confidence</span>
+</div>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="10">
+<div style="border-top: 1px solid #E6E9EF">
+<div class="hov-w" style="display: grid; grid-template-columns: minmax(240px, 2.4fr) 72px 150px minmax(150px, 1.3fr) 128px 92px 124px 132px; min-height: 54px; align-items: stretch">
+<div style="display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: 6px 12px 6px 20px; border-right: 1px solid #E6E9EF; min-width: 0">
+<a href="Lead.dc.html" style="font-weight: 600; color: #323338; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.name}}</a>
+<span style="font-size: 12px; color: #676879; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">#{{r.id}} · {{r.agent}}</span>
+</div>
+<div style="display: flex; align-items: center; justify-content: center; border-right: 1px solid #E6E9EF"><span role="img" aria-label="{{r.ownerName}}" style="width: 30px; height: 30px; border-radius: 50%; background: {{r.ownerColor}}; color: #FFFFFF; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">{{r.owner}}</span></div>
+<div style="border-right: 1px solid #FFFFFF; display: flex">
+<button class="pill" onClick="{{r.togglePicker}}" aria-expanded="{{r.pickerOpen}}" aria-label="{{r.statusAria}}" style="flex: 1; border: 0; margin: 0; background: {{r.st.color}}; color: {{r.st.text}}; font-size: 13px; font-weight: 600; cursor: pointer; transition: filter .15s ease">{{r.st.label}}</button>
+</div>
+<div style="display: flex; flex-direction: column; justify-content: center; padding: 6px 12px; border-right: 1px solid #E6E9EF; min-width: 0">
+<span style="font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.dest}}</span>
+<span style="font-size: 12px; color: #676879">{{r.country}} · {{r.nights}}</span>
+</div>
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 2px; padding: 6px 12px; border-right: 1px solid #E6E9EF">
+<span style="font-variant-numeric: tabular-nums">{{r.travel}}</span>
+<sc-if value="{{r.tentative}}" hint-placeholder-val="{{false}}"><span style="font-size: 11px; line-height: 16px; padding: 0 6px; border-radius: 4px; background: #FFF4CC; color: #6B4E00; font-weight: 600">Tentative</span></sc-if>
+</div>
+<div style="display: flex; align-items: center; padding: 6px 12px; border-right: 1px solid #E6E9EF; font-variant-numeric: tabular-nums">{{r.pax}}</div>
+<div style="display: flex; align-items: center; justify-content: flex-end; padding: 6px 12px; border-right: 1px solid #E6E9EF; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap">{{r.quote}}</div>
+<div style="display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 6px 12px">
+<div style="display: flex; justify-content: space-between; font-size: 12px"><span style="font-weight: 700">{{r.conf}}%</span><span style="color: {{r.confInk}}; font-weight: 600">{{r.confLabel}}</span></div>
+<div style="height: 6px; border-radius: 3px; background: #E6E9EF"><div style="width: {{r.conf}}%; height: 100%; border-radius: 3px; background: {{r.confColor}}"></div></div>
+</div>
+</div>
+<sc-if value="{{r.pickerOpen}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 20px; background: #F6F7FB; border-top: 1px solid #E6E9EF">
+<span style="font-size: 13px; font-weight: 600; color: #676879; margin-right: 6px">Move to</span>
+<sc-for list="{{r.options}}" as="o" hint-placeholder-count="9">
+<button class="pill" onClick="{{o.pick}}" aria-current="{{o.current}}" style="height: 36px; min-width: 108px; padding: 0 14px; border-radius: 6px; border: 0; outline: {{o.ring}}; outline-offset: 2px; background: {{o.color}}; color: {{o.text}}; font-size: 13px; font-weight: 600; cursor: pointer; transition: filter .15s ease">{{o.label}}</button>
+</sc-for>
+<button class="btn-s" onClick="{{closePicker}}" style="height: 36px; padding: 0 14px; margin-left: auto; border: 1px solid #C3C6D4; border-radius: 6px; background: #FFFFFF; color: #323338; font-size: 13px; font-weight: 600; cursor: pointer">Cancel</button>
+</div>
+</sc-if>
+</div>
+</sc-for>
+<sc-if value="{{rowsEmpty}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 36px 20px; border-top: 1px solid #E6E9EF; color: #676879">No enquiries match these filters.<button class="btn-s" onClick="{{clearFilter}}" style="height: 36px; padding: 0 16px; border: 1px solid #C3C6D4; border-radius: 6px; background: #FFFFFF; color: #323338; font-weight: 600; cursor: pointer">Clear filters</button></div>
+</sc-if>
+</div>
+</div>
+</section>
+
+<textarea ref="{{copyRef}}" aria-hidden="true" style="position: absolute; left: -9999px; top: 0; width: 1px; height: 1px; opacity: 0"></textarea>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3600}}'>
+const STATUSES = [
+  { key: 'new', label: 'New', color: '#66A8FF', text: '#323338' },
+  { key: 'info', label: 'Needs info', color: '#FFCB00', text: '#323338' },
+  { key: 'ready', label: 'Quote ready', color: '#8B47D0', text: '#FFFFFF' },
+  { key: 'quoted', label: 'Quoted', color: '#00779E', text: '#FFFFFF' },
+  { key: 'follow', label: 'Follow-up', color: '#FDAB3D', text: '#323338' },
+  { key: 'nego', label: 'Negotiation', color: '#C2378F', text: '#FFFFFF' },
+  { key: 'won', label: 'Won', color: '#00C875', text: '#323338' },
+  { key: 'lost', label: 'Lost', color: '#D83A52', text: '#FFFFFF' },
+  { key: 'expired', label: 'Expired', color: '#6B6E80', text: '#FFFFFF' }
+];
+const STATUS_BY_KEY = {};
+STATUSES.forEach(function (s) { STATUS_BY_KEY[s.key] = s; });
+
+const OWNERS = {
+  SK: { name: 'Shabna K', color: '#283277' },
+  RM: { name: 'Rahul M', color: '#7E3CC4' },
+  FN: { name: 'Fathima N', color: '#00796B' },
+  AP: { name: 'Arjun P', color: '#B8307F' }
+};
+
+const AGENTS = [
+  { name: 'Royal Sky Holidays', initials: 'RS', city: 'Kochi, India', cur: 'INR · MYR', group: 'Gold', markup: '8%', owner: 'SK', color: '#283277', last: 'Today 10:24' },
+  { name: 'Wanderlust Trips', initials: 'WT', city: 'Bengaluru, India', cur: 'INR', group: 'Silver', markup: '10%', owner: 'RM', color: '#00779E', last: 'Fri 9 Oct' },
+  { name: 'Al Noor Travels', initials: 'AN', city: 'Sharjah, UAE', cur: 'AED', group: 'Silver', markup: '10%', owner: 'FN', color: '#00796B', last: 'Thu 8 Oct' },
+  { name: 'Gulf Pearl Travels', initials: 'GP', city: 'Dubai, UAE', cur: 'AED', group: 'Gold', markup: '8%', owner: 'FN', color: '#7F5347', last: 'Sun 11 Oct' },
+  { name: 'Kerala Holidays Hub', initials: 'KH', city: 'Kozhikode, India', cur: 'INR', group: 'Standard', markup: '12%', owner: 'RM', color: '#5559DF', last: 'Sun 11 Oct' },
+  { name: 'Sky Wings Tours', initials: 'SW', city: 'Abu Dhabi, UAE', cur: 'AED', group: 'Standard', markup: '12%', owner: 'FN', color: '#B8307F', last: 'Tue 6 Oct' },
+  { name: 'Malabar Tours & Travels', initials: 'MT', city: 'Kannur, India', cur: 'INR', group: 'Silver', markup: '10%', owner: 'AP', color: '#8A4B00', last: 'Today 09:12' },
+  { name: 'TripNest Holidays', initials: 'TN', city: 'Chennai, India', cur: 'INR', group: 'Standard', markup: '12%', owner: 'AP', color: '#225091', last: 'Mon 5 Oct' },
+  { name: 'Coastal Escapes', initials: 'CE', city: 'Mangaluru, India', cur: 'INR', group: 'Standard', markup: '12%', owner: 'AP', color: '#037F4C', last: 'Thu 1 Oct' },
+  { name: 'Desert Rose Holidays', initials: 'DR', city: 'Dubai, UAE', cur: 'AED', group: 'Gold', markup: '8%', owner: 'FN', color: '#BB3354', last: 'Tue 29 Sep' },
+  { name: 'Horizon Trails', initials: 'HT', city: 'Pune, India', cur: 'INR', group: 'Standard', markup: '12%', owner: 'RM', color: '#5C5F72', last: 'Fri 18 Sep', quietDays: 24 },
+  { name: 'Bluewave Travel Co.', initials: 'BW', city: 'Muscat, Oman', cur: 'USD', group: 'Silver', markup: '10%', owner: 'SK', color: '#2B5C8A', last: 'Thu 27 Aug', quietDays: 46 },
+  { name: 'Direct · B2C', label: 'Direct travellers (B2C)', initials: 'B2C', city: 'WhatsApp B2C line', cur: 'INR · USD', group: 'Retail', markup: '15%', owner: 'AP', color: '#676879', last: 'Today 10:51' }
+];
+const GROUP_STYLE = {
+  Gold: { bg: '#FFF4CC', ink: '#6B4E00' },
+  Silver: { bg: '#ECEFF8', ink: '#323338' },
+  Standard: { bg: '#F6F7FB', ink: '#676879' },
+  Retail: { bg: '#ECEEFB', ink: '#283277' }
+};
+const QUOTED_KEYS = ['quoted', 'follow', 'nego', 'won', 'lost', 'expired'];
+
+const OPS = [
+  { trip: '4499580', name: 'Divya Suresh', dest: 'Singapore', owner: 'RM', stage: 'booking', open: 1 },
+  { trip: '4499530', name: 'Fatima Rasheed', dest: 'Kuala Lumpur', owner: 'FN', stage: 'returned', open: 1, note: 'Hotel not available for 5–7 Nov' },
+  { trip: '4499502', name: 'Rahul Varma', dest: 'Langkawi + KL', owner: 'SK', stage: 'booked' },
+  { trip: '4499498', name: 'Nadia Hassan', dest: 'Dubai', owner: 'FN', stage: 'proforma', advance: 'AED 1,050', overdue: 2 },
+  { trip: '4499470', name: 'Priya Nambiar', dest: 'Bangkok', owner: 'AP', stage: 'advance' },
+  { trip: '4499476', name: 'Arun Menon', dest: 'Langkawi + KL', owner: 'SK', stage: 'trip', day: 3, days: 6, done: 7, items: 12, guide: 'Ravi Kumar', last: 'Ravi Kumar ticked “Tour to Bukit Bintang at evening” at 19:05', expenses: 2 },
+  { trip: '4499455', name: 'Lakshmi Iyer', dest: 'Kuala Lumpur', owner: 'RM', stage: 'invoiced', balance: 'MYR 2,016' },
+  { trip: '4499431', name: 'Zubair Ahmed', dest: 'Phuket', owner: 'AP', stage: 'paid' }
+];
+const SHORT_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const LEADS = [
+  { id: '4499646', name: 'Ameena Basheer', agent: 'Direct · B2C', country: 'Malaysia', dest: 'Kuala Lumpur', nights: '4N/5D', travel: 'Dec 2026', tentative: true, pax: '2A + 2C', quote: '—', conf: 58, owner: 'AP', status: 'info' },
+  { id: '4499644', name: 'Nikhil Das', agent: 'Direct · B2C', country: 'Vietnam', dest: 'Hanoi + Ha Long', nights: '5N/6D', travel: 'Feb 2027', tentative: true, pax: '2A', quote: '—', conf: 40, owner: 'AP', status: 'new' },
+  { id: '4499641', name: 'Prakash Iyer', agent: 'Royal Sky Holidays', country: 'Malaysia', dest: 'Kuala Lumpur', nights: '4N/5D', travel: '12 Dec 2026', tentative: false, pax: '5A', quote: '—', conf: 93, owner: 'SK', status: 'new' },
+  { id: '4499640', name: 'Joseph Thomas', agent: 'Malabar Tours & Travels',country: 'Thailand', dest: 'Phuket', nights: '3N/4D', travel: 'Nov 2026', tentative: true, pax: '2A', quote: '—', conf: 71, owner: 'AP', status: 'new' },
+  { id: '4499633', name: 'Thomas Kurian', agent: 'Kerala Holidays Hub', country: 'Malaysia', dest: 'Langkawi + KL', nights: '6N/7D', travel: '20 Dec 2026', tentative: false, pax: '10A + 2C', quote: '—', conf: 88, owner: 'RM', status: 'ready' },
+  { id: '4499631', name: 'Rizwan Khan', agent: 'Gulf Pearl Travels', country: 'UAE', dest: 'Dubai', nights: '5N/6D', travel: '10 Dec 2026', tentative: false, pax: '2A + 2C', quote: 'AED 11,850', conf: 94, owner: 'FN', status: 'nego' },
+  { id: '4499625', name: 'Rohit Menon', agent: 'Wanderlust Trips', country: 'Multi-country', dest: 'Singapore + Malaysia', nights: '5N/6D', travel: '14 Jan 2027', tentative: false, pax: '3A', quote: 'USD 1,915', conf: 91, owner: 'AP', status: 'nego' },
+  { id: '4499621', name: 'Salman Faris', agent: 'Al Noor Travels', country: 'UAE', dest: 'Dubai', nights: '4N/5D', travel: '22 Nov 2026', tentative: false, pax: '4A', quote: 'AED 7,240', conf: 95, owner: 'FN', status: 'quoted' },
+  { id: '4499618', name: 'Meera Nair', agent: 'Direct · B2C', country: 'Thailand', dest: 'Bangkok + Pattaya', nights: '4N/5D', travel: '18 Dec 2026', tentative: false, pax: '2A + 2C', quote: '—', conf: 64, owner: 'RM', status: 'info' },
+  { id: '4499612', name: 'Amal Raj', agent: 'Royal Sky Holidays', country: 'Malaysia', dest: 'Kuala Lumpur', nights: '3N/4D', travel: '1 Dec 2026', tentative: true, pax: '2A', quote: '—', conf: 82, owner: 'SK', status: 'ready' },
+  { id: '4499602', name: 'Anjali Pillai', agent: 'Wanderlust Trips', country: 'Malaysia', dest: 'Langkawi + KL', nights: '5N/6D', travel: '8 Nov 2026', tentative: false, pax: '2A + 1C', quote: 'MYR 3,560', conf: 96, owner: 'RM', status: 'quoted' },
+  { id: '4499598', name: 'Kiran Babu', agent: 'Sky Wings Tours', country: 'UAE', dest: 'Dubai', nights: '3N/4D', travel: '30 Oct 2026', tentative: false, pax: '2A', quote: 'AED 3,180', conf: 97, owner: 'FN', status: 'follow' },
+  { id: '4499590', name: 'Haris Ahmed', agent: 'TripNest Holidays',country: 'Malaysia', dest: 'Kuala Lumpur', nights: '3N/4D', travel: '25 Oct 2026', tentative: false, pax: '2A', quote: 'MYR 1,640', conf: 99, owner: 'AP', status: 'follow' },
+  { id: '4499585', name: 'Deepa Krishnan', agent: 'Royal Sky Holidays', country: 'Thailand', dest: 'Phuket + Krabi', nights: '4N/5D', travel: '6 Nov 2026', tentative: false, pax: '6A', quote: 'INR 1,42,800', conf: 92, owner: 'SK', status: 'quoted' },
+  { id: '4499580', name: 'Divya Suresh', agent: 'Direct · B2C', country: 'Singapore', dest: 'Singapore', nights: '4N/5D', travel: '1 Nov 2026', tentative: false, pax: '2A + 1C', quote: 'USD 2,340', conf: 98, owner: 'RM', status: 'won' },
+  { id: '4499572', name: 'Farhan Ali', agent: 'Al Noor Travels', country: 'Malaysia', dest: 'Kuala Lumpur', nights: '4N/5D', travel: '19 Oct 2026', tentative: false, pax: '2A', quote: 'AED 4,120', conf: 96, owner: 'FN', status: 'lost' },
+  { id: '4499566', name: 'Vivek Raj', agent: 'Coastal Escapes',country: 'Thailand', dest: 'Bangkok', nights: '3N/4D', travel: '15 Oct 2026', tentative: false, pax: '2A', quote: 'INR 58,400', conf: 90, owner: 'AP', status: 'lost' },
+  { id: '4499560', name: 'Sajid Ali', agent: 'Royal Sky Holidays', country: 'Malaysia', dest: 'Langkawi + KL', nights: '5N/6D', travel: '10 Nov 2026', tentative: false, pax: '2A + 1C', quote: 'MYR 2,880', conf: 98, owner: 'SK', status: 'follow' },
+  { id: '4499551', name: 'Sneha Joseph', agent: 'Wanderlust Trips', country: 'Malaysia', dest: 'Penang', nights: '4N/5D', travel: '28 Oct 2026', tentative: false, pax: '2A', quote: 'MYR 2,390', conf: 95, owner: 'SK', status: 'expired' },
+  { id: '4499530', name: 'Fatima Rasheed', agent: 'Desert Rose Holidays',country: 'Malaysia', dest: 'Kuala Lumpur', nights: '4N/5D', travel: '5 Nov 2026', tentative: false, pax: '2A', quote: 'MYR 4,460', conf: 97, owner: 'FN', status: 'won' }
+];
+
+const TASKS = [
+  { id: 't1', time: '09:30', overdue: true, kind: 'task', title: 'Call Anjali Pillai', detail: '+4 h after quote · #4499602 · Langkawi + KL 5N', owner: 'RM', action: 'Call' },
+  { id: 't2', time: '10:00', overdue: true, kind: 'task', title: 'Review group quote for Thomas Kurian', detail: 'Group of 12 · review required before send · #4499633', owner: 'RM', action: 'Review' },
+  { id: 't3', time: '12:00', overdue: false, kind: 'auto', title: 'Day 1 message to Kiran Babu', detail: '“Did you get a chance to check the options?” · #4499598', owner: 'FN', action: 'Preview' },
+  { id: 't4', time: '14:30', overdue: false, kind: 'auto', title: 'Day 3 message to Sajid Ali', detail: 'Highlight the 3★ option, offer to customise · #4499560', owner: 'SK', action: 'Preview' },
+  { id: 't5', time: '16:00', overdue: false, kind: 'auto', title: 'Day 6 message to Haris Ahmed', detail: 'Validity ends tomorrow, rates may change · #4499590', owner: 'AP', action: 'Preview' },
+  { id: 't6', time: '17:00', overdue: false, kind: 'task', title: 'Close or follow up Sneha Joseph', detail: 'Quote expired on day 8 · pick Lost reason · #4499551', owner: 'SK', action: 'Close' },
+  { id: 't7', time: '18:00', overdue: false, kind: 'task', title: 'Ask Meera Nair for child ages', detail: '2 children, ages missing · price depends on age band · #4499618', owner: 'RM', action: 'Ask' }
+];
+
+const KINDS = [
+  { key: 'all', label: 'All' },
+  { key: 'task', label: 'Tasks' },
+  { key: 'auto', label: 'Auto WhatsApp' }
+];
+
+const DAYS = [
+  { label: 'Tue 29 Sep', short: '29', r: 1, q: 1 },
+  { label: 'Wed 30 Sep', short: '30', r: 2, q: 1 },
+  { label: 'Thu 1 Oct', short: '1', r: 1, q: 1 },
+  { label: 'Fri 2 Oct', short: '2', r: 0, q: 0 },
+  { label: 'Sat 3 Oct', short: '3', r: 2, q: 2 },
+  { label: 'Sun 4 Oct', short: '4', r: 1, q: 1 },
+  { label: 'Mon 5 Oct', short: '5', r: 1, q: 1 },
+  { label: 'Tue 6 Oct', short: '6', r: 2, q: 1 },
+  { label: 'Wed 7 Oct', short: '7', r: 1, q: 1 },
+  { label: 'Thu 8 Oct', short: '8', r: 2, q: 2 },
+  { label: 'Fri 9 Oct', short: '9', r: 1, q: 1 },
+  { label: 'Sat 10 Oct', short: '10', r: 2, q: 1 },
+  { label: 'Sun 11 Oct', short: '11', r: 1, q: 0 },
+  { label: 'Mon 12 Oct', short: '12', r: 3, q: 0 }
+];
+
+
+// Live trip files from the back office (Trip files, Purchasing, Finance…). Falls back to OPS until someone works a file.
+function liveOps() {
+  let d = null;
+  let g = null;
+  try { d = JSON.parse(window.localStorage.getItem('flyland-backoffice-v1') || 'null'); g = JSON.parse(window.localStorage.getItem('flyland-guide-app-v1') || 'null'); } catch (e) { return null; }
+  if (!d || !Array.isArray(d.files)) return null;
+  const t0 = new Date(); t0.setHours(0, 0, 0, 0);
+  const days = function (iso) { const p = String(iso).split('-').map(Number); return Math.round((new Date(p[0], p[1] - 1, p[2]) - t0) / 86400000); };
+  const sumv = function (l, f) { return l.reduce(function (a, x) { return a + f(x); }, 0); };
+  return d.files.map(function (f) {
+    const cn = sumv((d.cnotes || []).filter(function (c) { return c.file === f.id; }), function (c) { return c.amt; });
+    const paid = sumv(f.pays, function (p) { return p.amt; }) - sumv((d.cnotes || []).filter(function (c) { return c.file === f.id && c.refunded; }), function (c) { return c.amt; });
+    const adv = f.pf ? Math.round(f.sell * f.pf.pct / 100) : 0;
+    const start = days(f.start);
+    const end = start + f.nights;
+    const open = f.svc.filter(function (x) { return x.status !== 'confirmed'; }).length;
+    let stage;
+    if (f.cancelled) stage = 'cancelled';
+    else if (f.returned) stage = 'returned';
+    else if (open) stage = 'booking';
+    else if (!f.pf) stage = 'booked';
+    else if (sumv(f.pays, function (p) { return p.amt; }) < adv) stage = 'proforma';
+    else if (!f.itin) stage = 'advance';
+    else if (start > 0) stage = 'ready';
+    else if (end >= 0) stage = 'trip';
+    else if (!f.inv) stage = 'invoiced';
+    else if (paid < f.sell - cn) stage = 'invoiced';
+    else stage = 'paid';
+    const o = { trip: f.id, name: f.name, dest: f.dest, owner: f.owner, stage: stage, open: open, note: f.returned || '' };
+    if (stage === 'proforma') { o.advance = f.cur + ' ' + Math.round(adv - paid).toLocaleString('en-US'); const late = -days(f.pf.dueDate); if (late > 0) o.overdue = late; }
+    if (stage === 'invoiced') o.balance = f.cur + ' ' + Math.round(f.sell - cn - paid).toLocaleString('en-US');
+    if (stage === 'trip') {
+      const gt = g && g.trips ? g.trips.filter(function (x) { return x.id === f.id; })[0] : null;
+      const items = gt ? sumv(gt.days, function (x) { return x.items.length; }) : 0;
+      const done = gt ? sumv(gt.days, function (x) { return x.items.filter(function (i) { return i.status !== 'planned'; }).length; }) : 0;
+      let last = '';
+      if (gt) gt.days.forEach(function (x) { x.items.forEach(function (i) { if (i.status === 'done') last = 'Guide ticked “' + i.name + '” at ' + i.doneAt; }); });
+      o.day = 1 - start; o.days = f.nights + 1; o.items = items || 1; o.done = done; o.guide = (f.guide || 'Guide').split(', then ').pop(); o.last = last || 'Waiting for the first tick in the guide app';
+      o.expenses = gt ? (gt.expenses || []).filter(function (x) { return x.status === 'pending'; }).length : 0;
+    }
+    return o;
+  });
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      leads: LEADS.map(function (l) { return Object.assign({}, l); }),
+      owner: 'all',
+      agent: 'all',
+      statusFilter: null,
+      query: '',
+      pickerFor: null,
+      done: {},
+      kind: 'all',
+      hoverDay: null,
+      hoverSeg: null,
+      log: '',
+      aiNote: '',
+      aiOk: true
+    };
+    this.copyEl = null;
+  }
+
+  copyText(text, okNote) {
+    const self = this;
+    const done = function () { self.setState({ aiNote: okNote, aiOk: true }); };
+    const fallback = function () {
+      const ta = self.copyEl;
+      if (ta) {
+        ta.value = text; ta.focus(); ta.select();
+        try { if (document.execCommand('copy')) { done(); return; } } catch (err) { /* blocked */ }
+      }
+      self.setState({ aiNote: 'Copying is blocked here. Open the Trip desk to send it.', aiOk: false });
+    };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+      else fallback();
+    } catch (err) { fallback(); }
+  }
+
+  setLeadStatus(id, key) {
+    const lead = this.state.leads.find(function (l) { return l.id === id; });
+    const label = STATUS_BY_KEY[key].label;
+    this.setState({
+      leads: this.state.leads.map(function (l) { return l.id === id ? Object.assign({}, l, { status: key }) : l; }),
+      pickerFor: null,
+      log: lead.name + ' moved to ' + label + ' · logged 10:42 by Shabna K'
+    });
+  }
+
+  componentDidMount() {
+    const self = this;
+    this.onStore = function (e) { if (e && (e.key === 'flyland-backoffice-v1' || e.key === 'flyland-guide-app-v1')) self.forceUpdate(); };
+    try { window.addEventListener('storage', this.onStore); } catch (e) { /* no storage events here */ }
+  }
+
+  componentWillUnmount() { try { window.removeEventListener('storage', this.onStore); } catch (e) { /* ignore */ } }
+
+  renderVals() {
+    const self = this;
+    const s = this.state;
+    const byOwner = s.leads.filter(function (l) { return s.owner === 'all' || l.owner === s.owner; });
+    const mine = byOwner.filter(function (l) { return s.agent === 'all' || l.agent === s.agent; });
+
+    let agentActive = 0;
+    let agentQuiet = 0;
+    const agentRows = AGENTS.map(function (a) {
+      const leads = byOwner.filter(function (l) { return l.agent === a.name; });
+      const per = {};
+      leads.forEach(function (l) { per[l.status] = (per[l.status] || 0) + 1; });
+      const on = s.agent === a.name;
+      const gs = GROUP_STYLE[a.group];
+      if (a.name !== 'Direct · B2C') { if (leads.length) agentActive += 1; else agentQuiet += 1; }
+      return Object.assign({}, a, {
+        name: a.label || a.name,
+        enq: leads.length,
+        quoted: leads.filter(function (l) { return QUOTED_KEYS.indexOf(l.status) !== -1; }).length,
+        won: per.won || 0,
+        hasLeads: leads.length > 0,
+        noLeads: leads.length === 0,
+        isQuiet: !!a.quietDays,
+        battery: STATUSES.filter(function (x) { return per[x.key]; }).map(function (x) {
+          return { color: x.color, count: per[x.key], tip: x.label + ': ' + per[x.key] };
+        }),
+        groupBg: gs.bg,
+        groupInk: gs.ink,
+        ownerName: OWNERS[a.owner].name,
+        ownerColor: OWNERS[a.owner].color,
+        on: on,
+        bg: on ? '#ECEEFB' : 'transparent',
+        aria: (a.label || a.name) + ', ' + leads.length + ' enquiries. ' + (on ? 'Clear agent filter' : 'Filter dashboard by this agent'),
+        pick: function () { self.setState({ agent: on ? 'all' : a.name, pickerFor: null }); }
+      });
+    }).sort(function (x, y) { return y.enq - x.enq; });
+
+    const counts = {};
+    STATUSES.forEach(function (x) { counts[x.key] = 0; });
+    mine.forEach(function (l) { counts[l.status] += 1; });
+    const total = mine.length;
+
+    const toggleStatus = function (key) {
+      return function () { self.setState({ statusFilter: s.statusFilter === key ? null : key, pickerFor: null }); };
+    };
+
+    const statusSummary = STATUSES.map(function (x) {
+      const selected = s.statusFilter === x.key;
+      return Object.assign({}, x, {
+        count: counts[x.key],
+        pct: total ? Math.round(counts[x.key] * 100 / total) : 0,
+        selected: selected,
+        bg: selected ? '#ECEEFB' : '#FFFFFF',
+        border: selected ? '#3D4BC7' : '#D0D4E4',
+        pick: toggleStatus(x.key)
+      });
+    });
+    const live = statusSummary.filter(function (x) { return x.count > 0; });
+    const battery = live.map(function (x, i) {
+      return Object.assign({}, x, {
+        hovered: s.hoverSeg === x.key,
+        opacity: s.statusFilter && !x.selected ? 0.28 : 1,
+        radius: live.length === 1 ? '8px' : i === 0 ? '8px 0 0 8px' : i === live.length - 1 ? '0 8px 8px 0' : '0',
+        aria: x.label + ', ' + x.count + ' enquiries. Filter the table',
+        enter: function () { self.setState({ hoverSeg: x.key }); }
+      });
+    });
+
+    const q = s.query.trim().toLowerCase();
+    let list = mine;
+    if (s.statusFilter) list = list.filter(function (l) { return l.status === s.statusFilter; });
+    if (q) list = list.filter(function (l) { return (l.name + ' ' + l.agent + ' ' + l.dest + ' ' + l.country + ' ' + l.id).toLowerCase().indexOf(q) !== -1; });
+    const rows = list.slice(0, 10).map(function (l) {
+      const st = STATUS_BY_KEY[l.status];
+      const open = s.pickerFor === l.id;
+      return Object.assign({}, l, {
+        st: st,
+        ownerName: OWNERS[l.owner].name,
+        ownerColor: OWNERS[l.owner].color,
+        pickerOpen: open,
+        statusAria: 'Status ' + st.label + '. Change status',
+        togglePicker: function () { self.setState({ pickerFor: open ? null : l.id }); },
+        confLabel: l.conf >= 90 ? 'High' : l.conf >= 70 ? 'Check' : 'Review',
+        confColor: l.conf >= 90 ? '#00854D' : l.conf >= 70 ? '#E59A1F' : '#D83A52',
+        confInk: l.conf >= 90 ? '#00663B' : l.conf >= 70 ? '#8A4B00' : '#B42840',
+        options: open ? STATUSES.map(function (o) {
+          return Object.assign({}, o, {
+            current: o.key === l.status,
+            ring: o.key === l.status ? '2px solid #323338' : '2px solid transparent',
+            pick: function () { self.setLeadStatus(l.id, o.key); }
+          });
+        }) : []
+      });
+    });
+
+    const tasksAll = TASKS.filter(function (t) { return s.owner === 'all' || t.owner === s.owner; });
+    const tasks = tasksAll.filter(function (t) { return s.kind === 'all' || t.kind === s.kind; }).map(function (t) {
+      const done = !!s.done[t.id];
+      return Object.assign({}, t, {
+        cid: 'task-' + t.id,
+        done: done,
+        deco: done ? 'line-through' : 'none',
+        opacity: done ? 0.5 : 1,
+        showOverdue: t.overdue && !done,
+        isAuto: t.kind === 'auto',
+        isTask: t.kind === 'task',
+        ownerName: OWNERS[t.owner].name,
+        ownerColor: OWNERS[t.owner].color,
+        toggle: function () {
+          const next = Object.assign({}, self.state.done);
+          next[t.id] = !done;
+          self.setState({ done: next });
+        }
+      });
+    });
+    const taskOpen = tasksAll.filter(function (t) { return !s.done[t.id]; }).length;
+    const taskOverdue = tasksAll.filter(function (t) { return t.overdue && !s.done[t.id]; }).length;
+    const kinds = KINDS.map(function (k) {
+      const on = s.kind === k.key;
+      return Object.assign({}, k, {
+        on: on,
+        bg: on ? '#FFFFFF' : 'transparent',
+        weight: on ? 600 : 500,
+        shadow: on ? '0 1px 3px rgba(29,44,92,.16)' : 'none',
+        pick: function () { self.setState({ kind: k.key }); }
+      });
+    });
+
+    const MAXY = 3;
+    let sumR = 0;
+    let sumQ = 0;
+    const days = DAYS.map(function (d, i) {
+      sumR += d.r;
+      sumQ += d.q;
+      return Object.assign({}, d, {
+        rh: d.r / MAXY * 100,
+        qh: d.q / MAXY * 100,
+        hovered: s.hoverDay === i,
+        hoverBg: s.hoverDay === i ? '#EEF2FA' : 'transparent',
+        tipLeft: i < 3 ? '0' : i > 10 ? 'auto' : '50%',
+        tipRight: i > 10 ? '0' : 'auto',
+        tipTx: i < 3 || i > 10 ? 'none' : 'translateX(-50%)',
+        enter: function () { self.setState({ hoverDay: i }); }
+      });
+    });
+
+    const destMap = {};
+    mine.forEach(function (l) { destMap[l.country] = (destMap[l.country] || 0) + 1; });
+    const destRows = Object.keys(destMap).map(function (k) { return { name: k, count: destMap[k] }; })
+      .sort(function (a, b) { return b.count - a.count; });
+    const maxD = destRows.length ? destRows[0].count : 1;
+    destRows.forEach(function (d) {
+      d.w = Math.round(d.count / maxD * 100);
+      d.hasNote = d.name === 'Vietnam';
+      d.color = d.hasNote ? '#9699A6' : '#3D4BC7';
+    });
+
+    const ops = (liveOps() || OPS).filter(function (o) { return s.owner === 'all' || o.owner === s.owner; });
+    const oc = function (k) { return ops.filter(function (o) { return o.stage === k; }).length; };
+    const toQuote = counts.new + counts.info + counts.ready;
+    const awaiting = counts.quoted + counts.follow + counts.nego;
+    const openItems = ops.reduce(function (a, o) { return a + (o.open || 0); }, 0);
+    const overdue = ops.filter(function (o) { return o.overdue; });
+    const expensesToApprove = ops.reduce(function (a, o) { return a + (o.expenses || 0); }, 0);
+    const running = ops.filter(function (o) { return o.stage === 'trip'; });
+    const wfStages = [
+      { href: 'Lead.dc.html', dept: 'Sales', label: 'To quote', count: toQuote, color: '#3D4BC7', tint: '#ECEEFB', ink: '#283277' },
+      { href: 'Board.dc.html', dept: 'Sales', label: 'Awaiting reply', count: awaiting, color: '#3D4BC7', tint: '#ECEEFB', ink: '#283277' },
+      { href: 'Purchasing.dc.html', dept: 'Bookings', label: 'In booking', count: oc('booking') + oc('returned'), color: '#B35C00', tint: '#FFF0DB', ink: '#8A4B00' },
+      { href: 'Finance.dc.html', dept: 'Accounts', label: 'Proforma & advance', count: oc('booked') + oc('proforma'), color: '#00854D', tint: '#DDF5EA', ink: '#00663B' },
+      { href: 'Bookings.dc.html', dept: 'Itinerary', label: 'To plan', count: oc('advance'), color: '#8B47D0', tint: '#F1E8FB', ink: '#5B2A92' },
+      { href: 'Operations.dc.html', dept: 'Guides', label: 'On trip', count: oc('trip'), color: '#C2378F', tint: '#FBE6F1', ink: '#8C1D63' },
+      { href: 'Finance.dc.html', dept: 'Accounts', label: 'Balance due', count: oc('invoiced'), color: '#00854D', tint: '#DDF5EA', ink: '#00663B' },
+      { href: 'Reports.dc.html', dept: 'Closed', label: 'Paid', count: oc('paid'), color: '#6B6E80', tint: '#F0F1F5', ink: '#4B4D5C' }
+    ];
+    const red = function (n) { return n ? '#B42840' : '#323338'; };
+    const depts = [
+      { name: 'Sales', short: 'S', color: '#3D4BC7', rows: [{ label: 'Enquiries to quote', value: String(toQuote), ink: '#323338' }, { label: 'Awaiting customer reply', value: String(awaiting), ink: '#323338' }, { label: 'Returned from booking', value: String(oc('returned')), ink: red(oc('returned')) }] },
+      { name: 'Bookings', short: 'B', color: '#B35C00', rows: [{ label: 'Trips in booking', value: String(oc('booking') + oc('returned')), ink: '#323338' }, { label: 'Items to confirm', value: String(openItems), ink: '#323338' }, { label: 'Returned to sales', value: String(oc('returned')), ink: red(oc('returned')) }] },
+      { name: 'Accounts', short: 'A', color: '#00854D', rows: [{ label: 'Proforma to issue', value: String(oc('booked')), ink: '#323338' }, { label: 'Advance overdue', value: String(overdue.length), ink: red(overdue.length) }, { label: 'Balances due', value: String(oc('invoiced')), ink: '#323338' }, { label: 'Expenses to approve', value: String(expensesToApprove), ink: '#323338' }] },
+      { name: 'Itinerary', short: 'I', color: '#8B47D0', rows: [{ label: 'To plan', value: String(oc('advance')), ink: '#323338' }, { label: 'Shared & running', value: String(running.length), ink: '#323338' }] },
+      { name: 'Guides', short: 'G', color: '#C2378F', rows: [{ label: 'On trip now', value: String(running.length), ink: '#323338' }, { label: 'Items done today', value: running.length ? running.map(function (o) { return o.done + '/' + o.items; }).join(', ') : '0', ink: '#323338' }] }
+    ];
+    const now = new Date();
+    const insights = [];
+    if (counts.ready) insights.push({ title: counts.ready + ' quote' + (counts.ready > 1 ? 's are' : ' is') + ' ready but not sent', text: 'Built and waiting for review. Send them before the customer follows up.', action: 'Open Trip desk', href: 'Lead.dc.html', isLink: true, isCopy: false });
+    ops.filter(function (o) { return o.stage === 'returned'; }).forEach(function (o) {
+      insights.push({ title: o.name + ' was returned by booking', text: o.note + '. AI suggests offering another hotel in ' + o.dest + ' from your rate data as revision R2.', action: 'Revise quotation', href: 'Lead.dc.html', isLink: true, isCopy: false });
+    });
+    overdue.forEach(function (o) {
+      const due = new Date(now.getTime() - o.overdue * 86400000);
+      const text = 'Hi ' + o.name + ',\n\nA gentle reminder that the advance of *' + o.advance + '* for *Trip ID ' + o.trip + '* was due on ' + due.getDate() + ' ' + SHORT_MONTHS[due.getMonth()] + ' ' + due.getFullYear() + '. Please share the payment reference once done so we can keep your bookings secured.\n\nRegards,\nFlyland DMC Services';
+      insights.push({ title: o.name + '’s advance is ' + o.overdue + ' days overdue', text: 'AI drafted a polite reminder for ' + o.advance + '.', action: 'Copy reminder', isCopy: true, isLink: false, copy: function () { self.copyText(text, 'Reminder copied. Paste it into the WhatsApp chat.'); } });
+    });
+    running.forEach(function (o) {
+      insights.push({ title: 'Expense check on Trip ' + o.trip, text: 'MYR 60 parking logged by ' + o.guide + ' is higher than the MYR 20 usually logged for Genting. Review it before approving.', action: 'Review expenses', href: 'Finance.dc.html', isLink: true, isCopy: false });
+    });
+    const quiet = AGENTS.filter(function (a) { return a.quietDays && (s.owner === 'all' || a.owner === s.owner); });
+    if (quiet.length) {
+      const text = 'Hi team,\n\nHope you are doing well! We have fresh Malaysia packages (Langkawi + Kuala Lumpur) with year-end availability. Send us your next enquiry and we will share the quote right away.\n\nRegards,\nFlyland DMC Services';
+      insights.push({ title: 'Quiet agents: ' + quiet.map(function (a) { return a.name; }).join(', '), text: 'No enquiry for 3+ weeks. AI drafted a check-in message.', action: 'Copy check-in', isCopy: true, isLink: false, copy: function () { self.copyText(text, 'Check-in message copied.'); } });
+    }
+    const onTrip = running.map(function (o) {
+      return { name: o.name, trip: o.trip, dest: o.dest, guide: o.guide, dayTxt: 'Day ' + o.day + ' of ' + o.days, pct: Math.round(o.done * 100 / o.items), progress: o.done + '/' + o.items + ' done', last: o.last };
+    });
+
+    const closed = counts.won + counts.lost + counts.expired;
+    const tileStyle = function (key) { return s.statusFilter === key; };
+    const tileToggle = function (key) { return function () { self.setState({ statusFilter: s.statusFilter === key ? null : key, pickerFor: null }); }; };
+    const filterParts = [];
+    if (s.agent !== 'all') filterParts.push('Agent: ' + (s.agent === 'Direct · B2C' ? 'Direct (B2C)' : s.agent));
+    if (s.statusFilter) filterParts.push('Status: ' + STATUS_BY_KEY[s.statusFilter].label);
+    if (q) filterParts.push('Search: “' + s.query.trim() + '”');
+
+    return {
+      query: s.query,
+      onQuery: function (e) { self.setState({ query: e.target.value }); },
+      owner: s.owner,
+      onOwner: function (e) { self.setState({ owner: e.target.value, pickerFor: null }); },
+      agent: s.agent,
+      onAgent: function (e) { self.setState({ agent: e.target.value, pickerFor: null }); },
+      wfStages: wfStages,
+      depts: depts,
+      insights: insights,
+      onTrip: onTrip,
+      noTrip: onTrip.length === 0,
+      hasAiNote: !!s.aiNote,
+      aiNote: s.aiNote,
+      aiNoteBg: s.aiOk ? '#DDF5EA' : '#FFF0DB',
+      aiNoteInk: s.aiOk ? '#00663B' : '#6B3A00',
+      copyRef: function (el) { self.copyEl = el; },
+      agentRows: agentRows,
+      agentActive: agentActive,
+      agentQuiet: agentQuiet,
+      total: total,
+      newCount: counts.new,
+      readyCount: counts.ready,
+      wonCount: counts.won,
+      winRate: closed ? Math.round(counts.won * 100 / closed) : 0,
+      selNew: tileStyle('new'), bNew: tileStyle('new') ? '#3D4BC7' : '#E6E9EF', bgNew: tileStyle('new') ? '#F5F6FD' : '#FFFFFF', tileNew: tileToggle('new'),
+      selReady: tileStyle('ready'), bReady: tileStyle('ready') ? '#3D4BC7' : '#E6E9EF', bgReady: tileStyle('ready') ? '#F5F6FD' : '#FFFFFF', tileReady: tileToggle('ready'),
+      selWon: tileStyle('won'), bWon: tileStyle('won') ? '#3D4BC7' : '#E6E9EF', bgWon: tileStyle('won') ? '#F5F6FD' : '#FFFFFF', tileWon: tileToggle('won'),
+      statusSummary: statusSummary,
+      battery: battery,
+      segLeave: function () { self.setState({ hoverSeg: null }); },
+      tasks: tasks,
+      tasksEmpty: tasks.length === 0,
+      taskOpen: taskOpen,
+      taskOverdue: taskOverdue,
+      kinds: kinds,
+      days: days,
+      dayLeave: function () { self.setState({ hoverDay: null }); },
+      sumR: sumR,
+      sumQ: sumQ,
+      quoteRate: sumR ? Math.round(sumQ * 100 / sumR) : 0,
+      destRows: destRows,
+      rows: rows,
+      rowsEmpty: rows.length === 0,
+      shownCount: rows.length,
+      matchCount: list.length,
+      hasFilter: filterParts.length > 0,
+      filterLabel: filterParts.join(' · '),
+      clearFilter: function () { self.setState({ statusFilter: null, query: '', agent: 'all', pickerFor: null }); },
+      closePicker: function () { self.setState({ pickerFor: null }); },
+      hasLog: !!s.log,
+      log: s.log
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Flyland DMC — Packages</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#ECEFF8}
+a{color:#3D4BC7}a:hover{color:#283277}
+button,select,input,textarea{font-family:inherit}
+header a:focus-visible,header button:focus-visible{outline-color:#FFFFFF}
+.row:hover{background:#F5F6F8 !important}
+.btn-p:hover{background:#283277 !important}
+.btn-s:hover{background:#ECEFF8 !important}
+.tab:hover{background:#ECEFF8 !important}
+.card:hover{box-shadow:0 6px 16px rgba(29,44,92,.14) !important}
+.ico:hover{background:#ECEFF8 !important}
+.del:hover{background:#FDE7EA !important;color:#B42840 !important}
+.lib:hover{border-color:#3D4BC7 !important;color:#283277 !important}
+.cell:hover{border-color:#C3C6D4 !important}
+.cell:focus{border-color:#3D4BC7 !important;background:#FFFFFF !important;outline:none;box-shadow:0 0 0 1px #3D4BC7}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #3D4BC7;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #ECEFF8; color: #323338; font-family: Figtree, 'Segoe UI', sans-serif; font-size: 14px; line-height: 20px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 8px 20px; box-sizing: border-box; background: #283277; color: #FFFFFF">
+<a href="Main.dc.html" style="display: flex; align-items: center; text-decoration: none"><img src="/_blob/c96377ee37809ccd01d937b60c6b77c7" alt="Flyland DMC Services" style="display: block; height: 48px; width: auto"></a>
+<div style="display: flex; align-items: center; gap: 4px; margin-left: auto">
+<span role="img" aria-label="Signed in as Admin" style="width: 36px; height: 36px; border-radius: 50%; background: #C2378F; color: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #FFFFFF">AD</span>
+</div>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; padding: 12px 12px 12px 8px">
+<dc-import name="Sidebar" active="{{sideActive}}" collapsed="{{yes}}" hint-size="60px,640px"></dc-import>
+
+<main style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border-radius: 16px; box-shadow: 0 1px 3px rgba(29,44,92,.06); padding: 24px clamp(16px, 2.4vw, 28px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 26px; line-height: 34px; font-weight: 600">Packages &amp; products</h1>
+<p style="margin: 0; color: #676879; max-width: 680px">Ready-made trips the quote engine starts from, and the extras sales can offer on top.</p>
+</div>
+
+<nav aria-label="Packages" style="display: flex; flex-wrap: wrap; gap: 8px">
+<button class="tab" onClick="{{goPk}}" aria-current="{{pkCurrent}}" style="height: 36px; padding: 0 16px; border-radius: 18px; border: 1px solid {{pkBorder}}; background: {{pkBg}}; color: {{pkInk}}; font-size: 13px; font-weight: 600; cursor: pointer">Packages &amp; variants</button>
+<button class="tab" onClick="{{goAo}}" aria-current="{{aoCurrent}}" style="height: 36px; padding: 0 16px; border-radius: 18px; border: 1px solid {{aoBorder}}; background: {{aoBg}}; color: {{aoInk}}; font-size: 13px; font-weight: 600; cursor: pointer">Add-ons &amp; upsells</button>
+<button class="tab" onClick="{{goFd}}" aria-current="{{fdCurrent}}" style="height: 36px; padding: 0 16px; border-radius: 18px; border: 1px solid {{fdBorder}}; background: {{fdBg}}; color: {{fdInk}}; font-size: 13px; font-weight: 600; cursor: pointer">Fixed departures</button>
+</nav>
+
+<sc-if value="{{isPk}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 18px">
+<section aria-label="Package list" style="flex: 1 1 260px; max-width: 340px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{pkgs}}" as="p" hint-placeholder-count="3">
+<button class="card" onClick="{{p.pick}}" aria-current="{{p.current}}" style="display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border: 1.5px solid {{p.border}}; border-radius: 12px; background: {{p.bg}}; text-align: left; color: #323338; cursor: pointer">
+<strong style="font-size: 15px">{{p.name}}</strong>
+<span style="font-size: 13px; color: #676879">{{p.route}}</span>
+<span style="display: flex; justify-content: space-between; gap: 8px; width: 100%; font-size: 13px"><span>{{p.days}}</span><strong style="color: #283277">{{p.from}}</strong></span>
+</button>
+</sc-for>
+</section>
+
+<section aria-labelledby="pk-h" style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="pk-h" style="font-size: 13px; font-weight: 600; color: #4B4D5C">Package name</label>
+<input id="pk-h" class="cell" value="{{pk.name}}" onChange="{{pk.setName}}" style="height: 44px; padding: 0 10px; box-sizing: border-box; border: 1px solid #E6E9EF; border-radius: 8px; font-family: Poppins, sans-serif; font-size: 20px; font-weight: 600; color: #323338">
+<span style="color: #676879">{{pk.route}} · {{pk.days}}</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 18px; border: 1px solid #E6E9EF; border-radius: 12px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700">Variants by hotel category</h2>
+<div style="overflow-x: auto"><div role="table" aria-label="Variants" style="min-width: 640px">
+<div role="row" style="display: grid; grid-template-columns: 90px minmax(260px, 2fr) minmax(170px, 1fr) 130px; align-items: center; min-height: 36px; background: #F6F7FB; border-radius: 6px; font-size: 13px; font-weight: 600; color: #676879"><span role="columnheader" style="padding: 0 12px">Category</span><span role="columnheader" style="padding: 0 12px">Hotels</span><span role="columnheader" style="padding: 0 12px; text-align: right">From, per person</span><span role="columnheader" style="padding: 0 12px">In quotes</span></div>
+<sc-for list="{{pk.variants}}" as="v" hint-placeholder-count="3">
+<div role="row" style="display: grid; grid-template-columns: 90px minmax(260px, 2fr) minmax(170px, 1fr) 130px; align-items: center; min-height: 48px; border-bottom: 1px solid #E6E9EF">
+<strong role="cell" style="padding: 0 12px">{{v.star}}</strong>
+<span role="cell" style="padding: 6px 12px; color: {{v.hotelInk}}">{{v.hotels}}</span>
+<span role="cell" style="padding: 0 12px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600">{{v.from}}</span>
+<span role="cell" style="padding: 0 12px"><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: {{v.chipBg}}; color: {{v.chipInk}}; font-size: 12px; font-weight: 700">{{v.chip}}</span></span>
+</div>
+</sc-for>
+</div></div>
+<span style="font-size: 13px; color: #676879">Prices are for 2 adults sharing, from Masters rates with the standard 15% markup. <a href="Masters.dc.html">Edit hotel rates</a></span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 18px; border: 1px solid #E6E9EF; border-radius: 12px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Day plan</h2><span style="font-size: 13px; color: #676879">This text goes into every quote and itinerary built from the package.</span></div>
+<sc-for list="{{pk.dayList}}" as="d" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; border-radius: 10px; background: #F6F7FB">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px"><strong>{{d.title}}</strong><button class="btn-s" onClick="{{d.toggleAdd}}" aria-expanded="{{d.adding}}" style="height: 32px; padding: 0 12px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #323338; font-size: 13px; font-weight: 600; cursor: pointer">{{d.addLabel}}</button></div>
+<sc-for list="{{d.items}}" as="it" hint-placeholder-count="3">
+<div class="row" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 8px; background: #FFFFFF">
+<span style="flex: none; display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 11px; background: {{it.tagBg}}; color: {{it.tagInk}}; font-size: 11px; font-weight: 700">{{it.tag}}</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><strong style="font-size: 14px">{{it.name}}</strong><span style="font-size: 12px; line-height: 17px; color: #676879">{{it.desc}}</span></span>
+<button class="ico" onClick="{{it.up}}" aria-label="{{it.upAria}}" style="flex: none; width: 32px; height: 32px; border: 0; border-radius: 6px; background: transparent; color: #4B4D5C; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"></path></svg></button>
+<button class="ico" onClick="{{it.down}}" aria-label="{{it.downAria}}" style="flex: none; width: 32px; height: 32px; border: 0; border-radius: 6px; background: transparent; color: #4B4D5C; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
+<button class="del" onClick="{{it.del}}" aria-label="{{it.delAria}}" style="flex: none; width: 32px; height: 32px; border: 0; border-radius: 6px; background: transparent; color: #676879; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+</div>
+</sc-for>
+<sc-if value="{{d.adding}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; gap: 6px; padding-top: 4px">
+<sc-for list="{{lib}}" as="l" hint-placeholder-count="6"><button class="lib" onClick="{{l.add}}" style="height: 32px; padding: 0 10px; border: 1px dashed #9AA0B8; border-radius: 16px; background: #FFFFFF; color: #323338; font-size: 13px; cursor: pointer">+ {{l.name}}</button></sc-for>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{isAo}}" hint-placeholder-val="{{false}}">
+<section aria-labelledby="ao-h" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px"><h2 id="ao-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Add-ons &amp; upsells</h2><span style="color: #676879">When “AI suggests” is on, the Trip desk offers the add-on to sales whenever a quote matches.</span></div>
+<button class="btn-p" onClick="{{addAo}}" style="display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Add add-on</button>
+</div>
+<div style="overflow-x: auto; border: 1px solid #E6E9EF; border-radius: 10px"><div role="table" aria-label="Add-ons" style="min-width: 960px">
+<div role="row" style="display: grid; grid-template-columns: minmax(220px, 1.6fr) 120px 150px minmax(220px, 1.4fr) 150px 52px; align-items: center; min-height: 40px; background: #F6F7FB; border-bottom: 1px solid #E6E9EF; font-size: 13px; font-weight: 600; color: #676879"><span role="columnheader" style="padding: 0 12px">Add-on</span><span role="columnheader" style="padding: 0 12px; text-align: right">Price (MYR)</span><span role="columnheader" style="padding: 0 12px">Charged per</span><span role="columnheader" style="padding: 0 12px">Offer when</span><span role="columnheader" style="padding: 0 12px">AI suggests</span><span role="columnheader"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Remove</span></span></div>
+<sc-for list="{{addons}}" as="a" hint-placeholder-count="4">
+<div role="row" class="row" style="display: grid; grid-template-columns: minmax(220px, 1.6fr) 120px 150px minmax(220px, 1.4fr) 150px 52px; align-items: center; min-height: 52px; border-bottom: 1px solid #E6E9EF">
+<span role="cell" style="padding: 4px 6px"><input class="cell" aria-label="Add-on name" value="{{a.name}}" onChange="{{a.setName}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 8px; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; font-weight: 600; color: #323338"></span>
+<span role="cell" style="padding: 4px 6px"><input class="cell" type="number" aria-label="Price in MYR" value="{{a.price}}" onChange="{{a.setPrice}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 8px; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; color: #323338; text-align: right; font-variant-numeric: tabular-nums"></span>
+<span role="cell" style="padding: 4px 6px"><input class="cell" aria-label="Charged per" value="{{a.unit}}" onChange="{{a.setUnit}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 8px; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; color: #323338"></span>
+<span role="cell" style="padding: 4px 6px"><input class="cell" aria-label="Offer when" value="{{a.when}}" onChange="{{a.setWhen}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 8px; border: 1px solid transparent; border-radius: 6px; background: transparent; font-size: 14px; color: #323338"></span>
+<span role="cell" style="padding: 0 12px"><button onClick="{{a.toggle}}" aria-pressed="{{a.on}}" aria-label="{{a.toggleAria}}" style="display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 4px 0 0; border: 0; background: transparent; color: #323338; font-size: 13px; font-weight: 600; cursor: pointer"><span style="position: relative; width: 40px; height: 24px; border-radius: 12px; background: {{a.track}}"><span style="position: absolute; top: 3px; left: {{a.knob}}px; width: 18px; height: 18px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,.25)"></span></span>{{a.state}}</button></span>
+<span role="cell" style="display: flex; justify-content: center"><button class="del" onClick="{{a.del}}" aria-label="{{a.delAria}}" style="width: 36px; height: 36px; border: 0; border-radius: 8px; background: transparent; color: #676879; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"></path></svg></button></span>
+</div>
+</sc-for>
+</div></div>
+<div style="display: flex; gap: 10px; padding: 14px; border-radius: 10px; border: 1.5px solid transparent; background: linear-gradient(#FFFFFF, #FFFFFF) padding-box, linear-gradient(120deg, #3D4BC7, #8B47D0, #C2378F) border-box">
+<span style="flex: none; display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: linear-gradient(90deg, #3D4BC7, #8B47D0); color: #FFFFFF; font-size: 11px; font-weight: 700">AI</span>
+<span>{{aoNote}}</span>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{isFd}}" hint-placeholder-val="{{false}}">
+<section aria-labelledby="fd-h" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px"><h2 id="fd-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Fixed departures &amp; group tours</h2><span style="color: #676879">Set dates with a seat count; agents and travellers book seats until it is full.</span></div>
+<button class="btn-p" onClick="{{addFd}}" style="height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer">Add departure</button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px">
+<sc-for list="{{fixed}}" as="f" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 1px solid #E6E9EF; border-radius: 12px">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px"><span style="display: flex; flex-direction: column"><strong style="font-size: 16px">{{f.name}}</strong><span style="font-size: 13px; color: #676879">{{f.pkg}}</span></span><span style="flex: none; display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: {{f.chipBg}}; color: {{f.chipInk}}; font-size: 12px; font-weight: 700">{{f.chip}}</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span>Departs {{f.date}}</span><strong>{{f.price}} per person</strong></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><div style="height: 10px; border-radius: 5px; background: #E6E9EF"><div style="width: {{f.pct}}%; height: 100%; border-radius: 5px; background: #3D4BC7"></div></div><span style="font-size: 13px; color: #676879">{{f.seats}}</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-if value="{{f.canSell}}" hint-placeholder-val="{{true}}"><button class="btn-p" onClick="{{f.sell}}" style="height: 36px; padding: 0 12px; border: 0; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-weight: 700; cursor: pointer">Book a seat</button></sc-if><button class="btn-s" onClick="{{f.toggle}}" style="height: 36px; padding: 0 12px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #323338; font-weight: 600; cursor: pointer">{{f.toggleLabel}}</button></div>
+</div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{false}}"><div role="status" style="position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 20; max-width: calc(100% - 32px); padding: 12px 16px; box-sizing: border-box; border-radius: 10px; background: #323338; color: #FFFFFF; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,.25)">{{toast}}</div></sc-if>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1700}}'>
+const STORE = 'flyland-packages-v1';
+const LIB = {
+  lgk_arr: { basis: 'veh', name: 'LGK Airport to LGK Hotel', desc: 'Arrival & Transfer' },
+  checkin: { basis: 'pax', name: 'Checkin to hotel', desc: '(check in time is 3pm, guests have to wait at the hotel lobby till check in time)' },
+  lgk_eagle: { basis: 'veh', name: 'Tour to Eagle square and under water world', desc: 'Duration: 6 hrs)' },
+  uw: { basis: 'pax', name: 'Underwater world', desc: 'With entry tickets' },
+  island: { basis: 'pax', name: 'Island Hopping boat ride SIC', desc: '- (Dayang bunting island conservation fees of RM 20/Adult and RM 10/Child is not included, Guest need to pay the same if accessing fresh water lake)' },
+  lgk_oriental: { basis: 'veh', name: 'Tour to Oriental village', desc: '(Duration: 5 hrs -  Including pick up and return)' },
+  oriental: { basis: 'pax', name: 'Oriental Village', desc: 'Skycab, Skybridge, Skyglide, Skyrex, Skydome and 3D Art Museum with entry tickets' },
+  checkout: { basis: 'pax', name: 'Checkout from hotel', desc: '(hotel check-out is before 12:00 PM)' },
+  lgk_dep: { basis: 'veh', name: 'LGK Hotel to LGK Airport', desc: 'Arrival & Transfer' },
+  kl_arr: { basis: 'veh', name: 'KL Airport to Kuala Lumpur Hotel', desc: 'Arrival & Transfer' },
+  kl_bukit: { basis: 'veh', name: 'Tour to Bukit Bintang at evening', desc: '(Duration: 2 hrs)' },
+  kl_genting: { basis: 'veh', name: 'Tour to Batu caves and genting highlands', desc: '(Duration: 8 hrs)' },
+  cable: { basis: 'pax', name: 'Genting', desc: 'Cable car tickets (2 way), (Please note Cable car tickets can be upgraded to express tickets at an addition of 20 RM per person, to be confirmed one day prior to the travel)' },
+  kl_city: { basis: 'veh', name: 'Kuala lumpur Half Day City tour', desc: '(Twin tower photostop, KL Tower photostop, National Mosque, National Monument. Independence Square, Choclate outlet and Kings Palace) (Duration: 4 hrs)' },
+  kl_dep: { basis: 'veh', name: 'Drop off to KL Airport', desc: 'Transfer With Putrajaya & Drop off to Airport' },
+  leisure: { basis: 'pax', name: 'Day at leisure', desc: '(free day to explore on your own)' }
+};
+const HOTELS = { 'Langkawi': { 3: 'Adya', 4: 'Holiday Villa' }, 'Kuala Lumpur': { 3: 'Star Points Hotel', 4: 'IBIS KLCC' } };
+const FROM = { my3: { 3: 617, 4: 930 }, my4: { 3: 1046, 4: 1450 }, my5: { 3: 1203, 4: 1712 } };
+
+function seed() {
+  return {
+    pkgs: [
+      { id: 'my3', name: 'Malaysia 3N/4D · Kuala Lumpur 3N', segs: [['Kuala Lumpur', 3]], days: [['kl_arr', 'checkin', 'kl_bukit'], ['kl_genting', 'cable'], ['kl_city'], ['checkout', 'kl_dep']] },
+      { id: 'my4', name: 'Malaysia 4N/5D · Langkawi 2N + Kuala Lumpur 2N', segs: [['Langkawi', 2], ['Kuala Lumpur', 2]], days: [['lgk_arr', 'checkin', 'lgk_eagle', 'uw'], ['island', 'lgk_oriental', 'oriental'], ['checkout', 'lgk_dep', 'kl_arr', 'checkin', 'kl_bukit'], ['kl_genting', 'cable'], ['checkout', 'kl_dep']] },
+      { id: 'my5', name: 'Malaysia 5N/6D · Langkawi 2N + Kuala Lumpur 3N', segs: [['Langkawi', 2], ['Kuala Lumpur', 3]], days: [['lgk_arr', 'checkin', 'lgk_eagle', 'uw'], ['island', 'lgk_oriental', 'oriental'], ['checkout', 'lgk_dep', 'kl_arr', 'checkin', 'kl_bukit'], ['kl_genting', 'cable'], ['kl_city'], ['checkout', 'kl_dep']] }
+    ],
+    addons: [
+      { id: 'a1', name: 'Genting express cable car upgrade', price: '20', unit: 'Person', when: 'Trip includes the Genting cable car', on: true },
+      { id: 'a2', name: 'Upgrade Sedan to MPV', price: '30', unit: 'Transfer', when: '3–4 guests with large luggage', on: true },
+      { id: 'a3', name: 'Extra night in Kuala Lumpur', price: '204', unit: 'Room per night, 3 star', when: 'Departure flight is late at night', on: false },
+      { id: 'a4', name: 'Early check-in', price: '', unit: 'Hotel charges on request', when: 'Arrival before 12 pm', on: false }
+    ],
+    fixed: [
+      { id: 'f1', name: 'Malaysia family year-end', pkg: 'Langkawi 2N + Kuala Lumpur 3N · 4 star', date: '2026-12-18', seats: 20, sold: 14, price: '1650', open: true },
+      { id: 'f2', name: 'Chinese New Year in Langkawi', pkg: 'Langkawi 2N + Kuala Lumpur 2N · 4 star', date: '2027-02-06', seats: 16, sold: 5, price: '1690', open: true },
+      { id: 'f3', name: 'Kuala Lumpur shopping break', pkg: 'Kuala Lumpur 3N · 3 star', date: '2027-03-12', seats: 12, sold: 2, price: '720', open: true }
+    ]
+  };
+}
+
+function load() {
+  try {
+    const raw = window.localStorage.getItem(STORE);
+    const d = raw ? JSON.parse(raw) : null;
+    if (d && Array.isArray(d.pkgs) && Array.isArray(d.addons)) { if (!Array.isArray(d.fixed)) d.fixed = seed().fixed; return d; }
+  } catch (e) { /* use the samples */ }
+  return seed();
+}
+
+function cities(p) { const out = []; p.segs.forEach(function (s) { for (let i = 0; i < s[1]; i++) out.push(s[0]); }); return out; }
+function nights(p) { return p.segs.reduce(function (a, s) { return a + s[1]; }, 0); }
+function uid() { return 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'pk', data: load(), sel: 'my5', adding: -1, toast: '' };
+    const MAP = { packages: 'pk', addons: 'ao', fixed: 'fd' };
+    try { const n = window.localStorage.getItem('flyland-nav'); if (n && MAP[n]) { this.state.tab = MAP[n]; window.localStorage.removeItem('flyland-nav'); } } catch (e) { /* storage blocked */ }
+    this.timer = null;
+  }
+
+  componentDidMount() {
+    const self = this;
+    this.onStore = function (e) { if (e && e.key === STORE && e.newValue) { try { self.setState({ data: load() }); } catch (err) { /* ignore */ } } };
+    try { window.addEventListener('storage', this.onStore); } catch (e) { /* no storage events here */ }
+  }
+
+  componentWillUnmount() { if (this.timer) clearTimeout(this.timer); try { window.removeEventListener('storage', this.onStore); } catch (e) { /* ignore */ } }
+
+  componentDidUpdate(pp, ps) {
+    if (ps && ps.data !== this.state.data) { try { window.localStorage.setItem(STORE, JSON.stringify(this.state.data)); } catch (e) { /* keep in memory */ } }
+  }
+
+  flash(msg) {
+    const self = this;
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(function () { self.setState({ toast: '' }); }, 2600);
+    return { toast: msg };
+  }
+
+  edit(fn) { const d = JSON.parse(JSON.stringify(this.state.data)); fn(d); return d; }
+
+  renderVals() {
+    const self = this;
+    const s = this.state;
+    const isPk = s.tab === 'pk';
+    const tabStyle = function (on) { return { bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', border: on ? '#283277' : '#C3C6D4', current: on ? 'page' : 'false' }; };
+    const tp = tabStyle(isPk);
+    const ta = tabStyle(!isPk);
+    const p = s.data.pkgs.filter(function (x) { return x.id === s.sel; })[0] || s.data.pkgs[0];
+    const pi = s.data.pkgs.indexOf(p);
+    const route = function (x) { return x.segs.map(function (g) { return g[0] + ' ' + g[1] + 'N'; }).join(' + '); };
+    const fromOf = function (x) { const f = FROM[x.id]; return f ? 'From MYR ' + Math.min(f[3], f[4]).toLocaleString('en-US') : 'Not priced yet'; };
+    const cs = cities(p);
+    const on = s.data.addons.filter(function (a) { return a.on; });
+    const V = {
+      yes: true, sideActive: s.tab === 'fd' ? 'fixed' : isPk ? 'packages' : 'addons', isPk: isPk, isAo: s.tab === 'ao', isFd: s.tab === 'fd',
+      fdBg: s.tab === 'fd' ? '#283277' : '#FFFFFF', fdInk: s.tab === 'fd' ? '#FFFFFF' : '#323338', fdBorder: s.tab === 'fd' ? '#283277' : '#C3C6D4', fdCurrent: s.tab === 'fd' ? 'page' : 'false',
+      goFd: function () { self.setState({ tab: 'fd' }); },
+      fixed: (s.data.fixed || []).map(function (f, fi) {
+        const left = f.seats - f.sold;
+        const st = !f.open ? ['Sales closed', '#F0F1F5', '#4B4D5C'] : left <= 0 ? ['Full', '#FDE7EA', '#B42840'] : left <= Math.ceil(f.seats * 0.3) ? ['Filling fast', '#FFF0DB', '#8A4B00'] : ['Open', '#DDF5EA', '#00663B'];
+        const p = f.date.split('-').map(Number);
+        const dt = new Date(p[0], p[1] - 1, p[2]);
+        return { name: f.name, pkg: f.pkg, date: dt.getDate() + ' ' + ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][dt.getMonth()] + ' ' + dt.getFullYear(), seats: f.sold + ' of ' + f.seats + ' sold', pct: Math.round(f.sold * 100 / f.seats), price: 'MYR ' + Number(f.price).toLocaleString('en-US'), chip: st[0], chipBg: st[1], chipInk: st[2], canSell: f.open && left > 0,
+          sell: function () { self.setState(Object.assign({ data: self.edit(function (d) { d.fixed[fi].sold = Math.min(d.fixed[fi].seats, d.fixed[fi].sold + 1); }) }, self.flash('Seat booked on ' + f.name + '. ' + Math.max(0, left - 1) + ' left.'))); },
+          toggle: function () { self.setState({ data: self.edit(function (d) { d.fixed[fi].open = !d.fixed[fi].open; }) }); }, toggleLabel: f.open ? 'Close sales' : 'Reopen' };
+      }),
+      addFd: function () { self.setState(Object.assign({ data: self.edit(function (d) { d.fixed = d.fixed || []; d.fixed.unshift({ id: uid(), name: 'New group departure', pkg: 'Choose a package', date: '2027-04-01', seats: 15, sold: 0, price: '0', open: true }); }) }, self.flash('Departure added. Set the package, date and price.'))); },
+      pkBg: tp.bg, pkInk: tp.ink, pkBorder: tp.border, pkCurrent: tp.current,
+      aoBg: ta.bg, aoInk: ta.ink, aoBorder: ta.border, aoCurrent: ta.current,
+      goPk: function () { self.setState({ tab: 'pk' }); },
+      goAo: function () { self.setState({ tab: 'ao' }); },
+      hasToast: !!s.toast, toast: s.toast,
+      pkgs: s.data.pkgs.map(function (x) {
+        const sel = x.id === p.id;
+        return { name: x.name, route: route(x), days: x.days.length + ' days', from: fromOf(x), current: sel ? 'true' : 'false', bg: sel ? '#F5F6FF' : '#FFFFFF', border: sel ? '#3D4BC7' : '#E6E9EF', pick: function () { self.setState({ sel: x.id, adding: -1 }); } };
+      }),
+      pk: {
+        name: p.name, route: route(p), days: nights(p) + ' nights, ' + p.days.length + ' days',
+        setName: function (e) { const v = e.target.value; self.setState({ data: self.edit(function (d) { d.pkgs[pi].name = v; }) }); },
+        variants: [3, 4, 5].map(function (star) {
+          const names = p.segs.map(function (g) { const h = HOTELS[g[0]] && HOTELS[g[0]][star]; return h ? h + ', ' + g[0] : ''; });
+          const ok = names.every(function (n) { return n; });
+          const f = FROM[p.id] && FROM[p.id][star];
+          return {
+            star: star + ' star', hotels: ok ? names.join(' · ') : 'No ' + star + '-star hotel in Masters yet',
+            hotelInk: ok ? '#323338' : '#8A4B00', from: ok && f ? 'MYR ' + f.toLocaleString('en-US') : '—',
+            chip: ok ? 'Live' : 'Not offered', chipBg: ok ? '#DDF5EA' : '#F0F1F5', chipInk: ok ? '#00663B' : '#4B4D5C'
+          };
+        }),
+        dayList: p.days.map(function (items, di) {
+          const adding = s.adding === di;
+          return {
+            title: 'Day ' + (di + 1) + ' · ' + cs[Math.min(di, cs.length - 1)], adding: adding, addLabel: adding ? 'Done adding' : 'Add item',
+            toggleAdd: function () { self.setState({ adding: adding ? -1 : di }); },
+            items: items.map(function (key, ii) {
+              const it = LIB[key] || { basis: 'pax', name: key, desc: '' };
+              const move = function (to) {
+                return function () {
+                  if (to < 0 || to >= items.length) return;
+                  self.setState({ data: self.edit(function (d) { const arr = d.pkgs[pi].days[di]; const x = arr.splice(ii, 1)[0]; arr.splice(to, 0, x); }) });
+                };
+              };
+              return {
+                name: it.name, desc: it.desc, tag: it.basis === 'veh' ? 'Vehicle' : 'Per guest',
+                tagBg: it.basis === 'veh' ? '#ECEEFB' : '#F0F1F5', tagInk: it.basis === 'veh' ? '#283277' : '#4B4D5C',
+                up: move(ii - 1), down: move(ii + 1),
+                upAria: 'Move ' + it.name + ' up', downAria: 'Move ' + it.name + ' down', delAria: 'Remove ' + it.name + ' from day ' + (di + 1),
+                del: function () { self.setState(Object.assign({ data: self.edit(function (d) { d.pkgs[pi].days[di].splice(ii, 1); }) }, self.flash('Removed from day ' + (di + 1) + '.'))); }
+              };
+            })
+          };
+        })
+      },
+      lib: Object.keys(LIB).map(function (k) {
+        return { name: LIB[k].name, add: function () { const di = self.state.adding; if (di < 0) return; self.setState(Object.assign({ data: self.edit(function (d) { d.pkgs[pi].days[di].push(k); }) }, self.flash(LIB[k].name + ' added to day ' + (di + 1) + '.'))); } };
+      }),
+      addons: s.data.addons.map(function (a, ai) {
+        const set = function (key) { return function (e) { const v = e.target.value; self.setState({ data: self.edit(function (d) { d.addons[ai][key] = v; }) }); }; };
+        return {
+          name: a.name, price: a.price, unit: a.unit, when: a.when, on: a.on, state: a.on ? 'On' : 'Off',
+          track: a.on ? '#3D4BC7' : '#9AA0B8', knob: a.on ? 19 : 3, toggleAria: 'AI suggests ' + (a.name || 'this add-on'),
+          setName: set('name'), setPrice: set('price'), setUnit: set('unit'), setWhen: set('when'),
+          toggle: function () { self.setState({ data: self.edit(function (d) { d.addons[ai].on = !d.addons[ai].on; }) }); },
+          delAria: 'Remove ' + (a.name || 'add-on'),
+          del: function () { self.setState(Object.assign({ data: self.edit(function (d) { d.addons.splice(ai, 1); }) }, self.flash('Add-on removed.'))); }
+        };
+      }),
+      addAo: function () { self.setState(Object.assign({ data: self.edit(function (d) { d.addons.unshift({ id: uid(), name: '', price: '', unit: '', when: '', on: false }); }) }, self.flash('New add-on at the top. Name it and say when to offer it.'))); },
+      aoNote: on.length ? 'AI offers ' + on.length + (on.length === 1 ? ' add-on' : ' add-ons') + ' to sales when a quote matches: ' + on.map(function (a) { return a.name || 'unnamed'; }).join(', ') + '. In the Trip desk the Royal sky quote already shows the Genting express upgrade under AI suggestions.' : 'All AI suggestions are off. Sales will not be prompted to offer any add-on.'
+    };
+    return V;
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Flyland Guide — Sign in</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; overflow: hidden; display: flex; flex-direction: column; background: #F2F4F8; color: #323338; font-family: Figtree, 'Segoe UI', sans-serif; font-size: 15px; line-height: 22px">
+
+<sc-if value="{{isSignin}}" hint-placeholder-val="{{true}}">
+<div style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; justify-content: center; gap: 32px; padding: 32px 24px; background: #FFFFFF">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center">
+<img src="/_blob/ef36933162effd63da10b799d7b94969" alt="Flyland DMC Services" style="display: block; width: 88px; height: 88px; border-radius: 22px; box-shadow: 0 6px 18px rgba(29,44,92,.18)">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 26px; line-height: 34px; font-weight: 600; color: #283277">Flyland Guide</h1>
+<p style="margin: 0; color: #676879">Your trips, day plans and expenses in one place.</p>
+</div>
+<sc-if value="{{signPhone}}" hint-placeholder-val="{{true}}">
+<form onSubmit="{{sendCode}}" style="display: flex; flex-direction: column; gap: 14px">
+<label for="ga-phone" style="font-size: 14px; font-weight: 600">Mobile number</label>
+<div style="display: flex; gap: 8px">
+<select aria-label="Country code" value="{{cc}}" onChange="{{onCc}}" style="height: 52px; padding: 0 10px; border: 1px solid #C3C6D4; border-radius: 12px; background: #FFFFFF; font-family: inherit; font-size: 16px; color: #323338">
+<option value="+60">+60</option>
+<option value="+91">+91</option>
+<option value="+971">+971</option>
+<option value="+65">+65</option>
+</select>
+<input id="ga-phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="12-345 6789" value="{{phone}}" onChange="{{onPhone}}" style="flex: 1; min-width: 0; height: 52px; padding: 0 14px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 12px; font-family: inherit; font-size: 17px; color: #323338">
+</div>
+<span style="font-size: 13px; color: #676879">Use the number Flyland operations has on file for you.</span>
+<sc-if value="{{signErr}}" hint-placeholder-val="{{false}}"><span role="alert" style="font-size: 14px; color: #B42840">{{signErr}}</span></sc-if>
+<button type="submit" style="height: 52px; border: 0; border-radius: 12px; background: #3D4BC7; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">Send code</button>
+</form>
+</sc-if>
+<sc-if value="{{signCode}}" hint-placeholder-val="{{false}}">
+<form onSubmit="{{verify}}" style="display: flex; flex-direction: column; gap: 14px">
+<label for="ga-code" style="font-size: 14px; font-weight: 600">Enter the 6-digit code sent to {{fullPhone}}</label>
+<input id="ga-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="••••••" value="{{code}}" onChange="{{onCode}}" style="height: 60px; padding: 0 14px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 12px; text-align: center; letter-spacing: 12px; font-family: inherit; font-size: 26px; font-weight: 700; color: #323338">
+<sc-if value="{{signErr}}" hint-placeholder-val="{{false}}"><span role="alert" style="font-size: 14px; color: #B42840">{{signErr}}</span></sc-if>
+<button type="submit" style="height: 52px; border: 0; border-radius: 12px; background: #3D4BC7; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">Verify and sign in</button>
+<button type="button" onClick="{{changeNumber}}" style="height: 44px; border: 0; background: transparent; color: #3D4BC7; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer">Change number</button>
+</form>
+</sc-if>
+<p style="margin: 0; text-align: center; font-size: 14px; color: #676879">Trouble signing in? <a href="{{opsTel}}" style="color: #3D4BC7; font-weight: 600">Call operations</a></p>
+</div>
+</sc-if>
+
+<sc-if value="{{isToday}}" hint-placeholder-val="{{false}}">
+<div style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 20px 20px 60px; background: #283277; color: #FFFFFF">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<span style="font-size: 14px; color: #D5D9F5">{{todayLabel}}</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #D5D9F5"><span style="width: 8px; height: 8px; border-radius: 50%; background: #00C875"></span>All changes saved</span>
+</div>
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 24px; line-height: 32px; font-weight: 600">{{greeting}}</h1>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px; margin-top: -44px; padding: 0 16px 24px">
+
+<sc-if value="{{hasOffer}}" hint-placeholder-val="{{true}}">
+<button onClick="{{goTrips}}" style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 0; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.10); text-align: left; font-family: inherit; color: #323338; cursor: pointer">
+<span style="flex: none; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 12px; background: #ECEEFB; color: #3D4BC7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path></svg></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><strong style="font-size: 15px">New trip offered</strong><span style="font-size: 13px; color: #676879">{{offerText}}</span></span>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#676879" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+</button>
+</sc-if>
+
+<sc-if value="{{hasActive}}" hint-placeholder-val="{{true}}">
+<section aria-label="Today's trip" style="display: flex; flex-direction: column; gap: 14px; padding: 18px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.10)">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 13px; font-weight: 600; color: #676879">Trip {{trip.id}} · {{trip.dayOf}}</span>
+<strong style="font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">{{trip.guest}}</strong>
+<span style="font-size: 14px; color: #676879">{{trip.pax}}</span>
+</div>
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="flex: 1; height: 8px; border-radius: 4px; background: #E6E9EF"><div style="width: {{tday.pct}}%; height: 100%; border-radius: 4px; background: #00854D"></div></div>
+<span style="font-size: 13px; font-weight: 700">{{tday.progress}}</span>
+</div>
+<sc-if value="{{hasNext}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 14px; background: #F6F7FB">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #3D4BC7">Next stop · {{next.time}}</span>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<strong style="font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">{{next.name}}</strong>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: #676879"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>{{next.place}}</span>
+</div>
+<div style="display: flex; gap: 10px">
+<a href="{{next.mapHref}}" target="_blank" rel="noopener noreferrer" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; border: 1px solid #C3C6D4; border-radius: 12px; background: #FFFFFF; color: #323338; font-weight: 700; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg>Navigate</a>
+<button onClick="{{next.tickGo}}" style="flex: 1.3; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; border: 0; border-radius: 12px; background: #00854D; color: #FFFFFF; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Tick &amp; go</button>
+</div>
+<sc-if value="{{next.hasThen}}" hint-placeholder-val="{{true}}"><span style="font-size: 13px; color: #676879">Then {{next.then}}</span></sc-if>
+<button onClick="{{next.open}}" style="align-self: flex-start; height: 40px; padding: 0; border: 0; background: transparent; color: #3D4BC7; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer">Open stop · photos and notes</button>
+</div>
+</sc-if>
+<sc-if value="{{dayDone}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 14px; background: #DDF5EA">
+<strong style="color: #00663B">All stops done for today</strong>
+<span style="font-size: 14px; color: #1F4D36">{{reportHint}}</span>
+<button onClick="{{openReport}}" style="height: 48px; border: 0; border-radius: 12px; background: #00854D; color: #FFFFFF; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">{{reportBtn}}</button>
+</div>
+</sc-if>
+<button onClick="{{openToday}}" style="height: 48px; border: 1px solid #C3C6D4; border-radius: 12px; background: #FFFFFF; color: #323338; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">See the full day plan</button>
+</section>
+</sc-if>
+
+<sc-if value="{{noActive}}" hint-placeholder-val="{{false}}">
+<section style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.10)">
+<strong style="font-family: Poppins, sans-serif; font-size: 18px; font-weight: 600">No trip today</strong>
+<span style="color: #676879">New trips from operations appear under Trips.</span>
+</section>
+</sc-if>
+
+<sc-if value="{{hasBrief}}" hint-placeholder-val="{{true}}">
+<section aria-label="AI day brief" style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 16px; border: 1.5px solid transparent; background: linear-gradient(#FFFFFF, #FFFFFF) padding-box, linear-gradient(120deg, #3D4BC7, #8B47D0, #C2378F) border-box">
+<span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 13px; background: linear-gradient(90deg, #3D4BC7, #8B47D0); color: #FFFFFF; font-size: 12px; font-weight: 700"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 5.6L19.5 9.5l-5.7 1.9L12 17l-1.8-5.6L4.5 9.5l5.7-1.9z"></path></svg>AI day brief</span>
+<ul style="margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; line-height: 20px">
+<sc-for list="{{brief}}" as="b" hint-placeholder-count="3"><li>{{b.text}}</li></sc-for>
+</ul>
+</section>
+</sc-if>
+
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+<button onClick="{{openAddExpense}}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 84px; padding: 10px 6px; border: 0; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08); color: #323338; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3D4BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 2v20l2.5-1.5L10 22l2-1.5 2 1.5 2.5-1.5L19 22V2l-2.5 1.5L14 2l-2 1.5L10 2 7.5 3.5z"></path><path d="M9 8h6M9 12h6M9 16h4"></path></svg>Add expense</button>
+<button onClick="{{openTrip}}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 84px; padding: 10px 6px; border: 0; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08); color: #323338; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3D4BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="4"></circle><path d="M2 21a7 7 0 0 1 14 0"></path><path d="M17 4a4 4 0 0 1 0 8M22 21a7 7 0 0 0-4-6.3"></path></svg>Guests &amp; hotel</button>
+<a href="{{opsTel}}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 84px; padding: 10px 6px; box-sizing: border-box; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08); color: #323338; font-size: 13px; font-weight: 700; text-decoration: none"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3D4BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2z"></path></svg>Call ops</a>
+</div>
+
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isTrips}}" hint-placeholder-val="{{false}}">
+<div style="flex: none; display: flex; flex-direction: column; gap: 2px; padding: 20px 20px 14px; background: #FFFFFF; border-bottom: 1px solid #E6E9EF">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 24px; line-height: 32px; font-weight: 600">My trips</h1>
+<span style="font-size: 14px; color: #676879">{{guideLine}}</span>
+</div>
+<div style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; padding: 16px 16px 24px">
+<sc-for list="{{tripGroups}}" as="grp" hint-placeholder-count="3">
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">{{grp.title}}</h2>
+<sc-for list="{{grp.trips}}" as="t" hint-placeholder-count="1">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span style="font-size: 13px; font-weight: 600; color: #676879">Trip {{t.id}}</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 13px; background: {{t.chipBg}}; color: {{t.chipInk}}; font-size: 12px; font-weight: 700">{{t.chip}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<strong style="font-family: Poppins, sans-serif; font-size: 17px; line-height: 24px; font-weight: 600">{{t.guest}}</strong>
+<span style="font-size: 14px; color: #676879">{{t.dest}} · {{t.pax}}</span>
+<span style="font-size: 14px">{{t.dates}}</span>
+<span style="font-size: 14px; color: #676879">Your part: {{t.myDays}}</span>
+</div>
+<sc-if value="{{t.isOffer}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; gap: 10px">
+<button onClick="{{t.decline}}" style="flex: 1; height: 48px; border: 1px solid #C3C6D4; border-radius: 12px; background: #FFFFFF; color: #323338; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">Decline</button>
+<button onClick="{{t.accept}}" style="flex: 1.4; height: 48px; border: 0; border-radius: 12px; background: #3D4BC7; color: #FFFFFF; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">Accept trip</button>
+</div>
+</sc-if>
+<sc-if value="{{t.canOpen}}" hint-placeholder-val="{{false}}">
+<button onClick="{{t.open}}" style="height: 48px; border: 0; border-radius: 12px; background: #3D4BC7; color: #FFFFFF; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">Open today's plan</button>
+</sc-if>
+<sc-if value="{{t.hasNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #676879">{{t.note}}</span></sc-if>
+</div>
+</sc-for>
+</section>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{isDay}}" hint-placeholder-val="{{false}}">
+<div style="flex: none; display: flex; align-items: center; gap: 4px; min-height: 60px; padding: 4px 8px; background: #FFFFFF">
+<button onClick="{{back}}" aria-label="Back" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: 22px; background: transparent; color: #323338; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 24px; font-weight: 600">Trip {{trip.id}}</h1>
+<span style="font-size: 13px; color: #676879">{{trip.guest}} · {{trip.dest}}</span>
+</div>
+<button onClick="{{openTrip}}" aria-label="Guests and hotel" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: 22px; background: transparent; color: #3D4BC7; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg></button>
+</div>
+<div role="group" aria-label="Days" style="flex: none; display: flex; gap: 8px; padding: 4px 16px 12px; overflow-x: auto; background: #FFFFFF; border-bottom: 1px solid #E6E9EF">
+<sc-for list="{{dayChips}}" as="dc" hint-placeholder-count="4">
+<button onClick="{{dc.pick}}" aria-pressed="{{dc.on}}" style="flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 78px; height: 54px; padding: 0 10px; border: 1px solid {{dc.border}}; border-radius: 12px; background: {{dc.bg}}; color: {{dc.ink}}; font-family: inherit; cursor: pointer"><span style="font-size: 14px; font-weight: 700">{{dc.label}}</span><span style="font-size: 12px">{{dc.sub}}</span></button>
+</sc-for>
+</div>
+<div style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding: 16px 16px 24px">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px"><strong style="font-size: 16px">{{day.title}}</strong><span style="font-size: 13px; color: #676879">{{day.when}}</span></div>
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="flex: 1; height: 8px; border-radius: 4px; background: #E6E9EF"><div style="width: {{day.pct}}%; height: 100%; border-radius: 4px; background: #00854D"></div></div>
+<span style="font-size: 13px; font-weight: 700">{{day.progress}}</span>
+</div>
+</div>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{day.items}}" as="it" hint-placeholder-count="4">
+<li style="display: flex; gap: 10px; align-items: stretch">
+<span style="flex: none; width: 46px; padding-top: 14px; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: {{it.timeInk}}">{{it.time}}</span>
+<div style="flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; padding: 10px 6px 10px 12px; border: 1.5px solid {{it.border}}; border-radius: 14px; background: #FFFFFF">
+<button onClick="{{it.tick}}" aria-pressed="{{it.done}}" aria-label="{{it.tickAria}}" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 2px solid {{it.ring}}; border-radius: 50%; background: {{it.tickBg}}; color: {{it.checkInk}}; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button>
+<button onClick="{{it.open}}" aria-label="{{it.openAria}}" style="flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0; border: 0; background: transparent; text-align: left; font-family: inherit; color: #323338; cursor: pointer">
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 15px; font-weight: 600; text-decoration: {{it.deco}}">{{it.name}}</span>
+<span style="font-size: 13px; line-height: 18px; color: #676879">{{it.meta}}</span>
+<span style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-if value="{{it.isNow}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 11px; background: #3D4BC7; color: #FFFFFF; font-size: 12px; font-weight: 700">Now</span></sc-if>
+<sc-if value="{{it.hasState}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 11px; background: {{it.stateBg}}; color: {{it.stateInk}}; font-size: 12px; font-weight: 700">{{it.stateTxt}}</span></sc-if>
+<sc-if value="{{it.hasIssue}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 11px; background: #FDE7EA; color: #B42840; font-size: 12px; font-weight: 700">{{it.issue}}</span></sc-if>
+</span>
+</span>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#676879" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="m9 18 6-6-6-6"></path></svg>
+</button>
+</div>
+</li>
+</sc-for>
+</ol>
+<sc-if value="{{trip.hasOther}}" hint-placeholder-val="{{true}}"><span style="font-size: 13px; color: #676879">{{trip.otherDays}}</span></sc-if>
+<sc-if value="{{day.canReport}}" hint-placeholder-val="{{true}}">
+<button onClick="{{openReport}}" style="height: 52px; border: 0; border-radius: 12px; background: #3D4BC7; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">{{day.reportBtn}}</button>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{isStop}}" hint-placeholder-val="{{false}}">
+<div style="flex: none; display: flex; align-items: center; gap: 4px; min-height: 60px; padding: 4px 8px; background: #FFFFFF; border-bottom: 1px solid #E6E9EF">
+<button onClick="{{back}}" aria-label="Back to the day plan" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: 22px; background: transparent; color: #323338; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span style="font-family: Poppins, sans-serif; font-size: 17px; line-height: 24px; font-weight: 600">{{stop.dayLabel}} · {{stop.time}}</span>
+<span style="font-size: 13px; color: #676879">Stop {{stop.pos}} of {{stop.count}} · Trip {{trip.id}}</span>
+</div>
+</div>
+<div style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding: 16px 16px 24px">
+<section style="display: flex; flex-direction: column; gap: 12px; padding: 18px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<span style="align-self: flex-start; display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 13px; background: {{stop.stateBg}}; color: {{stop.stateInk}}; font-size: 12px; font-weight: 700">{{stop.stateLabel}}</span>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 22px; line-height: 30px; font-weight: 600; text-decoration: {{stop.deco}}">{{stop.name}}</h1>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: #676879"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>{{stop.place}}</span>
+</div>
+<a href="{{stop.mapHref}}" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; border: 1px solid #C3C6D4; border-radius: 12px; background: #FFFFFF; color: #323338; font-weight: 700; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg>Navigate in Google Maps</a>
+<sc-if value="{{stop.hasDesc}}" hint-placeholder-val="{{true}}"><p style="margin: 0; font-size: 14px; line-height: 21px">{{stop.desc}}</p></sc-if>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<div style="display: flex; flex-direction: column; padding: 10px 12px; border-radius: 12px; background: #F6F7FB"><span style="font-size: 12px; color: #676879">Guests</span><span style="font-size: 14px; font-weight: 600">{{trip.pax}}</span></div>
+<div style="display: flex; flex-direction: column; padding: 10px 12px; border-radius: 12px; background: #F6F7FB"><span style="font-size: 12px; color: #676879">Vehicle</span><span style="font-size: 14px; font-weight: 600">{{trip.vehicle}}</span></div>
+</div>
+</section>
+<sc-if value="{{stop.hasOpsNote}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; gap: 10px; padding: 14px; border-radius: 14px; background: #FFF0DB; color: #6B3A00">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
+<span style="display: flex; flex-direction: column; gap: 2px; font-size: 14px; line-height: 20px"><strong>From operations</strong>{{stop.opsNote}}</span>
+</div>
+</sc-if>
+<section aria-labelledby="ga-ph-h" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px"><h2 id="ga-ph-h" style="margin: 0; font-size: 16px; font-weight: 700">Photos</h2><span style="font-size: 13px; color: #676879">{{stop.photoCount}}</span></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{stop.photos}}" as="ph" hint-placeholder-count="0"><img src="{{ph.src}}" alt="{{ph.alt}}" style="display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; background: #E6E9EF"></sc-for>
+<label style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; aspect-ratio: 1; border: 1.5px dashed #9AA0B8; border-radius: 10px; background: #F6F7FB; color: #3D4BC7; font-size: 13px; font-weight: 700; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>Add photo<input type="file" accept="image/*" capture="environment" onChange="{{stop.addPhoto}}" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden"></label>
+</div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<label for="ga-note" style="font-size: 16px; font-weight: 700">Note for operations</label>
+<textarea id="ga-note" rows="3" placeholder="e.g. Guests asked to stay 30 minutes longer" value="{{stop.note}}" onChange="{{stop.onNote}}" style="padding: 10px 12px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 12px; font-family: inherit; font-size: 15px; line-height: 21px; color: #323338; resize: vertical"></textarea>
+</section>
+<section aria-labelledby="ga-pr-h" style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<div style="display: flex; flex-direction: column; gap: 2px"><h2 id="ga-pr-h" style="margin: 0; font-size: 16px; font-weight: 700">Report a problem</h2><span style="font-size: 13px; color: #676879">Operations is alerted straight away.</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{stop.issues}}" as="is" hint-placeholder-count="4"><button onClick="{{is.pick}}" aria-pressed="{{is.on}}" style="height: 40px; padding: 0 14px; border: 1px solid {{is.border}}; border-radius: 20px; background: {{is.bg}}; color: {{is.ink}}; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">{{is.label}}</button></sc-for>
+</div>
+<sc-if value="{{stop.hasIssue}}" hint-placeholder-val="{{false}}"><span role="status" style="font-size: 13px; font-weight: 600; color: #B42840">{{stop.issueTxt}}</span></sc-if>
+</section>
+</div>
+<div style="flex: none; display: flex; gap: 10px; padding: 12px 16px 24px; background: #FFFFFF; border-top: 1px solid #E6E9EF">
+<button onClick="{{stop.skip}}" style="flex: none; height: 52px; padding: 0 18px; border: 1px solid #C3C6D4; border-radius: 12px; background: #FFFFFF; color: #323338; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">{{stop.skipLabel}}</button>
+<button onClick="{{stop.tickGo}}" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 52px; border: 0; border-radius: 12px; background: {{stop.tickBg}}; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>{{stop.tickLabel}}</button>
+</div>
+</sc-if>
+
+<sc-if value="{{isExpenses}}" hint-placeholder-val="{{false}}">
+<div style="flex: none; display: flex; flex-direction: column; gap: 2px; padding: 20px 20px 14px; background: #FFFFFF; border-bottom: 1px solid #E6E9EF">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 24px; line-height: 32px; font-weight: 600">Expenses</h1>
+<span style="font-size: 14px; color: #676879">Trip {{trip.id}} · {{trip.guest}}</span>
+</div>
+<div style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding: 16px 16px 24px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 14px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)"><span style="font-size: 12px; color: #676879">Total</span><strong style="font-size: 16px; font-variant-numeric: tabular-nums">{{exp.total}}</strong></div>
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 14px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)"><span style="font-size: 12px; color: #676879">Approved</span><strong style="font-size: 16px; color: #00663B; font-variant-numeric: tabular-nums">{{exp.approved}}</strong></div>
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 14px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)"><span style="font-size: 12px; color: #676879">Waiting</span><strong style="font-size: 16px; color: #8A4B00; font-variant-numeric: tabular-nums">{{exp.pending}}</strong></div>
+</div>
+<button onClick="{{openAddExpense}}" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 52px; border: 0; border-radius: 12px; background: #3D4BC7; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Add expense</button>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{exp.items}}" as="x" hint-placeholder-count="2">
+<li style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<sc-if value="{{x.hasPhoto}}" hint-placeholder-val="{{false}}"><img src="{{x.photo}}" alt="{{x.photoAlt}}" style="flex: none; width: 44px; height: 44px; object-fit: cover; border-radius: 10px"></sc-if>
+<sc-if value="{{x.noPhoto}}" hint-placeholder-val="{{true}}"><span style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; background: #ECEEFB; color: #3D4BC7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 2v20l2.5-1.5L10 22l2-1.5 2 1.5 2.5-1.5L19 22V2l-2.5 1.5L14 2l-2 1.5L10 2 7.5 3.5z"></path><path d="M9 8h6M9 12h6"></path></svg></span></sc-if>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<strong style="font-size: 15px">{{x.cat}}</strong>
+<span style="font-size: 13px; line-height: 18px; color: #676879">{{x.sub}}</span>
+</div>
+<div style="flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
+<strong style="font-size: 15px; font-variant-numeric: tabular-nums">{{x.amount}}</strong>
+<span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 11px; background: {{x.bg}}; color: {{x.ink}}; font-size: 12px; font-weight: 700">{{x.status}}</span>
+</div>
+</li>
+</sc-for>
+</ul>
+<sc-if value="{{exp.none}}" hint-placeholder-val="{{false}}"><span style="font-size: 14px; color: #676879">No expenses on this trip yet.</span></sc-if>
+<span style="font-size: 13px; color: #676879">Accounts checks each expense against this trip. Keep the paper receipt until it is approved.</span>
+</div>
+</sc-if>
+
+<sc-if value="{{isTrip}}" hint-placeholder-val="{{false}}">
+<div style="flex: none; display: flex; align-items: center; gap: 4px; min-height: 60px; padding: 4px 8px; background: #FFFFFF; border-bottom: 1px solid #E6E9EF">
+<button onClick="{{back}}" aria-label="Back" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: 22px; background: transparent; color: #323338; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 24px; font-weight: 600">Guests &amp; hotel</h1>
+<span style="font-size: 13px; color: #676879">Trip {{trip.id}} · {{trip.dates}}</span>
+</div>
+</div>
+<div style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding: 16px 16px 24px">
+<section aria-labelledby="ga-gu-h" style="display: flex; flex-direction: column; gap: 4px; padding: 16px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<h2 id="ga-gu-h" style="margin: 0 0 6px; font-size: 16px; font-weight: 700">Guests · {{trip.pax}}</h2>
+<sc-for list="{{guests}}" as="g" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 12px; min-height: 56px">
+<span aria-hidden="true" style="flex: none; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: {{g.avBg}}; color: #FFFFFF; font-size: 14px; font-weight: 700">{{g.initials}}</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column"><strong style="font-size: 15px">{{g.name}}</strong><span style="font-size: 13px; color: #676879">{{g.role}}</span></div>
+<sc-if value="{{g.hasPhone}}" hint-placeholder-val="{{false}}">
+<a href="{{g.tel}}" aria-label="{{g.callAria}}" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 22px; background: #ECEEFB; color: #3D4BC7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2z"></path></svg></a>
+<a href="{{g.wa}}" target="_blank" rel="noopener noreferrer" aria-label="{{g.waAria}}" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 22px; background: #DDF5EA; color: #00663B"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"></path></svg></a>
+</sc-if>
+</div>
+</sc-for>
+</section>
+<section aria-labelledby="ga-ho-h" style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<h2 id="ga-ho-h" style="margin: 0; font-size: 16px; font-weight: 700">Hotel</h2>
+<div style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 15px">{{hotel.name}}</strong><span style="font-size: 14px; color: #676879">{{hotel.room}} · Bed and Breakfast</span></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<div style="display: flex; flex-direction: column; padding: 10px 12px; border-radius: 12px; background: #F6F7FB"><span style="font-size: 12px; color: #676879">Confirmation</span><span style="font-size: 14px; font-weight: 600">{{hotel.conf}}</span></div>
+<div style="display: flex; flex-direction: column; padding: 10px 12px; border-radius: 12px; background: #F6F7FB"><span style="font-size: 12px; color: #676879">Check-out</span><span style="font-size: 14px; font-weight: 600">{{hotel.checkout}}</span></div>
+</div>
+<a href="{{hotel.mapHref}}" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; border: 1px solid #C3C6D4; border-radius: 12px; color: #323338; font-weight: 700; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg>Navigate to hotel</a>
+</section>
+<section aria-labelledby="ga-tr-h" style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<h2 id="ga-tr-h" style="margin: 0; font-size: 16px; font-weight: 700">Transport</h2>
+<span style="font-size: 15px">{{trip.vehicle}}</span>
+<span style="font-size: 14px; color: #676879">{{trip.dropText}}</span>
+<sc-if value="{{trip.hasOther}}" hint-placeholder-val="{{true}}"><span style="font-size: 14px; color: #676879">{{trip.otherDays}}</span></sc-if>
+</section>
+<section aria-labelledby="ga-op-h" style="display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column"><h2 id="ga-op-h" style="margin: 0; font-size: 16px; font-weight: 700">Flyland operations</h2><span style="font-size: 13px; color: #676879">For changes, delays or anything urgent</span></div>
+<a href="{{opsTel}}" aria-label="Call operations" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 22px; background: #ECEEFB; color: #3D4BC7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2z"></path></svg></a>
+<a href="{{opsWa}}" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp operations" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 22px; background: #DDF5EA; color: #00663B"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"></path></svg></a>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{isReport}}" hint-placeholder-val="{{false}}">
+<div style="flex: none; display: flex; align-items: center; gap: 4px; min-height: 60px; padding: 4px 8px; background: #FFFFFF; border-bottom: 1px solid #E6E9EF">
+<button onClick="{{back}}" aria-label="Back to the day plan" style="flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: 22px; background: transparent; color: #323338; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 24px; font-weight: 600">Day report</h1>
+<span style="font-size: 13px; color: #676879">{{rep.dayLabel}} · Trip {{trip.id}}</span>
+</div>
+</div>
+<div style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding: 16px 16px 24px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 14px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)"><span style="font-size: 12px; color: #676879">Stops done</span><strong style="font-size: 18px">{{rep.stops}}</strong></div>
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 14px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)"><span style="font-size: 12px; color: #676879">Photos</span><strong style="font-size: 18px">{{rep.photos}}</strong></div>
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 14px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)"><span style="font-size: 12px; color: #676879">Spent today</span><strong style="font-size: 18px; font-variant-numeric: tabular-nums">{{rep.spent}}</strong></div>
+</div>
+<sc-if value="{{rep.sent}}" hint-placeholder-val="{{false}}">
+<section style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 16px; background: #DDF5EA">
+<strong style="color: #00663B">Sent to operations at {{rep.sentAt}}</strong>
+<p style="margin: 0; font-size: 14px; line-height: 21px; white-space: pre-line; color: #1F4D36">{{rep.sentText}}</p>
+<button onClick="{{goToday}}" style="height: 48px; border: 0; border-radius: 12px; background: #00854D; color: #FFFFFF; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">Back to today</button>
+</section>
+</sc-if>
+<sc-if value="{{rep.draft}}" hint-placeholder-val="{{true}}">
+<section style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 16px; border: 1.5px solid transparent; background: linear-gradient(#FFFFFF, #FFFFFF) padding-box, linear-gradient(120deg, #3D4BC7, #8B47D0, #C2378F) border-box">
+<span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 13px; background: linear-gradient(90deg, #3D4BC7, #8B47D0); color: #FFFFFF; font-size: 12px; font-weight: 700"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 5.6L19.5 9.5l-5.7 1.9L12 17l-1.8-5.6L4.5 9.5l5.7-1.9z"></path></svg>AI drafted from your ticks, photos and expenses</span>
+<label for="ga-rep" style="font-size: 15px; font-weight: 700">Report for operations</label>
+<textarea id="ga-rep" rows="9" value="{{rep.text}}" onChange="{{rep.onText}}" style="padding: 10px 12px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 12px; font-family: inherit; font-size: 14px; line-height: 20px; color: #323338; resize: vertical"></textarea>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><span style="font-size: 13px; color: #676879">Edit anything before you send.</span><button onClick="{{rep.redraft}}" style="height: 40px; padding: 0 12px; border: 1px solid #C3C6D4; border-radius: 10px; background: #FFFFFF; color: #323338; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">Redraft</button></div>
+</section>
+<section aria-labelledby="ga-mood-h" style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<h2 id="ga-mood-h" style="margin: 0; font-size: 16px; font-weight: 700">How were the guests today?</h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{rep.moods}}" as="m" hint-placeholder-count="3"><button onClick="{{m.pick}}" aria-pressed="{{m.on}}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; height: 72px; border: 1.5px solid {{m.border}}; border-radius: 14px; background: {{m.bg}}; color: {{m.ink}}; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="{{m.mouth}}"></path><path d="M9 9h.01M15 9h.01"></path></svg>{{m.label}}</button></sc-for>
+</div>
+<sc-if value="{{rep.unhappy}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; font-weight: 600; color: #B42840">Operations will call you after you send this report.</span></sc-if>
+</section>
+<sc-if value="{{rep.hasErr}}" hint-placeholder-val="{{false}}"><span role="alert" style="font-size: 14px; color: #B42840">{{rep.err}}</span></sc-if>
+<button onClick="{{rep.send}}" style="height: 52px; border: 0; border-radius: 12px; background: #3D4BC7; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">Send to operations</button>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{isMe}}" hint-placeholder-val="{{false}}">
+<div style="flex: none; padding: 20px 20px 14px; background: #FFFFFF; border-bottom: 1px solid #E6E9EF"><h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 24px; line-height: 32px; font-weight: 600">Me</h1></div>
+<div style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding: 16px 16px 24px">
+<section style="display: flex; align-items: center; gap: 14px; padding: 18px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<span aria-hidden="true" style="flex: none; display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background: #283277; color: #FFFFFF; font-family: Poppins, sans-serif; font-size: 20px; font-weight: 600">{{me.initials}}</span>
+<div style="display: flex; flex-direction: column"><strong style="font-family: Poppins, sans-serif; font-size: 18px; font-weight: 600">{{me.name}}</strong><span style="font-size: 14px; color: #676879">Guide · {{me.city}}</span><span style="font-size: 14px; color: #676879">{{me.phone}}</span></div>
+</section>
+<section style="display: flex; flex-direction: column; padding: 4px 16px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(29,44,92,.08)">
+<div style="display: flex; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid #E6E9EF"><span style="color: #676879">Languages</span><span style="font-weight: 600; text-align: right">{{me.langs}}</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid #E6E9EF"><span style="color: #676879">Trips accepted</span><span style="font-weight: 600">{{me.trips}}</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; padding: 14px 0"><span style="color: #676879">Expenses waiting</span><span style="font-weight: 600">{{me.waiting}}</span></div>
+</section>
+<button onClick="{{resetDemo}}" style="height: 48px; border: 1px solid #C3C6D4; border-radius: 12px; background: #FFFFFF; color: #323338; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">Reset sample trips</button>
+<button onClick="{{signOut}}" style="height: 52px; border: 1px solid #C3C6D4; border-radius: 12px; background: #FFFFFF; color: #B42840; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">Sign out</button>
+</div>
+</sc-if>
+
+<sc-if value="{{showTabs}}" hint-placeholder-val="{{false}}">
+<nav aria-label="Main" style="flex: none; display: flex; padding: 6px 8px 22px; background: #FFFFFF; border-top: 1px solid #E6E9EF">
+<button onClick="{{tToday.pick}}" aria-current="{{tToday.current}}" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 52px; border: 0; background: transparent; color: {{tToday.ink}}; font-family: inherit; font-size: 12px; font-weight: {{tToday.weight}}; cursor: pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>Today</button>
+<button onClick="{{tTrips.pick}}" aria-current="{{tTrips.current}}" style="position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 52px; border: 0; background: transparent; color: {{tTrips.ink}}; font-family: inherit; font-size: 12px; font-weight: {{tTrips.weight}}; cursor: pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path></svg>Trips<sc-if value="{{hasOffer}}" hint-placeholder-val="{{true}}"><span style="position: absolute; top: 6px; left: calc(50% + 8px); min-width: 18px; height: 18px; padding: 0 5px; box-sizing: border-box; border-radius: 9px; background: #D83A52; color: #FFFFFF; font-size: 11px; font-weight: 700; line-height: 18px">1<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)"> new</span></span></sc-if></button>
+<button onClick="{{tExp.pick}}" aria-current="{{tExp.current}}" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 52px; border: 0; background: transparent; color: {{tExp.ink}}; font-family: inherit; font-size: 12px; font-weight: {{tExp.weight}}; cursor: pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 2v20l2.5-1.5L10 22l2-1.5 2 1.5 2.5-1.5L19 22V2l-2.5 1.5L14 2l-2 1.5L10 2 7.5 3.5z"></path><path d="M9 8h6M9 12h6M9 16h4"></path></svg>Expenses</button>
+<button onClick="{{tMe.pick}}" aria-current="{{tMe.current}}" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 52px; border: 0; background: transparent; color: {{tMe.ink}}; font-family: inherit; font-size: 12px; font-weight: {{tMe.weight}}; cursor: pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>Me</button>
+</nav>
+</sc-if>
+
+<sc-if value="{{sheetOpen}}" hint-placeholder-val="{{false}}">
+<div style="position: absolute; inset: 0; z-index: 20; display: flex; flex-direction: column; background: rgba(31,32,35,.45)">
+<button onClick="{{closeSheet}}" aria-label="Close add expense" style="flex: 1; min-height: 40px; border: 0; background: transparent; cursor: pointer"></button>
+<form role="dialog" aria-modal="true" aria-labelledby="ga-exp-h" onSubmit="{{saveExpense}}" style="flex: none; max-height: 90%; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; padding: 10px 20px 28px; border-radius: 20px 20px 0 0; background: #FFFFFF">
+<span aria-hidden="true" style="align-self: center; width: 36px; height: 5px; border-radius: 3px; background: #C3C6D4"></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><h2 id="ga-exp-h" style="margin: 0; font-family: Poppins, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Add expense</h2><span style="font-size: 14px; color: #676879">Against Trip {{trip.id}} · {{expDay}}</span></div>
+<fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px">
+<legend style="padding: 0; margin-bottom: 8px; font-size: 14px; font-weight: 700">Category</legend>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{expCats}}" as="c" hint-placeholder-count="6"><button type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="height: 44px; border: 1.5px solid {{c.border}}; border-radius: 12px; background: {{c.bg}}; color: {{c.ink}}; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer">{{c.label}}</button></sc-for>
+</div>
+</fieldset>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="ga-amt" style="font-size: 14px; font-weight: 700">Amount</label>
+<div style="display: flex; align-items: center; height: 56px; border: 1px solid #C3C6D4; border-radius: 12px; overflow: hidden">
+<span style="display: flex; align-items: center; height: 100%; padding: 0 14px; background: #F6F7FB; border-right: 1px solid #C3C6D4; font-weight: 700; color: #676879">MYR</span>
+<input id="ga-amt" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" value="{{expAmount}}" onChange="{{onExpAmount}}" style="flex: 1; min-width: 0; height: 100%; padding: 0 14px; box-sizing: border-box; border: 0; font-family: inherit; font-size: 22px; font-weight: 700; color: #323338">
+</div>
+</div>
+<sc-if value="{{expFlag}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; align-items: flex-start; gap: 10px; padding: 12px; border-radius: 12px; border: 1.5px solid transparent; background: linear-gradient(#FFFFFF, #FFFFFF) padding-box, linear-gradient(120deg, #3D4BC7, #8B47D0, #C2378F) border-box; font-size: 14px; line-height: 20px">
+<span style="flex: none; display: inline-flex; align-items: center; height: 24px; padding: 0 8px; border-radius: 12px; background: linear-gradient(90deg, #3D4BC7, #8B47D0); color: #FFFFFF; font-size: 11px; font-weight: 700">AI</span>
+<span>{{expFlagText}}</span>
+</div>
+</sc-if>
+<div style="display: flex; align-items: center; gap: 12px">
+<sc-if value="{{hasExpPhoto}}" hint-placeholder-val="{{false}}"><img src="{{expPhoto}}" alt="Receipt photo" style="flex: none; width: 56px; height: 56px; object-fit: cover; border-radius: 10px"></sc-if>
+<label style="position: relative; flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 52px; border: 1.5px dashed #9AA0B8; border-radius: 12px; background: #F6F7FB; color: #3D4BC7; font-size: 15px; font-weight: 700; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>{{receiptLabel}}<input type="file" accept="image/*" capture="environment" onChange="{{onExpPhoto}}" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden"></label>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="ga-exn" style="font-size: 14px; font-weight: 700">Note <span style="font-weight: 400; color: #676879">(optional)</span></label>
+<input id="ga-exn" type="text" placeholder="e.g. Batu Caves car park" value="{{expNote}}" onChange="{{onExpNote}}" style="height: 48px; padding: 0 14px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 12px; font-family: inherit; font-size: 15px; color: #323338">
+</div>
+<sc-if value="{{expErr}}" hint-placeholder-val="{{false}}"><span role="alert" style="font-size: 14px; color: #B42840">{{expErr}}</span></sc-if>
+<div style="display: flex; gap: 10px">
+<button type="button" onClick="{{closeSheet}}" style="flex: 1; height: 52px; border: 1px solid #C3C6D4; border-radius: 12px; background: #FFFFFF; color: #323338; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">Cancel</button>
+<button type="submit" style="flex: 1.6; height: 52px; border: 0; border-radius: 12px; background: #3D4BC7; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">Save expense</button>
+</div>
+</form>
+</div>
+</sc-if>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{false}}">
+<div role="status" style="position: absolute; left: 16px; right: 16px; bottom: {{toastBottom}}; z-index: 30; padding: 12px 14px; border-radius: 12px; background: #323338; color: #FFFFFF; font-size: 14px; line-height: 20px; box-shadow: 0 8px 24px rgba(0,0,0,.25)">{{toast}}</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"screen":{"editor":"enum","options":["signin","trips","today","trip","day","stop","addExpense","expenses","report","me"],"default":"signin"},"$preview":{"width":390,"height":844}}'>
+const STORE = 'flyland-guide-app-v1';
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const WEEK = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const GUIDE = { name: 'Ravi Kumar', first: 'Ravi', city: 'Kuala Lumpur', phone: '+60 12-345 6789', langs: 'English, Malay, Tamil' };
+const OPS_PHONE = '+60320000000';
+const TABS = ['today', 'trips', 'expenses', 'me'];
+const CATS = [
+  { label: 'Fuel', usual: 80 }, { label: 'Parking', usual: 20 }, { label: 'Toll', usual: 30 },
+  { label: 'Tickets', usual: 150 }, { label: 'Meals', usual: 60 }, { label: 'Other', usual: 50 }
+];
+const ISSUES = ['Running late', 'Guest not at pickup', 'Place closed', 'Vehicle problem'];
+const MOODS = [
+  { key: 'happy', label: 'Happy', mouth: 'M8 14s1.5 2 4 2 4-2 4-2' },
+  { key: 'okay', label: 'Okay', mouth: 'M8 15h8' },
+  { key: 'unhappy', label: 'Unhappy', mouth: 'M16 16s-1.5-2-4-2-4 2-4 2' }
+];
+const AV = ['#3D4BC7', '#C2378F', '#00779E'];
+
+function pad(n) { return (n < 10 ? '0' : '') + n; }
+function today0() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+function addDays(d, n) { const x = new Date(d.getTime()); x.setDate(x.getDate() + n); return x; }
+function dayDate(t, n) { return addDays(today0(), t.start + n - 1); }
+function dShort(d) { return WEEK[d.getDay()] + ' ' + d.getDate(); }
+function dMed(d) { return WEEK[d.getDay()] + ', ' + d.getDate() + ' ' + MONTHS[d.getMonth()]; }
+function nowHM() { const d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+function money(n) { return 'MYR ' + Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function initials(s) { const w = String(s || '?').trim().split(/\s+/); return ((w[0] || '?')[0] + (w[1] ? w[1][0] : '')).toUpperCase(); }
+function mapHref(q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q); }
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+function uid() { return 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+function todayN(t) { return 1 - t.start; }
+function dayOf(t, n) { return (t.days || []).filter(function (d) { return d.n === n; })[0] || null; }
+function nextPlanned(day, afterId) {
+  if (!day) return null;
+  const items = day.items;
+  const at = afterId ? items.findIndex(function (i) { return i.id === afterId; }) : -1;
+  const later = items.filter(function (i, ix) { return ix > at && i.status === 'planned' && i.id !== afterId; })[0];
+  return later || items.filter(function (i) { return i.status === 'planned' && i.id !== afterId; })[0] || null;
+}
+
+function readImage(file, cb) {
+  try {
+    const fr = new FileReader();
+    fr.onload = function () {
+      const img = new Image();
+      img.onload = function () {
+        try {
+          const max = 640;
+          let w = img.width;
+          let h = img.height;
+          if (w > max || h > max) { const sc = max / Math.max(w, h); w = Math.round(w * sc); h = Math.round(h * sc); }
+          const c = document.createElement('canvas');
+          c.width = w; c.height = h;
+          c.getContext('2d').drawImage(img, 0, 0, w, h);
+          cb(c.toDataURL('image/jpeg', 0.7));
+        } catch (err) { cb(String(fr.result || '')); }
+      };
+      img.onerror = function () { cb(''); };
+      img.src = String(fr.result || '');
+    };
+    fr.readAsDataURL(file);
+  } catch (err) { cb(''); }
+}
+
+function stop(id, time, name, place, desc, extra) {
+  return Object.assign({ id: id, time: time, name: name, place: place, desc: desc || '', status: 'planned', doneAt: '', note: '', photos: [], issue: '', issueAt: '', opsNote: '' }, extra || {});
+}
+
+function seed() {
+  return { v: 1, trips: [
+    {
+      id: '4499476', guest: 'Arun Menon', dest: 'Langkawi + Kuala Lumpur', pax: '2 adults · 1 child (7 yrs)', vehicle: '1-Sedan (4 Seater)',
+      status: 'active', start: -3, nights: 5, myDays: 'Days 3–6 in Kuala Lumpur',
+      otherDays: 'Days 1–2 in Langkawi are with Faizal Rahman.',
+      dropText: 'Day 6: checkout by 10:00, then the airport drop via Putrajaya.',
+      hotel: { name: 'IBIS KLCC', place: 'ibis Kuala Lumpur City Centre', room: 'Standard room (Window room)', conf: 'IBK-48812' },
+      guests: [
+        { name: 'Arun Menon', role: 'Lead guest', phone: '+919876543210' },
+        { name: 'Anjali Menon', role: 'Adult' },
+        { name: 'Dev Menon', role: 'Child, 7 yrs · needs a child seat', child: true }
+      ],
+      days: [
+        { n: 3, report: { sentAt: '19:20', mood: 'happy', text: 'Day 3 · All 3 stops done.\nGuests landed on time and checked in at 15:08.\nBukit Bintang walk finished at 19:05.' }, items: [
+          stop('d3a', '14:05', 'KL Airport to Kuala Lumpur Hotel', 'KLIA Arrival Hall', 'Arrival & Transfer', { status: 'done', doneAt: '14:12' }),
+          stop('d3b', '15:00', 'Checkin to hotel', 'ibis Kuala Lumpur City Centre', '(check in time is 3pm, guests have to wait at the hotel lobby till check in time)', { status: 'done', doneAt: '15:08' }),
+          stop('d3c', '18:00', 'Tour to Bukit Bintang at evening', 'Bukit Bintang, Kuala Lumpur', '(Duration: 2 hrs)', { status: 'done', doneAt: '19:05' })
+        ] },
+        { n: 4, items: [
+          stop('d4a', '08:30', 'Pickup from hotel lobby', 'ibis Kuala Lumpur City Centre', 'Tour to Batu caves and genting highlands (Duration: 8 hrs)', { status: 'done', doneAt: '08:34' }),
+          stop('d4b', '09:15', 'Batu Caves', 'Batu Caves, Selangor', 'Temple caves at the top of 272 steps.', { opsNote: 'Knees and shoulders must be covered at the temple. Sarongs can be rented at the entrance.' }),
+          stop('d4c', '11:30', 'Genting cable car', 'Awana Skyway, Genting Highlands', 'Cable car tickets (2 way), (Please note Cable car tickets can be upgraded to express tickets at an addition of 20 RM per person, to be confirmed one day prior to the travel)', { opsNote: 'Tickets are booked for 3 guests: 2 adults and 1 child.' }),
+          stop('d4d', '12:30', 'Genting Highlands free time', 'Genting Highlands', 'Lunch is not included. Meet back at the cable car station by 16:00.'),
+          stop('d4e', '17:30', 'Drop at hotel', 'ibis Kuala Lumpur City Centre', '')
+        ] },
+        { n: 5, items: [
+          stop('d5a', '09:00', 'Kuala lumpur Half Day City tour', 'Petronas Twin Towers, Kuala Lumpur', '(Twin tower photostop, KL Tower photostop, National Mosque, National Monument. Independence Square, Choclate outlet and Kings Palace) (Duration: 4 hrs)'),
+          stop('d5b', '13:00', 'Drop at hotel', 'ibis Kuala Lumpur City Centre', '')
+        ] },
+        { n: 6, items: [
+          stop('d6a', '10:00', 'Checkout from hotel', 'ibis Kuala Lumpur City Centre', '(hotel check-out is before 12:00 PM)'),
+          stop('d6b', '10:30', 'Drop off to KL Airport', 'Putrajaya', 'Transfer With Putrajaya & Drop off to Airport')
+        ] }
+      ],
+      expenses: [
+        { id: 'e1', day: 3, cat: 'Parking', amount: 12, note: 'KLIA arrival car park', status: 'approved', time: '14:20', photo: '' },
+        { id: 'e2', day: 3, cat: 'Toll', amount: 9.8, note: 'Airport highway toll', status: 'pending', time: '15:02', photo: '' }
+      ]
+    },
+    { id: '4499502', guest: 'Rahul Varma', dest: 'Langkawi + Kuala Lumpur', pax: '2 adults', vehicle: '1-Sedan (4 Seater)', status: 'offer', start: 9, nights: 5, myDays: 'Days 3–6 in Kuala Lumpur', days: [], expenses: [] },
+    { id: '4499455', guest: 'Lakshmi Iyer', dest: 'Kuala Lumpur', pax: '3 adults', vehicle: '1-MPV (7 Seater)', status: 'done', start: -16, nights: 3, myDays: 'All 4 days', note: '4 day reports sent · MYR 64.00 in expenses approved', days: [], expenses: [] }
+  ] };
+}
+
+function loadData() {
+  try {
+    const raw = window.localStorage.getItem(STORE);
+    if (!raw) return seed();
+    const d = JSON.parse(raw);
+    if (!d || d.v !== 1 || !Array.isArray(d.trips)) return seed();
+    return d;
+  } catch (e) { return seed(); }
+}
+
+function draftReport(t, day) {
+  const items = day.items;
+  const done = items.filter(function (i) { return i.status === 'done'; });
+  const L = ['Day ' + day.n + ' · ' + dMed(dayDate(t, day.n)) + ' · ' + t.guest];
+  L.push(done.length === items.length ? 'All ' + plural(items.length, 'stop', 'stops') + ' done.' : done.length + ' of ' + items.length + ' stops done.');
+  items.forEach(function (i) {
+    if (i.status === 'done') L.push('• ' + i.name + ': done at ' + i.doneAt);
+    else if (i.status === 'skipped') L.push('• ' + i.name + ': skipped');
+    else L.push('• ' + i.name + ': not done yet');
+  });
+  items.forEach(function (i) { if (i.issue) L.push('Problem at ' + i.name + ': ' + i.issue + ' (' + i.issueAt + ')'); });
+  items.forEach(function (i) { if (i.note) L.push('Note on ' + i.name + ': ' + i.note); });
+  const photos = items.reduce(function (a, i) { return a + (i.photos ? i.photos.length : 0); }, 0);
+  if (photos) L.push(plural(photos, 'photo', 'photos') + ' added.');
+  const ex = (t.expenses || []).filter(function (x) { return x.day === day.n; });
+  if (ex.length) L.push('Spent ' + money(ex.reduce(function (a, x) { return a + x.amount; }, 0)) + ': ' + ex.map(function (x) { return x.cat + ' ' + money(x.amount); }).join(', ') + '.');
+  else L.push('No expenses today.');
+  return L.join('\n');
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const data = loadData();
+    const first = this.startScreen(props, data);
+    this.state = Object.assign({
+      data: data, root: 'today', tripBack: 'today',
+      cc: '+60', phone: '', code: '', signStep: 'phone', signErr: '',
+      expCat: 'Parking', expAmount: '', expNote: '', expPhoto: '', expErr: '',
+      repEdit: null, mood: 'happy', repErr: '',
+      toast: ''
+    }, first);
+    this.toastTimer = null;
+    this.skipSave = false;
+    this.onStorage = this.onStorage.bind(this);
+  }
+
+  startScreen(props, data) {
+    const want = props && props.screen ? String(props.screen) : 'signin';
+    const t = data.trips.filter(function (x) { return x.status === 'active'; })[0];
+    const tn = t ? todayN(t) : 0;
+    const nx = t ? nextPlanned(dayOf(t, tn)) : null;
+    const out = { screen: want === 'addExpense' ? 'expenses' : want, sheet: want === 'addExpense', dayN: tn, stopId: nx ? nx.id : '' };
+    if (TABS.indexOf(out.screen) > -1) out.root = out.screen;
+    if (want === 'addExpense') { out.expCat = 'Parking'; out.expAmount = '35'; out.expNote = 'Batu Caves car park'; }
+    return out;
+  }
+
+  componentDidMount() {
+    try { window.addEventListener('storage', this.onStorage); } catch (e) { /* no storage events here */ }
+  }
+
+  componentWillUnmount() {
+    try { window.removeEventListener('storage', this.onStorage); } catch (e) { /* ignore */ }
+    if (this.toastTimer) clearTimeout(this.toastTimer);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps && prevProps.screen !== this.props.screen) { this.setState(this.startScreen(this.props, this.state.data)); return; }
+    if (prevState && prevState.data !== this.state.data) {
+      if (this.skipSave) { this.skipSave = false; return; }
+      try { window.localStorage.setItem(STORE, JSON.stringify(this.state.data)); } catch (e) { /* storage full or blocked: keep working in memory */ }
+    }
+  }
+
+  onStorage(e) {
+    if (!e || e.key !== STORE || !e.newValue) return;
+    try {
+      const d = JSON.parse(e.newValue);
+      if (d && d.v === 1 && Array.isArray(d.trips)) { this.skipSave = true; this.setState({ data: d }); }
+    } catch (err) { /* ignore bad data */ }
+  }
+
+  active(data) { return (data || this.state.data).trips.filter(function (x) { return x.status === 'active'; })[0] || null; }
+
+  flash(msg) {
+    const self = this;
+    if (this.toastTimer) clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(function () { self.setState({ toast: '' }); }, 2800);
+    return { toast: msg };
+  }
+
+  go(screen, extra) {
+    const st = Object.assign({ screen: screen, sheet: false }, extra || {});
+    if (TABS.indexOf(screen) > -1) st.root = screen;
+    this.setState(st);
+  }
+
+  back() {
+    const s = this.state;
+    if (s.screen === 'stop' || s.screen === 'report') this.go('day');
+    else if (s.screen === 'trip') this.go(s.tripBack || s.root);
+    else this.go(s.root);
+  }
+
+  // One state write per action: build the new data and the screen change together.
+  withItem(dayN, id, fn, extra) {
+    const d = clone(this.state.data);
+    const t = this.active(d);
+    const day = t ? dayOf(t, dayN) : null;
+    const x = day ? day.items.filter(function (i) { return i.id === id; })[0] : null;
+    if (!x) return;
+    const more = fn(x, day, t) || {};
+    this.setState(Object.assign({ data: d }, extra || {}, more));
+  }
+
+  tickGo(dayN, id, from) {
+    const t = this.active();
+    if (!t) return;
+    if (dayN > todayN(t)) { this.setState(this.flash('You can tick stops on the day itself.')); return; }
+    const self = this;
+    this.withItem(dayN, id, function (x, day) {
+      if (x.status === 'done') { x.status = 'planned'; x.doneAt = ''; return self.flash('Tick removed from ' + x.name + '.'); }
+      const at = nowHM();
+      x.status = 'done'; x.doneAt = at;
+      const nx = nextPlanned(day, x.id);
+      if (from === 'stop') {
+        if (nx) return Object.assign({ stopId: nx.id }, self.flash('Done at ' + at + '. Next: ' + nx.time + ' ' + nx.name + '.'));
+        return Object.assign({ screen: 'report', repEdit: null, repErr: '' }, self.flash('All stops done. Your day report is drafted.'));
+      }
+      return self.flash(nx ? 'Done at ' + at + '. Next: ' + nx.time + ' ' + nx.name + '.' : 'All stops done for today.');
+    });
+  }
+
+  skip(dayN, id) {
+    const t = this.active();
+    if (!t) return;
+    if (dayN > todayN(t)) { this.setState(this.flash('You can update stops on the day itself.')); return; }
+    const self = this;
+    this.withItem(dayN, id, function (x, day) {
+      if (x.status === 'skipped') { x.status = 'planned'; x.doneAt = ''; return self.flash(x.name + ' is back on the plan.'); }
+      x.status = 'skipped'; x.doneAt = nowHM();
+      const nx = nextPlanned(day, x.id);
+      if (nx) return Object.assign({ stopId: nx.id }, self.flash('Skipped. Operations can see it. Next: ' + nx.name + '.'));
+      return Object.assign({ screen: 'report', repEdit: null, repErr: '' }, self.flash('Skipped. Your day report is drafted.'));
+    });
+  }
+
+  saveExpense(ev) {
+    if (ev && ev.preventDefault) ev.preventDefault();
+    const s = this.state;
+    const amt = parseFloat(s.expAmount);
+    if (!(amt > 0)) { this.setState({ expErr: 'Enter the amount you paid.' }); return; }
+    const d = clone(s.data);
+    const t = this.active(d);
+    if (!t) { this.setState({ expErr: 'There is no trip running today to charge this to.' }); return; }
+    t.expenses = (t.expenses || []).concat([{ id: uid(), day: todayN(t), cat: s.expCat, amount: Math.round(amt * 100) / 100, note: s.expNote.trim(), status: 'pending', time: nowHM(), photo: s.expPhoto }]);
+    this.setState(Object.assign({ data: d, sheet: false, expAmount: '', expNote: '', expPhoto: '', expErr: '', screen: 'expenses', root: 'expenses' }, this.flash('Expense sent to accounts against Trip ' + t.id + '.')));
+  }
+
+  sendReport(dayN, text) {
+    if (!String(text || '').trim()) { this.setState({ repErr: 'Write a line or two before sending.' }); return; }
+    const d = clone(this.state.data);
+    const t = this.active(d);
+    const day = t ? dayOf(t, dayN) : null;
+    if (!day) return;
+    day.report = { sentAt: nowHM(), mood: this.state.mood, text: String(text).trim() };
+    this.setState(Object.assign({ data: d, repErr: '', repEdit: null }, this.flash('Day report sent to operations.')));
+  }
+
+  setOffer(id, status) {
+    const d = clone(this.state.data);
+    const t = d.trips.filter(function (x) { return x.id === id; })[0];
+    if (!t) return;
+    t.status = status;
+    this.setState(Object.assign({ data: d }, this.flash(status === 'upcoming' ? 'Trip ' + id + ' accepted. Operations has been told.' : 'Declined. Operations will offer Trip ' + id + ' to another guide.')));
+  }
+
+  renderVals() {
+    const self = this;
+    const s = this.state;
+    const scr = s.screen;
+    const t = this.active();
+    const tn = t ? todayN(t) : 0;
+    const tday = t ? dayOf(t, tn) : null;
+    const V = {
+      isSignin: scr === 'signin', isToday: scr === 'today', isTrips: scr === 'trips', isDay: scr === 'day', isStop: scr === 'stop',
+      isExpenses: scr === 'expenses', isTrip: scr === 'trip', isReport: scr === 'report', isMe: scr === 'me',
+      showTabs: TABS.indexOf(scr) > -1, sheetOpen: !!s.sheet,
+      hasToast: !!s.toast, toast: s.toast,
+      opsTel: 'tel:' + OPS_PHONE, opsWa: 'https://wa.me/' + OPS_PHONE.replace(/\D/g, ''),
+      back: function () { self.back(); },
+      goToday: function () { self.go('today'); },
+      goTrips: function () { self.go('trips'); }
+    };
+    V.toastBottom = V.showTabs ? '96px' : scr === 'stop' ? '100px' : '24px';
+    const tab = function (key) { const on = s.root === key; return { pick: function () { self.go(key); }, current: on ? 'page' : 'false', ink: on ? '#3D4BC7' : '#676879', weight: on ? '700' : '600' }; };
+    V.tToday = tab('today'); V.tTrips = tab('trips'); V.tExp = tab('expenses'); V.tMe = tab('me');
+
+    // Sign in
+    V.signPhone = s.signStep === 'phone'; V.signCode = s.signStep === 'code'; V.signErr = s.signErr;
+    V.cc = s.cc; V.phone = s.phone; V.code = s.code; V.fullPhone = s.cc + ' ' + s.phone;
+    V.onCc = function (e) { self.setState({ cc: e.target.value }); };
+    V.onPhone = function (e) { self.setState({ phone: e.target.value, signErr: '' }); };
+    V.onCode = function (e) { self.setState({ code: e.target.value.replace(/\D/g, '').slice(0, 6), signErr: '' }); };
+    V.sendCode = function (e) {
+      if (e && e.preventDefault) e.preventDefault();
+      if (self.state.phone.replace(/\D/g, '').length < 8) { self.setState({ signErr: 'Enter your mobile number, at least 8 digits.' }); return; }
+      self.setState({ signStep: 'code', signErr: '', code: '' });
+    };
+    V.verify = function (e) {
+      if (e && e.preventDefault) e.preventDefault();
+      if (self.state.code.length !== 6) { self.setState({ signErr: 'Enter the 6-digit code from the SMS.' }); return; }
+      self.setState(Object.assign({ screen: 'today', root: 'today', signStep: 'phone', code: '', signErr: '' }, self.flash('Signed in as ' + GUIDE.name + '.')));
+    };
+    V.changeNumber = function () { self.setState({ signStep: 'phone', code: '', signErr: '' }); };
+    V.resetDemo = function () { self.setState(Object.assign({ data: seed(), dayN: 4, stopId: 'd4b', repEdit: null }, self.flash('Sample trips reset on this device.'))); };
+    V.signOut = function () { self.setState({ screen: 'signin', signStep: 'phone', phone: '', code: '', signErr: '', sheet: false }); };
+
+    // Trip shared bits
+    V.trip = t ? {
+      id: t.id, guest: t.guest, dest: t.dest, pax: t.pax, vehicle: t.vehicle,
+      dayOf: 'Day ' + tn + ' of ' + (t.nights + 1),
+      dates: dMed(dayDate(t, 1)) + ' – ' + dMed(dayDate(t, t.nights + 1)),
+      hasOther: !!t.otherDays, otherDays: t.otherDays || '', dropText: t.dropText || ''
+    } : { id: '', guest: '', dest: '', pax: '', vehicle: '', dayOf: '', dates: '', hasOther: false, otherDays: '', dropText: '' };
+    V.openTrip = function () { self.go('trip', { tripBack: scr === 'day' ? 'day' : s.root }); };
+    V.openToday = function () { self.go('day', { dayN: tn }); };
+    V.openReport = function () { self.go('report', { dayN: scr === 'day' ? s.dayN : tn, repEdit: null, repErr: '' }); };
+    V.openAddExpense = function () { self.setState({ sheet: true, expErr: '' }); };
+
+    // Today
+    const now = new Date();
+    const hr = now.getHours();
+    V.greeting = (hr < 12 ? 'Good morning, ' : hr < 17 ? 'Good afternoon, ' : 'Good evening, ') + GUIDE.first;
+    V.todayLabel = dMed(today0()) + ' · ' + GUIDE.city;
+    const offer = s.data.trips.filter(function (x) { return x.status === 'offer'; })[0];
+    V.hasOffer = !!offer;
+    V.offerText = offer ? 'Trip ' + offer.id + ' · ' + offer.guest + ' · starts ' + dMed(dayDate(offer, 1)) : '';
+    V.hasActive = !!(t && tday);
+    V.noActive = !V.hasActive;
+    const counts = function (day) {
+      const total = day ? day.items.length : 0;
+      const done = day ? day.items.filter(function (i) { return i.status === 'done'; }).length : 0;
+      const skipped = day ? day.items.filter(function (i) { return i.status === 'skipped'; }).length : 0;
+      return { pct: total ? Math.round((done + skipped) * 100 / total) : 0, progress: done + ' of ' + total + ' done' + (skipped ? ' · ' + skipped + ' skipped' : ''), done: done, total: total };
+    };
+    V.tday = counts(tday);
+    const nx = tday ? nextPlanned(tday) : null;
+    V.hasNext = !!nx;
+    V.dayDone = !!(tday && !nx && tday.items.length);
+    V.next = { time: '', name: '', place: '', mapHref: '#', hasThen: false, then: '', tickGo: function () {}, open: function () {} };
+    if (nx) {
+      const then = nextPlanned(tday, nx.id);
+      V.next = {
+        time: nx.time, name: nx.name, place: nx.place, mapHref: mapHref(nx.place),
+        hasThen: !!then, then: then ? then.time + ' · ' + then.name : '',
+        tickGo: function () { self.tickGo(tn, nx.id, 'today'); },
+        open: function () { self.go('stop', { dayN: tn, stopId: nx.id }); }
+      };
+    }
+    const tRep = tday && tday.report;
+    V.reportHint = tRep ? 'Report sent to operations at ' + tRep.sentAt + '.' : 'Send your day report so operations can close the day.';
+    V.reportBtn = tRep ? 'View day report' : 'Send day report';
+    V.brief = [];
+    if (tday && t) {
+      const rem = tday.items.filter(function (i) { return i.status === 'planned'; });
+      if (rem.length) V.brief.push({ text: plural(rem.length, 'stop', 'stops') + ' left today. The last is ' + rem[rem.length - 1].name.toLowerCase() + ' at ' + rem[rem.length - 1].time + '.' });
+      (t.guests || []).filter(function (g) { return g.child; }).forEach(function (g) { V.brief.push({ text: g.name.split(' ')[0] + ' (' + g.role.split('·')[0].replace('Child, ', '').trim() + ') needs a child seat: keep it fitted all day.' }); });
+      rem.forEach(function (i) { if (i.opsNote) V.brief.push({ text: i.name + ': ' + i.opsNote }); });
+      rem.forEach(function (i) { if (/not included/i.test(i.desc)) V.brief.push({ text: i.name + ': lunch is not included, so suggest a place nearby.' }); });
+      V.brief = V.brief.slice(0, 4);
+    }
+    V.hasBrief = V.hasActive && V.brief.length > 0;
+
+    // Trips
+    V.guideLine = GUIDE.name + ' · ' + GUIDE.city;
+    const CHIP = {
+      offer: ['New offer', '#ECEEFB', '#283277'], active: ['On trip', '#DDF5EA', '#00663B'], upcoming: ['Accepted', '#E3F0FF', '#0B4F8A'],
+      done: ['Completed', '#F0F1F5', '#4B4D5C'], declined: ['Declined', '#FDE7EA', '#B42840']
+    };
+    const card = function (x) {
+      const c = CHIP[x.status] || CHIP.done;
+      const note = x.status === 'upcoming' ? 'The day plan appears here once operations shares it.' : x.status === 'declined' ? 'Operations will offer this trip to another guide.' : x.note || '';
+      return {
+        id: x.id, guest: x.guest, dest: x.dest, pax: x.pax, myDays: x.myDays,
+        dates: dMed(dayDate(x, 1)) + ' – ' + dMed(dayDate(x, x.nights + 1)),
+        chip: c[0], chipBg: c[1], chipInk: c[2],
+        isOffer: x.status === 'offer', canOpen: x.status === 'active', hasNote: !!note, note: note,
+        accept: function () { self.setOffer(x.id, 'upcoming'); },
+        decline: function () { self.setOffer(x.id, 'declined'); },
+        open: function () { self.go('day', { dayN: todayN(x) }); }
+      };
+    };
+    const groups = [
+      { title: 'Waiting for you', keys: ['offer'] }, { title: 'On trip now', keys: ['active'] },
+      { title: 'Coming up', keys: ['upcoming'] }, { title: 'Past and declined', keys: ['done', 'declined'] }
+    ];
+    V.tripGroups = groups.map(function (g) {
+      return { title: g.title, trips: s.data.trips.filter(function (x) { return g.keys.indexOf(x.status) > -1; }).map(card) };
+    }).filter(function (g) { return g.trips.length; });
+
+    // Day plan
+    const sel = t ? dayOf(t, s.dayN) || tday : null;
+    V.dayChips = t ? t.days.map(function (d) {
+      const on = sel && d.n === sel.n;
+      return {
+        label: 'Day ' + d.n, sub: d.n === tn ? 'Today' : dShort(dayDate(t, d.n)), on: on,
+        bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', border: on ? '#283277' : '#C3C6D4',
+        pick: function () { self.setState({ dayN: d.n }); }
+      };
+    }) : [];
+    V.day = { title: '', when: '', pct: 0, progress: '', items: [], canReport: false, reportBtn: '' };
+    if (sel) {
+      const k = counts(sel);
+      const firstOpen = sel.n === tn ? nextPlanned(sel) : null;
+      V.day = {
+        title: 'Day ' + sel.n + ' of ' + (t.nights + 1) + (sel.n === tn ? ' · Today' : ''),
+        when: dMed(dayDate(t, sel.n)), pct: k.pct, progress: k.progress,
+        canReport: sel.n <= tn, reportBtn: sel.report ? 'View day report' : 'Send day report',
+        items: sel.items.map(function (i) {
+          const done = i.status === 'done';
+          const skipped = i.status === 'skipped';
+          const isNow = !!(firstOpen && firstOpen.id === i.id);
+          const meta = [i.place];
+          if (i.photos && i.photos.length) meta.push(plural(i.photos.length, 'photo', 'photos'));
+          if (i.note) meta.push('note added');
+          return {
+            time: i.time, name: i.name, meta: meta.join(' · '), isNow: isNow, done: done,
+            timeInk: done || skipped ? '#676879' : '#323338', deco: skipped ? 'line-through' : 'none',
+            border: isNow ? '#3D4BC7' : done ? '#9ED9BC' : '#E6E9EF',
+            ring: done ? '#00854D' : '#767B91', tickBg: done ? '#00854D' : '#FFFFFF', checkInk: done ? '#FFFFFF' : '#C3C6D4',
+            hasState: done || skipped, stateTxt: done ? 'Done ' + i.doneAt : 'Skipped',
+            stateBg: done ? '#DDF5EA' : '#F0F1F5', stateInk: done ? '#00663B' : '#4B4D5C',
+            hasIssue: !!i.issue, issue: i.issue,
+            tickAria: done ? 'Undo tick for ' + i.name : 'Tick ' + i.name + ' as done',
+            openAria: 'Open ' + i.name,
+            tick: function () { self.tickGo(sel.n, i.id, 'day'); },
+            open: function () { self.go('stop', { dayN: sel.n, stopId: i.id }); }
+          };
+        })
+      };
+    }
+
+    // Stop
+    let sd = sel;
+    let st = sd ? sd.items.filter(function (i) { return i.id === s.stopId; })[0] : null;
+    if (!st && t) t.days.forEach(function (d) { d.items.forEach(function (i) { if (i.id === s.stopId) { st = i; sd = d; } }); });
+    if (!st && sd) { st = nextPlanned(sd) || sd.items[0]; }
+    V.stop = { issues: [], photos: [] };
+    if (st && sd) {
+      const done = st.status === 'done';
+      const skipped = st.status === 'skipped';
+      const pos = sd.items.indexOf(st);
+      const after = nextPlanned(sd, st.id);
+      const isNext = sd.n === tn && !done && !skipped && nextPlanned(sd) === st;
+      const n = st.photos ? st.photos.length : 0;
+      const stopId = st.id;
+      const dn = sd.n;
+      V.stop = {
+        dayLabel: 'Day ' + dn, time: st.time, pos: pos + 1, count: sd.items.length,
+        name: st.name, place: st.place, mapHref: mapHref(st.place), desc: st.desc, hasDesc: !!st.desc,
+        opsNote: st.opsNote, hasOpsNote: !!st.opsNote, deco: skipped ? 'line-through' : 'none',
+        stateLabel: done ? 'Done at ' + st.doneAt : skipped ? 'Skipped' : isNext ? 'Next stop' : 'Planned',
+        stateBg: done ? '#DDF5EA' : skipped ? '#F0F1F5' : isNext ? '#3D4BC7' : '#ECEEFB',
+        stateInk: done ? '#00663B' : skipped ? '#4B4D5C' : isNext ? '#FFFFFF' : '#283277',
+        photoCount: n ? plural(n, 'photo', 'photos') : 'No photos yet',
+        photos: (st.photos || []).map(function (p, pi) { return { src: p.src, alt: 'Photo ' + (pi + 1) + ' at ' + st.name }; }),
+        addPhoto: function (e) {
+          const f = e.target.files && e.target.files[0];
+          if (!f) return;
+          readImage(f, function (src) {
+            if (!src) { self.setState(self.flash('That photo could not be read. Try another.')); return; }
+            self.withItem(dn, stopId, function (x) { x.photos = (x.photos || []).concat([{ src: src, at: nowHM() }]); return self.flash('Photo added. Operations can see it now.'); });
+          });
+        },
+        note: st.note,
+        onNote: function (e) { const v = e.target.value; self.withItem(dn, stopId, function (x) { x.note = v; }); },
+        issues: ISSUES.map(function (label) {
+          const on = st.issue === label;
+          return {
+            label: label, on: on, bg: on ? '#FDE7EA' : '#FFFFFF', ink: on ? '#B42840' : '#323338', border: on ? '#B42840' : '#C3C6D4',
+            pick: function () {
+              self.withItem(dn, stopId, function (x) {
+                if (x.issue === label) { x.issue = ''; x.issueAt = ''; return self.flash('Problem cleared.'); }
+                x.issue = label; x.issueAt = nowHM();
+                return self.flash('Operations alerted: ' + label.toLowerCase() + '.');
+              });
+            }
+          };
+        }),
+        hasIssue: !!st.issue, issueTxt: st.issue ? 'Operations alerted at ' + st.issueAt + ': ' + st.issue : '',
+        skipLabel: skipped ? 'Undo skip' : 'Skip',
+        skip: function () { self.skip(dn, stopId); },
+        tickLabel: done ? 'Undo tick' : after ? 'Tick & go to next' : 'Tick & finish day',
+        tickBg: done ? '#676879' : '#00854D',
+        tickGo: function () { self.tickGo(dn, stopId, 'stop'); }
+      };
+    }
+
+    // Expenses
+    const exps = t ? (t.expenses || []).slice().reverse() : [];
+    const sum = function (list) { return list.reduce(function (a, x) { return a + x.amount; }, 0); };
+    const STAT = { approved: ['Approved', '#DDF5EA', '#00663B'], rejected: ['Rejected', '#FDE7EA', '#B42840'], pending: ['Waiting', '#FFF0DB', '#8A4B00'] };
+    V.exp = {
+      total: money(sum(exps)),
+      approved: money(sum(exps.filter(function (x) { return x.status === 'approved'; }))),
+      pending: money(sum(exps.filter(function (x) { return x.status === 'pending'; }))),
+      none: exps.length === 0,
+      items: exps.map(function (x) {
+        const c = STAT[x.status] || STAT.pending;
+        return {
+          cat: x.cat, amount: money(x.amount), status: c[0], bg: c[1], ink: c[2],
+          sub: 'Day ' + x.day + ' · ' + x.time + (x.note ? ' · ' + x.note : ''),
+          hasPhoto: !!x.photo, noPhoto: !x.photo, photo: x.photo || '', photoAlt: 'Receipt for ' + x.cat + ', ' + money(x.amount)
+        };
+      })
+    };
+    V.expDay = t ? 'Day ' + tn + ' · ' + dMed(today0()) : '';
+    V.expCats = CATS.map(function (c) {
+      const on = s.expCat === c.label;
+      return { label: c.label, on: on, bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', border: on ? '#283277' : '#C3C6D4', pick: function () { self.setState({ expCat: c.label }); } };
+    });
+    V.expAmount = s.expAmount; V.expNote = s.expNote; V.expPhoto = s.expPhoto; V.hasExpPhoto = !!s.expPhoto; V.expErr = s.expErr;
+    V.receiptLabel = s.expPhoto ? 'Change receipt photo' : 'Add receipt photo';
+    const cat = CATS.filter(function (c) { return c.label === s.expCat; })[0];
+    const amt = parseFloat(s.expAmount);
+    V.expFlag = !!(cat && amt > cat.usual);
+    V.expFlagText = V.expFlag ? 'Higher than usual for ' + cat.label.toLowerCase() + ': most are under MYR ' + cat.usual + '. ' + (s.expPhoto ? 'The receipt is attached, so accounts can check it.' : 'Add the receipt so accounts can approve it quickly.') : '';
+    V.onExpAmount = function (e) { self.setState({ expAmount: e.target.value, expErr: '' }); };
+    V.onExpNote = function (e) { self.setState({ expNote: e.target.value }); };
+    V.onExpPhoto = function (e) {
+      const f = e.target.files && e.target.files[0];
+      if (!f) return;
+      readImage(f, function (src) { self.setState(src ? { expPhoto: src } : { expErr: 'That photo could not be read. Try another.' }); });
+    };
+    V.closeSheet = function () { self.setState({ sheet: false, expErr: '' }); };
+    V.saveExpense = function (e) { self.saveExpense(e); };
+
+    // Guests & hotel
+    V.guests = t ? (t.guests || []).map(function (g, gi) {
+      return {
+        name: g.name, role: g.role, initials: initials(g.name), avBg: AV[gi % AV.length],
+        hasPhone: !!g.phone, tel: 'tel:' + (g.phone || ''), wa: 'https://wa.me/' + String(g.phone || '').replace(/\D/g, ''),
+        callAria: 'Call ' + g.name, waAria: 'WhatsApp ' + g.name
+      };
+    }) : [];
+    V.hotel = t && t.hotel ? {
+      name: t.hotel.name, room: t.hotel.room, conf: t.hotel.conf, mapHref: mapHref(t.hotel.place),
+      checkout: dMed(dayDate(t, t.nights + 1)) + ', by 12:00'
+    } : { name: '', room: '', conf: '', mapHref: '#', checkout: '' };
+
+    // Day report
+    const rd = sel;
+    V.rep = { moods: [], sent: false, draft: false };
+    if (rd && t) {
+      const k = counts(rd);
+      const text = s.repEdit !== null && s.repEdit !== undefined ? s.repEdit : draftReport(t, rd);
+      const rn = rd.n;
+      V.rep = {
+        dayLabel: 'Day ' + rn + ' · ' + dMed(dayDate(t, rn)),
+        stops: k.done + '/' + k.total,
+        photos: String(rd.items.reduce(function (a, i) { return a + (i.photos ? i.photos.length : 0); }, 0)),
+        spent: money(sum((t.expenses || []).filter(function (x) { return x.day === rn; }))),
+        sent: !!rd.report, draft: !rd.report,
+        sentAt: rd.report ? rd.report.sentAt : '', sentText: rd.report ? rd.report.text : '',
+        text: text,
+        onText: function (e) { self.setState({ repEdit: e.target.value, repErr: '' }); },
+        redraft: function () { self.setState({ repEdit: null }); },
+        moods: MOODS.map(function (m) {
+          const on = s.mood === m.key;
+          return { label: m.label, mouth: m.mouth, on: on, bg: on ? '#ECEEFB' : '#FFFFFF', ink: on ? '#283277' : '#323338', border: on ? '#3D4BC7' : '#C3C6D4', pick: function () { self.setState({ mood: m.key }); } };
+        }),
+        unhappy: s.mood === 'unhappy', hasErr: !!s.repErr, err: s.repErr,
+        send: function () { self.sendReport(rn, text); }
+      };
+    }
+
+    // Me
+    V.me = {
+      name: GUIDE.name, initials: initials(GUIDE.name), city: GUIDE.city, phone: GUIDE.phone, langs: GUIDE.langs,
+      trips: String(s.data.trips.filter(function (x) { return x.status !== 'offer' && x.status !== 'declined'; }).length),
+      waiting: t ? String((t.expenses || []).filter(function (x) { return x.status === 'pending'; }).length) : '0'
+    };
+    return V;
+  }
+}
+</script>
+</body>
+</html>

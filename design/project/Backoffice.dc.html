@@ -1,0 +1,1364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Flyland DMC — Back office core</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<div style="display: flex; flex-direction: column; gap: 18px; color: #323338; font-family: Figtree, 'Segoe UI', sans-serif; font-size: 14px; line-height: 20px">
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-family: Poppins, sans-serif; font-size: 26px; line-height: 34px; font-weight: 600">{{title}}</h1>
+<p style="margin: 0; color: #676879; max-width: 720px">{{intro}}</p>
+</div>
+<sc-if value="{{showJourney}}" hint-placeholder-val="{{true}}"><span role="status" style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: #00663B; font-weight: 600"><span style="width: 8px; height: 8px; border-radius: 50%; background: #00854D"></span>Shared with every team</span></sc-if>
+</div>
+
+<sc-if value="{{showJourney}}" hint-placeholder-val="{{true}}">
+<section aria-label="Selected trip file" style="display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; border: 1px solid #E6E9EF; border-radius: 12px; background: #FBFBFD">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #676879">Trip file</span>
+<strong style="font-size: 15px">{{j.id}} · {{j.name}}</strong>
+<span style="color: #676879">{{j.sub}}</span>
+<span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 6px; background: {{j.chipBg}}; color: {{j.chipInk}}; font-size: 12px; font-weight: 700">{{j.chip}}</span>
+<button onClick="{{togglePick}}" aria-expanded="{{pickOpen}}" style="margin-left: auto; height: 34px; padding: 0 12px; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #323338; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">Change file</button>
+</div>
+<sc-if value="{{pickOpen}}" hint-placeholder-val="{{false}}">
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px">
+<sc-for list="{{pickList}}" as="p" hint-placeholder-count="9"><button onClick="{{p.pick}}" aria-current="{{p.current}}" style="display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border: 1.5px solid {{p.border}}; border-radius: 8px; background: #FFFFFF; text-align: left; font-family: inherit; color: #323338; cursor: pointer"><strong style="font-size: 13px">{{p.id}} · {{p.name}}</strong><span style="font-size: 12px; color: #676879">{{p.stage}}</span></button></sc-for>
+</div>
+</sc-if>
+<ol aria-label="Journey" style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{j.steps}}" as="st" hint-placeholder-count="11"><li style="display: flex"><a href="{{st.href}}" aria-current="{{st.current}}" title="{{st.team}}" style="display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 10px; border-radius: 15px; border: 1px solid {{st.border}}; background: {{st.bg}}; color: {{st.ink}}; font-size: 12px; font-weight: 700; text-decoration: none"><span aria-hidden="true">{{st.mark}}</span>{{st.label}}</a></li></sc-for>
+</ol>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px">
+<span><strong>Next:</strong> {{j.nextText}} <span style="color: #676879">· {{j.nextTeam}}</span></span>
+<sc-if value="{{j.hasAct}}" hint-placeholder-val="{{true}}"><button onClick="{{j.act}}" style="height: 34px; padding: 0 14px; border: 0; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer">{{j.actLabel}}</button></sc-if>
+<sc-if value="{{j.hasLink}}" hint-placeholder-val="{{true}}"><a href="{{j.nextHref}}" style="display: inline-flex; align-items: center; height: 34px; padding: 0 14px; border: 1px solid #C3C6D4; border-radius: 8px; color: #283277; font-size: 13px; font-weight: 700; text-decoration: none">Open {{j.nextScreen}} →</a></sc-if>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{showTabs}}" hint-placeholder-val="{{true}}">
+<nav aria-label="{{title}}" style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="6"><button onClick="{{t.pick}}" aria-current="{{t.current}}" style="height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid {{t.border}}; background: {{t.bg}}; color: {{t.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{t.label}}<sc-if value="{{t.hasCount}}" hint-placeholder-val="{{false}}"> <span style="display: inline-flex; min-width: 20px; height: 20px; padding: 0 6px; box-sizing: border-box; border-radius: 10px; background: {{t.cBg}}; color: {{t.cInk}}; font-size: 11px; line-height: 20px; justify-content: center">{{t.count}}</span></sc-if></button></sc-for>
+</nav>
+</sc-if>
+
+<sc-if value="{{hasAi}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px 12px; padding: 12px 14px; border-radius: 10px; border: 1.5px solid transparent; background: linear-gradient(#FFFFFF, #FFFFFF) padding-box, linear-gradient(120deg, #3D4BC7, #8B47D0, #C2378F) border-box">
+<span style="flex: none; display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 12px; background: linear-gradient(90deg, #3D4BC7, #8B47D0); color: #FFFFFF; font-size: 11px; font-weight: 700"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 5.6L19.5 9.5l-5.7 1.9L12 17l-1.8-5.6L4.5 9.5l5.7-1.9z"></path></svg>AI</span>
+<ul style="flex: 1 1 320px; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px"><sc-for list="{{ai}}" as="a" hint-placeholder-count="2"><li>{{a.text}}</li></sc-for></ul>
+</div>
+</sc-if>
+
+<sc-if value="{{hasKpis}}" hint-placeholder-val="{{false}}">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="4"><div style="display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; border: 1px solid #E6E9EF; border-radius: 12px"><span style="font-size: 13px; color: #676879">{{k.label}}</span><strong style="font-family: Poppins, sans-serif; font-size: 22px; line-height: 30px; font-weight: 600; color: {{k.ink}}; font-variant-numeric: tabular-nums">{{k.value}}</strong><span style="font-size: 12px; color: #676879">{{k.sub}}</span></div></sc-for>
+</div>
+</sc-if>
+
+<sc-for list="{{blocks}}" as="b" hint-placeholder-count="1">
+<section style="display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{b.hasHead}}" hint-placeholder-val="{{true}}"><div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 12px"><h2 style="margin: 0; font-family: Poppins, sans-serif; font-size: 18px; line-height: 26px; font-weight: 600">{{b.title}}</h2><span style="color: #676879">{{b.note}}</span></div></sc-if>
+
+<sc-if value="{{b.isTable}}" hint-placeholder-val="{{true}}">
+<sc-if value="{{b.std}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<label style="flex: 1 1 220px; max-width: 320px; display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; background: #FFFFFF; color: #676879"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="search" aria-label="{{b.tv.searchAria}}" placeholder="Search" value="{{b.tv.q}}" onChange="{{b.tv.onQ}}" style="flex: 1; min-width: 0; border: 0; outline-offset: 4px; background: transparent; font-family: inherit; font-size: 14px; color: #323338"></label>
+<button onClick="{{b.tv.togglePanel}}" aria-expanded="{{b.tv.panel}}" style="display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid {{b.tv.fBorder}}; background: {{b.tv.fBg}}; color: {{b.tv.fInk}}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"></path></svg>{{b.tv.filterLabel}}</button>
+<button onClick="{{b.tv.startSave}}" style="display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><path d="M17 21v-8H7v8M7 3v5h8"></path></svg>Save view</button>
+<sc-if value="{{b.tv.hasActive}}" hint-placeholder-val="{{false}}"><button onClick="{{b.tv.clear}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: transparent; color: #3D4BC7">Clear</button></sc-if>
+<span style="margin-left: auto; font-size: 13px; color: #676879">{{b.tv.showing}}</span>
+</div>
+<sc-if value="{{b.tv.hasQuick}}" hint-placeholder-val="{{false}}"><div role="group" aria-label="Quick filter" style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{b.tv.quick}}" as="qf" hint-placeholder-count="3"><button onClick="{{qf.pick}}" aria-pressed="{{qf.on}}" style="display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid {{qf.border}}; background: {{qf.bg}}; color: {{qf.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{qf.label}}<span style="font-size: 12px; opacity: .8">{{qf.count}}</span></button></sc-for></div></sc-if>
+<sc-if value="{{b.tv.hasViews}}" hint-placeholder-val="{{false}}"><div role="group" aria-label="Saved views" style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px"><span style="font-size: 13px; color: #676879">Saved views</span><sc-for list="{{b.tv.views}}" as="sv" hint-placeholder-count="1"><span style="display: inline-flex; align-items: center; height: 30px; border: 1px solid {{sv.border}}; border-radius: 15px; background: {{sv.bg}}; overflow: hidden"><button onClick="{{sv.apply}}" aria-pressed="{{sv.on}}" style="height: 100%; padding: 0 6px 0 12px; border: 0; background: transparent; color: {{sv.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{sv.label}}</button><button onClick="{{sv.del}}" aria-label="{{sv.delAria}}" style="height: 100%; padding: 0 10px 0 4px; border: 0; background: transparent; color: {{sv.ink}}; font-family: inherit; font-size: 15px; cursor: pointer">×</button></span></sc-for></div></sc-if>
+<sc-if value="{{b.tv.saving}}" hint-placeholder-val="{{false}}"><div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; background: #F6F7FB"><input aria-label="Name this view" placeholder="e.g. Overdue advances" value="{{b.tv.name}}" onChange="{{b.tv.onName}}" style="flex: 1 1 220px; max-width: 320px; height: 34px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"><button onClick="{{b.tv.saveView}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: #3D4BC7; color: #FFFFFF">Save this view</button><button onClick="{{b.tv.cancelSave}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338">Cancel</button><span style="font-size: 12px; color: #676879">Keeps the search, quick filter, detailed filters and sort.</span></div></sc-if>
+<sc-if value="{{b.tv.panel}}" hint-placeholder-val="{{false}}">
+<div role="region" aria-label="Detailed filters" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px 16px; padding: 14px; border: 1px solid #E6E9EF; border-radius: 10px; background: #FBFBFD">
+<sc-for list="{{b.tv.fields}}" as="fd" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<span style="font-size: 13px; font-weight: 600; color: #4B4D5C">{{fd.label}}</span>
+<sc-if value="{{fd.isText}}" hint-placeholder-val="{{true}}"><input aria-label="{{fd.aria}}" placeholder="Contains…" value="{{fd.text}}" onChange="{{fd.onText}}" style="height: 34px; padding: 0 10px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"></sc-if>
+<sc-if value="{{fd.isNum}}" hint-placeholder-val="{{false}}"><span style="display: flex; gap: 6px"><input type="number" aria-label="{{fd.ariaMin}}" placeholder="From" value="{{fd.min}}" onChange="{{fd.onMin}}" style="width: 50%; height: 34px; padding: 0 8px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"><input type="number" aria-label="{{fd.ariaMax}}" placeholder="To" value="{{fd.max}}" onChange="{{fd.onMax}}" style="width: 50%; height: 34px; padding: 0 8px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338"></span></sc-if>
+<sc-if value="{{fd.isDate}}" hint-placeholder-val="{{false}}"><span style="display: flex; gap: 6px"><input type="date" aria-label="{{fd.ariaFrom}}" value="{{fd.from}}" onChange="{{fd.onFrom}}" style="width: 50%; min-width: 0; height: 34px; padding: 0 6px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 13px; color: #323338"><input type="date" aria-label="{{fd.ariaTo}}" value="{{fd.to}}" onChange="{{fd.onTo}}" style="width: 50%; min-width: 0; height: 34px; padding: 0 6px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 13px; color: #323338"></span></sc-if>
+<sc-if value="{{fd.isSet}}" hint-placeholder-val="{{false}}"><span role="group" aria-label="{{fd.label}}" style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{fd.opts}}" as="o" hint-placeholder-count="2"><button onClick="{{o.pick}}" aria-pressed="{{o.on}}" style="height: 30px; padding: 0 10px; border-radius: 15px; border: 1px solid {{o.border}}; background: {{o.bg}}; color: {{o.ink}}; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer">{{o.label}}</button></sc-for></span></sc-if>
+</div>
+</sc-for>
+<div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 8px"><button onClick="{{b.tv.clear}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #C3C6D4; background: #FFFFFF; color: #323338">Clear all</button><button onClick="{{b.tv.togglePanel}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 0; background: #3D4BC7; color: #FFFFFF">Done</button></div>
+</div>
+</sc-if>
+</sc-if>
+<div style="overflow-x: auto; border: 1px solid #E6E9EF; border-radius: 10px">
+<div role="table" aria-label="{{b.title}}" style="min-width: {{b.minW}}px">
+<div role="row" style="display: grid; grid-template-columns: {{b.grid}}; align-items: center; min-height: 40px; background: #F6F7FB; border-bottom: 1px solid #E6E9EF; font-size: 13px; font-weight: 600; color: #676879">
+<sc-for list="{{b.cols}}" as="c" hint-placeholder-count="5"><span role="columnheader" aria-sort="{{c.ariaSort}}" style="padding: 0 12px; text-align: {{c.align}}"><sc-if value="{{c.sortable}}" hint-placeholder-val="{{false}}"><button onClick="{{c.sort}}" style="display: inline-flex; align-items: center; gap: 4px; min-height: 32px; padding: 0; border: 0; background: transparent; color: inherit; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{c.label}}<span aria-hidden="true" style="font-size: 10px; color: #3D4BC7">{{c.arrow}}</span></button></sc-if><sc-if value="{{c.plainHead}}" hint-placeholder-val="{{true}}">{{c.label}}</sc-if></span></sc-for>
+</div>
+<sc-for list="{{b.rows}}" as="r" hint-placeholder-count="4">
+<div role="row" style="display: grid; grid-template-columns: {{b.grid}}; align-items: center; min-height: 48px; border-bottom: 1px solid #E6E9EF; background: {{r.bg}}">
+<sc-for list="{{r.cells}}" as="c" hint-placeholder-count="5">
+<span role="cell" style="display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; text-align: {{c.align}}; align-items: {{c.items}}; min-width: 0">
+<sc-if value="{{c.isText}}" hint-placeholder-val="{{true}}"><span style="font-weight: {{c.w}}; color: {{c.ink}}; font-variant-numeric: tabular-nums; overflow-wrap: anywhere">{{c.t}}</span></sc-if>
+<sc-if value="{{c.isChip}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: {{c.bg}}; color: {{c.fg}}; font-size: 12px; font-weight: 700; white-space: nowrap">{{c.t}}</span></sc-if>
+<sc-if value="{{c.hasSub}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; line-height: 17px; color: #676879">{{c.sub}}</span></sc-if>
+<sc-if value="{{c.isInput}}" hint-placeholder-val="{{false}}"><input type="{{c.type}}" aria-label="{{c.aria}}" value="{{c.v}}" placeholder="{{c.ph}}" onChange="{{c.set}}" style="width: 100%; height: 34px; padding: 0 8px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 6px; font-family: inherit; font-size: 14px; color: #323338"></sc-if>
+<sc-if value="{{c.isActs}}" hint-placeholder-val="{{false}}"><span style="display: flex; flex-wrap: wrap; gap: 6px; justify-content: {{c.justify}}"><sc-for list="{{c.acts}}" as="a" hint-placeholder-count="1"><sc-if value="{{a.isBtn}}" hint-placeholder-val="{{true}}"><button onClick="{{a.go}}" style="height: 32px; padding: 0 10px; border: 1px solid {{a.border}}; border-radius: 8px; background: {{a.bg}}; color: {{a.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap">{{a.label}}</button></sc-if><sc-if value="{{a.isLink}}" hint-placeholder-val="{{false}}"><a href="{{a.href}}" target="{{a.target}}" rel="noopener noreferrer" style="display: inline-flex; align-items: center; height: 32px; padding: 0 10px; box-sizing: border-box; border: 1px solid {{a.border}}; border-radius: 8px; background: {{a.bg}}; color: {{a.ink}}; font-size: 13px; font-weight: 600; text-decoration: none; white-space: nowrap">{{a.label}}</a></sc-if></sc-for></span></sc-if>
+</span>
+</sc-for>
+</div>
+</sc-for>
+<sc-if value="{{b.empty}}" hint-placeholder-val="{{false}}"><div style="padding: 20px; text-align: center; color: #676879">{{b.emptyText}}</div></sc-if>
+</div>
+</div>
+<sc-if value="{{b.std}}" hint-placeholder-val="{{false}}"><sc-if value="{{b.tv.hasPages}}" hint-placeholder-val="{{false}}">
+<nav aria-label="Pages" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px">
+<span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; color: #676879">Rows per page<sc-for list="{{b.tv.sizes}}" as="z" hint-placeholder-count="3"><button onClick="{{z.pick}}" aria-pressed="{{z.on}}" style="min-width: 36px; height: 30px; padding: 0 8px; border-radius: 6px; border: 1px solid {{z.border}}; background: {{z.bg}}; color: {{z.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{z.label}}</button></sc-for></span>
+<span style="display: flex; flex-wrap: wrap; gap: 4px"><button onClick="{{b.tv.prev}}" aria-label="Previous page" style="width: 34px; height: 34px; border-radius: 6px; border: 1px solid #C3C6D4; background: #FFFFFF; color: {{b.tv.prevInk}}; font-family: inherit; font-size: 16px; cursor: pointer">‹</button><sc-for list="{{b.tv.pages}}" as="pg" hint-placeholder-count="3"><button onClick="{{pg.go}}" aria-current="{{pg.current}}" style="min-width: 34px; height: 34px; padding: 0 6px; border-radius: 6px; border: 1px solid #C3C6D4; background: {{pg.bg}}; color: {{pg.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{pg.label}}</button></sc-for><button onClick="{{b.tv.next}}" aria-label="Next page" style="width: 34px; height: 34px; border-radius: 6px; border: 1px solid #C3C6D4; background: #FFFFFF; color: {{b.tv.nextInk}}; font-family: inherit; font-size: 16px; cursor: pointer">›</button></span>
+</nav>
+</sc-if></sc-if>
+</sc-if>
+
+<sc-if value="{{b.isBars}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 1px solid #E6E9EF; border-radius: 12px">
+<sc-for list="{{b.bars}}" as="x" hint-placeholder-count="4">
+<div style="display: grid; grid-template-columns: minmax(120px, 220px) 1fr minmax(90px, auto); align-items: center; gap: 12px">
+<span style="display: flex; flex-direction: column"><span style="font-weight: 600">{{x.label}}</span><span style="font-size: 12px; color: #676879">{{x.sub}}</span></span>
+<div style="height: 14px; border-radius: 7px; background: #ECEFF8"><div style="width: {{x.pct}}%; height: 100%; border-radius: 7px; background: {{x.color}}"></div></div>
+<strong style="text-align: right; font-variant-numeric: tabular-nums">{{x.value}}</strong>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{b.isCal}}" hint-placeholder-val="{{false}}">
+<div style="overflow-x: auto; border: 1px solid #E6E9EF; border-radius: 10px">
+<div style="min-width: 840px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr))">
+<sc-for list="{{b.heads}}" as="h" hint-placeholder-count="7"><span style="padding: 8px 10px; background: #F6F7FB; border-bottom: 1px solid #E6E9EF; font-size: 13px; font-weight: 600; color: #676879">{{h.t}}</span></sc-for>
+<sc-for list="{{b.days}}" as="d" hint-placeholder-count="35">
+<div style="min-height: 96px; padding: 6px; border-right: 1px solid #E6E9EF; border-bottom: 1px solid #E6E9EF; background: {{d.bg}}; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; font-weight: {{d.w}}; color: {{d.ink}}">{{d.n}}</span>
+<sc-for list="{{d.items}}" as="it" hint-placeholder-count="1"><button onClick="{{it.go}}" title="{{it.tip}}" style="display: block; width: 100%; padding: 2px 6px; border: 0; border-radius: 4px; background: {{it.bg}}; color: {{it.fg}}; font-family: inherit; font-size: 11px; font-weight: 700; line-height: 16px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer">{{it.t}}</button></sc-for>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{b.isCards}}" hint-placeholder-val="{{false}}">
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax({{b.cardMin}}px, 1fr)); gap: 12px">
+<sc-for list="{{b.cards}}" as="k" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border: 1.5px solid {{k.border}}; border-radius: 12px; background: #FFFFFF">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px"><span style="display: flex; flex-direction: column"><strong style="font-size: 15px">{{k.title}}</strong><span style="font-size: 13px; color: #676879">{{k.sub}}</span></span><sc-if value="{{k.hasChip}}" hint-placeholder-val="{{true}}"><span style="flex: none; display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 12px; background: {{k.chipBg}}; color: {{k.chipFg}}; font-size: 12px; font-weight: 700">{{k.chip}}</span></sc-if></div>
+<sc-for list="{{k.lines}}" as="l" hint-placeholder-count="2"><span style="display: flex; justify-content: space-between; gap: 10px; font-size: 13px"><span style="color: #676879">{{l.k}}</span><span style="font-weight: 600; text-align: right; font-variant-numeric: tabular-nums">{{l.v}}</span></span></sc-for>
+<sc-if value="{{k.hasBar}}" hint-placeholder-val="{{false}}"><div style="height: 8px; border-radius: 4px; background: #E6E9EF"><div style="width: {{k.pct}}%; height: 100%; border-radius: 4px; background: {{k.barColor}}"></div></div></sc-if>
+<sc-if value="{{k.hasActs}}" hint-placeholder-val="{{false}}"><div style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{k.acts}}" as="a" hint-placeholder-count="1"><sc-if value="{{a.isBtn}}" hint-placeholder-val="{{true}}"><button onClick="{{a.go}}" style="height: 32px; padding: 0 10px; border: 1px solid {{a.border}}; border-radius: 8px; background: {{a.bg}}; color: {{a.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{a.label}}</button></sc-if><sc-if value="{{a.isLink}}" hint-placeholder-val="{{false}}"><a href="{{a.href}}" target="{{a.target}}" rel="noopener noreferrer" style="display: inline-flex; align-items: center; height: 32px; padding: 0 10px; box-sizing: border-box; border: 1px solid {{a.border}}; border-radius: 8px; background: {{a.bg}}; color: {{a.ink}}; font-size: 13px; font-weight: 600; text-decoration: none">{{a.label}}</a></sc-if></sc-for></div></sc-if>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{b.isBoard}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px">
+<sc-for list="{{b.columns}}" as="col" hint-placeholder-count="6">
+<div style="flex: 0 0 240px; display: flex; flex-direction: column; gap: 8px; padding: 10px; border-radius: 12px; background: #F6F7FB">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 2px"><span style="display: flex; flex-direction: column"><strong>{{col.title}}</strong><span style="font-size: 12px; color: #676879">{{col.team}}</span></span><span style="min-width: 22px; height: 22px; padding: 0 6px; box-sizing: border-box; border-radius: 11px; background: {{col.color}}; color: #FFFFFF; font-size: 12px; font-weight: 700; line-height: 22px; text-align: center">{{col.count}}</span></div>
+<sc-for list="{{col.cards}}" as="c" hint-placeholder-count="2">
+<button onClick="{{c.pick}}" aria-current="{{c.current}}" style="display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1.5px solid {{c.border}}; border-radius: 10px; background: #FFFFFF; text-align: left; font-family: inherit; color: #323338; cursor: pointer; box-shadow: 0 1px 2px rgba(29,44,92,.06)">
+<span style="display: flex; justify-content: space-between; gap: 6px; width: 100%"><strong style="font-size: 14px">{{c.name}}</strong><span style="font-size: 12px; color: #676879">{{c.id}}</span></span>
+<span style="font-size: 12px; line-height: 17px; color: #676879">{{c.sub}}</span>
+<span style="display: flex; justify-content: space-between; align-items: center; gap: 6px; width: 100%"><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 6px; background: {{c.chipBg}}; color: {{c.chipFg}}; font-size: 11px; font-weight: 700">{{c.chip}}</span><strong style="font-size: 13px; font-variant-numeric: tabular-nums">{{c.value}}</strong></span>
+<span style="font-size: 12px; line-height: 17px; color: {{c.nextInk}}">{{c.next}}</span>
+</button>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{b.isForm}}" hint-placeholder-val="{{false}}">
+<form onSubmit="{{b.submit}}" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border: 1px solid #E6E9EF; border-radius: 12px; background: #FBFBFD">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+<sc-for list="{{b.fields}}" as="f" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="{{f.id}}" style="font-size: 13px; font-weight: 600; color: #4B4D5C">{{f.label}}</label>
+<sc-if value="{{f.isInput}}" hint-placeholder-val="{{true}}"><input id="{{f.id}}" type="{{f.type}}" value="{{f.v}}" placeholder="{{f.ph}}" onChange="{{f.set}}" style="height: 40px; padding: 0 12px; box-sizing: border-box; border: 1px solid #C3C6D4; border-radius: 8px; font-family: inherit; font-size: 14px; color: #323338; background: #FFFFFF"></sc-if>
+<sc-if value="{{f.isChoice}}" hint-placeholder-val="{{false}}"><span id="{{f.id}}" role="group" aria-label="{{f.label}}" style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{f.options}}" as="o" hint-placeholder-count="3"><button type="button" onClick="{{o.pick}}" aria-pressed="{{o.on}}" style="height: 36px; padding: 0 12px; border-radius: 18px; border: 1px solid {{o.border}}; background: {{o.bg}}; color: {{o.ink}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{o.label}}</button></sc-for></span></sc-if>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{b.hasErr}}" hint-placeholder-val="{{false}}"><span role="alert" style="color: #B42840">{{b.err}}</span></sc-if>
+<sc-if value="{{b.hasResult}}" hint-placeholder-val="{{false}}"><div style="padding: 12px 14px; border-radius: 10px; background: #ECEEFB; color: #283277; white-space: pre-line">{{b.result}}</div></sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><button type="submit" style="height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: #3D4BC7; color: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer">{{b.submitLabel}}</button></div>
+</form>
+</sc-if>
+
+<sc-if value="{{b.isNote}}" hint-placeholder-val="{{false}}"><p style="margin: 0; color: #4B4D5C; max-width: 820px">{{b.text}}</p></sc-if>
+<sc-if value="{{b.hasFoot}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #676879">{{b.foot}}</span></sc-if>
+</section>
+</sc-for>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{false}}"><div role="status" style="position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 20; max-width: calc(100% - 32px); padding: 12px 16px; box-sizing: border-box; border-radius: 10px; background: #323338; color: #FFFFFF; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,.25)">{{toast}}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"module":{"editor":"enum","options":["files","bookings","ops","purchasing","finance","reports","crm","portal"],"default":"files"},"$preview":{"width":1200,"height":1400}}'>
+const STORE = 'flyland-backoffice-v1';
+const SEL = 'flyland-file-sel';
+const NAV = 'flyland-nav';
+const GSTORE = 'flyland-guide-app-v1';
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const WEEK = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const FX = { MYR: 1, INR: 18.9, AED: 0.82, USD: 0.22 };
+const TONE = { ok: ['#DDF5EA', '#00663B'], warn: ['#FFF0DB', '#8A4B00'], bad: ['#FDE7EA', '#B42840'], info: ['#ECEEFB', '#283277'], mute: ['#F0F1F5', '#4B4D5C'], blue: ['#E3F0FF', '#0B4F8A'], solid: ['#3D4BC7', '#FFFFFF'] };
+const OWNERS = { SK: 'Shabna K', RM: 'Rahul M', FN: 'Fathima N', AP: 'Arjun P' };
+const STAGE = {
+  returned: { label: 'Returned to sales', team: 'Sales', tone: 'bad', step: 0, next: 'Sales revises the quote with another hotel', href: 'Lead.dc.html', screen: 'Trip desk' },
+  booking: { label: 'Booking', team: 'Bookings', tone: 'warn', step: 1, next: 'Get every service confirmed by suppliers', href: 'Purchasing.dc.html', screen: 'Purchasing', own: 'purchasing' },
+  booked: { label: 'Booked', team: 'Accounts', tone: 'info', step: 2, next: 'Issue the proforma invoice', href: 'Finance.dc.html', screen: 'Finance', own: 'finance', act: 'Issue proforma' },
+  proforma: { label: 'Advance due', team: 'Accounts', tone: 'warn', step: 3, next: 'Collect the advance', href: 'Finance.dc.html', screen: 'Finance', own: 'finance', act: 'Record advance' },
+  advance: { label: 'Advance in', team: 'Itinerary', tone: 'info', step: 4, next: 'Build the day plan and share it with the guide and traveller', href: 'Lead.dc.html', screen: 'Trip desk', own: 'bookings', act: 'Mark itinerary shared' },
+  ready: { label: 'Ready to travel', team: 'Operations', tone: 'blue', step: 5, next: 'Assign drivers and brief the guide', href: 'Operations.dc.html', screen: 'Operations' },
+  ontrip: { label: 'On trip', team: 'Operations', tone: 'ok', step: 6, next: 'Track the guide app and handle any issues', href: 'Operations.dc.html', screen: 'Operations' },
+  completed: { label: 'Trip done', team: 'Accounts', tone: 'warn', step: 7, next: 'Create the final invoice', href: 'Finance.dc.html', screen: 'Finance', own: 'finance', act: 'Create invoice' },
+  invoiced: { label: 'Balance due', team: 'Accounts', tone: 'warn', step: 8, next: 'Collect the balance', href: 'Finance.dc.html', screen: 'Finance', own: 'finance', act: 'Record balance' },
+  paid: { label: 'Paid', team: 'Management', tone: 'ok', step: 9, next: 'Check supplier bills are paid, then close the file', href: 'Reports.dc.html', screen: 'Reports', own: 'reports', act: 'Close file' },
+  closed: { label: 'Closed', team: 'Management', tone: 'mute', step: 10, next: 'Nothing left to do', href: 'Reports.dc.html', screen: 'Reports' },
+  cancelled: { label: 'Cancelled', team: 'Sales', tone: 'mute', step: -1, next: 'Nothing left to do', href: 'Bookings.dc.html', screen: 'Bookings' }
+};
+const STEPS = [
+  { label: 'Quote', href: 'Lead.dc.html', team: 'Sales · Trip desk' }, { label: 'Suppliers', href: 'Purchasing.dc.html', team: 'Bookings · Purchasing' },
+  { label: 'Proforma', href: 'Finance.dc.html', team: 'Accounts · Finance' }, { label: 'Advance', href: 'Finance.dc.html', team: 'Accounts · Finance' },
+  { label: 'Itinerary', href: 'Lead.dc.html', team: 'Itinerary · Trip desk' }, { label: 'Dispatch', href: 'Operations.dc.html', team: 'Operations' },
+  { label: 'On trip', href: 'GuideToday.dc.html', team: 'Guide app' }, { label: 'Invoice', href: 'Finance.dc.html', team: 'Accounts · Finance' },
+  { label: 'Balance', href: 'Finance.dc.html', team: 'Accounts · Finance' }, { label: 'Close', href: 'Reports.dc.html', team: 'Management · Reports' }
+];
+
+function pad(n) { return (n < 10 ? '0' : '') + n; }
+function today0() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+function isoOf(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+function isoDays(off) { const d = today0(); d.setDate(d.getDate() + off); return isoOf(d); }
+function dateOf(iso) { const p = String(iso || '').split('-').map(Number); return p.length === 3 && p[0] ? new Date(p[0], p[1] - 1, p[2]) : null; }
+function addIso(iso, n) { const d = dateOf(iso); d.setDate(d.getDate() + n); return isoOf(d); }
+function daysFrom(iso) { const d = dateOf(iso); return d ? Math.round((d - today0()) / 86400000) : 0; }
+function dShort(iso) { const d = dateOf(iso); return d ? d.getDate() + ' ' + MONTHS[d.getMonth()] : ''; }
+function dLong(iso) { const d = dateOf(iso); return d ? d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear() : ''; }
+function dDay(iso) { const d = dateOf(iso); return d ? WEEK[d.getDay()] + ', ' + d.getDate() + ' ' + MONTHS[d.getMonth()] : ''; }
+function rel(iso) { const n = daysFrom(iso); return n === 0 ? 'today' : n === 1 ? 'tomorrow' : n === -1 ? 'yesterday' : n > 0 ? 'in ' + n + ' days' : -n + ' days ago'; }
+function fmt(n) { return Math.round(n).toLocaleString('en-US'); }
+function money(n, cur) { return (cur || 'MYR') + ' ' + fmt(n); }
+function toMYR(n, cur) { return n / (FX[cur] || 1); }
+function uid() { return 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+function sum(list, fn) { return list.reduce(function (a, x) { return a + (fn ? fn(x) : x); }, 0); }
+function nowHM() { const d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+
+function S(kind, supplier, city, item, day, nights, cost, status, conf, at) {
+  return { kind: kind, supplier: supplier, city: city, item: item, day: day, nights: nights, cost: cost, status: status, conf: conf || '', at: at === undefined ? null : at };
+}
+function MYSVC(hl, hk) {
+  return [S('hotel', hl[0], 'Langkawi', hl[1], 1, 2, hl[2], 'confirmed', hl[3], -30), S('hotel', hk[0], 'Kuala Lumpur', hk[1], 3, 3, hk[2], 'confirmed', hk[3], -29),
+    S('transfer', 'Langkawi transport partner', 'Langkawi', 'Transfers and tours by Sedan, days 1–3', 1, 0, 250, 'confirmed', 'LT-1102', -29), S('transfer', 'Kuala Lumpur transport partner', 'Kuala Lumpur', 'Transfers and tours by Sedan, days 3–6', 3, 0, 380, 'confirmed', 'KT-2207', -29),
+    S('ticket', 'Attraction tickets', 'Langkawi + Genting', 'Underwater World, island hopping, Oriental Village, Genting cable car', 1, 0, 540, 'confirmed', 'TK-0091', -29)];
+}
+
+function seed() {
+  const files = [
+    { id: '4499560', name: 'Royal sky group', agent: 'Royal Sky Holidays', owner: 'SK', dest: 'Langkawi + Kuala Lumpur', start: '2026-11-23', nights: 5, pax: '2 adults, 1 child (7y)', n: 3, cur: 'MYR', sell: 3975, quote: 'R1 · 4 star',
+      pf: { no: 'PI-4499560', d: 0, pct: 30, due: 3 }, pays: [], itin: false, inv: null, guide: '',
+      svc: MYSVC(['Holiday Villa Beach Resort', 'Deluxe Room × 1, B&B', 896, 'HV-55821'], ['IBIS KLCC', 'Standard room (Window room) × 1, B&B', 1391, 'IB-90314']) },
+    { id: '4499580', name: 'Divya Suresh', agent: '', owner: 'RM', dest: 'Singapore', start: 30, nights: 3, pax: '2 adults', n: 2, cur: 'MYR', sell: 2450, quote: 'R1 · 4 star', pf: null, pays: [], itin: false, inv: null, guide: '',
+      svc: [S('hotel', 'Singapore city hotel (4 star)', 'Singapore', 'Deluxe Room × 1, B&B', 1, 3, 1380, 'requested', '', -2), S('transfer', 'Singapore transport partner', 'Singapore', 'Airport transfers by Sedan', 1, 0, 260, 'confirmed', 'SG-311', -1), S('ticket', 'Gardens by the Bay tickets', 'Singapore', 'Entry for 2 adults', 2, 0, 180, 'confirmed', 'GB-077', -1)] },
+    { id: '4499530', name: 'Fatima Rasheed', agent: '', owner: 'FN', dest: 'Kuala Lumpur', start: 16, nights: 2, pax: '2 adults', n: 2, cur: 'MYR', sell: 1280, quote: 'R1 · 3 star', pf: null, pays: [], itin: false, inv: null, guide: '', returned: 'Hotel not available for 5–7 Nov',
+      svc: [S('hotel', 'Star Points Hotel', 'Kuala Lumpur', 'Superior Queen Room × 1, B&B', 1, 2, 450, 'declined', '', -1), S('transfer', 'Kuala Lumpur transport partner', 'Kuala Lumpur', 'Airport transfers by Sedan', 1, 0, 150, 'pending', '', null)] },
+    { id: '4499502', name: 'Rahul Varma', agent: 'Wanderlust Trips', owner: 'SK', dest: 'Langkawi + Kuala Lumpur', start: 9, nights: 5, pax: '2 adults', n: 2, cur: 'MYR', sell: 3250, quote: 'R2 · 3 star', pf: null, pays: [], itin: false, inv: null, guide: '',
+      svc: MYSVC(['Adya Hotel', 'Deluxe king × 1, B&B', 440, 'AD-3321'], ['Star Points Hotel', 'Superior Queen Room × 1, B&B', 680, 'SP-7781']) },
+    { id: '4499498', name: 'Nadia Hassan', agent: 'Al Noor Travels', owner: 'FN', dest: 'Dubai', start: 12, nights: 4, pax: '2 adults', n: 2, cur: 'AED', sell: 3500, quote: 'R1 · 4 star', pf: { no: 'PI-4499498', d: -5, pct: 30, due: -2 }, pays: [], itin: false, inv: null, guide: '',
+      svc: [S('hotel', 'Dubai city hotel (4 star)', 'Dubai', 'Deluxe Room × 1, B&B', 1, 4, 1700, 'confirmed', 'DB-4410', -6), S('transfer', 'Dubai transport partner', 'Dubai', 'Airport transfers and city tour', 1, 0, 300, 'confirmed', 'DT-552', -6), S('ticket', 'Desert safari tickets', 'Dubai', 'Evening desert safari, 2 adults', 3, 0, 440, 'confirmed', 'DS-918', -6)] },
+    { id: '4499470', name: 'Priya Nambiar', agent: 'Malabar Tours & Travels', owner: 'AP', dest: 'Bangkok', start: 20, nights: 4, pax: '2 adults', n: 2, cur: 'MYR', sell: 2800, quote: 'R1 · 4 star', pf: { no: 'PI-4499470', d: -6, pct: 30, due: -3 }, pays: [{ d: -3, amt: 840, mode: 'Bank transfer', ref: 'UTR 3391' }], itin: false, inv: null, guide: '',
+      svc: [S('hotel', 'Bangkok city hotel (4 star)', 'Bangkok', 'Deluxe Room × 1, B&B', 1, 4, 1350, 'confirmed', 'BK-2081', -8), S('transfer', 'Bangkok transport partner', 'Bangkok', 'Airport transfers and city tour', 1, 0, 280, 'confirmed', 'BT-114', -8), S('ticket', 'Chao Phraya dinner cruise', 'Bangkok', 'Dinner cruise, 2 adults', 2, 0, 260, 'confirmed', 'CP-330', -8)] },
+    { id: '4499476', name: 'Arun Menon', agent: '', owner: 'SK', dest: 'Langkawi + Kuala Lumpur', start: -3, nights: 5, pax: '2 adults, 1 child (7y)', n: 3, cur: 'MYR', sell: 3975, quote: 'R1 · 4 star', pf: { no: 'PI-4499476', d: -40, pct: 30, due: -37 }, pays: [{ d: -38, amt: 1193, mode: 'Bank transfer', ref: 'UTR 1187' }], itin: true, inv: null, guide: 'Faizal Rahman, then Ravi Kumar',
+      svc: MYSVC(['Holiday Villa Beach Resort', 'Deluxe Room × 1, B&B', 896, 'HV-55107'], ['IBIS KLCC', 'Standard room (Window room) × 1, B&B', 1391, 'IB-89912']) },
+    { id: '4499455', name: 'Lakshmi Iyer', agent: 'Kerala Holidays Hub', owner: 'RM', dest: 'Kuala Lumpur', start: -16, nights: 3, pax: '3 adults', n: 3, cur: 'MYR', sell: 2880, quote: 'R1 · 3 star', pf: { no: 'PI-4499455', d: -50, pct: 30, due: -47 }, pays: [{ d: -48, amt: 864, mode: 'Bank transfer', ref: 'UTR 0915' }], itin: true, inv: { no: 'INV-4499455', d: -11 }, guide: 'Ravi Kumar',
+      svc: [S('hotel', 'Star Points Hotel', 'Kuala Lumpur', 'Superior Queen Room × 1 + extra bed, B&B', 1, 3, 870, 'confirmed', 'SP-6620', -52), S('transfer', 'Kuala Lumpur transport partner', 'Kuala Lumpur', 'Transfers and tours by MPV', 1, 0, 380, 'confirmed', 'KT-1980', -52), S('ticket', 'Genting cable car tickets', 'Genting Highlands', 'Cable car, 3 adults', 2, 0, 75, 'confirmed', 'GC-410', -52)] },
+    { id: '4499431', name: 'Zubair Ahmed', agent: 'Gulf Pearl Travels', owner: 'AP', dest: 'Phuket', start: -30, nights: 4, pax: '2 adults', n: 2, cur: 'MYR', sell: 3100, quote: 'R1 · 4 star', pf: { no: 'PI-4499431', d: -62, pct: 30, due: -59 }, pays: [{ d: -60, amt: 930, mode: 'Bank transfer', ref: 'UTR 7712' }, { d: -22, amt: 2170, mode: 'Bank transfer', ref: 'UTR 8840' }], itin: true, inv: { no: 'INV-4499431', d: -24 }, guide: 'Phuket guide partner',
+      svc: [S('hotel', 'Phuket beach hotel (4 star)', 'Phuket', 'Deluxe Room × 1, B&B', 1, 4, 1520, 'confirmed', 'PK-7781', -64), S('transfer', 'Phuket transport partner', 'Phuket', 'Airport transfers by Sedan', 1, 0, 300, 'confirmed', 'PT-209', -64), S('ticket', 'Phi Phi island tour', 'Phuket', 'Speedboat tour, 2 adults', 2, 0, 360, 'confirmed', 'PP-551', -64)] }
+  ];
+  files.forEach(function (f) {
+    if (typeof f.start === 'number') f.start = isoDays(f.start);
+    if (f.pf) { f.pf.date = isoDays(f.pf.d); f.pf.dueDate = isoDays(f.pf.due); delete f.d; }
+    f.pays = f.pays.map(function (p, i) { return { id: f.id + 'p' + i, date: isoDays(p.d), amt: p.amt, mode: p.mode, ref: p.ref }; });
+    if (f.inv) f.inv.date = isoDays(f.inv.d);
+    f.svc = f.svc.map(function (s, i) { return Object.assign({}, s, { id: f.id + 's' + i, at: s.at === null ? '' : isoDays(s.at) }); });
+  });
+  return {
+    v: 1, files: files,
+    bills: [
+      { id: 'b1', file: '4499431', svc: '4499431s0', no: 'PKH-3390', amt: 1520, date: isoDays(-28), due: isoDays(-14), paid: isoDays(-15) },
+      { id: 'b2', file: '4499431', svc: '4499431s1', no: 'PTP-118', amt: 300, date: isoDays(-26), due: isoDays(-10), paid: isoDays(-12) },
+      { id: 'b3', file: '4499431', svc: '4499431s2', no: 'PPT-772', amt: 360, date: isoDays(-26), due: isoDays(-10), paid: isoDays(-12) },
+      { id: 'b4', file: '4499455', svc: '4499455s0', no: 'SPH-1022', amt: 870, date: isoDays(-12), due: isoDays(3), paid: isoDays(-2) },
+      { id: 'b5', file: '4499455', svc: '4499455s1', no: 'KTP-0871', amt: 380, date: isoDays(-12), due: isoDays(18), paid: null },
+      { id: 'b6', file: '4499476', svc: '4499476s0', no: 'HVB-5510', amt: 896, date: isoDays(-10), due: isoDays(-4), paid: isoDays(-5) },
+      { id: 'b7', file: '4499476', svc: '4499476s1', no: 'IBK-9001', amt: 1391, date: isoDays(-8), due: isoDays(-3), paid: null }
+    ],
+    cnotes: [{ id: 'cn1', no: 'CN-4499431-1', file: '4499431', amt: 120, reason: 'Island tour cut short by weather', date: isoDays(-20), refunded: isoDays(-18) }],
+    expenses: [{ id: 'xe1', file: '4499455', by: 'Ravi Kumar', cat: 'Parking', amt: 24, date: isoDays(-15), status: 'approved', note: 'KL Tower car park' }, { id: 'xe2', file: '4499455', by: 'Ravi Kumar', cat: 'Fuel', amt: 40, date: isoDays(-14), status: 'approved', note: 'Genting day' }],
+    amends: [{ id: 'am1', file: '4499580', type: 'Date change', text: 'Move the trip one day later', date: isoDays(-1), status: 'pending' }, { id: 'am2', file: '4499530', type: 'Cancellation', text: 'Guest will cancel if no Kuala Lumpur hotel is found by Friday', date: isoDays(0), status: 'pending' }],
+    jobs: [
+      { id: 'j1', file: '4499476', date: isoDays(0), time: '08:30', what: 'Batu Caves and Genting tour', from: 'IBIS KLCC', vtype: 'Sedan', driver: 'Kumar S', status: 'In progress' },
+      { id: 'j2', file: '4499476', date: isoDays(1), time: '09:00', what: 'Kuala Lumpur half day city tour', from: 'IBIS KLCC', vtype: 'Sedan', driver: 'Kumar S', status: 'Assigned' },
+      { id: 'j3', file: '4499476', date: isoDays(2), time: '10:30', what: 'IBIS KLCC to KL Airport via Putrajaya', from: 'IBIS KLCC', vtype: 'Sedan', driver: '', status: 'Unassigned' },
+      { id: 'j4', file: '4499502', date: isoDays(9), time: '10:00', what: 'LGK Airport to Adya Hotel', from: 'LGK Airport', vtype: 'Sedan', driver: '', status: 'Unassigned' },
+      { id: 'j5', file: '4499502', date: isoDays(9), time: '16:00', what: 'Eagle Square and Underwater World tour', from: 'Adya Hotel', vtype: 'Sedan', driver: '', status: 'Unassigned' },
+      { id: 'j6', file: '4499498', date: isoDays(12), time: '14:00', what: 'Dubai airport to hotel', from: 'DXB Airport', vtype: 'Supplier', driver: 'Dubai transport partner', status: 'Supplier confirmed' }
+    ],
+    drivers: [{ name: 'Kumar S', city: 'Kuala Lumpur', vehicle: 'Sedan · KL 1', phone: '' }, { name: 'Lim W', city: 'Kuala Lumpur', vehicle: 'MPV · KL 2', phone: '' }, { name: 'Azman I', city: 'Langkawi', vehicle: 'Sedan · LGK 1', phone: '' }, { name: 'Hafiz R', city: 'Langkawi', vehicle: 'Van · LGK 2', phone: '' }],
+    vehicles: [{ name: 'Sedan · KL 1', seats: 4, city: 'Kuala Lumpur', service: isoDays(40) }, { name: 'MPV · KL 2', seats: 7, city: 'Kuala Lumpur', service: isoDays(6) }, { name: 'Sedan · LGK 1', seats: 4, city: 'Langkawi', service: isoDays(75) }, { name: 'Van · LGK 2', seats: 10, city: 'Langkawi', service: isoDays(21) }],
+    incidents: [{ id: 'in1', file: '4499455', date: isoDays(-14), by: 'Ravi Kumar', text: 'Guest left a bag at KL Tower; recovered the same day', status: 'Resolved' }],
+    allot: [{ hotel: 'IBIS KLCC', period: 'Nov–Dec 2026', rooms: 5, used: 2, release: isoDays(12) }, { hotel: 'Holiday Villa Beach Resort', period: 'Nov–Dec 2026', rooms: 3, used: 1, release: isoDays(26) }, { hotel: 'Star Points Hotel', period: 'Dec 2026', rooms: 4, used: 0, release: isoDays(31) }],
+    agents: [
+      { name: 'Royal Sky Holidays', city: 'Kochi, India', group: 'Gold', owner: 'SK' }, { name: 'Wanderlust Trips', city: 'Bengaluru, India', group: 'Silver', owner: 'RM' },
+      { name: 'Al Noor Travels', city: 'Sharjah, UAE', group: 'Silver', owner: 'FN' }, { name: 'Gulf Pearl Travels', city: 'Dubai, UAE', group: 'Gold', owner: 'FN' },
+      { name: 'Kerala Holidays Hub', city: 'Kozhikode, India', group: 'Standard', owner: 'RM' }, { name: 'Malabar Tours & Travels', city: 'Kannur, India', group: 'Silver', owner: 'AP' },
+      { name: 'Sky Wings Tours', city: 'Abu Dhabi, UAE', group: 'Standard', owner: 'FN' }, { name: 'Desert Rose Holidays', city: 'Dubai, UAE', group: 'Gold', owner: 'FN' }
+    ],
+    groups: [{ name: 'Gold', markup: 8, credit: 25000, days: 30 }, { name: 'Silver', markup: 10, credit: 15000, days: 21 }, { name: 'Standard', markup: 12, credit: 8000, days: 14 }],
+    campaigns: [{ id: 'c1', name: 'Year-end Malaysia family offer', audience: 'Gold and Silver agents', count: 6, date: isoDays(-5), status: 'Sent', read: 5, replies: 3 }, { id: 'c2', name: 'Chinese New Year in Langkawi', audience: 'All agents', count: 8, date: isoDays(20), status: 'Scheduled', read: 0, replies: 0 }],
+    fixed: [],
+    closed: {}
+  };
+}
+
+function load() {
+  try {
+    const raw = window.localStorage.getItem(STORE);
+    const d = raw ? JSON.parse(raw) : null;
+    if (d && d.v === 1 && Array.isArray(d.files)) return d;
+  } catch (e) { /* use the sample files */ }
+  return seed();
+}
+
+function guideTrip() {
+  try {
+    const raw = window.localStorage.getItem(GSTORE);
+    const g = raw ? JSON.parse(raw) : null;
+    return g && Array.isArray(g.trips) ? g : null;
+  } catch (e) { return null; }
+}
+
+function paidOf(f) { return sum(f.pays, function (p) { return p.amt; }); }
+function advOf(f) { return f.pf ? Math.round(f.sell * f.pf.pct / 100) : 0; }
+function endOf(f) { return addIso(f.start, f.nights); }
+function costOf(f) { return sum(f.svc, function (s) { return s.cost; }); }
+
+function stageOf(f, d) {
+  if (f.cancelled) return 'cancelled';
+  if (f.returned) return 'returned';
+  if (f.svc.some(function (s) { return s.status !== 'confirmed'; })) return 'booking';
+  if (!f.pf) return 'booked';
+  const cn = sum((d.cnotes || []).filter(function (c) { return c.file === f.id; }), function (c) { return c.amt; });
+  const paid = paidOf(f) - sum((d.cnotes || []).filter(function (c) { return c.file === f.id && c.refunded; }), function (c) { return c.amt; });
+  if (paidOf(f) < advOf(f)) return 'proforma';
+  if (!f.itin) return 'advance';
+  if (daysFrom(f.start) > 0) return 'ready';
+  if (daysFrom(endOf(f)) >= 0) return 'ontrip';
+  if (!f.inv) return 'completed';
+  if (paid < f.sell - cn) return 'invoiced';
+  return d.closed && d.closed[f.id] ? 'closed' : 'paid';
+}
+
+function T(t, o) {
+  o = o || {};
+  const al = o.align || 'left';
+  return { isText: true, isChip: false, isInput: false, isActs: false, t: String(t === undefined || t === null ? '' : t), v: o.v, w: o.w || '400', ink: o.ink || '#323338', align: al, items: al === 'right' ? 'flex-end' : 'flex-start', hasSub: !!o.sub, sub: o.sub || '' };
+}
+function TD(iso, o) { o = o || {}; const txt = (o.day ? dDay(iso) : dShort(iso)) + (o.range ? ' – ' + dShort(o.range) : '') + (o.time ? ' · ' + o.time : ''); return T(txt, Object.assign({}, o, { v: iso })); }
+function numOf(t) { const m = String(t).replace(/,/g, '').replace(/−\s*/, '-').match(/^[A-Za-z ]*([-+]?\d+(\.\d+)?)\s*%?$/); return m ? parseFloat(m[1]) : null; }
+function C(t, tone, sub) { const c = TONE[tone] || TONE.mute; return { isText: false, isChip: true, isInput: false, isActs: false, t: t, bg: c[0], fg: c[1], align: 'left', items: 'flex-start', hasSub: !!sub, sub: sub || '' }; }
+function A(list, right) { return { isText: false, isChip: false, isInput: false, isActs: true, acts: list.filter(Boolean), justify: right ? 'flex-end' : 'flex-start', align: right ? 'right' : 'left', items: right ? 'flex-end' : 'flex-start', hasSub: false, sub: '' }; }
+function I(v, set, o) { o = o || {}; return { isText: false, isChip: false, isInput: true, isActs: false, type: o.type || 'text', v: v, set: set, aria: o.aria || '', ph: o.ph || '', align: 'left', items: 'stretch', hasSub: false, sub: '' }; }
+function KIND(k) { return k === 'p' ? ['#3D4BC7', '#FFFFFF', '#3D4BC7'] : k === 'g' ? ['#00854D', '#FFFFFF', '#00854D'] : k === 'd' ? ['#FFFFFF', '#B42840', '#C3C6D4'] : ['#FFFFFF', '#323338', '#C3C6D4']; }
+function B(label, go, k) { const c = KIND(k); return { isBtn: true, isLink: false, label: label, go: go, bg: c[0], ink: c[1], border: c[2] }; }
+function L(label, href, k, blank) { const c = KIND(k); return { isBtn: false, isLink: true, label: label, href: href, target: blank ? '_blank' : '_self', bg: c[0], ink: c[1], border: c[2] }; }
+function blk(type, o) {
+  return Object.assign({ std: false, isTable: type === 'table', isBars: type === 'bars', isCal: type === 'cal', isCards: type === 'cards', isBoard: type === 'board', isForm: type === 'form', isNote: type === 'note', hasHead: !!(o && o.title), title: '', note: '', hasFoot: !!(o && o.foot), foot: '', empty: false, emptyText: 'Nothing here right now.', hasErr: !!(o && o.err), err: '', hasResult: !!(o && o.result), result: '', cardMin: 260 }, o || {});
+}
+function table(title, note, cols, rows, o) {
+  return blk('table', Object.assign({
+    title: title, note: note || '',
+    cols: cols.map(function (c) { return { label: c[0], align: c[2] || 'left', sortable: false, plainHead: true, arrow: '', ariaSort: 'none' }; }),
+    grid: cols.map(function (c) { return c[3] ? 'minmax(' + c[1] + 'px, ' + c[3] + 'fr)' : c[1] + 'px'; }).join(' '),
+    minW: sum(cols, function (c) { return c[1]; }),
+    rows: rows.map(function (r) { return Array.isArray(r) ? { cells: r, bg: '#FFFFFF' } : r; }),
+    empty: rows.length === 0
+  }, o || {}));
+}
+
+const VIEWS = 'flyland-views-v1';
+const MODS = {
+  files: { title: 'Trip files', href: 'TripFiles.dc.html', intro: 'Every confirmed trip, from supplier booking to final payment. Pick a file to see where it stands and what happens next.', tabs: [['board', 'By stage'], ['list', 'All files']] },
+  bookings: { title: 'Bookings & reservations', href: 'Bookings.dc.html', intro: 'Confirmed files, the calendar, changes, vouchers, traveller itineraries and rooming lists.', tabs: [['list', 'Bookings'], ['cal', 'Booking calendar'], ['amend', 'Amendments & cancellations'], ['vouchers', 'Vouchers'], ['itin', 'Guest itinerary'], ['rooming', 'Rooming list']] },
+  ops: { title: 'Operations', href: 'Operations.dc.html', intro: 'Who arrives, who drives, which guide goes where, and what went wrong on the ground.', tabs: [['arr', 'Arrivals & departures'], ['dispatch', 'Transfer dispatch'], ['drivers', 'Drivers & vehicles'], ['guides', 'Guides'], ['sheet', 'Daily ops sheet'], ['incidents', 'Incidents']] },
+  purchasing: { title: 'Purchasing', href: 'Purchasing.dc.html', intro: 'Requests to suppliers, their confirmations, purchase orders and room blocks.', tabs: [['req', 'Booking requests'], ['conf', 'Supplier confirmations'], ['po', 'Purchase orders'], ['allot', 'Allotments']] },
+  finance: { title: 'Finance & accounts', href: 'Finance.dc.html', intro: 'Money in from customers and agents, money out to suppliers and guides, and the books behind it.', tabs: [['pf', 'Proforma invoices'], ['inv', 'Sales invoices'], ['rcpt', 'Receipts & payment links'], ['cn', 'Credit notes'], ['bills', 'Supplier bills'], ['spay', 'Supplier payments'], ['astmt', 'Agent statements'], ['sstmt', 'Supplier statements'], ['exp', 'Expenses'], ['bank', 'Bank & cash'], ['jnl', 'Journal entries'], ['coa', 'Chart of accounts'], ['tax', 'Tax'], ['fx', 'Currency gain / loss']] },
+  reports: { title: 'Reports', href: 'Reports.dc.html', intro: 'How sales, bookings, suppliers and money are doing. Built from the same trip files every team works on.', tabs: [['sales', 'Sales'], ['bookings', 'Bookings'], ['supp', 'Supplier performance'], ['profit', 'Profit per file'], ['ageing', 'Ageing'], ['pl', 'P&L, balance sheet, cash flow']] },
+  portal: { title: 'Agent portal', href: 'AgentPortal.dc.html', intro: 'Royal Sky Holidays · quote, book and pay with Flyland DMC Services.', tabs: [['quote', 'Self-quote'], ['bookings', 'My bookings'], ['pay', 'Invoices & payments'], ['stmt', 'Statement']] },
+  crm: { title: 'Contacts & agents', href: 'CRM.dc.html', intro: 'Agents and travellers, agent groups with credit limits, and WhatsApp campaigns.', tabs: [['contacts', 'Contacts'], ['groups', 'Agent groups & credit limits'], ['campaigns', 'Campaigns']] }
+};
+const NAVMAP = {
+  files: ['files', 'board'], 'bk-list': ['bookings', 'list'], 'bk-cal': ['bookings', 'cal'], 'bk-amend': ['bookings', 'amend'], 'bk-vouchers': ['bookings', 'vouchers'], 'bk-itin': ['bookings', 'itin'], 'bk-rooming': ['bookings', 'rooming'],
+  'op-arr': ['ops', 'arr'], 'op-dispatch': ['ops', 'dispatch'], 'op-drivers': ['ops', 'drivers'], 'op-guides': ['ops', 'guides'], 'op-sheet': ['ops', 'sheet'], 'op-incidents': ['ops', 'incidents'],
+  'pu-req': ['purchasing', 'req'], 'pu-conf': ['purchasing', 'conf'], 'pu-po': ['purchasing', 'po'], 'pu-allot': ['purchasing', 'allot'],
+  'fi-pf': ['finance', 'pf'], 'fi-inv': ['finance', 'inv'], 'fi-rcpt': ['finance', 'rcpt'], 'fi-cn': ['finance', 'cn'], 'fi-bills': ['finance', 'bills'], 'fi-spay': ['finance', 'spay'], 'fi-astmt': ['finance', 'astmt'], 'fi-sstmt': ['finance', 'sstmt'], 'fi-exp': ['finance', 'exp'], 'fi-bank': ['finance', 'bank'], 'fi-jnl': ['finance', 'jnl'], 'fi-coa': ['finance', 'coa'], 'fi-tax': ['finance', 'tax'], 'fi-fx': ['finance', 'fx'],
+  'rp-sales': ['reports', 'sales'], 'rp-bookings': ['reports', 'bookings'], 'rp-supp': ['reports', 'supp'], 'rp-profit': ['reports', 'profit'], 'rp-ageing': ['reports', 'ageing'], 'rp-pl': ['reports', 'pl'],
+  contacts: ['crm', 'contacts'], credit: ['crm', 'groups'], campaigns: ['crm', 'campaigns'],
+  'ap-quote': ['portal', 'quote'], 'ap-bookings': ['portal', 'bookings'], 'ap-pay': ['portal', 'pay'], 'ap-stmt': ['portal', 'stmt']
+};
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const mod = MODS[props && props.module] ? props.module : 'files';
+    let sel = '4499560';
+    let tab = MODS[mod].tabs[0][0];
+    try {
+      const s = window.localStorage.getItem(SEL);
+      if (s) sel = s;
+      const n = window.localStorage.getItem(NAV);
+      if (n && NAVMAP[n] && NAVMAP[n][0] === mod) { tab = NAVMAP[n][1]; window.localStorage.removeItem(NAV); }
+    } catch (e) { /* storage blocked */ }
+    if (props && props.tab) tab = props.tab;
+    let views = {};
+    try { views = JSON.parse(window.localStorage.getItem(VIEWS) || '{}') || {}; } catch (e) { views = {}; }
+    this.state = { tv: {}, views: views, mod: mod, tab: tab, data: load(), sel: sel, pickOpen: false, toast: '', form: {}, err: '', result: '', guide: guideTrip(), calOff: 0, sheetDay: 0 };
+    this.timer = null;
+    this.onStorage = this.onStorage.bind(this);
+  }
+
+  componentDidMount() { try { window.addEventListener('storage', this.onStorage); } catch (e) { /* ignore */ } }
+  componentWillUnmount() { try { window.removeEventListener('storage', this.onStorage); } catch (e) { /* ignore */ } if (this.timer) clearTimeout(this.timer); }
+
+  componentDidUpdate(pp, ps) {
+    if (pp && pp.module !== this.props.module && MODS[this.props.module]) { this.setState({ mod: this.props.module, tab: MODS[this.props.module].tabs[0][0] }); return; }
+    if (ps && ps.data !== this.state.data && !this.quiet) { try { window.localStorage.setItem(STORE, JSON.stringify(this.state.data)); } catch (e) { /* keep in memory */ } }
+    if (ps && ps.sel !== this.state.sel) { try { window.localStorage.setItem(SEL, this.state.sel); } catch (e) { /* ignore */ } }
+    this.quiet = false;
+  }
+
+  onStorage(e) {
+    if (!e) return;
+    try {
+      if (e.key === STORE && e.newValue) { const d = JSON.parse(e.newValue); if (d && d.v === 1) { this.quiet = true; this.setState({ data: d }); } }
+      if (e.key === SEL && e.newValue) this.setState({ sel: e.newValue });
+      if (e.key === GSTORE) this.setState({ guide: guideTrip() });
+      if (e.key === 'flyland-trip-desk-v3') this.forceUpdate();
+    } catch (err) { /* ignore */ }
+  }
+
+  flash(msg) {
+    const self = this;
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(function () { self.setState({ toast: '' }); }, 2800);
+    return { toast: msg };
+  }
+
+  mut(fn, msg, extra) {
+    const d = clone(this.state.data);
+    const out = fn(d);
+    this.setState(Object.assign({ data: d }, msg ? this.flash(typeof msg === 'function' ? msg(out) : msg) : {}, extra || {}));
+  }
+
+  file(d, id) { return d.files.filter(function (f) { return f.id === id; })[0]; }
+
+  advance(id) {
+    const self = this;
+    const f0 = this.file(this.state.data, id);
+    const st = stageOf(f0, this.state.data);
+    this.mut(function (d) {
+      const f = self.file(d, id);
+      if (st === 'booked') f.pf = { no: 'PI-' + f.id, date: isoDays(0), pct: 30, dueDate: isoDays(3) };
+      else if (st === 'proforma') f.pays.push({ id: uid(), date: isoDays(0), amt: advOf(f) - paidOf(f), mode: 'Bank transfer', ref: '[payment reference]' });
+      else if (st === 'advance') f.itin = true;
+      else if (st === 'completed') f.inv = { no: 'INV-' + f.id, date: isoDays(0) };
+      else if (st === 'invoiced') {
+        const cn = sum(d.cnotes.filter(function (c) { return c.file === f.id; }), function (c) { return c.amt; });
+        const net = paidOf(f) - sum(d.cnotes.filter(function (c) { return c.file === f.id && c.refunded; }), function (c) { return c.amt; });
+        f.pays.push({ id: uid(), date: isoDays(0), amt: f.sell - cn - net, mode: 'Bank transfer', ref: '[payment reference]' });
+      } else if (st === 'paid') d.closed[f.id] = isoDays(0);
+      return stageOf(f, d);
+    }, function (ns) { return 'Trip ' + id + ' moved to “' + STAGE[ns].label + '”. ' + STAGE[ns].team + ' takes it from here.'; });
+  }
+
+  pick(id) { this.setState({ sel: id, pickOpen: false }); }
+
+  renderVals() {
+    const self = this;
+    const s = this.state;
+    const d = s.data;
+    const mod = s.mod;
+    const M = MODS[mod];
+    const F = d.files.map(function (f) {
+      const stage = stageOf(f, d);
+      const cn = sum(d.cnotes.filter(function (c) { return c.file === f.id; }), function (c) { return c.amt; });
+      const refunds = sum(d.cnotes.filter(function (c) { return c.file === f.id && c.refunded; }), function (c) { return c.amt; });
+      const paid = paidOf(f) - refunds;
+      return Object.assign({}, f, { stage: stage, st: STAGE[stage], paid: paid, adv: advOf(f), end: endOf(f), cost: costOf(f), cn: cn, bal: Math.max(0, f.sell - cn - paid), label: f.name + (f.agent ? ' · ' + f.agent : ' · direct') });
+    });
+    const sel = F.filter(function (f) { return f.id === s.sel; })[0] || F[0];
+    const st = sel.st;
+    const ctx = { d: d, F: F, sel: sel, tab: s.tab, s: s };
+    const out = this['m_' + mod](ctx);
+    const step = st.step;
+    const canAct = !!(st.act && (st.own === mod || mod === 'files'));
+    const V = {
+      title: M.title, intro: M.intro, showJourney: mod !== 'portal', showTabs: !out.hideTabs, pickOpen: s.pickOpen, hasToast: !!s.toast, toast: s.toast,
+      togglePick: function () { self.setState({ pickOpen: !self.state.pickOpen }); },
+      pickList: F.map(function (f) { const on = f.id === sel.id; return { id: f.id, name: f.name, stage: f.st.label + ' · ' + f.dest, current: on ? 'true' : 'false', border: on ? '#3D4BC7' : '#E6E9EF', pick: function () { self.pick(f.id); } }; }),
+      j: {
+        id: sel.id, name: sel.name, sub: sel.dest + ' · ' + dShort(sel.start) + ' – ' + dLong(sel.end) + ' · ' + sel.pax + ' · ' + money(sel.sell, sel.cur) + (sel.agent ? ' · ' + sel.agent : ''),
+        chip: st.label, chipBg: TONE[st.tone][0], chipInk: TONE[st.tone][1],
+        nextText: st.next, nextTeam: st.team, hasAct: canAct, actLabel: st.act || '', act: function () { self.advance(sel.id); },
+        hasLink: !canAct && st.href !== M.href && sel.stage !== 'closed' && sel.stage !== 'cancelled', nextHref: st.href, nextScreen: st.screen,
+        steps: STEPS.map(function (x, i) {
+          const done = step > i || sel.stage === 'closed';
+          const cur = step === i && sel.stage !== 'closed';
+          const bad = cur && sel.stage === 'returned';
+          return { label: x.label, href: x.href, team: x.team, current: cur ? 'step' : 'false', mark: done ? '✓' : String(i + 1),
+            bg: bad ? '#D83A52' : cur ? '#3D4BC7' : done ? '#DDF5EA' : '#FFFFFF', ink: cur ? '#FFFFFF' : done ? '#00663B' : '#4B4D5C', border: bad ? '#D83A52' : cur ? '#3D4BC7' : done ? '#BFE8D3' : '#C3C6D4' };
+        })
+      },
+      tabs: M.tabs.map(function (t) {
+        const on = s.tab === t[0];
+        const c = out.counts && out.counts[t[0]];
+        return { label: t[1], current: on ? 'page' : 'false', bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', border: on ? '#283277' : '#C3C6D4', hasCount: !!c, count: String(c || ''), cBg: on ? 'rgba(255,255,255,.2)' : '#FDE7EA', cInk: on ? '#FFFFFF' : '#B42840', pick: function () { self.setState({ tab: t[0], err: '', result: '' }); } };
+      }),
+      hasAi: !!(out.ai && out.ai.length), ai: (out.ai || []).map(function (t) { return { text: t }; }),
+      hasKpis: !!(out.kpis && out.kpis.length), kpis: (out.kpis || []).map(function (k) { return { label: k[0], value: k[1], sub: k[2] || '', ink: k[3] || '#323338' }; }),
+      blocks: (out.blocks || []).map(function (b, bi) { return b.isTable && !b.plain ? self.stdTable(b, mod + '/' + s.tab + '/' + (b.title || bi)) : b; })
+    };
+    return V;
+  }
+
+  // The standard data table: search, Sl. No., quick filter, detailed filter, saved views, sort, pagination.
+  stdTable(b, key) {
+    const self = this;
+    const all = this.state.tv || {};
+    const tv = Object.assign({ q: '', quick: '', f: {}, sort: null, page: 1, size: 10, panel: false, saving: false, name: '' }, all[key]);
+    const set = function (patch) { const nx = Object.assign({}, self.state.tv || {}); nx[key] = Object.assign({}, tv, patch); self.setState({ tv: nx }); };
+    const slug = key.replace(/[^a-z0-9]+/gi, '-');
+    const valOf = function (c) { return !c ? null : c.isText ? { t: c.t, sub: c.sub || '', v: c.v } : c.isChip ? { t: c.t, sub: c.sub || '', v: c.v, chip: true } : null; };
+    const rows = b.rows.map(function (r, i) { return { r: r, i: i, vals: r.cells.map(valOf) }; });
+    const meta = b.cols.map(function (c, ci) {
+      const vs = rows.map(function (x) { return x.vals[ci]; }).filter(function (v) { return v && v.t !== ''; });
+      if (!vs.length || !c.label) return { kind: 'none' };
+      if (vs.every(function (v) { return v.chip; })) return { kind: 'set' };
+      if (vs.every(function (v) { return typeof v.v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v.v); })) return { kind: 'date' };
+      if (vs.every(function (v) { return typeof v.v === 'number' || numOf(v.t) !== null; })) return { kind: 'num' };
+      return { kind: 'text' };
+    });
+    const numVal = function (v) { return !v ? null : typeof v.v === 'number' ? v.v : numOf(v.t); };
+    const quickCol = meta.findIndex(function (m) { return m.kind === 'set'; });
+    const q = String(tv.q || '').trim().toLowerCase();
+    const pass = function (x, skipQuick) {
+      if (q && !x.vals.some(function (v) { return v && (v.t + ' ' + v.sub).toLowerCase().indexOf(q) > -1; })) return false;
+      if (!skipQuick && tv.quick && quickCol > -1 && (!x.vals[quickCol] || x.vals[quickCol].t !== tv.quick)) return false;
+      return Object.keys(tv.f).every(function (ci) {
+        const fl = tv.f[ci];
+        const v = x.vals[ci];
+        const m = meta[ci];
+        if (!m || !fl) return true;
+        if (m.kind === 'text' && fl.text) return !!v && (v.t + ' ' + v.sub).toLowerCase().indexOf(String(fl.text).toLowerCase()) > -1;
+        if (m.kind === 'set' && fl.set && fl.set.length) return !!v && fl.set.indexOf(v.t) > -1;
+        if (m.kind === 'num') { const n = numVal(v); if (fl.min !== undefined && fl.min !== '' && (n === null || n < +fl.min)) return false; if (fl.max !== undefined && fl.max !== '' && (n === null || n > +fl.max)) return false; }
+        if (m.kind === 'date') { const dd = v ? v.v : ''; if (fl.from && (!dd || dd < fl.from)) return false; if (fl.to && (!dd || dd > fl.to)) return false; }
+        return true;
+      });
+    };
+    let list = rows.filter(function (x) { return pass(x, false); });
+    if (tv.sort && meta[tv.sort.i] && meta[tv.sort.i].kind !== 'none') {
+      const i = tv.sort.i;
+      const k = meta[i].kind;
+      const kv = function (x) { const v = x.vals[i]; return !v ? '' : k === 'num' ? numVal(v) : k === 'date' ? v.v : (v.t + ' ' + v.sub).toLowerCase(); };
+      list = list.slice().sort(function (a, c) { const A = kv(a); const Z = kv(c); return (A < Z ? -1 : A > Z ? 1 : 0) * (tv.sort.dir === 'desc' ? -1 : 1); });
+    }
+    const n = list.length;
+    const size = tv.size || 10;
+    const pages = Math.max(1, Math.ceil(n / size));
+    const page = Math.min(Math.max(1, tv.page || 1), pages);
+    const off = (page - 1) * size;
+    const shown = list.slice(off, off + size);
+    const nF = Object.keys(tv.f).filter(function (ci) { const fl = tv.f[ci]; return fl && (fl.text || (fl.set && fl.set.length) || fl.min || fl.max || fl.from || fl.to); }).length;
+    const setF = function (ci, patch) { const f = Object.assign({}, tv.f); f[ci] = Object.assign({}, f[ci] || {}, patch); set({ f: f, page: 1 }); };
+    const savedList = (this.state.views || {})[key] || [];
+    const cur = JSON.stringify({ q: tv.q, quick: tv.quick, f: tv.f, sort: tv.sort });
+    const writeViews = function (list2) { const vs = Object.assign({}, self.state.views || {}); vs[key] = list2; try { window.localStorage.setItem(VIEWS, JSON.stringify(vs)); } catch (e) { /* keep in memory */ } return vs; };
+    const quickCounts = {};
+    if (quickCol > -1) rows.filter(function (x) { return pass(x, true); }).forEach(function (x) { const v = x.vals[quickCol]; if (v) quickCounts[v.t] = (quickCounts[v.t] || 0) + 1; });
+    const qKeys = Object.keys(quickCounts).sort(function (a, c) { return quickCounts[c] - quickCounts[a]; }).slice(0, 8);
+    const chipStyle = function (on) { return { bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', border: on ? '#283277' : '#C3C6D4' }; };
+    const out = Object.assign({}, b, {
+      std: true,
+      cols: [{ label: 'Sl. No.', align: 'right', sortable: false, plainHead: true, arrow: '', ariaSort: 'none' }].concat(b.cols.map(function (c, ci) {
+        const on = tv.sort && tv.sort.i === ci;
+        const can = meta[ci].kind !== 'none';
+        return { label: c.label, align: c.align, sortable: can, plainHead: !can, arrow: on ? (tv.sort.dir === 'desc' ? '▼' : '▲') : '', ariaSort: on ? (tv.sort.dir === 'desc' ? 'descending' : 'ascending') : 'none',
+          sort: function () { set({ sort: on && tv.sort.dir === 'asc' ? { i: ci, dir: 'desc' } : on && tv.sort.dir === 'desc' ? null : { i: ci, dir: 'asc' } }); } };
+      })),
+      grid: '72px ' + b.grid, minW: b.minW + 72,
+      rows: shown.map(function (x, k) { return Object.assign({}, x.r, { cells: [T(String(off + k + 1), { align: 'right', ink: '#676879' })].concat(x.r.cells) }); }),
+      empty: n === 0, emptyText: rows.length ? 'No rows match. Clear the filters to see all ' + rows.length + '.' : b.emptyText,
+      tv: {
+        q: tv.q, onQ: function (e) { set({ q: e.target.value, page: 1 }); }, searchAria: 'Search ' + (b.title || 'table'),
+        panel: tv.panel, togglePanel: function () { set({ panel: !tv.panel, saving: false }); },
+        filterLabel: nF ? 'Filters · ' + nF : 'Filters', fBg: nF ? '#ECEEFB' : '#FFFFFF', fInk: nF ? '#283277' : '#323338', fBorder: nF ? '#3D4BC7' : '#C3C6D4',
+        hasActive: !!(q || tv.quick || nF || tv.sort), clear: function () { set({ q: '', quick: '', f: {}, sort: null, page: 1 }); },
+        showing: n ? 'Showing ' + (off + 1) + '–' + (off + shown.length) + ' of ' + n + (n < rows.length ? ' (filtered from ' + rows.length + ')' : '') : 'No matching rows',
+        hasQuick: quickCol > -1 && qKeys.length > 1,
+        quick: [{ label: 'All', count: String(rows.filter(function (x) { return pass(x, true); }).length), on: !tv.quick, pick: function () { set({ quick: '', page: 1 }); } }].concat(qKeys.map(function (k) { return { label: k, count: String(quickCounts[k]), on: tv.quick === k, pick: function () { set({ quick: tv.quick === k ? '' : k, page: 1 }); } }; })).map(function (x) { return Object.assign(x, chipStyle(x.on)); }),
+        fields: meta.map(function (m, ci) {
+          if (m.kind === 'none') return null;
+          const fl = tv.f[ci] || {};
+          const label = b.cols[ci].label;
+          const opts = m.kind === 'set' ? Object.keys(rows.reduce(function (a, x) { const v = x.vals[ci]; if (v) a[v.t] = 1; return a; }, {})).slice(0, 12) : [];
+          return { label: label, isText: m.kind === 'text', isNum: m.kind === 'num', isDate: m.kind === 'date', isSet: m.kind === 'set',
+            aria: label + ' contains', ariaMin: label + ' from', ariaMax: label + ' to', ariaFrom: label + ' from date', ariaTo: label + ' to date',
+            text: fl.text || '', min: fl.min || '', max: fl.max || '', from: fl.from || '', to: fl.to || '',
+            onText: function (e) { setF(ci, { text: e.target.value }); }, onMin: function (e) { setF(ci, { min: e.target.value }); }, onMax: function (e) { setF(ci, { max: e.target.value }); },
+            onFrom: function (e) { setF(ci, { from: e.target.value }); }, onTo: function (e) { setF(ci, { to: e.target.value }); },
+            opts: opts.map(function (o) { const on = (fl.set || []).indexOf(o) > -1; return Object.assign({ label: o, on: on, pick: function () { const st = (fl.set || []).slice(); if (on) st.splice(st.indexOf(o), 1); else st.push(o); setF(ci, { set: st }); } }, chipStyle(on)); }) };
+        }).filter(Boolean),
+        saving: tv.saving, name: tv.name, onName: function (e) { set({ name: e.target.value }); },
+        startSave: function () { set({ saving: true, panel: false, name: '' }); }, cancelSave: function () { set({ saving: false }); },
+        saveView: function () {
+          const nm = String(tv.name || '').trim() || 'View ' + (savedList.length + 1);
+          const vs = writeViews(savedList.filter(function (v) { return v.name !== nm; }).concat([{ name: nm, q: tv.q, quick: tv.quick, f: tv.f, sort: tv.sort }]));
+          const nx = Object.assign({}, self.state.tv || {}); nx[key] = Object.assign({}, tv, { saving: false, name: '' });
+          self.setState(Object.assign({ views: vs, tv: nx }, self.flash('Saved view “' + nm + '”. It stays on this device.')));
+        },
+        hasViews: savedList.length > 0,
+        views: savedList.map(function (v) {
+          const on = JSON.stringify({ q: v.q, quick: v.quick, f: v.f, sort: v.sort }) === cur;
+          return Object.assign({ label: v.name, on: on, delAria: 'Delete saved view ' + v.name,
+            apply: function () { set({ q: v.q || '', quick: v.quick || '', f: v.f || {}, sort: v.sort || null, page: 1 }); },
+            del: function () { self.setState(Object.assign({ views: writeViews(savedList.filter(function (x) { return x.name !== v.name; })) }, self.flash('Saved view deleted.'))); } }, chipStyle(on));
+        }),
+        hasPages: n > 10,
+        sizes: [10, 25, 50].map(function (z) { return Object.assign({ label: String(z), on: size === z, pick: function () { set({ size: z, page: 1 }); } }, chipStyle(size === z)); }),
+        pages: Array.apply(null, { length: pages }).map(function (_, i) { const on = i + 1 === page; return { label: String(i + 1), current: on ? 'page' : 'false', bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', go: function () { set({ page: i + 1 }); } }; }),
+        prev: function () { set({ page: Math.max(1, page - 1) }); }, next: function () { set({ page: Math.min(pages, page + 1) }); },
+        prevInk: page > 1 ? '#323338' : '#9AA0B8', nextInk: page < pages ? '#323338' : '#9AA0B8'
+      }
+    });
+    return out;
+  }
+
+  selBtn(f) { const self = this; return B(f.id === this.state.sel ? 'Selected' : 'Select', function () { self.pick(f.id); }, f.id === this.state.sel ? 'p' : 's'); }
+
+  setForm(key) { const self = this; return function (e) { const f = Object.assign({}, self.state.form); f[key] = e && e.target ? e.target.value : e; self.setState({ form: f, err: '' }); }; }
+  field(id, label, key, o) {
+    o = o || {};
+    const v = this.state.form[key] !== undefined ? this.state.form[key] : (o.def !== undefined ? o.def : '');
+    return { id: 'bo-' + id, label: label, isInput: !o.options, isChoice: !!o.options, type: o.type || 'text', ph: o.ph || '', v: v, set: this.setForm(key),
+      options: (o.options || []).map(function (op) { const on = v === op; return { label: op, on: on, bg: on ? '#283277' : '#FFFFFF', ink: on ? '#FFFFFF' : '#323338', border: on ? '#283277' : '#C3C6D4', pick: this.setForm(key).bind(null, op) }; }, this) };
+  }
+  fv(key, def) { const v = this.state.form[key]; return v === undefined || v === '' ? def : v; }
+
+  deskNew(c) {
+    let dk = null;
+    try { dk = JSON.parse(window.localStorage.getItem('flyland-trip-desk-v3') || 'null'); } catch (e) { dk = null; }
+    if (!dk || !Array.isArray(dk.enquiries)) return [];
+    const have = {};
+    c.d.files.forEach(function (f) { have[f.id] = 1; });
+    return dk.enquiries.filter(function (e) { return e.confirmed && !have[String(e.trip)]; }).map(function (e) {
+      const snap = (e.quotes || []).filter(function (q) { return q.rev === e.confirmed.rev; })[0];
+      const opt = snap ? snap.options.filter(function (o) { return o.n === e.confirmed.n; })[0] : null;
+      return snap && opt ? { e: e, snap: snap, opt: opt } : null;
+    }).filter(Boolean);
+  }
+
+  fromDesk(x, agents) {
+    const e = x.e;
+    const snap = x.snap;
+    const opt = x.opt;
+    const id = String(e.trip);
+    const tasks = e.tasks || [];
+    const stat = function (t) { return !t ? 'pending' : t.status === 'confirmed' ? 'confirmed' : t.status === 'unavailable' ? 'declined' : 'pending'; };
+    const costT = Math.round(opt.total / 1.15);
+    const nTot = sum(opt.stays, function (st) { return st.nights; }) || 1;
+    const hotels = tasks.filter(function (t) { return t.kind === 'hotel'; });
+    const svc = [];
+    let day = 1;
+    opt.stays.forEach(function (st, i) {
+      const t = hotels[i];
+      svc.push({ id: id + 's' + svc.length, kind: 'hotel', supplier: st.hotel || 'Hotel on request', city: st.city, item: (snap.rooms || 1) + ' × ' + (st.room || 'Room') + ', ' + (st.meal || 'Bed and Breakfast'), day: day, nights: st.nights, cost: Math.round(costT * 0.55 * st.nights / nTot), status: stat(t), conf: t && t.conf ? t.conf : '', at: '' });
+      day += st.nights;
+    });
+    const tr = tasks.filter(function (t) { return t.kind === 'transport'; })[0];
+    const tk = tasks.filter(function (t) { return t.kind === 'tickets'; })[0];
+    svc.push({ id: id + 's' + svc.length, kind: 'transfer', supplier: 'Transport partner', city: snap.segs.map(function (g) { return g.city; }).join(' + '), item: 'Transfers and tours as per the itinerary', day: 1, nights: 0, cost: Math.round(costT * 0.2), status: stat(tr), conf: tr && tr.conf ? tr.conf : '', at: '' });
+    svc.push({ id: id + 's' + svc.length, kind: 'ticket', supplier: 'Attraction tickets', city: snap.segs.map(function (g) { return g.city; }).join(' + '), item: 'Entry tickets as per the itinerary', day: 1, nights: 0, cost: costT - sum(svc, function (v) { return v.cost; }), status: stat(tk), conf: tk && tk.conf ? tk.conf : '', at: '' });
+    const ag = agents.filter(function (a) { return a.name.toLowerCase().indexOf(String(e.from || '').toLowerCase()) === 0; })[0];
+    const kids = snap.paying || [];
+    return { id: id, name: snap.greet || e.from, agent: ag ? ag.name : '', owner: 'SK', dest: snap.segs.map(function (g) { return g.city; }).join(' + '), start: snap.startIso, nights: snap.nights, pax: snap.adults + ' adult' + (snap.adults > 1 ? 's' : '') + (kids.length ? ', ' + kids.length + (kids.length > 1 ? ' children' : ' child') + ' (' + kids.map(function (a) { return a + 'y'; }).join(', ') + ')' : ''), n: snap.adults + kids.length, cur: snap.cur || 'MYR', sell: opt.total, quote: snap.rev + ' · ' + opt.star + ' star', pf: null, pays: [], itin: false, inv: null, guide: '', svc: svc };
+  }
+
+  m_files(c) {
+    const self = this;
+    const F = c.F;
+    const live = F.filter(function (f) { return f.stage !== 'closed' && f.stage !== 'cancelled'; });
+    const advDue = F.filter(function (f) { return f.stage === 'proforma'; });
+    const balDue = F.filter(function (f) { return f.stage === 'invoiced' || f.stage === 'completed'; });
+    const ai = [];
+    advDue.forEach(function (f) { if (f.pf.dueDate && daysFrom(f.pf.dueDate) < 0) ai.push('Trip ' + f.id + ' (' + f.name + '): the advance of ' + money(f.adv - f.paid, f.cur) + ' was due ' + rel(f.pf.dueDate) + '. Finance can send the reminder in one click.'); });
+    F.filter(function (f) { return f.stage === 'returned'; }).forEach(function (f) { ai.push('Trip ' + f.id + ' (' + f.name + ') is back with sales: ' + f.returned + '.'); });
+    F.forEach(function (f) { const open = c.d.jobs.filter(function (j) { return j.file === f.id && j.status === 'Unassigned'; }).length; if (open && daysFrom(f.start) <= 14) ai.push('Trip ' + f.id + ' (' + f.name + ') has ' + open + ' transfer' + (open > 1 ? 's' : '') + ' without a driver. The first is ' + rel(c.d.jobs.filter(function (j) { return j.file === f.id && j.status === 'Unassigned'; })[0].date) + '.'); });
+    const out = {
+      ai: ai.slice(0, 4),
+      kpis: [
+        ['Active trip files', String(live.length), 'From supplier booking to final payment'],
+        ['Value in progress', 'MYR ' + fmt(sum(live, function (f) { return toMYR(f.sell, f.cur); })), 'Selling value, all currencies in MYR'],
+        ['Advances due', String(advDue.length), 'MYR ' + fmt(sum(advDue, function (f) { return toMYR(f.adv - f.paid, f.cur); })) + ' to collect', advDue.length ? '#8A4B00' : '#323338'],
+        ['Balances due', String(balDue.length), 'MYR ' + fmt(sum(balDue, function (f) { return toMYR(f.bal, f.cur); })) + ' after the trip', balDue.length ? '#8A4B00' : '#323338']
+      ],
+      blocks: []
+    };
+    const fresh = this.deskNew(c);
+    if (fresh.length) {
+      out.blocks.push(table('New from sales', 'Quotes the customer confirmed in the Trip desk', [['Customer', 240, 'left', 1.4], ['Quote', 160], ['Travel', 170], ['Value', 130, 'right'], ['Hotels in Trip desk', 180], ['', 180, 'right']],
+        fresh.map(function (x) {
+          const hs = (x.e.tasks || []).filter(function (t) { return t.kind === 'hotel'; });
+          const okN = hs.filter(function (t) { return t.status === 'confirmed'; }).length;
+          return [T(x.snap.greet || x.e.from, { w: '700', sub: 'Trip ' + x.e.trip + ' · ' + x.e.from }), T(x.snap.rev + ' · ' + x.opt.star + ' star'), T(dShort(x.snap.startIso) + ' · ' + x.snap.nights + ' nights'), T(money(x.opt.total, x.snap.cur || 'MYR'), { align: 'right', w: '600' }), C(hs.length ? okN + ' of ' + hs.length + ' confirmed' : 'Not started', okN && okN === hs.length ? 'ok' : 'warn'), A([B('Create trip file', function () { self.mut(function (dd) { dd.files.unshift(self.fromDesk(x, dd.agents)); }, 'Trip file ' + x.e.trip + ' created. Bookings can request the services now.', { sel: String(x.e.trip) }); }, 'p')], true)];
+        })));
+    } else out.blocks.push(blk('note', { text: 'When a customer confirms a quote in the Trip desk, it appears here as “New from sales”, ready to become a trip file.' }));
+    const card = function (f) {
+      const on = f.id === c.sel.id;
+      const t = TONE[f.st.tone];
+      return { id: f.id, name: f.name, sub: f.dest + ' · ' + dShort(f.start) + ' – ' + dShort(f.end) + (f.agent ? ' · ' + f.agent : ''), chip: f.st.label, chipBg: t[0], chipFg: t[1], value: money(f.sell, f.cur), next: f.st.next, nextInk: f.stage === 'returned' || (f.stage === 'proforma' && daysFrom(f.pf.dueDate) < 0) ? '#B42840' : '#676879', current: on ? 'true' : 'false', border: on ? '#3D4BC7' : '#E6E9EF', pick: function () { self.pick(f.id); } };
+    };
+    if (c.tab === 'board') {
+      const COLS = [['Booking', ['returned', 'booking'], 'Bookings and sales', '#8A4B00'], ['Booked · proforma', ['booked', 'proforma'], 'Accounts', '#6A2FA8'], ['Before the trip', ['advance', 'ready'], 'Itinerary and operations', '#00779E'], ['On trip', ['ontrip'], 'Operations and guides', '#00854D'], ['After the trip', ['completed', 'invoiced'], 'Accounts', '#B42870'], ['Paid and closed', ['paid', 'closed'], 'Management', '#4B4D5C']];
+      out.blocks.push(blk('board', { title: 'Files by stage', note: 'Click a file to follow it above.', columns: COLS.map(function (col) { const fs = F.filter(function (f) { return col[1].indexOf(f.stage) > -1; }); return { title: col[0], team: col[2], color: col[3], count: String(fs.length), cards: fs.map(card) }; }) }));
+    } else {
+      out.blocks.push(table('All files', F.length + ' files', [['File', 220, 'left', 1.4], ['Dates', 170], ['Value', 130, 'right'], ['Stage', 160], ['Next step', 260, 'left', 1.4], ['', 110, 'right']],
+        F.map(function (f) { return { bg: f.id === c.sel.id ? '#F5F6FF' : '#FFFFFF', cells: [T(f.name, { w: '700', sub: f.id + ' · ' + f.dest + (f.agent ? ' · ' + f.agent : '') }), TD(f.start, { range: f.end,  sub: f.pax }), T(money(f.sell, f.cur), { align: 'right', w: '600' }), C(f.st.label, f.st.tone, f.st.team), T(f.st.next), A([self.selBtn(f)], true)] }; })));
+    }
+    return out;
+  }
+
+  m_bookings(c) {
+    const self = this;
+    const d = c.d;
+    const F = c.F.filter(function (f) { return f.stage !== 'cancelled'; });
+    const out = { blocks: [], counts: { amend: d.amends.filter(function (a) { return a.status === 'pending'; }).length } };
+    const svcDates = function (f, sv) { const a = addIso(f.start, sv.day - 1); return sv.nights ? dShort(a) + ' – ' + dShort(addIso(a, sv.nights)) : dShort(a); };
+    if (c.tab === 'list') {
+      out.blocks.push(table('Bookings', 'Every trip file and how many of its services are confirmed', [['File', 220, 'left', 1.4], ['Dates', 170], ['Services', 150], ['Stage', 160], ['', 260, 'right']],
+        F.map(function (f) {
+          const ok = f.svc.filter(function (s) { return s.status === 'confirmed'; }).length;
+          return { bg: f.id === c.sel.id ? '#F5F6FF' : '#FFFFFF', cells: [T(f.name, { w: '700', sub: f.id + ' · ' + f.dest }), TD(f.start, { range: f.end,  sub: f.pax }), C(ok + ' of ' + f.svc.length + ' confirmed', ok === f.svc.length ? 'ok' : 'warn'), C(f.st.label, f.st.tone), A([self.selBtn(f), ok < f.svc.length ? L('Requests', 'Purchasing.dc.html', 's') : null], true)] };
+        })));
+      const f = c.sel;
+      out.blocks.push(table('Services in Trip ' + f.id, f.name + ' · ' + f.quote, [['Service', 280, 'left', 1.6], ['Dates', 150], ['Cost', 110, 'right'], ['Status', 130], ['Confirmation', 130], ['', 120, 'right']],
+        f.svc.map(function (sv) {
+          const tone = sv.status === 'confirmed' ? 'ok' : sv.status === 'declined' ? 'bad' : 'warn';
+          return [T(sv.item, { w: '600', sub: sv.supplier + ' · ' + sv.city }), T(svcDates(f, sv)), T(money(sv.cost, f.cur), { align: 'right' }), C(sv.status[0].toUpperCase() + sv.status.slice(1), tone), T(sv.conf || '—'), A([sv.status === 'confirmed' ? L('Voucher', 'Voucher.dc.html', 's') : L('Open request', 'Purchasing.dc.html', 's')], true)];
+        }), { foot: 'Cost is staff-only. Customers see the selling price only.' }));
+    }
+    if (c.tab === 'cal') {
+      const t0 = today0();
+      [0, 1].forEach(function (m) {
+        const first = new Date(t0.getFullYear(), t0.getMonth() + m, 1);
+        const lead = (first.getDay() + 6) % 7;
+        const daysIn = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
+        const cells = [];
+        for (let i = 0; i < lead; i++) cells.push({ n: '', bg: '#FBFBFD', w: '400', ink: '#676879', items: [] });
+        for (let dd = 1; dd <= daysIn; dd++) {
+          const iso = isoOf(new Date(first.getFullYear(), first.getMonth(), dd));
+          const items = [];
+          F.forEach(function (f) {
+            if (f.start === iso) items.push({ t: '↘ ' + f.name, tip: 'Arrives · Trip ' + f.id, bg: TONE.info[0], fg: TONE.info[1], go: function () { self.pick(f.id); } });
+            if (f.end === iso) items.push({ t: '↗ ' + f.name, tip: 'Departs · Trip ' + f.id, bg: TONE.mute[0], fg: TONE.mute[1], go: function () { self.pick(f.id); } });
+          });
+          const isToday = iso === isoOf(t0);
+          cells.push({ n: String(dd), bg: isToday ? '#ECEEFB' : '#FFFFFF', w: isToday ? '700' : '400', ink: isToday ? '#283277' : '#323338', items: items });
+        }
+        while (cells.length % 7) cells.push({ n: '', bg: '#FBFBFD', w: '400', ink: '#676879', items: [] });
+        out.blocks.push(blk('cal', { title: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][first.getMonth()] + ' ' + first.getFullYear(), note: '↘ arrives · ↗ departs · click to open the file', heads: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(function (h) { return { t: h }; }), days: cells }));
+      });
+    }
+    if (c.tab === 'amend') {
+      out.blocks.push(table('Amendments & cancellations', 'Approving a change updates the file; changed hotels go back to suppliers for re-confirmation', [['File', 200, 'left', 1.2], ['Type', 130], ['Request', 280, 'left', 1.6], ['Raised', 110], ['Status', 110], ['', 190, 'right']],
+        d.amends.map(function (a) {
+          const f = c.F.filter(function (x) { return x.id === a.file; })[0];
+          const tone = a.status === 'approved' ? 'ok' : a.status === 'declined' ? 'mute' : 'warn';
+          return [T(f ? f.name : a.file, { w: '700', sub: a.file }), T(a.type), T(a.text), T(rel(a.date)), C(a.status[0].toUpperCase() + a.status.slice(1), tone), A(a.status !== 'pending' ? [] : [
+            B('Approve', function () {
+              self.mut(function (dd) {
+                const am = dd.amends.filter(function (x) { return x.id === a.id; })[0]; am.status = 'approved';
+                const ff = self.file(dd, a.file);
+                if (a.type === 'Cancellation') ff.cancelled = isoDays(0);
+                else if (a.type === 'Date change') { ff.start = addIso(ff.start, 1); ff.svc.forEach(function (sv) { if (sv.kind === 'hotel') { sv.status = 'pending'; sv.conf = ''; } }); }
+              }, a.type === 'Cancellation' ? 'Trip ' + a.file + ' cancelled. Accounts will see any refund due.' : 'Dates moved. The hotel is back in Purchasing for re-confirmation.');
+            }, 'p'),
+            B('Decline', function () { self.mut(function (dd) { dd.amends.filter(function (x) { return x.id === a.id; })[0].status = 'declined'; }, 'Request declined.'); }, 's')], true)];
+        })));
+      out.blocks.push(blk('form', { title: 'Log a change for Trip ' + c.sel.id, note: c.sel.name, fields: [this.field('am-type', 'Type of change', 'amType', { options: ['Date change', 'Add a service', 'Name change', 'Cancellation'], def: 'Date change' }), this.field('am-text', 'What exactly changes', 'amText', { ph: 'e.g. Add one night in Kuala Lumpur' })], submitLabel: 'Add request', err: c.s.err, hasErr: !!c.s.err,
+        submit: function (e) { if (e && e.preventDefault) e.preventDefault(); const txt = String(self.fv('amText', '')).trim(); if (!txt) { self.setState({ err: 'Describe the change first.' }); return; } self.mut(function (dd) { dd.amends.unshift({ id: uid(), file: c.sel.id, type: self.fv('amType', 'Date change'), text: txt, date: isoDays(0), status: 'pending' }); }, 'Change request added.', { form: {} }); } }));
+    }
+    if (c.tab === 'vouchers') {
+      const rows = [];
+      F.filter(function (f) { return f.stage !== 'booking' && f.stage !== 'returned'; }).forEach(function (f) {
+        f.svc.forEach(function (sv, i) {
+          const txt = 'Hotel voucher · Flyland DMC Services\nVoucher VCH-' + f.id + '-' + (i + 1) + '\nGuest: ' + f.name + ' (' + f.pax + ')\n' + sv.supplier + ': ' + sv.item + '\nDates: ' + svcDates(f, sv) + '\nConfirmation: ' + sv.conf;
+          rows.push([T('VCH-' + f.id + '-' + (i + 1), { w: '700', sub: f.name }), T(sv.supplier, { sub: sv.item }), T(svcDates(f, sv)), T(sv.conf), A([L('View', 'Voucher.dc.html', 's'), L('Send', 'https://wa.me/?text=' + encodeURIComponent(txt), 'g', true)], true)]);
+        });
+      });
+      out.blocks.push(table('Vouchers', 'Issued for every confirmed service once the file is booked', [['Voucher', 190], ['Supplier & service', 300, 'left', 1.8], ['Dates', 150], ['Confirmation', 130], ['', 170, 'right']], rows));
+    }
+    if (c.tab === 'itin') {
+      out.blocks.push(table('Guest itinerary', 'The day plan is built in the Trip desk; sharing it unlocks operations and the traveller page', [['File', 220, 'left', 1.3], ['Dates', 170], ['Guide', 200, 'left', 1], ['Itinerary', 130], ['', 330, 'right']],
+        F.filter(function (f) { return ['advance', 'ready', 'ontrip', 'completed', 'invoiced', 'paid', 'closed'].indexOf(f.stage) > -1; }).map(function (f) {
+          return [T(f.name, { w: '700', sub: f.id + ' · ' + f.dest }), TD(f.start, { range: f.end }), T(f.guide || 'Not assigned'), C(f.itin ? 'Shared' : 'Not shared', f.itin ? 'ok' : 'warn'), A([L('Build in Trip desk', 'Lead.dc.html', 's'), f.itin ? L('Traveller page', 'Traveller.dc.html', 's') : B('Mark shared', function () { self.mut(function (dd) { const ff = self.file(dd, f.id); ff.itin = true; ff.guide = ff.guide || 'Ravi Kumar'; }, 'Itinerary shared. Trip ' + f.id + ' is now with operations.'); }, 'p')], true)];
+        }), { emptyText: 'No file has its advance in yet.' }));
+    }
+    if (c.tab === 'rooming') {
+      const rows = [];
+      F.forEach(function (f) {
+        f.svc.forEach(function (sv) {
+          if (sv.kind !== 'hotel' || sv.status !== 'confirmed') return;
+          const a = addIso(f.start, sv.day - 1);
+          const n = daysFrom(a);
+          if (n < -1 || n > 60) return;
+          const txt = 'Rooming list · Flyland DMC Services\n' + sv.supplier + '\nCheck-in ' + dLong(a) + ', check-out ' + dLong(addIso(a, sv.nights)) + '\n' + sv.item + '\nGuests: ' + f.name + ' (' + f.pax + ')\nConfirmation: ' + sv.conf;
+          rows.push({ n: n, row: [T(sv.supplier, { w: '700', sub: sv.city }), T(dShort(a) + ' – ' + dShort(addIso(a, sv.nights)), { v: a, sub: rel(a) }), T(f.name, { sub: f.pax + ' · Trip ' + f.id }), T(sv.item), T(sv.conf), A([L('Send to hotel', 'https://wa.me/?text=' + encodeURIComponent(txt), 'g', true)], true)] });
+        });
+      });
+      rows.sort(function (x, y) { return x.n - y.n; });
+      out.blocks.push(table('Rooming list', 'Hotel stays in the next 60 days', [['Hotel', 200, 'left', 1], ['Stay', 150], ['Guests', 200, 'left', 1], ['Room', 220, 'left', 1.2], ['Confirmation', 120], ['', 140, 'right']], rows.map(function (r) { return r.row; })));
+    }
+    return out;
+  }
+
+  guideItems(fileId, dayOff) {
+    const g = this.state.guide;
+    const t = g ? g.trips.filter(function (x) { return x.id === fileId; })[0] : null;
+    if (!t) return [];
+    const n = 1 - t.start + dayOff;
+    const day = (t.days || []).filter(function (x) { return x.n === n; })[0];
+    return day ? day.items : [];
+  }
+
+  issues(c) {
+    const d = c.d;
+    const out = d.incidents.map(function (x) { return Object.assign({}, x); });
+    const g = this.state.guide;
+    const t = g ? g.trips.filter(function (x) { return x.id === '4499476'; })[0] : null;
+    if (t) t.days.forEach(function (day) { day.items.forEach(function (i) { if (i.issue) out.unshift({ id: 'g-' + i.id, file: '4499476', date: isoDays(day.n - 1 + t.start), by: 'Ravi Kumar (guide app)', text: i.issue + ' at ' + i.name + (i.issueAt ? ', ' + i.issueAt : ''), status: d.resolved && d.resolved['g-' + i.id] ? 'Resolved' : 'Open' }); }); });
+    return out;
+  }
+
+  m_ops(c) {
+    const self = this;
+    const d = c.d;
+    const F = c.F.filter(function (f) { return f.stage !== 'cancelled' && f.stage !== 'returned'; });
+    const GUIDES = [{ name: 'Faizal Rahman', city: 'Langkawi' }, { name: 'Ravi Kumar', city: 'Kuala Lumpur' }, { name: 'Siti Aminah', city: 'Kuala Lumpur' }];
+    const cityOf = function (j) { return /LGK|Adya|Langkawi/.test(j.from + j.what) ? 'Langkawi' : /DXB|Dubai/.test(j.from) ? 'Dubai' : 'Kuala Lumpur'; };
+    const fileName = function (id) { const f = c.F.filter(function (x) { return x.id === id; })[0]; return f ? f.name : id; };
+    const iss = this.issues(c);
+    const out = { blocks: [], counts: { dispatch: d.jobs.filter(function (j) { return j.status === 'Unassigned'; }).length, incidents: iss.filter(function (x) { return x.status === 'Open'; }).length }, ai: [] };
+    const suggest = function (j) {
+      const busy = d.jobs.filter(function (x) { return x.date === j.date && x.driver; }).map(function (x) { return x.driver; });
+      const pool = d.drivers.filter(function (r) { return r.city === cityOf(j) && busy.indexOf(r.name) < 0; });
+      return (pool.filter(function (r) { return r.vehicle.indexOf(j.vtype) === 0; })[0] || pool[0] || null);
+    };
+    if (c.tab === 'arr') {
+      const mk = function (key, title) {
+        const rows = F.map(function (f) { return { f: f, iso: key === 'a' ? f.start : f.end }; }).filter(function (x) { const n = daysFrom(x.iso); return n >= -1 && n <= 14; }).sort(function (x, y) { return daysFrom(x.iso) - daysFrom(y.iso); });
+        return table(title, key === 'a' ? 'Today and the next 14 days' : 'Airport drops in the next 14 days', [['When', 150], ['File', 220, 'left', 1.3], ['Where', 180], ['Guests', 140], ['Transfer', 150], ['', 110, 'right']],
+          rows.map(function (x) {
+            const js = d.jobs.filter(function (j) { return j.file === x.f.id && j.date === x.iso; });
+            const open = js.filter(function (j) { return j.status === 'Unassigned'; }).length;
+            return [TD(x.iso, { day: true,  w: '600', sub: rel(x.iso) }), T(x.f.name, { w: '700', sub: x.f.id }), T(x.f.dest), T(x.f.pax), js.length ? C(open ? open + ' unassigned' : 'Assigned', open ? 'warn' : 'ok') : C('No transfer job', 'mute'), A([self.selBtn(x.f)], true)];
+          }), { emptyText: key === 'a' ? 'No arrivals in the next two weeks.' : 'No departures in the next two weeks.' });
+      };
+      out.blocks.push(mk('a', 'Arrivals'));
+      out.blocks.push(mk('d', 'Departures'));
+    }
+    if (c.tab === 'dispatch') {
+      const jobs = d.jobs.slice().sort(function (x, y) { return (x.date + x.time) < (y.date + y.time) ? -1 : 1; });
+      jobs.filter(function (j) { return j.status === 'Unassigned'; }).slice(0, 2).forEach(function (j) { const s = suggest(j); if (s) out.ai.push(s.name + ' (' + s.vehicle + ') is free ' + rel(j.date) + ' in ' + cityOf(j) + ': suggested for “' + j.what + '”.'); });
+      out.blocks.push(table('Transfer dispatch', 'Jobs come from confirmed transfers on each trip file', [['When', 150], ['File', 170], ['Job', 260, 'left', 1.6], ['Vehicle', 110], ['Driver', 150], ['Status', 140], ['', 220, 'right']],
+        jobs.map(function (j) {
+          const sg = j.driver ? null : suggest(j);
+          const tone = j.status === 'Unassigned' ? 'warn' : j.status === 'Done' ? 'mute' : j.status === 'In progress' ? 'ok' : 'info';
+          return { bg: j.file === c.sel.id ? '#F5F6FF' : '#FFFFFF', cells: [TD(j.date, { day: true, time: j.time,  w: '600', sub: rel(j.date) }), T(fileName(j.file), { sub: j.file }), T(j.what, { sub: 'From ' + j.from + ' · ' + cityOf(j) }), T(j.vtype), T(j.driver || '—'), C(j.status, tone), A(j.vtype === 'Supplier' ? [] : [
+            sg ? B('Assign ' + sg.name, function () { self.mut(function (dd) { const x = dd.jobs.filter(function (y) { return y.id === j.id; })[0]; x.driver = sg.name; x.status = 'Assigned'; }, sg.name + ' assigned. The driver gets the job on WhatsApp.'); }, 'p') : null,
+            j.driver && j.status !== 'Done' ? B(j.status === 'In progress' ? 'Mark done' : 'Start', function () { self.mut(function (dd) { const x = dd.jobs.filter(function (y) { return y.id === j.id; })[0]; x.status = x.status === 'In progress' ? 'Done' : 'In progress'; }, 'Job updated.'); }, 's') : null,
+            j.driver && j.status === 'Assigned' ? B('Unassign', function () { self.mut(function (dd) { const x = dd.jobs.filter(function (y) { return y.id === j.id; })[0]; x.driver = ''; x.status = 'Unassigned'; }, 'Driver removed.'); }, 'd') : null], true)] };
+        })));
+    }
+    if (c.tab === 'drivers') {
+      out.blocks.push(blk('cards', { title: 'Drivers', note: 'Jobs in the next 7 days', cardMin: 240, cards: d.drivers.map(function (r) {
+        const js = d.jobs.filter(function (j) { return j.driver === r.name && daysFrom(j.date) >= 0 && daysFrom(j.date) <= 7; });
+        return { title: r.name, sub: r.city, hasChip: true, chip: js.length ? js.length + ' job' + (js.length > 1 ? 's' : '') : 'Free', chipBg: TONE[js.length ? 'info' : 'ok'][0], chipFg: TONE[js.length ? 'info' : 'ok'][1], border: '#E6E9EF', lines: [{ k: 'Vehicle', v: r.vehicle }, { k: 'Next job', v: js.length ? dDay(js[0].date) + ' ' + js[0].time : '—' }], hasBar: false, hasActs: true, acts: [L('WhatsApp', 'https://wa.me/?text=' + encodeURIComponent('Hi ' + r.name + ', your jobs from Flyland DMC Services:\n' + js.map(function (j) { return '• ' + dDay(j.date) + ' ' + j.time + ' ' + j.what; }).join('\n')), 'g', true)] };
+      }) }));
+      out.blocks.push(table('Vehicles', 'Service dates keep vehicles safe and legal', [['Vehicle', 200, 'left', 1], ['Seats', 90, 'right'], ['Based in', 160], ['Next service', 200]],
+        d.vehicles.map(function (v) { const n = daysFrom(v.service); return [T(v.name, { w: '700' }), T(v.seats, { align: 'right' }), T(v.city), C(dShort(v.service) + ' · ' + rel(v.service), n <= 14 ? 'warn' : 'ok')]; })));
+    }
+    if (c.tab === 'guides') {
+      out.blocks.push(blk('cards', { title: 'Guides', note: 'Guides work from the Flyland guide app', cardMin: 280, cards: GUIDES.map(function (g) {
+        const fs = F.filter(function (f) { return (f.guide || '').indexOf(g.name) > -1 && daysFrom(f.end) >= -1; });
+        const now = fs.filter(function (f) { return f.stage === 'ontrip'; })[0];
+        return { title: g.name, sub: g.city, hasChip: true, chip: now ? 'On trip' : 'Available', chipBg: TONE[now ? 'ok' : 'info'][0], chipFg: TONE[now ? 'ok' : 'info'][1], border: now ? '#00854D' : '#E6E9EF',
+          lines: fs.length ? fs.map(function (f) { return { k: f.name + ' · ' + f.id, v: dShort(f.start) + ' – ' + dShort(f.end) }; }) : [{ k: 'Assignments', v: 'None coming up' }], hasBar: false, hasActs: true, acts: [L('Open guide app', 'GuideToday.dc.html', 's')] };
+      }) }));
+    }
+    if (c.tab === 'sheet') {
+      [0, 1].forEach(function (off) {
+        const iso = isoDays(off);
+        const rows = [];
+        d.jobs.filter(function (j) { return j.date === iso; }).forEach(function (j) { rows.push({ t: j.time, cells: [T(j.time, { w: '700' }), T(fileName(j.file), { sub: j.file }), T(j.what), T(j.driver || 'No driver yet', { ink: j.driver ? '#323338' : '#B42840' }), C(j.status, j.status === 'Unassigned' ? 'warn' : 'info')] }); });
+        self.guideItems('4499476', off).forEach(function (i) { rows.push({ t: i.time, cells: [T(i.time, { w: '700' }), T('Arun Menon', { sub: '4499476' }), T(i.name), T('Ravi Kumar (guide)'), C(i.status === 'done' ? 'Done ' + i.doneAt : i.status === 'skipped' ? 'Skipped' : 'Planned', i.status === 'done' ? 'ok' : i.status === 'skipped' ? 'mute' : 'info')] }); });
+        rows.sort(function (x, y) { return x.t < y.t ? -1 : 1; });
+        const txt = 'Ops sheet · ' + dDay(iso) + '\n' + rows.map(function (r) { return r.t + ' ' + r.cells[1].t + ': ' + r.cells[2].t + ' (' + r.cells[3].t + ')'; }).join('\n');
+        out.blocks.push(table((off ? 'Tomorrow · ' : 'Today · ') + dDay(iso), rows.length + ' items · guide stops update live from the app', [['Time', 80], ['File', 170], ['What', 300, 'left', 1.6], ['Who', 180], ['Status', 140]], rows.map(function (r) { return r.cells; }), { emptyText: 'Nothing scheduled.' }));
+        if (rows.length) out.blocks.push(blk('cards', { cardMin: 240, cards: [{ title: 'Send this sheet', sub: 'To drivers and guides on WhatsApp', hasChip: false, border: '#E6E9EF', lines: [], hasBar: false, hasActs: true, acts: [L('Share on WhatsApp', 'https://wa.me/?text=' + encodeURIComponent(txt), 'g', true)] }] }));
+      });
+    }
+    if (c.tab === 'incidents') {
+      out.blocks.push(table('Incidents & guest issues', 'Problems guides report in the app land here straight away', [['When', 130], ['File', 170], ['Reported by', 170], ['What happened', 320, 'left', 1.8], ['Status', 110], ['', 120, 'right']],
+        iss.map(function (x) { return { bg: x.status === 'Open' ? '#FFF8F8' : '#FFFFFF', cells: [TD(x.date, { sub: rel(x.date) }), T(fileName(x.file), { sub: x.file }), T(x.by), T(x.text), C(x.status, x.status === 'Open' ? 'bad' : 'ok'), A(x.status === 'Open' ? [B('Resolve', function () { self.mut(function (dd) { if (x.id.indexOf('g-') === 0) { dd.resolved = dd.resolved || {}; dd.resolved[x.id] = isoDays(0); } else dd.incidents.filter(function (y) { return y.id === x.id; })[0].status = 'Resolved'; }, 'Marked resolved.'); }, 'p')] : [], true)] }; }), { emptyText: 'No incidents. Guides report problems from the stop screen in the app.' }));
+      out.blocks.push(blk('form', { title: 'Log an incident on Trip ' + c.sel.id, fields: [this.field('in-text', 'What happened', 'inText', { ph: 'e.g. Flight delayed 2 hours; pickup moved to 16:00' })], submitLabel: 'Log incident', err: c.s.err, hasErr: !!c.s.err,
+        submit: function (e) { if (e && e.preventDefault) e.preventDefault(); const t = String(self.fv('inText', '')).trim(); if (!t) { self.setState({ err: 'Describe what happened.' }); return; } self.mut(function (dd) { dd.incidents.unshift({ id: uid(), file: c.sel.id, date: isoDays(0), by: 'Operations', text: t, status: 'Open' }); }, 'Incident logged.', { form: {} }); } }));
+    }
+    return out;
+  }
+
+  m_purchasing(c) {
+    const self = this;
+    const d = c.d;
+    const F = c.F.filter(function (f) { return f.stage !== 'cancelled'; });
+    const svcDates = function (f, sv) { const a = addIso(f.start, sv.day - 1); return sv.nights ? dShort(a) + ' – ' + dShort(addIso(a, sv.nights)) : dShort(a); };
+    const open = [];
+    F.forEach(function (f) { f.svc.forEach(function (sv) { if (sv.status !== 'confirmed') open.push({ f: f, sv: sv }); }); });
+    const out = { blocks: [], counts: { req: open.length }, ai: [] };
+    open.filter(function (x) { return x.sv.status === 'requested' && x.sv.at && daysFrom(x.sv.at) <= -1; }).forEach(function (x) { out.ai.push(x.sv.supplier + ' has had the request for ' + x.f.name + ' (Trip ' + x.f.id + ') for ' + (-daysFrom(x.sv.at)) + ' days. Most suppliers confirm within a day: send a reminder.'); });
+    const setSvc = function (fid, sid, fn, msg) { self.mut(function (dd) { const ff = self.file(dd, fid); const sv = ff.svc.filter(function (x) { return x.id === sid; })[0]; fn(sv, ff); if (!ff.svc.some(function (x) { return x.status === 'declined'; })) delete ff.returned; return stageOf(ff, dd); }, msg); };
+    if (c.tab === 'req') {
+      out.blocks.push(table('Booking requests to suppliers', 'Confirm every service to move the file to Booked', [['Supplier', 200, 'left', 1], ['Service', 260, 'left', 1.4], ['Dates', 140], ['Status', 120], ['Confirmation no.', 160], ['', 280, 'right']],
+        open.map(function (x) {
+          const f = x.f;
+          const sv = x.sv;
+          const key = 'cf-' + sv.id;
+          const msg = 'Hello ' + sv.supplier + ',\n\nThis is Flyland DMC Services. Please confirm availability for *' + sv.item + '* on ' + svcDates(f, sv) + ' for ' + f.pax + '.\nOur reference: Trip ID ' + f.id + '.\n\nThank you.';
+          const tone = sv.status === 'declined' ? 'bad' : sv.status === 'requested' ? 'info' : 'warn';
+          const acts = sv.status === 'pending' ? [B('Mark sent', function () { setSvc(f.id, sv.id, function (s) { s.status = 'requested'; s.at = isoDays(0); }, 'Request sent to ' + sv.supplier + '.'); }, 'p'), L('WhatsApp', 'https://wa.me/?text=' + encodeURIComponent(msg), 'g', true)]
+            : sv.status === 'requested' ? [B('Confirm', function () { const no = String(self.fv(key, '')).trim() || ('CNF-' + Math.floor(1000 + Math.random() * 9000)); setSvc(f.id, sv.id, function (s) { s.status = 'confirmed'; s.conf = no; s.at = isoDays(0); }, function (ns) { return sv.supplier + ' confirmed (' + no + '). Trip ' + f.id + ' is now “' + STAGE[ns].label + '”.'; }); }, 'g'), B('Declined', function () { setSvc(f.id, sv.id, function (s, ff) { s.status = 'declined'; ff.returned = sv.supplier + ' cannot confirm ' + svcDates(f, sv); }, 'Declined. Trip ' + f.id + ' is back with sales for another option.'); }, 'd')]
+              : [L('Find another', 'Suppliers.dc.html', 's'), B('Request again', function () { setSvc(f.id, sv.id, function (s) { s.status = 'requested'; s.at = isoDays(0); }, 'Asked again.'); }, 's')];
+          return { bg: f.id === c.sel.id ? '#F5F6FF' : '#FFFFFF', cells: [T(sv.supplier, { w: '700', sub: sv.city }), T(sv.item, { sub: f.name + ' · Trip ' + f.id }), T(svcDates(f, sv)), C(sv.status[0].toUpperCase() + sv.status.slice(1), tone, sv.at ? 'since ' + dShort(sv.at) : ''), sv.status === 'requested' ? I(self.state.form[key] || '', self.setForm(key), { aria: 'Confirmation number', ph: 'e.g. HV-55821' }) : T('—'), A(acts, true)] };
+        }), { emptyText: 'Every service on every file is confirmed.' }));
+    }
+    if (c.tab === 'conf') {
+      const rows = [];
+      F.forEach(function (f) { f.svc.forEach(function (sv) { if (sv.status === 'confirmed') rows.push({ at: sv.at, cells: [T(sv.supplier, { w: '700', sub: sv.city }), T(sv.item, { sub: f.name + ' · Trip ' + f.id }), T(svcDates(f, sv)), T(sv.conf, { w: '600' }), T(sv.at ? dShort(sv.at) : '—', { sub: sv.at ? rel(sv.at) : '' }), A([L('Voucher', 'Voucher.dc.html', 's')], true)] }); }); });
+      rows.sort(function (x, y) { return x.at < y.at ? 1 : -1; });
+      out.blocks.push(table('Supplier confirmations', rows.length + ' confirmed services', [['Supplier', 200, 'left', 1], ['Service', 260, 'left', 1.4], ['Dates', 140], ['Confirmation no.', 150], ['Confirmed', 120], ['', 110, 'right']], rows.map(function (r) { return r.cells; })));
+    }
+    if (c.tab === 'po') {
+      const rows = [];
+      F.forEach(function (f) { f.svc.forEach(function (sv, i) {
+        if (sv.status !== 'confirmed') return;
+        const bill = d.bills.filter(function (b) { return b.svc === sv.id; })[0];
+        const st = bill ? (bill.paid ? ['Paid', 'ok'] : ['Billed', 'info']) : ['Sent', 'warn'];
+        const no = 'PO-' + f.id + '-' + (i + 1);
+        rows.push([T(no, { w: '700' }), T(sv.supplier, { sub: sv.item }), T(f.name, { sub: 'Trip ' + f.id }), T(money(sv.cost, f.cur), { align: 'right', w: '600' }), C(st[0], st[1], bill ? 'Bill ' + bill.no : ''), A([L('Send PO', 'https://wa.me/?text=' + encodeURIComponent('Purchase order ' + no + ' · Flyland DMC Services\n' + sv.supplier + ': ' + sv.item + '\nAmount: ' + money(sv.cost, f.cur) + '\nConfirmation: ' + sv.conf), 's', true), bill ? null : L('Enter bill', 'Finance.dc.html', 's')], true)]);
+      }); });
+      out.blocks.push(table('Purchase orders', 'One per confirmed service; the supplier bill is matched against it', [['PO', 160], ['Supplier', 260, 'left', 1.4], ['File', 180], ['Amount', 120, 'right'], ['Status', 140], ['', 200, 'right']], rows));
+    }
+    if (c.tab === 'allot') {
+      d.allot.forEach(function (a) { const left = a.rooms - a.used; const n = daysFrom(a.release); if (left && n <= 14) out.ai.push(a.hotel + ': ' + left + ' of ' + a.rooms + ' rooms are unsold and the release date is ' + rel(a.release) + '. Sell or release them before then.'); });
+      out.blocks.push(blk('cards', { title: 'Allotments & room blocks', note: 'Rooms held for you at contracted rates', cardMin: 280, cards: d.allot.map(function (a) {
+        const n = daysFrom(a.release);
+        return { title: a.hotel, sub: a.period, hasChip: true, chip: 'Release ' + rel(a.release), chipBg: TONE[n <= 14 ? 'warn' : 'info'][0], chipFg: TONE[n <= 14 ? 'warn' : 'info'][1], border: n <= 14 ? '#FDAB3D' : '#E6E9EF', lines: [{ k: 'Rooms per night', v: String(a.rooms) }, { k: 'Sold', v: a.used + ' of ' + a.rooms }, { k: 'Release date', v: dLong(a.release) }], hasBar: true, pct: Math.round(a.used * 100 / a.rooms), barColor: '#3D4BC7', hasActs: true,
+          acts: [B('Sell 1 room', function () { self.mut(function (dd) { const x = dd.allot.filter(function (y) { return y.hotel === a.hotel; })[0]; if (x.used < x.rooms) x.used += 1; }, 'One more room sold from the block.'); }, 's'), B('Release unsold', function () { self.mut(function (dd) { const x = dd.allot.filter(function (y) { return y.hotel === a.hotel; })[0]; x.rooms = x.used; }, 'Unsold rooms released to ' + a.hotel + '.'); }, 'd')] };
+      }) }));
+    }
+    return out;
+  }
+
+  guideExps() {
+    const g = this.state.guide;
+    const t = g ? g.trips.filter(function (x) { return x.id === '4499476'; })[0] : null;
+    return t ? (t.expenses || []).map(function (x) { return { id: 'g-' + x.id, gid: x.id, file: '4499476', by: 'Ravi Kumar', cat: x.cat, amt: x.amount, date: isoDays(x.day - 1 + t.start), status: x.status, note: x.note, photo: x.photo || '', guide: true }; }) : [];
+  }
+
+  setGuideExp(gid, status) {
+    try {
+      const g = guideTrip();
+      const t = g.trips.filter(function (x) { return x.id === '4499476'; })[0];
+      t.expenses.filter(function (x) { return x.id === gid; })[0].status = status;
+      window.localStorage.setItem(GSTORE, JSON.stringify(g));
+      this.setState(Object.assign({ guide: g }, this.flash('Expense ' + status + '. Ravi sees it in the guide app.')));
+    } catch (e) { this.setState(this.flash('The guide app data is not on this device yet. Open the guide app once, then try again.')); }
+  }
+
+  books(c) {
+    const d = c.d;
+    const exps = d.expenses.concat(this.guideExps());
+    const tx = [{ date: isoDays(-90), text: 'Opening balance', amt: 50000 }];
+    c.F.forEach(function (f) { f.pays.forEach(function (p) { tx.push({ date: p.date, text: 'Receipt · ' + f.name + ' · ' + f.id, amt: toMYR(p.amt, f.cur) }); }); });
+    d.cnotes.forEach(function (n) { if (n.refunded) tx.push({ date: n.refunded, text: 'Refund ' + n.no, amt: -n.amt }); });
+    d.bills.forEach(function (b) { if (b.paid) tx.push({ date: b.paid, text: 'Supplier payment · bill ' + b.no, amt: -b.amt }); });
+    exps.forEach(function (x) { if (x.status === 'approved') tx.push({ date: x.date, text: 'Guide expense · ' + x.cat + ' · ' + x.by, amt: -x.amt }); });
+    tx.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+    let bal = 0;
+    tx.forEach(function (t) { bal += t.amt; t.bal = bal; });
+    const invoiced = c.F.filter(function (f) { return f.inv; });
+    return {
+      tx: tx, bank: bal, exps: exps,
+      ar: sum(invoiced, function (f) { return toMYR(f.bal, f.cur); }),
+      adv: sum(c.F.filter(function (f) { return !f.inv; }), function (f) { return toMYR(f.paid, f.cur); }),
+      ap: sum(d.bills.filter(function (b) { return !b.paid; }), function (b) { return b.amt; }),
+      rev: sum(invoiced, function (f) { return toMYR(f.sell - f.cn, f.cur); }),
+      cos: sum(d.bills, function (b) { return b.amt; }),
+      gexp: sum(exps.filter(function (x) { return x.status === 'approved'; }), function (x) { return x.amt; })
+    };
+  }
+
+  m_finance(c) {
+    const self = this;
+    const d = c.d;
+    const F = c.F.filter(function (f) { return f.stage !== 'cancelled'; });
+    const K = this.books(c);
+    const fname = function (id) { const f = c.F.filter(function (x) { return x.id === id; })[0]; return f ? f.name : id; };
+    const svcOf = function (sid) { let r = null; c.F.forEach(function (f) { f.svc.forEach(function (sv) { if (sv.id === sid) r = { f: f, sv: sv }; }); }); return r; };
+    const toCollect = sum(F, function (f) { return f.stage === 'proforma' ? toMYR(f.adv - f.paid, f.cur) : (f.stage === 'invoiced' ? toMYR(f.bal, f.cur) : 0); });
+    const waitingExp = K.exps.filter(function (x) { return x.status === 'pending'; });
+    const out = { blocks: [], ai: [], counts: { exp: waitingExp.length, pf: F.filter(function (f) { return f.stage === 'booked' || f.stage === 'proforma'; }).length, inv: F.filter(function (f) { return f.stage === 'completed' || f.stage === 'invoiced'; }).length, spay: d.bills.filter(function (b) { return !b.paid; }).length },
+      kpis: [['To collect', 'MYR ' + fmt(toCollect), 'Advances and balances due', toCollect ? '#8A4B00' : '#323338'], ['To pay suppliers', 'MYR ' + fmt(K.ap), d.bills.filter(function (b) { return !b.paid; }).length + ' unpaid bills'], ['Bank balance', 'MYR ' + fmt(K.bank), 'After every receipt and payment'], ['Guide expenses waiting', String(waitingExp.length), 'MYR ' + fmt(sum(waitingExp, function (x) { return x.amt; })) + ' to check', waitingExp.length ? '#8A4B00' : '#323338']] };
+    F.filter(function (f) { return f.stage === 'proforma' && daysFrom(f.pf.dueDate) < 0; }).forEach(function (f) { out.ai.push(f.name + ' (Trip ' + f.id + '): advance of ' + money(f.adv - f.paid, f.cur) + ' is ' + (-daysFrom(f.pf.dueDate)) + ' days late. The reminder is ready to send.'); });
+    waitingExp.forEach(function (x) { const cat = { Fuel: 80, Parking: 20, Toll: 30, Tickets: 150, Meals: 60, Other: 50 }[x.cat] || 50; if (x.amt > cat) out.ai.push(x.by + '’s ' + x.cat.toLowerCase() + ' claim of MYR ' + fmt(x.amt) + ' is above the usual MYR ' + cat + '. Check the receipt before approving.'); });
+    const remind = function (f, amt, due) { return 'https://wa.me/?text=' + encodeURIComponent('Hi ' + (f.agent || f.name) + ',\n\nA gentle reminder that *' + money(amt, f.cur) + '* for *Trip ID ' + f.id + '* is due by ' + dLong(due) + '. Please share the payment reference once done.\n\nRegards,\nFlyland DMC Services'); };
+    const pay = function (f, amt, label) { return B(label, function () { self.mut(function (dd) { self.file(dd, f.id).pays.push({ id: uid(), date: isoDays(0), amt: amt, mode: 'Bank transfer', ref: '[payment reference]' }); return stageOf(self.file(dd, f.id), dd); }, function (ns) { return money(amt, f.cur) + ' recorded. Trip ' + f.id + ' is now “' + STAGE[ns].label + '”.'; }); }, 'g'); };
+    if (c.tab === 'pf') {
+      const ready = F.filter(function (f) { return f.stage === 'booked'; });
+      out.blocks.push(table('Ready for a proforma', 'Every service is confirmed', [['File', 240, 'left', 1.4], ['Travel', 160], ['Total', 130, 'right'], ['Advance 30%', 130, 'right'], ['', 170, 'right']],
+        ready.map(function (f) { return [T(f.name, { w: '700', sub: f.id + (f.agent ? ' · ' + f.agent : '') }), TD(f.start, { range: f.end }), T(money(f.sell, f.cur), { align: 'right' }), T(money(Math.round(f.sell * 0.3), f.cur), { align: 'right' }), A([B('Issue proforma', function () { self.mut(function (dd) { self.file(dd, f.id).pf = { no: 'PI-' + f.id, date: isoDays(0), pct: 30, dueDate: isoDays(3) }; }, 'PI-' + f.id + ' issued. Advance due in 3 days.'); }, 'p')], true)]; }), { emptyText: 'No booked file is waiting for a proforma.' }));
+      out.blocks.push(table('Proforma invoices', 'Advance requested against the confirmed quotation', [['Proforma', 150], ['File', 200, 'left', 1.2], ['Total', 120, 'right'], ['Advance', 120, 'right'], ['Due', 140], ['Status', 120], ['', 270, 'right']],
+        F.filter(function (f) { return f.pf; }).map(function (f) {
+          const due = f.adv - f.paid;
+          const late = due > 0 && daysFrom(f.pf.dueDate) < 0;
+          return [T(f.pf.no, { w: '700', sub: dShort(f.pf.date) }), T(f.name, { sub: f.id }), T(money(f.sell, f.cur), { align: 'right' }), T(money(f.adv, f.cur), { align: 'right', w: '600' }), TD(f.pf.dueDate, { sub: rel(f.pf.dueDate) }), C(due > 0 ? (late ? 'Overdue' : 'Due') : 'Received', due > 0 ? (late ? 'bad' : 'warn') : 'ok'), A([due > 0 ? pay(f, due, 'Record advance') : null, due > 0 ? L('Reminder', remind(f, due, f.pf.dueDate), 's', true) : null, L('Print', 'Proforma.dc.html', 's')], true)];
+        })));
+    }
+    if (c.tab === 'inv') {
+      out.blocks.push(table('Ready to invoice', 'Trips that have ended', [['File', 260, 'left', 1.4], ['Trip ended', 150], ['Total', 130, 'right'], ['Received', 130, 'right'], ['', 170, 'right']],
+        F.filter(function (f) { return f.stage === 'completed'; }).map(function (f) { return [T(f.name, { w: '700', sub: f.id }), TD(f.end, { sub: rel(f.end) }), T(money(f.sell, f.cur), { align: 'right' }), T(money(f.paid, f.cur), { align: 'right' }), A([B('Create invoice', function () { self.mut(function (dd) { self.file(dd, f.id).inv = { no: 'INV-' + f.id, date: isoDays(0) }; }, 'INV-' + f.id + ' created. Balance ' + money(f.bal, f.cur) + ' is now due.'); }, 'p')], true)]; }), { emptyText: 'No finished trip is waiting for its invoice.' }));
+      out.blocks.push(table('Sales invoices', 'Final invoices and what is still owed', [['Invoice', 150], ['File', 200, 'left', 1.2], ['Total', 120, 'right'], ['Received', 120, 'right'], ['Balance', 120, 'right'], ['Status', 110], ['', 280, 'right']],
+        F.filter(function (f) { return f.inv; }).map(function (f) { return [T(f.inv.no, { w: '700', sub: dShort(f.inv.date) }), T(f.name, { sub: f.id }), T(money(f.sell - f.cn, f.cur), { align: 'right' }), T(money(f.paid, f.cur), { align: 'right' }), T(money(f.bal, f.cur), { align: 'right', w: '700', ink: f.bal ? '#8A4B00' : '#00663B' }), C(f.bal ? 'Balance due' : 'Paid', f.bal ? 'warn' : 'ok'), A([f.bal ? pay(f, f.bal, 'Record balance') : null, f.bal ? L('Reminder', remind(f, f.bal, addIso(f.inv.date, 7)), 's', true) : null, L('Print', 'Invoice.dc.html', 's')], true)]; })));
+    }
+    if (c.tab === 'rcpt') {
+      const f = c.sel;
+      const sugg = f.stage === 'proforma' ? f.adv - f.paid : f.bal;
+      out.blocks.push(blk('form', { title: 'Record a receipt for Trip ' + f.id, note: f.name + ' · owes ' + money(f.bal, f.cur), fields: [this.field('r-amt', 'Amount (' + f.cur + ')', 'rAmt', { type: 'number', def: String(sugg || '') }), this.field('r-mode', 'Paid by', 'rMode', { options: ['Bank transfer', 'UPI', 'Card', 'Cash'], def: 'Bank transfer' }), this.field('r-ref', 'Reference', 'rRef', { ph: 'UTR or transaction ID' })], submitLabel: 'Record receipt', err: c.s.err, hasErr: !!c.s.err,
+        submit: function (e) { if (e && e.preventDefault) e.preventDefault(); const amt = parseFloat(self.fv('rAmt', sugg)); if (!(amt > 0)) { self.setState({ err: 'Enter the amount received.' }); return; } self.mut(function (dd) { self.file(dd, f.id).pays.push({ id: uid(), date: isoDays(0), amt: amt, mode: self.fv('rMode', 'Bank transfer'), ref: self.fv('rRef', '') }); return stageOf(self.file(dd, f.id), dd); }, function (ns) { return 'Receipt saved. Trip ' + f.id + ' is now “' + STAGE[ns].label + '”.'; }, { form: {} }); } }));
+      out.blocks.push(blk('cards', { cardMin: 300, cards: [{ title: 'Payment request', sub: money(sugg, f.cur) + ' for Trip ' + f.id, hasChip: false, border: '#E6E9EF', lines: [{ k: 'Bank transfer', v: '[Bank name] · [Account number]' }, { k: 'Card or UPI link', v: '[payment gateway link]' }], hasBar: false, hasActs: true, acts: [L('Send on WhatsApp', 'https://wa.me/?text=' + encodeURIComponent('Hi ' + (f.agent || f.name) + ',\n\nPlease pay *' + money(sugg, f.cur) + '* for *Trip ID ' + f.id + '*.\n\nBank: [Bank name], A/c [Account number]\nOr pay online: [payment gateway link]\n\nRegards,\nFlyland DMC Services'), 'g', true)] }] }));
+      const rows = [];
+      c.F.forEach(function (x) { x.pays.forEach(function (p) { rows.push({ date: p.date, cells: [TD(p.date, { sub: rel(p.date) }), T(x.name, { sub: x.id }), T(money(p.amt, x.cur), { align: 'right', w: '700' }), T(p.mode), T(p.ref || '—')] }); }); });
+      rows.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+      out.blocks.push(table('All receipts', rows.length + ' payments', [['Date', 130], ['File', 220, 'left', 1.3], ['Amount', 140, 'right'], ['Mode', 150], ['Reference', 180]], rows.map(function (r) { return r.cells; })));
+    }
+    if (c.tab === 'cn') {
+      out.blocks.push(table('Credit notes & refunds', 'Reduce what a customer owes, or pay money back', [['Credit note', 170], ['File', 200, 'left', 1.2], ['Reason', 260, 'left', 1.4], ['Amount', 120, 'right'], ['Refund', 140], ['', 150, 'right']],
+        d.cnotes.map(function (n) { return [T(n.no, { w: '700', sub: dShort(n.date) }), T(fname(n.file), { sub: n.file }), T(n.reason), T('MYR ' + fmt(n.amt), { align: 'right' }), C(n.refunded ? 'Refunded ' + dShort(n.refunded) : 'Not refunded', n.refunded ? 'ok' : 'warn'), A(n.refunded ? [] : [B('Mark refunded', function () { self.mut(function (dd) { dd.cnotes.filter(function (y) { return y.id === n.id; })[0].refunded = isoDays(0); }, 'Refund recorded.'); }, 'p')], true)]; })));
+      out.blocks.push(blk('form', { title: 'New credit note for Trip ' + c.sel.id, note: c.sel.name, fields: [this.field('cn-amt', 'Amount (' + c.sel.cur + ')', 'cnAmt', { type: 'number' }), this.field('cn-why', 'Reason', 'cnWhy', { ph: 'e.g. Tour cancelled by the operator' })], submitLabel: 'Create credit note', err: c.s.err, hasErr: !!c.s.err,
+        submit: function (e) { if (e && e.preventDefault) e.preventDefault(); const amt = parseFloat(self.fv('cnAmt', '')); const why = String(self.fv('cnWhy', '')).trim(); if (!(amt > 0) || !why) { self.setState({ err: 'Enter the amount and a reason.' }); return; } self.mut(function (dd) { const k = dd.cnotes.filter(function (x) { return x.file === c.sel.id; }).length + 1; dd.cnotes.unshift({ id: uid(), no: 'CN-' + c.sel.id + '-' + k, file: c.sel.id, amt: amt, reason: why, date: isoDays(0), refunded: null }); }, 'Credit note created.', { form: {} }); } }));
+    }
+    if (c.tab === 'bills' || c.tab === 'spay' || c.tab === 'sstmt') {
+      const billRow = function (b, acts) { const x = svcOf(b.svc); return [T(b.no, { w: '700', sub: dShort(b.date) }), T(x ? x.sv.supplier : '—', { sub: x ? x.sv.item : '' }), T(fname(b.file), { sub: b.file }), T('MYR ' + fmt(b.amt), { align: 'right', w: '600' }), C(b.paid ? 'Paid ' + dShort(b.paid) : 'Due ' + dShort(b.due), b.paid ? 'ok' : daysFrom(b.due) < 0 ? 'bad' : 'warn'), A(acts, true)]; };
+      const payBtn = function (b) { return B('Pay now', function () { self.mut(function (dd) { dd.bills.filter(function (y) { return y.id === b.id; })[0].paid = isoDays(0); }, 'Bill ' + b.no + ' paid. Bank balance updated.'); }, 'g'); };
+      if (c.tab === 'bills') {
+        const missing = [];
+        F.filter(function (f) { return ['booking', 'returned'].indexOf(f.stage) < 0; }).forEach(function (f) { f.svc.forEach(function (sv) { if (sv.status === 'confirmed' && !d.bills.some(function (b) { return b.svc === sv.id; })) missing.push({ f: f, sv: sv }); }); });
+        out.blocks.push(table('Waiting for a supplier bill', 'Confirmed services with no bill yet', [['Supplier', 220, 'left', 1.2], ['File', 200], ['PO amount', 130, 'right'], ['', 160, 'right']],
+          missing.map(function (x) { return [T(x.sv.supplier, { w: '700', sub: x.sv.item }), T(x.f.name, { sub: x.f.id }), T(money(x.sv.cost, x.f.cur), { align: 'right' }), A([B('Enter bill', function () { self.mut(function (dd) { dd.bills.unshift({ id: uid(), file: x.f.id, svc: x.sv.id, no: 'BILL-' + Math.floor(1000 + Math.random() * 9000), amt: Math.round(toMYR(x.sv.cost, x.f.cur)), date: isoDays(0), due: isoDays(14), paid: null }); }, 'Bill entered and matched to the purchase order.'); }, 'p')], true)]; })));
+        out.blocks.push(table('Supplier bills', d.bills.length + ' bills', [['Bill', 140], ['Supplier', 260, 'left', 1.4], ['File', 180], ['Amount', 120, 'right'], ['Status', 140], ['', 120, 'right']], d.bills.map(function (b) { return billRow(b, b.paid ? [] : [payBtn(b)]); })));
+      }
+      if (c.tab === 'spay') {
+        out.blocks.push(table('Bills to pay', 'Oldest due date first', [['Bill', 140], ['Supplier', 260, 'left', 1.4], ['File', 180], ['Amount', 120, 'right'], ['Status', 140], ['', 120, 'right']], d.bills.filter(function (b) { return !b.paid; }).sort(function (a, b) { return a.due < b.due ? -1 : 1; }).map(function (b) { return billRow(b, [payBtn(b)]); }), { emptyText: 'Every supplier bill is paid.' }));
+        out.blocks.push(table('Paid recently', '', [['Bill', 140], ['Supplier', 260, 'left', 1.4], ['File', 180], ['Amount', 120, 'right'], ['Status', 140], ['', 60, 'right']], d.bills.filter(function (b) { return b.paid; }).map(function (b) { return billRow(b, []); })));
+      }
+      if (c.tab === 'sstmt') {
+        const sups = {};
+        d.bills.forEach(function (b) { const x = svcOf(b.svc); const n = x ? x.sv.supplier : 'Other'; sups[n] = sups[n] || { billed: 0, paid: 0, rows: [] }; sups[n].billed += b.amt; if (b.paid) sups[n].paid += b.amt; sups[n].rows.push(b); });
+        out.blocks.push(table('Supplier statements', 'What you owe each supplier', [['Supplier', 280, 'left', 1.4], ['Billed', 130, 'right'], ['Paid', 130, 'right'], ['Balance', 130, 'right'], ['Bills', 220]],
+          Object.keys(sups).map(function (n) { const x = sups[n]; return [T(n, { w: '700' }), T('MYR ' + fmt(x.billed), { align: 'right' }), T('MYR ' + fmt(x.paid), { align: 'right' }), T('MYR ' + fmt(x.billed - x.paid), { align: 'right', w: '700', ink: x.billed - x.paid ? '#8A4B00' : '#00663B' }), T(x.rows.map(function (b) { return b.no; }).join(', '))]; })));
+      }
+    }
+    if (c.tab === 'astmt') {
+      const agents = {};
+      c.F.forEach(function (f) { if (f.agent) { agents[f.agent] = agents[f.agent] || []; agents[f.agent].push(f); } });
+      const names = Object.keys(agents);
+      const pickA = this.state.form.agent && agents[this.state.form.agent] ? this.state.form.agent : names[0];
+      out.blocks.push(blk('cards', { title: 'Agents', note: 'Pick one to see the statement', cardMin: 220, cards: names.map(function (n) {
+        const bal = sum(agents[n], function (f) { return f.inv ? toMYR(f.bal, f.cur) : -toMYR(f.paid, f.cur); });
+        return { title: n, sub: agents[n].length + ' file' + (agents[n].length > 1 ? 's' : ''), hasChip: true, chip: bal > 0 ? 'Owes MYR ' + fmt(bal) : bal < 0 ? 'Advance MYR ' + fmt(-bal) : 'Settled', chipBg: TONE[bal > 0 ? 'warn' : 'ok'][0], chipFg: TONE[bal > 0 ? 'warn' : 'ok'][1], border: n === pickA ? '#3D4BC7' : '#E6E9EF', lines: [], hasBar: false, hasActs: true, acts: [B(n === pickA ? 'Showing' : 'Show statement', function () { self.setState({ form: Object.assign({}, self.state.form, { agent: n }) }); }, n === pickA ? 'p' : 's')] };
+      }) }));
+      if (pickA) {
+        const lines = [];
+        agents[pickA].forEach(function (f) {
+          if (f.pf) lines.push({ date: f.pf.date, doc: f.pf.no + ' · proforma, ' + f.name, dr: 0, cr: 0, cur: f.cur });
+          f.pays.forEach(function (p) { lines.push({ date: p.date, doc: 'Receipt · ' + f.id + ' · ' + p.mode, dr: 0, cr: p.amt, cur: f.cur }); });
+          if (f.inv) lines.push({ date: f.inv.date, doc: f.inv.no + ' · invoice, ' + f.name, dr: f.sell, cr: 0, cur: f.cur });
+          d.cnotes.filter(function (n) { return n.file === f.id; }).forEach(function (n) { lines.push({ date: n.date, doc: n.no + ' · credit note', dr: 0, cr: n.amt, cur: f.cur }); if (n.refunded) lines.push({ date: n.refunded, doc: n.no + ' · refund paid', dr: n.amt, cr: 0, cur: f.cur }); });
+        });
+        lines.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+        let bal = 0;
+        out.blocks.push(table('Statement · ' + pickA, 'Debit is what they owe; credit is what they paid', [['Date', 130], ['Document', 320, 'left', 1.8], ['Debit', 130, 'right'], ['Credit', 130, 'right'], ['Balance', 150, 'right']],
+          lines.map(function (l) { bal += l.dr - l.cr; return [TD(l.date), T(l.doc), T(l.dr ? money(l.dr, l.cur) : '', { align: 'right' }), T(l.cr ? money(l.cr, l.cur) : '', { align: 'right' }), T(bal < 0 ? 'Advance ' + money(-bal, l.cur) : money(bal, l.cur), { align: 'right', w: '700' })]; }), { plain: true, hasFoot: true, foot: 'Send it from Contacts & agents, or share this screen on a call.' }));
+      }
+    }
+    if (c.tab === 'exp') {
+      out.blocks.push(table('Guide expenses', 'Claims from the guide app; approving one updates the guide’s phone too', [['Date', 120], ['Guide', 150], ['File', 180], ['Expense', 220, 'left', 1.2], ['Amount', 120, 'right'], ['Status', 120], ['', 200, 'right']],
+        K.exps.map(function (x) {
+          const tone = x.status === 'approved' ? 'ok' : x.status === 'rejected' ? 'bad' : 'warn';
+          const set = function (st) { return function () { if (x.guide) self.setGuideExp(x.gid, st); else self.mut(function (dd) { dd.expenses.filter(function (y) { return y.id === x.id; })[0].status = st; }, 'Expense ' + st + '.'); }; };
+          return [TD(x.date), T(x.by), T(fname(x.file), { sub: x.file }), T(x.cat, { w: '600', sub: x.note || (x.photo ? 'Receipt attached' : '') }), T('MYR ' + fmt(x.amt), { align: 'right', w: '600' }), C(x.status === 'pending' ? 'Waiting' : x.status[0].toUpperCase() + x.status.slice(1), tone), A(x.status === 'pending' ? [B('Approve', set('approved'), 'g'), B('Reject', set('rejected'), 'd')] : [], true)];
+        }), { emptyText: 'No expense claims yet.' }));
+    }
+    if (c.tab === 'bank') {
+      out.blocks.push(blk('cards', { cardMin: 240, cards: [{ title: 'Current account', sub: '[Bank name] · [Account number]', hasChip: false, border: '#E6E9EF', lines: [{ k: 'Balance', v: 'MYR ' + fmt(K.bank) }, { k: 'Transactions', v: String(K.tx.length) }], hasBar: false, hasActs: false }, { title: 'Petty cash', sub: 'Office', hasChip: false, border: '#E6E9EF', lines: [{ k: 'Balance', v: 'MYR 1,200' }, { k: 'Counted', v: dShort(isoDays(-2)) }], hasBar: false, hasActs: false }] }));
+      out.blocks.push(table('Bank transactions', 'Every receipt, refund, supplier payment and expense, in MYR', [['Date', 130], ['Description', 340, 'left', 2], ['In', 130, 'right'], ['Out', 130, 'right'], ['Balance', 140, 'right']],
+        K.tx.slice().reverse().map(function (t) { return [TD(t.date), T(t.text), T(t.amt > 0 ? fmt(t.amt) : '', { align: 'right', ink: '#00663B' }), T(t.amt < 0 ? fmt(-t.amt) : '', { align: 'right', ink: '#B42840' }), T(fmt(t.bal), { align: 'right', w: '700' })]; }), { plain: true, hasFoot: true, foot: 'Opening balance is sample data.' }));
+    }
+    if (c.tab === 'jnl') {
+      const J = [];
+      c.F.forEach(function (f) {
+        f.pays.forEach(function (p) { J.push([p.date, 'Receipt from ' + f.name, 'Bank', f.inv && f.inv.date <= p.date ? 'Accounts receivable' : 'Customer advances', toMYR(p.amt, f.cur)]); });
+        if (f.inv) { J.push([f.inv.date, f.inv.no + ' · ' + f.name, 'Accounts receivable', 'Tour revenue', toMYR(f.sell, f.cur)]); J.push([f.inv.date, 'Advance applied · ' + f.id, 'Customer advances', 'Accounts receivable', toMYR(sum(f.pays.filter(function (p) { return p.date < f.inv.date; }), function (p) { return p.amt; }), f.cur)]); }
+      });
+      d.bills.forEach(function (b) { J.push([b.date, 'Bill ' + b.no, 'Cost of tours', 'Accounts payable', b.amt]); if (b.paid) J.push([b.paid, 'Paid bill ' + b.no, 'Accounts payable', 'Bank', b.amt]); });
+      d.cnotes.forEach(function (n) { J.push([n.date, n.no, 'Tour revenue', 'Accounts receivable', n.amt]); if (n.refunded) J.push([n.refunded, 'Refund ' + n.no, 'Accounts receivable', 'Bank', n.amt]); });
+      K.exps.filter(function (x) { return x.status === 'approved'; }).forEach(function (x) { J.push([x.date, 'Guide expense · ' + x.cat, 'Guide expenses', 'Bank', x.amt]); });
+      J.sort(function (a, b) { return a[0] < b[0] ? 1 : -1; });
+      out.blocks.push(table('Journal entries', 'Posted automatically from receipts, invoices, bills, refunds and expenses', [['Date', 120], ['Entry', 280, 'left', 1.6], ['Debit', 190], ['Credit', 190], ['Amount (MYR)', 140, 'right']], J.filter(function (j) { return j[4] > 0; }).map(function (j) { return [TD(j[0]), T(j[1]), T(j[2], { w: '600' }), T(j[3]), T(fmt(j[4]), { align: 'right', w: '600' })]; })));
+    }
+    if (c.tab === 'coa') {
+      const rows = [['1000', 'Bank · current account', 'Asset', K.bank], ['1010', 'Petty cash', 'Asset', 1200], ['1100', 'Accounts receivable', 'Asset', K.ar], ['2000', 'Accounts payable', 'Liability', K.ap], ['2100', 'Customer advances', 'Liability', K.adv], ['3000', 'Opening balance', 'Equity', 51200], ['4000', 'Tour revenue', 'Income', K.rev], ['5000', 'Cost of tours', 'Expense', K.cos], ['5100', 'Guide expenses', 'Expense', K.gexp]];
+      out.blocks.push(table('Chart of accounts', 'Balances in MYR, from the journal', [['Code', 90], ['Account', 280, 'left', 1.6], ['Type', 140], ['Balance', 160, 'right']], rows.map(function (r) { return [T(r[0], { w: '600' }), T(r[1]), C(r[2], { Asset: 'info', Liability: 'warn', Equity: 'mute', Income: 'ok', Expense: 'bad' }[r[2]]), T(fmt(r[3]), { align: 'right', w: '700' })]; })));
+    }
+    if (c.tab === 'tax') {
+      const rows = [];
+      F.forEach(function (f) { f.svc.forEach(function (sv) { if (sv.kind === 'hotel' && /Langkawi|Kuala Lumpur/.test(sv.city) && sv.status === 'confirmed') rows.push([T(f.name, { w: '700', sub: f.id }), T(sv.supplier, { sub: sv.city }), T(String(sv.nights), { align: 'right' }), T('MYR ' + fmt(sv.nights * 10), { align: 'right', w: '600' }), C('Included in price', 'info')]); }); });
+      out.blocks.push(table('Malaysia tourism tax', 'MYR 10 per room per night, included in every quote', [['File', 220, 'left', 1.2], ['Hotel', 240, 'left', 1.2], ['Room-nights', 120, 'right'], ['Tax', 120, 'right'], ['Treatment', 170]], rows, { hasFoot: true, foot: 'India GST and UAE VAT are set per company in Settings › Company & branches.' }));
+    }
+    if (c.tab === 'fx') {
+      const TODAY = { AED: 0.80, INR: 19.1, USD: 0.215 };
+      out.blocks.push(table('Currency gain / loss', 'Files sold in another currency, valued at today’s rate', [['File', 220, 'left', 1.2], ['Amount', 140, 'right'], ['Rate when quoted', 150, 'right'], ['Rate today', 130, 'right'], ['Gain / loss (MYR)', 160, 'right'], ['Status', 140]],
+        c.F.filter(function (f) { return f.cur !== 'MYR'; }).map(function (f) { const was = f.sell / FX[f.cur]; const now = f.sell / TODAY[f.cur]; const g = now - was; return [T(f.name, { w: '700', sub: f.id }), T(money(f.sell, f.cur), { align: 'right' }), T(String(FX[f.cur]), { align: 'right' }), T(String(TODAY[f.cur]), { align: 'right' }), T((g >= 0 ? '+' : '−') + fmt(Math.abs(g)), { align: 'right', w: '700', ink: g >= 0 ? '#00663B' : '#B42840' }), C(f.paid >= f.sell ? 'Realised' : 'Unrealised', 'info')]; }), { hasFoot: true, foot: 'Rate today is sample data; Masters › Currencies holds the live rates.' }));
+    }
+    return out;
+  }
+
+  m_reports(c) {
+    const self = this;
+    const d = c.d;
+    const F = c.F.filter(function (f) { return f.stage !== 'cancelled'; });
+    const K = this.books(c);
+    const out = { blocks: [], ai: [] };
+    const bars = function (title, note, rows, color, fmtV) { const max = Math.max.apply(null, rows.map(function (r) { return r[1]; }).concat([1])); return blk('bars', { title: title, note: note, bars: rows.map(function (r) { return { label: r[0], sub: r[2] || '', value: fmtV ? fmtV(r[1]) : String(r[1]), pct: Math.round(r[1] * 100 / max), color: color }; }) }); };
+    const group = function (key) { const m = {}; F.forEach(function (f) { const k = key(f); m[k] = m[k] || { n: 0, v: 0 }; m[k].n += 1; m[k].v += toMYR(f.sell, f.cur); }); return Object.keys(m).map(function (k) { return [k, Math.round(m[k].v), m[k].n + ' file' + (m[k].n > 1 ? 's' : '')]; }).sort(function (a, b) { return b[1] - a[1]; }); };
+    const prof = F.filter(function (f) { return ['booking', 'returned'].indexOf(f.stage) < 0; }).map(function (f) {
+      const exp = sum(K.exps.filter(function (x) { return x.file === f.id && x.status === 'approved'; }), function (x) { return x.amt; });
+      const sell = toMYR(f.sell - f.cn, f.cur);
+      const cost = toMYR(f.cost, f.cur);
+      const p = sell - cost - exp;
+      return { f: f, sell: sell, cost: cost, exp: exp, p: p, m: sell ? p * 100 / sell : 0 };
+    });
+    if (c.tab === 'sales') {
+      out.kpis = [['Enquiries this month', '20', 'WhatsApp, B2B and B2C'], ['Quoted', '14', '70% of enquiries'], ['Won', '5', '25% conversion', '#00663B'], ['Lost', '3', 'See reasons below', '#B42840']];
+      out.blocks.push(blk('note', { text: 'Sample figures until live enquiries flow in from WhatsApp. Trip files below are real data from this prototype.' }));
+      out.blocks.push(bars('Enquiries by executive', 'This month', [['Shabna K', 7, 'Won 3'], ['Rahul M', 5, 'Won 1'], ['Fathima N', 5, 'Won 1'], ['Arjun P', 3, 'Won 0']], '#3D4BC7'));
+      out.blocks.push(bars('Why enquiries were lost', 'Picked when an enquiry is marked Lost', [['Price', 2], ['Dates changed', 1]], '#D83A52'));
+    }
+    if (c.tab === 'bookings') {
+      out.blocks.push(bars('By destination', 'Selling value in MYR', group(function (f) { return f.dest; }), '#00779E', function (v) { return 'MYR ' + fmt(v); }));
+      out.blocks.push(bars('By agent', 'Direct customers grouped together', group(function (f) { return f.agent || 'Direct customers'; }), '#8B47D0', function (v) { return 'MYR ' + fmt(v); }));
+      out.blocks.push(bars('By travel month', 'When the trips start', group(function (f) { const dd = dateOf(f.start); return MONTHS[dd.getMonth()] + ' ' + dd.getFullYear(); }), '#00854D', function (v) { return 'MYR ' + fmt(v); }));
+    }
+    if (c.tab === 'supp') {
+      const m = {};
+      F.forEach(function (f) { f.svc.forEach(function (sv) { const k = sv.supplier; m[k] = m[k] || { n: 0, ok: 0, no: 0, open: 0, v: 0 }; m[k].n += 1; m[k].v += toMYR(sv.cost, f.cur); if (sv.status === 'confirmed') m[k].ok += 1; else if (sv.status === 'declined') m[k].no += 1; else m[k].open += 1; }); });
+      out.blocks.push(table('Supplier performance', 'From every request in the trip files', [['Supplier', 280, 'left', 1.6], ['Requests', 100, 'right'], ['Confirmed', 110, 'right'], ['Declined', 100, 'right'], ['Waiting', 100, 'right'], ['Value booked', 140, 'right'], ['Rating', 130]],
+        Object.keys(m).sort(function (a, b) { return m[b].v - m[a].v; }).map(function (k) { const x = m[k]; const r = x.no ? ['Watch', 'bad'] : x.open ? ['Slow to reply', 'warn'] : ['Reliable', 'ok']; return [T(k, { w: '700' }), T(x.n, { align: 'right' }), T(x.ok, { align: 'right' }), T(x.no, { align: 'right', ink: x.no ? '#B42840' : '#323338' }), T(x.open, { align: 'right' }), T('MYR ' + fmt(x.v), { align: 'right' }), C(r[0], r[1])]; })));
+    }
+    if (c.tab === 'profit') {
+      const tot = { sell: sum(prof, function (x) { return x.sell; }), cost: sum(prof, function (x) { return x.cost; }), exp: sum(prof, function (x) { return x.exp; }), p: sum(prof, function (x) { return x.p; }) };
+      out.kpis = [['Selling value', 'MYR ' + fmt(tot.sell), prof.length + ' booked files'], ['Supplier cost', 'MYR ' + fmt(tot.cost), 'Hotels, transfers, tickets'], ['Profit', 'MYR ' + fmt(tot.p), 'After guide expenses', '#00663B'], ['Margin', (tot.sell ? Math.round(tot.p * 1000 / tot.sell) / 10 : 0) + '%', 'Target 12% or more']];
+      prof.filter(function (x) { return x.m < 12; }).forEach(function (x) { out.ai.push('Trip ' + x.f.id + ' (' + x.f.name + ') makes ' + Math.round(x.m) + '%, below the 12% minimum.'); });
+      out.blocks.push(table('Profit per file', 'All amounts in MYR', [['File', 240, 'left', 1.4], ['Stage', 140], ['Selling', 120, 'right'], ['Cost', 120, 'right'], ['Guide exp.', 110, 'right'], ['Profit', 120, 'right'], ['Margin', 110]],
+        prof.map(function (x) { return [T(x.f.name, { w: '700', sub: x.f.id + ' · ' + x.f.dest }), C(x.f.st.label, x.f.st.tone), T(fmt(x.sell), { align: 'right' }), T(fmt(x.cost), { align: 'right' }), T(fmt(x.exp), { align: 'right' }), T(fmt(x.p), { align: 'right', w: '700' }), C(Math.round(x.m) + '%', x.m >= 12 ? 'ok' : 'warn')]; })));
+    }
+    if (c.tab === 'ageing') {
+      const bucket = function (n) { return n <= 0 ? 0 : n <= 30 ? 1 : n <= 60 ? 2 : 3; };
+      const rec = [0, 0, 0, 0];
+      const recRows = [];
+      F.forEach(function (f) {
+        let amt = 0;
+        let due = null;
+        if (f.stage === 'proforma') { amt = f.adv - f.paid; due = f.pf.dueDate; } else if (f.inv && f.bal) { amt = f.bal; due = addIso(f.inv.date, 7); }
+        if (!amt) return;
+        const late = -daysFrom(due);
+        rec[bucket(late)] += toMYR(amt, f.cur);
+        recRows.push([T(f.agent || f.name, { w: '700', sub: f.id }), T(money(amt, f.cur), { align: 'right' }), TD(due, { sub: rel(due) }), C(late <= 0 ? 'Not due' : late + ' days late', late <= 0 ? 'info' : late > 30 ? 'bad' : 'warn')]);
+      });
+      const pay = [0, 0, 0, 0];
+      d.bills.filter(function (b) { return !b.paid; }).forEach(function (b) { pay[bucket(-daysFrom(b.due))] += b.amt; });
+      const lab = ['Not due', '1–30 days', '31–60 days', 'Over 60 days'];
+      out.blocks.push(table('Ageing summary', 'MYR', [['', 200], ['Not due', 130, 'right'], ['1–30 days', 130, 'right'], ['31–60 days', 130, 'right'], ['Over 60 days', 130, 'right']], [[T('Customers owe us', { w: '700' })].concat(rec.map(function (v) { return T(fmt(v), { align: 'right' }); })), [T('We owe suppliers', { w: '700' })].concat(pay.map(function (v) { return T(fmt(v), { align: 'right' }); }))], { plain: true }));
+      out.blocks.push(table('Receivables in detail', lab.join(' · '), [['Customer or agent', 260, 'left', 1.4], ['Amount', 140, 'right'], ['Due', 150], ['Age', 150]], recRows));
+    }
+    if (c.tab === 'pl') {
+      const gp = K.rev - K.cos;
+      const net = gp - K.gexp;
+      out.blocks.push(table('Profit & loss', 'Invoiced trips, MYR', [['', 320, 'left', 1.6], ['Amount', 160, 'right']], [[T('Tour revenue'), T(fmt(K.rev), { align: 'right' })], [T('Cost of tours (supplier bills)'), T('− ' + fmt(K.cos), { align: 'right' })], [T('Gross profit', { w: '700' }), T(fmt(gp), { align: 'right', w: '700' })], [T('Guide expenses'), T('− ' + fmt(K.gexp), { align: 'right' })], [T('Overheads', { sub: 'Rent, salaries and the like go in as journal entries' }), T('0', { align: 'right' })], [T('Net profit', { w: '700' }), T(fmt(net), { align: 'right', w: '700', ink: net >= 0 ? '#00663B' : '#B42840' })]], { plain: true, hasFoot: true, foot: 'Bills on trips not yet invoiced are in cost already; their revenue follows when invoiced.' }));
+      out.blocks.push(table('Balance sheet', 'Today, MYR', [['', 320, 'left', 1.6], ['Amount', 160, 'right']], [[T('Bank and cash'), T(fmt(K.bank + 1200), { align: 'right' })], [T('Accounts receivable'), T(fmt(K.ar), { align: 'right' })], [T('Total assets', { w: '700' }), T(fmt(K.bank + 1200 + K.ar), { align: 'right', w: '700' })], [T('Accounts payable'), T(fmt(K.ap), { align: 'right' })], [T('Customer advances'), T(fmt(K.adv), { align: 'right' })], [T('Equity and profit', { w: '700' }), T(fmt(K.bank + 1200 + K.ar - K.ap - K.adv), { align: 'right', w: '700' })]], { plain: true }));
+      const inflow = sum(K.tx.filter(function (t) { return t.amt > 0 && t.text !== 'Opening balance'; }), function (t) { return t.amt; });
+      const outflow = -sum(K.tx.filter(function (t) { return t.amt < 0; }), function (t) { return t.amt; });
+      out.blocks.push(table('Cash flow', 'Last 90 days, MYR', [['', 320, 'left', 1.6], ['Amount', 160, 'right']], [[T('Received from customers and agents'), T(fmt(inflow), { align: 'right', ink: '#00663B' })], [T('Paid to suppliers, guides and refunds'), T('− ' + fmt(outflow), { align: 'right', ink: '#B42840' })], [T('Net cash flow', { w: '700' }), T(fmt(inflow - outflow), { align: 'right', w: '700' })]], { plain: true }));
+    }
+    return out;
+  }
+
+  m_crm(c) {
+    const self = this;
+    const d = c.d;
+    const out = { blocks: [], ai: [] };
+    const used = function (a) { return sum(c.F.filter(function (f) { return f.agent === a.name && f.stage !== 'cancelled'; }), function (f) { return toMYR(f.inv ? f.bal : Math.max(0, f.sell - f.paid), f.cur); }); };
+    if (c.tab === 'contacts') {
+      const rows = d.agents.map(function (a) { const fs = c.F.filter(function (f) { return f.agent === a.name; }); return [T(a.name, { w: '700', sub: a.city }), C('Agent · ' + a.group, a.group === 'Gold' ? 'warn' : 'info'), T(OWNERS[a.owner] || a.owner), T(fs.length, { align: 'right' }), A([L('WhatsApp', 'https://wa.me/?text=' + encodeURIComponent('Hello ' + a.name + ', this is Flyland DMC Services.'), 'g', true), fs.length ? L('Statement', 'Finance.dc.html', 's') : null], true)]; });
+      c.F.filter(function (f) { return !f.agent; }).forEach(function (f) { rows.push([T(f.name, { w: '700', sub: f.dest }), C('Traveller', 'mute'), T(OWNERS[f.owner] || f.owner), T(1, { align: 'right' }), A([B(f.id === c.sel.id ? 'Selected' : 'Open file', function () { self.pick(f.id); }, 's')], true)]); });
+      out.blocks.push(table('Contacts', 'Agents and direct travellers', [['Name', 260, 'left', 1.4], ['Type', 150], ['Owner', 140], ['Files', 80, 'right'], ['', 220, 'right']], rows));
+    }
+    if (c.tab === 'groups') {
+      out.blocks.push(blk('cards', { title: 'Agent groups', note: 'Markup, credit limit and payment terms per group', cardMin: 220, cards: d.groups.map(function (g) { return { title: g.name, sub: d.agents.filter(function (a) { return a.group === g.name; }).length + ' agents', hasChip: true, chip: g.markup + '% markup', chipBg: TONE.info[0], chipFg: TONE.info[1], border: '#E6E9EF', lines: [{ k: 'Credit limit', v: 'MYR ' + fmt(g.credit) }, { k: 'Pay within', v: g.days + ' days' }], hasBar: false, hasActs: false }; }) }));
+      const rows = d.agents.map(function (a) {
+        const g = d.groups.filter(function (x) { return x.name === a.group; })[0];
+        const u = used(a);
+        const pct = g.credit ? Math.round(u * 100 / g.credit) : 0;
+        if (pct >= 80) out.ai.push(a.name + ' has used ' + pct + '% of its MYR ' + fmt(g.credit) + ' limit. New bookings will need a manager’s approval.');
+        return [T(a.name, { w: '700', sub: a.city }), T(a.group), T('MYR ' + fmt(g.credit), { align: 'right' }), T('MYR ' + fmt(u), { align: 'right', w: '600' }), C(pct + '% used', pct >= 100 ? 'bad' : pct >= 80 ? 'warn' : 'ok'), A([B('Move to Gold', function () { self.mut(function (dd) { dd.agents.filter(function (x) { return x.name === a.name; })[0].group = 'Gold'; }, a.name + ' is now Gold.'); }, 's')].filter(function () { return a.group !== 'Gold'; }), true)];
+      });
+      out.blocks.push(table('Credit used by each agent', 'Unpaid amounts on their open files', [['Agent', 260, 'left', 1.4], ['Group', 110], ['Limit', 130, 'right'], ['Used', 130, 'right'], ['Status', 120], ['', 150, 'right']], rows));
+    }
+    if (c.tab === 'campaigns') {
+      out.blocks.push(table('WhatsApp campaigns', 'Broadcasts to agents or past travellers', [['Campaign', 280, 'left', 1.4], ['Audience', 200], ['Date', 140], ['Status', 120], ['Read', 90, 'right'], ['Replies', 90, 'right']],
+        d.campaigns.map(function (x) { return [T(x.name, { w: '700' }), T(x.audience, { sub: x.count + ' contacts' }), TD(x.date, { sub: rel(x.date) }), C(x.status, x.status === 'Sent' ? 'ok' : 'info'), T(x.status === 'Sent' ? x.read : '—', { align: 'right' }), T(x.status === 'Sent' ? x.replies : '—', { align: 'right' })]; }), { hasFoot: true, foot: 'Read and reply counts are sample data until the official WhatsApp API is connected.' }));
+      out.blocks.push(blk('form', { title: 'New campaign', note: 'It uses an approved WhatsApp template', fields: [this.field('cp-name', 'Campaign name', 'cpName', { ph: 'e.g. Langkawi school holiday offer' }), this.field('cp-aud', 'Send to', 'cpAud', { options: ['All agents', 'Gold agents', 'Silver agents', 'Past travellers'], def: 'All agents' }), this.field('cp-date', 'Send on', 'cpDate', { type: 'date', def: isoDays(3) })], submitLabel: 'Schedule campaign', err: c.s.err, hasErr: !!c.s.err,
+        submit: function (e) {
+          if (e && e.preventDefault) e.preventDefault();
+          const name = String(self.fv('cpName', '')).trim();
+          if (!name) { self.setState({ err: 'Name the campaign.' }); return; }
+          const aud = self.fv('cpAud', 'All agents');
+          const n = aud === 'All agents' ? d.agents.length : aud === 'Past travellers' ? c.F.filter(function (f) { return !f.agent; }).length : d.agents.filter(function (a) { return aud.indexOf(a.group) === 0; }).length;
+          self.mut(function (dd) { dd.campaigns.unshift({ id: uid(), name: name, audience: aud, count: n, date: self.fv('cpDate', isoDays(3)), status: 'Scheduled', read: 0, replies: 0 }); }, 'Campaign scheduled for ' + n + ' contacts.', { form: {} });
+        } }));
+    }
+    return out;
+  }
+
+  m_portal(c) {
+    const self = this;
+    const s = this.state;
+    const AG = 'Royal Sky Holidays';
+    const agent = c.d.agents.filter(function (a) { return a.name === AG; })[0] || { group: 'Gold' };
+    const grp = c.d.groups.filter(function (g) { return g.name === agent.group; })[0] || { markup: 8, credit: 25000, days: 30 };
+    const out = { blocks: [], ai: [] };
+    if (s.portalOut) {
+      out.hideTabs = true;
+      out.blocks.push(blk('form', { title: 'Agent sign in', note: 'For travel agents who work with Flyland DMC Services', fields: [this.field('ap-email', 'Agency email', 'apEmail', { type: 'email', ph: 'name@agency.com' }), this.field('ap-pass', 'Password', 'apPass', { type: 'password' })], submitLabel: 'Sign in', err: s.err, hasErr: !!s.err,
+        submit: function (e) { if (e && e.preventDefault) e.preventDefault(); if (!/@/.test(self.fv('apEmail', '')) || String(self.fv('apPass', '')).length < 6) { self.setState({ err: 'Enter your agency email and password.' }); return; } self.setState({ portalOut: false, err: '', form: {}, tab: 'quote' }); } }));
+      return out;
+    }
+    const mine = c.F.filter(function (f) { return f.agent === AG; });
+    const LABEL = { booking: ['Confirming services', 'warn'], returned: ['Finding another hotel', 'bad'], booked: ['Confirmed · invoice coming', 'info'], proforma: ['Advance due', 'warn'], advance: ['Itinerary being prepared', 'info'], ready: ['Ready to travel', 'blue'], ontrip: ['Travelling now', 'ok'], completed: ['Final invoice coming', 'info'], invoiced: ['Balance due', 'warn'], paid: ['Completed', 'ok'], closed: ['Completed', 'ok'], cancelled: ['Cancelled', 'mute'] };
+    const owed = sum(mine, function (f) { return f.stage === 'proforma' ? toMYR(f.adv - f.paid, f.cur) : f.stage === 'invoiced' ? toMYR(f.bal, f.cur) : 0; });
+    const credit = sum(mine.filter(function (f) { return f.stage !== 'cancelled'; }), function (f) { return toMYR(f.inv ? f.bal : Math.max(0, f.sell - f.paid), f.cur); });
+    out.kpis = [['Your group', agent.group, grp.markup + '% markup · pay within ' + grp.days + ' days'], ['Open bookings', String(mine.filter(function (f) { return ['paid', 'closed', 'cancelled'].indexOf(f.stage) < 0; }).length), 'With Flyland now'], ['Due now', 'MYR ' + fmt(owed), 'Advances and balances', owed ? '#8A4B00' : '#323338'], ['Credit used', Math.round(credit * 100 / grp.credit) + '%', 'of MYR ' + fmt(grp.credit)]];
+    if (c.tab === 'quote') {
+      const PK = { 'Kuala Lumpur 3N': ['my3', [['Kuala Lumpur', 3]]], 'Langkawi 2N + KL 2N': ['my4', [['Langkawi', 2], ['Kuala Lumpur', 2]]], 'Langkawi 2N + KL 3N': ['my5', [['Langkawi', 2], ['Kuala Lumpur', 3]]] };
+      const FROM = { my3: { 3: 617, 4: 930 }, my4: { 3: 1046, 4: 1450 }, my5: { 3: 1203, 4: 1712 } };
+      const HOT = { Langkawi: { 3: ['Adya Hotel', 'Deluxe king', 210], 4: ['Holiday Villa Beach Resort', 'Deluxe Room', 380] }, 'Kuala Lumpur': { 3: ['Star Points Hotel', 'Superior Queen Room', 204], 4: ['IBIS KLCC', 'Standard room (Window room)', 386] } };
+      const pkName = this.fv('apPk', 'Langkawi 2N + KL 3N');
+      const star = this.fv('apStar', '4 star') === '3 star' ? 3 : 4;
+      const ad = Math.max(1, parseInt(this.fv('apAd', '2'), 10) || 1);
+      const kids = Math.max(0, parseInt(this.fv('apKids', '0'), 10) || 0);
+      const start = this.fv('apDate', isoDays(45));
+      const pk = PK[pkName];
+      const nights = sum(pk[1], function (g) { return g[1]; });
+      const pp = Math.round(FROM[pk[0]][star] / 1.15 * (1 + grp.markup / 100));
+      const pc = Math.round(pp * 0.5);
+      const total = pp * ad + pc * kids;
+      const result = 'Your net price (' + agent.group + ', ' + grp.markup + '% markup):\n• MYR ' + fmt(pp) + ' per adult × ' + ad + '\n' + (kids ? '• MYR ' + fmt(pc) + ' per child × ' + kids + '\n' : '') + 'Total MYR ' + fmt(total) + ' for ' + nights + ' nights from ' + dLong(start) + '\nHotels: ' + pk[1].map(function (g) { return HOT[g[0]][star][0] + ' (' + g[0] + ')'; }).join(', ') + '\nAdd your own margin when you quote your customer.';
+      out.blocks.push(blk('form', { title: 'Self-quote', note: 'Instant net price from our contracted rates', fields: [
+        this.field('ap-pk', 'Package', 'apPk', { options: Object.keys(PK), def: 'Langkawi 2N + KL 3N' }), this.field('ap-star', 'Hotels', 'apStar', { options: ['3 star', '4 star'], def: '4 star' }),
+        this.field('ap-date', 'First day', 'apDate', { type: 'date', def: isoDays(45) }), this.field('ap-ad', 'Adults', 'apAd', { type: 'number', def: '2' }), this.field('ap-kids', 'Children', 'apKids', { type: 'number', def: '0' }), this.field('ap-lead', 'Lead guest name', 'apLead', { ph: 'As on passport' })],
+        hasResult: true, result: result, submitLabel: 'Request this booking', err: s.err, hasErr: !!s.err,
+        submit: function (e) {
+          if (e && e.preventDefault) e.preventDefault();
+          const lead = String(self.fv('apLead', '')).trim();
+          if (!lead) { self.setState({ err: 'Add the lead guest name so we can book the hotels.' }); return; }
+          self.mut(function (dd) {
+            const id = String(Math.max.apply(null, dd.files.map(function (f) { return parseInt(f.id, 10); })) + 1);
+            let day = 1;
+            const svc = [];
+            pk[1].forEach(function (g, gi) {
+              const h = HOT[g[0]][star];
+              svc.push({ id: id + 's' + svc.length, kind: 'hotel', supplier: h[0], city: g[0], item: h[1] + ' × 1, B&B', day: day, nights: g[1], cost: h[2] * g[1], status: 'pending', conf: '', at: '' });
+              svc.push({ id: id + 's' + svc.length, kind: 'transfer', supplier: g[0] + ' transport partner', city: g[0], item: 'Transfers and tours by Sedan', day: day, nights: 0, cost: g[0] === 'Langkawi' ? 250 : 380, status: 'pending', conf: '', at: '' });
+              day += g[1];
+            });
+            svc.push({ id: id + 's' + svc.length, kind: 'ticket', supplier: 'Attraction tickets', city: pk[1].map(function (g) { return g[0]; }).join(' + '), item: 'Entry tickets as per the package', day: 1, nights: 0, cost: 190 * ad + 150 * kids, status: 'pending', conf: '', at: '' });
+            dd.files.unshift({ id: id, name: lead, agent: AG, owner: 'SK', dest: pk[1].map(function (g) { return g[0]; }).join(' + '), start: start, nights: nights, pax: ad + ' adult' + (ad > 1 ? 's' : '') + (kids ? ', ' + kids + ' child' + (kids > 1 ? 'ren' : '') : ''), n: ad + kids, cur: 'MYR', sell: total, quote: 'Agent self-quote · ' + star + ' star', pf: null, pays: [], itin: false, inv: null, guide: '', svc: svc });
+            return id;
+          }, function (id) { return 'Booking request sent. Trip ' + id + ' is with the Flyland bookings team.'; }, { form: {}, tab: 'bookings' });
+        } }));
+    }
+    if (c.tab === 'bookings') {
+      out.blocks.push(table('My bookings', mine.length + ' files', [['Booking', 240, 'left', 1.4], ['Travel', 170], ['Guests', 150], ['Amount', 130, 'right'], ['Status', 200], ['', 220, 'right']],
+        mine.map(function (f) { const l = LABEL[f.stage]; return [T(f.name, { w: '700', sub: 'Trip ' + f.id + ' · ' + f.dest }), TD(f.start, { range: f.end,  sub: rel(f.start) }), T(f.pax), T(money(f.sell, f.cur), { align: 'right', w: '600' }), C(l[0], l[1]), A([['ready', 'ontrip', 'advance'].indexOf(f.stage) > -1 ? L('Itinerary', 'Traveller.dc.html', 's') : null, ['booking', 'returned'].indexOf(f.stage) < 0 ? L('Vouchers', 'Voucher.dc.html', 's') : null], true)]; }), { emptyText: 'No bookings yet. Use Self-quote to request one.' }));
+    }
+    if (c.tab === 'pay') {
+      const rows = [];
+      mine.forEach(function (f) {
+        const due = f.stage === 'proforma' ? f.adv - f.paid : f.stage === 'invoiced' ? f.bal : 0;
+        if (f.pf) rows.push([T(f.pf.no, { w: '700', sub: 'Proforma · ' + dShort(f.pf.date) }), T(f.name, { sub: 'Trip ' + f.id }), T(money(f.adv, f.cur), { align: 'right' }), C(f.stage === 'proforma' ? 'Due ' + dShort(f.pf.dueDate) : 'Paid', f.stage === 'proforma' ? 'warn' : 'ok'), A(f.stage === 'proforma' ? [L('Print', 'Proforma.dc.html', 's'), B('I have paid', function () { self.mut(function (dd) { self.file(dd, f.id).pays.push({ id: uid(), date: isoDays(0), amt: due, mode: 'Reported by agent', ref: '[payment reference]' }); }, 'Thank you. Flyland accounts will match your payment.'); }, 'g')] : [L('Print', 'Proforma.dc.html', 's')], true)]);
+        if (f.inv) rows.push([T(f.inv.no, { w: '700', sub: 'Invoice · ' + dShort(f.inv.date) }), T(f.name, { sub: 'Trip ' + f.id }), T(money(f.sell - f.cn, f.cur), { align: 'right' }), C(f.bal ? 'Balance ' + money(f.bal, f.cur) : 'Paid', f.bal ? 'warn' : 'ok'), A(f.bal ? [L('Print', 'Invoice.dc.html', 's'), B('I have paid', function () { self.mut(function (dd) { self.file(dd, f.id).pays.push({ id: uid(), date: isoDays(0), amt: f.bal, mode: 'Reported by agent', ref: '[payment reference]' }); }, 'Thank you. Flyland accounts will match your payment.'); }, 'g')] : [L('Print', 'Invoice.dc.html', 's')], true)]);
+      });
+      out.blocks.push(table('Invoices & payments', 'Pay by bank transfer, then tell us here', [['Document', 200], ['Booking', 220, 'left', 1.3], ['Amount', 140, 'right'], ['Status', 170], ['', 220, 'right']], rows, { emptyText: 'No invoices yet.' }));
+      out.blocks.push(blk('cards', { cardMin: 280, cards: [{ title: 'Bank details', sub: 'Flyland DMC Services', hasChip: false, border: '#E6E9EF', lines: [{ k: 'Bank', v: '[Bank name]' }, { k: 'Account', v: '[Account number]' }, { k: 'IFSC / SWIFT', v: '[Code]' }], hasBar: false, hasActs: false }] }));
+    }
+    if (c.tab === 'stmt') {
+      const lines = [];
+      mine.forEach(function (f) {
+        f.pays.forEach(function (p) { lines.push({ date: p.date, doc: 'Payment · Trip ' + f.id + ' · ' + p.mode, dr: 0, cr: p.amt, cur: f.cur }); });
+        if (f.inv) lines.push({ date: f.inv.date, doc: f.inv.no + ' · ' + f.name, dr: f.sell, cr: 0, cur: f.cur });
+      });
+      lines.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+      let bal = 0;
+      out.blocks.push(table('Statement', 'Royal Sky Holidays with Flyland DMC Services', [['Date', 130], ['Document', 320, 'left', 1.8], ['Invoiced', 130, 'right'], ['Paid', 130, 'right'], ['Balance', 160, 'right']],
+        lines.map(function (l) { bal += l.dr - l.cr; return [TD(l.date), T(l.doc), T(l.dr ? money(l.dr, l.cur) : '', { align: 'right' }), T(l.cr ? money(l.cr, l.cur) : '', { align: 'right' }), T(bal < 0 ? 'In advance ' + money(-bal, l.cur) : money(bal, l.cur), { align: 'right', w: '700' })]; }), { plain: true, emptyText: 'Nothing on your statement yet.' }));
+    }
+    return out;
+  }
+}
+</script>
+</body>
+</html>
